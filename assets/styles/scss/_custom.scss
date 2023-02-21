@@ -1,0 +1,20 @@
+//<style lang="windi">
+.flex-center-x {
+  @apply flex flex-wrap justify-center;
+}
+
+.flex-center-y {
+  @apply
+    flex
+    flex-wrap
+    items-center;
+}
+
+.flex-center-xy {
+  @apply
+    flex
+    flex-wrap
+    items-center
+    justify-center;
+}
+//</style>

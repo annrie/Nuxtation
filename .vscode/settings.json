@@ -1,0 +1,144 @@
+{
+"fileMatch": "/package.json",
+"url": "https://json.schemastore.org/package",
+"schema": true,
+"workbench.iconTheme": "material-icon-theme",
+"workbench.fontAliasing": "default",
+"editor.fontFamily": "'SF Mono'",
+"editor.tabSize": 2,
+"[FILE EXTENSION OF STEP 3].lint.unknownAtRules": "ignore",
+"prettier.trailingComma": "es5",
+"prettier.vueIndentScriptAndStyle": true,
+"typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+"typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+"typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+"typescript.format.insertSpaceAfterCommaDelimiter": false,
+"typescript.format.insertSpaceAfterSemicolonInForStatements": false,
+"typescript.format.insertSpaceBeforeAndAfterBinaryOperators": false,
+"typescript.preferences.useAliasesForRenames": false,
+"typescript.suggest.autoImports": false,
+"typescript.suggest.completeJSDocs": false,
+"typescript.suggest.enabled": false,
+"typescript.suggest.includeAutomaticOptionalChainCompletions": false,
+"typescript.suggest.paths": false,
+"typescript.suggestionActions.enabled": false,
+
+// ↓自動フォーマット関連
+"editor.formatOnPaste": true, // ペースト時自動フォーマット
+"editor.formatOnType": true, // 入力時自動フォーマット
+"editor.formatOnSave": true,
+// ↓自動フォーマット（html）
+  い
+// ↓自動フォーマット（eslint）
+"eslint.alwaysShowStatus": true, // 常にeslintの状態を表示する
+"eslint.format.enable": true, // eslintの自動フォーマット
+// ↓自動フォーマット（stylelint）
+"editor.codeActionsOnSave": {
+  "source.fixAll.stylelint": true,
+  "source.fixAll.eslint": true
+},
+"volar.icon.preview": true,
+"emmet.variables": {
+  "lang": "ja"
+},
+"emmet.showAbbreviationSuggestions": true,
+"emmet.showExpandedAbbreviation": "always",
+"emmet.includeLanguages": {
+  "vue-html": "html",
+  "vue": "html"
+},
+"[html]": {
+  "files.insertFinalNewline": true,
+  "html.format.wrapLineLength": 0, // htmlファイルで一行あたりの文字数制限を解除
+  "html.format.preserveNewLines": true, // 要素の前の改行を保持する
+  "html.format.maxPreserveNewLines": 1, // 保持できる最大の改行数
+  "html.format.wrapAttributes": "auto", // タグ内の属性を折り返さな
+},
+"[vue]": {
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "Vue.volar",
+},
+"[javascript]": {
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+},
+"[markdown]": {
+  "files.trimTrailingWhitespace": false,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.renderWhitespace": "all",
+  "editor.acceptSuggestionOnEnter": "off"
+},
+"css.validate": false,
+"scss.validate": false,
+"scss.lint.unknownAtRules": "ignore",
+"less.validate": false,
+"[css]": {
+  "editor.formatOnSave": true,
+},
+"[scss]": {
+  "editor.formatOnSave":true,
+},
+"editor.semanticHighlighting.enabled": true,
+"editor.codeActionsOnSave": {
+  "source.fixAll": true
+},
+"prettier.enableDebugLogs": true,
+"prettier.useEditorConfig": false,
+"prettier.enable": true,
+"eslint.format.enable": false,
+"editor.defaultFormatter": "esbenp.prettier-vscode",
+
+"terminal.integrated.shellIntegration.enabled": true,
+"terminal.integrated.profiles.osx": {
+"bash": {
+  "path": "bash",
+  "args": ["-l"],
+  "icon": "terminal-bash"
+  }
+},
+"javascript.format.enable": false,
+"typescript.format.enable": false,
+"files.associations": {
+  "*.vue": "vue",
+  "*.css": "windicss",
+},
+"eslint.validate": [
+  "javascript",
+  "javascriptreact",
+  "typescript",
+  "typescriptreact",
+  "html",
+  "vue"
+],
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.openPositioning": "last",
+  "workbench.editorAssociations": {
+	"*.md": "vscode.markdown.preview.editor"
+  },
+  "editor.quickSuggestions": {
+		"other": "on",
+		"comments":true,
+		"strings": true
+  },
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "editor.formatOnSave": false,
+  "windicss.includeLanguages": {
+    "abc": "html",
+    "def": {
+      "type": "css"
+    },
+    "ghi": {
+      "type": "js",
+      "patterns": ["@apply\s+\S+$", "..." ],
+    },
+  },
+}

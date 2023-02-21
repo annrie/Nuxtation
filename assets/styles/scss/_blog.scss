@@ -1,0 +1,30 @@
+
+.page-section {
+  @apply mx-auto p-4 py-0 tb:max-w-4xl lg:max-w-5xl;
+}
+
+.article-list {
+  @apply h-full mx-auto;
+}
+
+.article-item a {
+  @apply no-underline;
+}
+
+.textsContainer {
+    padding: 0 2rem 0.8rem;
+}
+
+.linkButton {
+@apply bg-hex-108775 rounded-5px text-white text-lg py-[1.5px] px-2rem inline-block;
+}
+.linkButton:hover {
+   @apply  opacity-80 text-light-700;
+}
+.blogCard {
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);
+
+}
+#twitter-widget-0 {
+  @apply sm:ml-4 tb:ml-12 lg:ml-16;
+}

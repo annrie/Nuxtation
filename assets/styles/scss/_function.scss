@@ -1,0 +1,19 @@
+// rem
+@function rem($value, $root: $BASE_FONT_SIZE) {
+  @return math.div($value, $root) + rem;
+}
+
+// em
+@function em($value, $root) {
+  @return math.div($value, $root) + em;
+}
+
+// vw
+@function vw($value, $root) {
+  @return math.div($value, $root) * 100 + vw;
+}
+
+// vh
+@function vh($value, $root) {
+  @return math.div($value, $root) * 100 + vh;
+}

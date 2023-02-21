@@ -6,7 +6,7 @@
 
 旧オリジナル"Nuxtation"から**Nuxt3**仕様に全面的に作り直してポートフォリオ用に再公開しました。
 
-諸々最新環境で動くようにはしていますN
+諸々最新環境で動くようにはしています。
 
 ## セットアップ
 
@@ -42,5 +42,5 @@ npx nuxi@latest devtools enable
 
 ## ライセンス
 
-[MIT](https://github.com/annrie/Vuedation/master/LICENSE)
+[MIT](https://github.com/annrie/Nuxtation/main/LICENSE)
 Copyright &copy; 2020-present, Annrie

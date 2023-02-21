@@ -42,5 +42,5 @@ npx nuxi@latest devtools enable
 
 ## ライセンス
 
-[MIT](https://github.com/annrie/Vuedation/main/LICENSE)
+[MIT](https://github.com/annrie/Nuxtation/main/LICENSE)
 Copyright &copy; 2020-present, Annrie

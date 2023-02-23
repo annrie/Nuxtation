@@ -82,6 +82,11 @@
         "emoji": "💁",
         "value": "ux"
     },
+    "package": {
+      "description": "packageの変更",
+      "section": "📦",
+      "value": "package"
+    },
     "WIP": {
       "description": "作業中",
       "emoji": "⏲️",

@@ -1,0 +1,80 @@
+{
+  "types": [
+    {
+      "type": "chore",
+      "section": "ビルドプロセスまたは補助ツールの変更",
+      "hidden": false
+    },
+    {
+      "type": "feat",
+      "section": "機能の追加、変更、削除",
+      "hidden": false
+    },
+    {
+      "type": "fix",
+      "section": "バグ修正",
+      "hidden": false
+    },
+    {
+      "type": "docs",
+      "section": "ドキュメント",
+      "hidden": false
+    },
+    {
+      "type": "style",
+      "section": "コードスタイル",
+      "hidden": false
+    },
+    {
+      "type": "style",
+      "section": "コードスタイル",
+      "hidden": false
+    },
+    {
+      "type": "ux",
+      "section": "ユーザーエクスペリエンス/ユーザビリティ",
+      "hidden": false
+    },
+    {
+      "type": "perf",
+      "section": "パフォーマンスの改善",
+      "hidden": false
+    },
+    {
+      "type": "test",
+      "section": "テストコードの変更",
+      "hidden": false
+    },
+    {
+      "type": "ci",
+      "section": "CI関連",
+      "hidden": false
+    },
+    {
+      "type": "config",
+      "section": "設定ファイル",
+      "hidden": false
+    },
+    {
+      "type": "build",
+      "section": "ビルドシステムや外部依存に関する変更",
+      "hidden": false
+    },
+    {
+      "type": "typo",
+      "section": "タイプミスの修正",
+      "hidden": false
+    },
+    {
+      "type": "i18n",
+      "section": "国際化",
+      "hidden": false
+    },
+    {
+      "type": "package",
+      "section": "パッケージ",
+      "hidden": false
+    }
+  ],
+  "releaseCommitMessageFormat": "chore(release): 🏹{{currentTag}}"
+}

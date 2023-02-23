@@ -1,0 +1,96 @@
+{
+  "disableEmoji": false,
+  "format": "{type}{scope}: {emoji}{subject}",
+  "list": ["test", "feat", "fix", "chore", "docs", "refactor", "style", "ci", "perf","hotfix","typo","build","config","i18n","ux","WIP"],
+  "maxMessageLength": 64,
+  "minMessageLength": 3,
+  "questions": ["type", "scope", "subject", "body", "breaking", "issues", "lerna"],
+  "scopes": [],
+  "types": {
+    "feat": {
+      "description": "機能の追加、変更、削除（セマンティックバージョニングのマイナー以上）",
+      "emoji": "🎸",
+      "value": "feat"
+    },
+    "fix": {
+      "description": "バグ修正（セマンティックバージョニングのパッチ相当）",
+      "emoji": "🐛",
+      "value": "fix"
+    },
+    "hotfix":  {
+      "description":   "致命的で緊急なバグ修正",
+      "emoji": "🔥",
+     "value": "Critical hotfix"
+    },
+   "chore": {
+      "description": "ビルド関連や補助ツールの変更\n           （補助ツール、ドキュメント生成などのソースやテストの変更を含まない変更）",
+      "emoji": "🤖",
+      "value": "chore"
+    },
+   "typo": {
+      "description": "タイプミスの修正",
+      "emoji": "✍️",
+      "value": "typo"
+    },
+   "build": {
+      "description": "ビルドシステムや外部依存に関する変更\n           （スコープ例: gulp, broccoli, npm）",
+      "emoji": "🔨",
+      "value": "build"
+    },
+   "config": {
+      "description": "設定の追加や変更",
+      "emoji": "🛠️",
+      "value": "Configuration"
+    },
+   "i18n": {
+      "description": "国際化",
+      "emoji": "🏁",
+      "value": "Internationalization"
+    },
+    "ci": {
+      "description": "CI関連の変更\n           （スコープ例:Travis, Circle, BrowserStack, SauceLabs)",
+      "emoji": "🎡",
+      "value": "ci"
+    },
+    "docs": {
+      "description": "ドキュメントの更新",
+      "emoji": "✏️",
+      "value": "docs"
+    },
+    "perf": {
+      "description": "パフォーマンス改善",
+      "emoji": "⚡️",
+      "value": "perf"
+    },
+    "refactor": {
+      "description": "リファクタリング\n            （機能追加やバグ修正を含まない変更）",
+      "emoji": "💡",
+      "value": "refactor"
+    },
+    "release": {
+      "description": "リリースコミット",
+      "emoji": "🏹",
+      "value": "release"
+    },
+    "style": {
+      "description": "フォーマッティングなどのコードのスタイル調整",
+      "emoji": "💄",
+      "value": "style"
+    },
+    "ux": {
+        "description": "ユーザーエクスペリエンス/ユーザビリティの改善",
+        "emoji": "💁",
+        "value": "ux"
+    },
+    "WIP": {
+      "description": "作業中",
+      "emoji": "⏲️",
+      "value": "WIP"
+    },
+    "test": {
+      "description": "テストコードの変更",
+      "emoji": "💍",
+      "value": "test"
+    }
+  }
+}

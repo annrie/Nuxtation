@@ -8,12 +8,11 @@ defineProps<{
 
 <template>
   <article
-    class="container bg-white rounded-2xl grid p-5 shadow-2xl gap-6 auto-cols-[minmax(0,_2fr)] grid-cols-3 dark:bg-gray-200"
-  >
-    <div class="h-full object-cover w-full">
-      <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
-        <NuxtImg
-          :provider="item.provider"
+      class="container bg-white rounded-2xl grid p-5 gap-6 auto-cols-[minmax(0,_2fr)] grid-cols-3 blogCard dark:bg-gray-200"
+    >
+      <div class="h-full object-cover w-full">
+        <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
+            <NuxtImg
           :src="item.img"
           :alt="item.title"
           width="300"

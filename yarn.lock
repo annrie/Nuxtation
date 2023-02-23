@@ -911,15 +911,15 @@
   resolved "https://registry.npmjs.org/@nuxt/devalue/-/devalue-2.0.0.tgz"
   integrity sha512-YBI/6o2EBz02tdEJRBK8xkt3zvOFOWlLBf7WKYGBsSYSRtjjgrqPe2skp6VLLmKx5WbHHDNcW+6oACaurxGzeA==
 
-"@nuxt/image-edge@^1.0.0-27907872.f4dd19d":
-  version "1.0.0-27907872.f4dd19d"
-  resolved "https://registry.yarnpkg.com/@nuxt/image-edge/-/image-edge-1.0.0-27907872.f4dd19d.tgz#4ab4e0919774bae0fdc65907d36bf049c8f62799"
-  integrity sha512-wvSjj36blN2XzENFbsRWL9JkcvJljBv2HywftxYQ95uSYmWJYi+hgEgShFj2SMFo7lVYOb9sweXMo2CiZxgS1w==
+"@nuxt/image-edge@^1.0.0-27919678.2f5b64b":
+  version "1.0.0-27919678.2f5b64b"
+  resolved "https://registry.yarnpkg.com/@nuxt/image-edge/-/image-edge-1.0.0-27919678.2f5b64b.tgz#a9b084cf2ad5eafff2e069b85e856a9dd1a876f3"
+  integrity sha512-MvQ8NJyOTO4n8x+KU+Fyn7H+FegAb+ZN+7cwTAquOy41ev+c1mKn2EYGjkrYEoY/jKMaKSgK/jMtQjOeOhiQXA==
   dependencies:
-    "@nuxt/kit" "^3.0.0"
+    "@nuxt/kit" "^3.1.1"
     consola "^2.15.3"
-    defu "^6.1.1"
-    h3 "^1.0.2"
+    defu "^6.1.2"
+    h3 "^1.1.0"
     image-meta "^0.1.1"
     node-fetch-native "^1.0.1"
     ohash "^1.0.0"
@@ -4391,7 +4391,7 @@ gzip-size@^7.0.0:
   dependencies:
     duplexer "^0.1.2"
 
-h3@^1.0.1, h3@^1.0.2:
+h3@^1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/h3/-/h3-1.0.2.tgz"
   integrity sha512-25QqjQMz8pX1NI2rZ/ziNT9B8Aog7jmu2a0o8Qm9kKoH3zOhE+2icVs069h6DEp0g1Dst1+zKfRdRYcK0MogJA==
@@ -4401,7 +4401,7 @@ h3@^1.0.1, h3@^1.0.2:
     radix3 "^1.0.0"
     ufo "^1.0.1"
 
-h3@^1.5.0:
+h3@^1.1.0, h3@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/h3/-/h3-1.5.0.tgz#667fce40383712da314200312d043e892c5002fc"
   integrity sha512-M+T6P4iOB0ipkC/ZCdw2w8iTF7yY6phmkILOwlrtcPuVv+KW9BilOspYlvnblpKx1nnNl+3iBsZIvZ8pvKM8Nw==
@@ -4815,9 +4815,9 @@ ip-regex@^5.0.0:
   resolved "https://registry.npmjs.org/ip-regex/-/ip-regex-5.0.0.tgz"
   integrity sha512-fOCG6lhoKKakwv+C6KdsOnGvgXnmgfmp0myi3bcNwj3qfwPAxRKWEuFhvEFF7ceYIz6+1jRZ+yguLFAmUNPEfw==
 
-ipx@1.0.0-2:
+ipx@1.0.0-2, ipx@^1.0.0-2:
   version "1.0.0-2"
-  resolved "https://registry.npmjs.org/ipx/-/ipx-1.0.0-2.tgz"
+  resolved "https://registry.yarnpkg.com/ipx/-/ipx-1.0.0-2.tgz#e26b40318c9dbc635d8f857c8f981199de4dd2d3"
   integrity sha512-WQJA3oYPavbNUNKU9wyvMq34PvWLaxsio2woPXVYhxDQ8W/5OaZQusrbof3rXe3FZ4oib4/L9YYSN1D71Pq7nA==
   dependencies:
     consola "^2.15.3"

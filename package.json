@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -12,7 +12,7 @@
     "start": "node .output/server/index.mjs",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "postinstall": "nuxi prepare",
+    "postinstall": "nuxi prepare; node scripts/postinstall.js; husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

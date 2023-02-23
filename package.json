@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.4",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -12,9 +12,12 @@
     "start": "node .output/server/index.mjs",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "postinstall": "nuxi prepare",
+    "postinstall": "nuxi prepare; node scripts/postinstall.js; husky install",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "release:patch": "standard-version --release-as patch",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.1",
@@ -47,6 +50,7 @@
     "pinia": "^2.0.29",
     "sass": "^1.57.1",
     "sitemap": "^7.1.1",
+    "standard-version": "^9.5.0",
     "unplugin-icons": "^0.15.2"
   },
   "dependencies": {

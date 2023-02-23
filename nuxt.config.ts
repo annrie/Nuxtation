@@ -17,6 +17,9 @@ export default defineNuxtConfig({
   devServer: {
     host:'0',
   },
+  // serverMiddleware: {
+  //   '/_ipx': '@/server/middleware/ipx.js'
+  // },
   // runtimeConfig: {
   //   apiSecret: '123',
   //   public: {
@@ -166,6 +169,7 @@ export default defineNuxtConfig({
   },
   experimental: {
     emitRouteChunkError: 'reload',
+    payloadExtraction: false,
   },
   css: [
     '@unocss/reset/tailwind.css',
@@ -193,18 +197,18 @@ export default defineNuxtConfig({
         '2xl': 1536
       },
       domains: [
-        'images.unsplash.com'
+        'nuxtation.phantomoon.com'
       ],
-      alias: {
-        unsplash: 'https://images.unsplash.com'
-      },
-      cloudinary: {
-        baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
-      },
+      // alias: {
+      //   unsplash: 'https://images.unsplash.com'
+      // },
+      // cloudinary: {
+      //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
+      // },
 
-      imgix: {
-        baseURL: 'https://images.unsplash.com/',
-      },
+      // imgix: {
+      //   baseURL: 'https://images.unsplash.com/',
+      // },
       presets: {
         blog: {
           modifiers: {
@@ -230,7 +234,7 @@ export default defineNuxtConfig({
     Disallow: '/',
   },
    nitro: {
-    // preset: 'node-server',
+    preset: 'node-server',
     prerender: {
       routes: ['/sitemap.xml']
     }

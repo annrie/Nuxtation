@@ -234,7 +234,7 @@ export default defineNuxtConfig({
     Disallow: '/',
   },
    nitro: {
-    preset: 'node-server',
+    preset: 'vercel',
     prerender: {
       routes: ['/sitemap.xml']
     }

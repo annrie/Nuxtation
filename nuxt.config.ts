@@ -5,8 +5,8 @@ import { typeNavigationGuard } from 'vue-router';
 const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
 const ogTitle = 'annrie\'s Nuxtation';
 const twitterDescription = 'Nuxt, contentで構築したブログサイト';
-const twitterCard = 'https://nuxtation.phantomoon.com/twitter-card.png';
-const mySite = 'https://nuxtation.phantomoon.com';
+const twitterCard = 'https://nuxtation.vercel.app/twitter-card.png';
+const mySite = 'https://nuxtation.vercel.app/';
 const siteName = 'Nuxtation';
 
 export default defineNuxtConfig({
@@ -197,7 +197,7 @@ export default defineNuxtConfig({
         '2xl': 1536
       },
       domains: [
-        'nuxtation.phantomoon.com'
+        'nuxtation.vercel.app'
       ],
       // alias: {
       //   unsplash: 'https://images.unsplash.com'

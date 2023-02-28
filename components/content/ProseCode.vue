@@ -74,25 +74,22 @@ const languageColor = computed(() =>
 
 <template>
   <div class="container">
-    <span v-if="filename"
-      class="filename-text">
-      {{ filename }}
-    </span>
-    <span v-if="languageText"
-      :style="{ backgroundColor: languageBackground, color: languageColor }"
-      class="language-text">
-      {{ languageText }}
-    </span>
-    <slot />
-    <div class="bottom-container">
-      <div class="copy-container">
-        <span class="copied-text"
-          v-if="copied">Copied code!</span>
-        <button @click="copy(code)"
-          bg-transparent
-          text-right>
-          <CopyToClipboard text-2xl
-            text-blue-400 />
+      <span v-if="filename" class="filename-text">
+        {{ filename }}
+      </span>
+      <span
+        v-if="languageText"
+        :style="{ backgroundColor: languageBackground, color: languageColor }"
+        class="language-text"
+      >
+        {{ languageText }}
+      </span>
+      <slot />
+      <div class="bottom-container">
+        <div class="copy-container">
+          <span class="copied-text" v-if="copied">Copied code!</span>
+          <button @click="copy(code)" bg-transparent text-right>
+            <CopyToClipboard text-2xl text-blue-400 />
         </button>
       </div>
     </div>
@@ -101,7 +98,7 @@ const languageColor = computed(() =>
 
 <style scoped lang="postcss">
 .container {
-  @apply rounded-lg bg-hex-1f2937 mt-0 mb-0 w-full pt-0 relative dark: bg-hex-1b1917;
+  @apply rounded-lg bg-hex-1f2937 mt-0 mb-0 w-full pt-0 relative dark: bg-hex-1b1917 ;
 }
 
 .filename-text {
@@ -134,7 +131,7 @@ const languageColor = computed(() =>
   display: flex;
 
   button {
-    @apply bottom-0 relative sm: -right-2.5rem tb:-right-4.5rem lg:-right-7rem;
+    @apply bottom-0 relative sm: -right-2.5rem tb:-right-4.5rem lg:-right-7rem ;
   }
 }
 
@@ -185,4 +182,5 @@ const languageColor = computed(() =>
   padding-right: 1em;
   padding-left: 0.75em;
   border-left: 0.25em solid red;
-}</style>
+}
+</style>

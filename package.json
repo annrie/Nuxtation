@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -18,7 +18,7 @@
     "release:patch": "standard-version --release-as patch",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
-		"vercel": "vercel --prod"
+    "vercel": "vercel --prod"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.34.1",

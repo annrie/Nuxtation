@@ -5,7 +5,7 @@ import { typeNavigationGuard } from 'vue-router';
 const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
 const ogTitle = 'annrie\'s Nuxtation';
 const twitterDescription = 'Nuxt, contentで構築したブログサイト';
-const twitterCard = 'https://nuxtation.vercel.app/twitter-card.gif';
+const twitterCard = 'https://nuxtation.vercel.app/twitter-card.png';
 const mySite = 'https://nuxtation.vercel.app/';
 const siteName = 'Nuxtation';
 

@@ -63,7 +63,7 @@ console.log({ articleTags });
     >
       <NuxtLink
         :to="`/${section}/tags/${tag}`"
-        class="rounded-md bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-0.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5 font-header"
+          class="rounded-md font-header bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-0.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
       >
         {{ replaceHyphen(tag) }}
       </NuxtLink>

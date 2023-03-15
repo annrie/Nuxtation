@@ -29,7 +29,9 @@ useHead({
     <!-- <NuxtLayout> -->
     <header class="<md:mt-5 <md:p-5 <md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold <md: text-3xl tb:text-5xl ">All articles with "{{ slug }}"</h1>
+        <h1 class="font-extrabold <md: text-3xl tb:text-5xl">
+          All articles with "{{ slug }}"
+        </h1>
         <p class="font-medium text-lg">Here's a list of all my great articles</p>
       </div>
     </header>
@@ -65,9 +67,9 @@ useHead({
                 :alt="article.title"
                 fit="fill"
                 format="jpeg"
-                class="rounded h-auto w-auto transition-all duration-400 <sm:(scale-150 block text-center) tb:scale-100 hover:scale-100 "
+                class="rounded h-auto w-auto transition-all duration-400 <sm:(scale-150 block text-center) tb:scale-100 hover:scale-100"
               />
-              <header class="pl-0.8rem <md:(text-center mt-4) tb:text-left ">
+              <header class="pl-0.8rem <md:(text-center mt-4) tb:text-left">
                 <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
                 <p>{{ article.description }}</p>
                 <ul class="tags-list">
@@ -94,12 +96,12 @@ useHead({
 
 <style scope lang="scss">
 .tags-list {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md:(text-md justify-center) ;
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md:(text-base justify-center);
 
   .tags {
-    @apply text-sm p-0 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5 ;
+    @apply text-sm p-0 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;
     a {
-      @apply py-1 px-0 transition-all  whitespace-nowrap hover:(bg-blue-500 underline) ;
+      @apply py-1 px-0 transition-all  whitespace-nowrap hover:(bg-blue-500 underline);
     }
   }
   .router-link-exact-active {

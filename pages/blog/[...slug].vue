@@ -102,11 +102,11 @@ useHead({
 }
 
 .article-header .heading {
-  @apply font-extrabold <md: text-3xl tb:text-5xl;
+  @apply font-extrabold <md: text-3xl tb:text-5xl ;
 }
 
 .article-header .supporting {
-  @apply font-medium text-lg sm: mt-4 tb:my-8;
+  @apply font-medium text-lg sm: mt-4 tb:my-8 ;
 }
 
 .article-section {
@@ -114,15 +114,15 @@ useHead({
 }
 
 .article-tags {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase <md: text-md;
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase <md: text-base ;
 
   .tag {
-    @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
+    @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5 ;
   }
 }
 
 .aside {
-  @apply w-full col-span-full pt-14 lg: order-2 lg:col-span-2;
+  @apply w-full col-span-full pt-14 lg: order-2 lg:col-span-2 ;
 }
 
 .aside .toc {
@@ -130,6 +130,6 @@ useHead({
 }
 
 .article {
-  @apply mx-auto w-full col-span-full p-4 md: col-start-1 lg:order-1 lg:col-span-6;
+  @apply mx-auto w-full col-span-full p-4 md: col-start-1 lg:order-1 lg:col-span-6 ;
 }
 </style>

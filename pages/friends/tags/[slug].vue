@@ -16,10 +16,6 @@ const section: Sections = "friends";
 
 definePageMeta({
   key: (route) => route.fullPath,
-  // pageTransition: {
-  //   name: "fade",
-  //   mode: "in-out",
-  // },
 });
 
 // set meta for page
@@ -33,19 +29,22 @@ useHead({
     <!-- <NuxtLayout> -->
     <header class="<md:mt-5 <md:p-5 <md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold <md: text-3xl tb:text-5xl"> All articles with "{{ slug }}" </h1>
-        <p class="font-medium text-lg">Here's a list of all friends great articles</p>
-      </div>
-    </header>
-    <section class="mx-auto max-w-3xl p-4 py-0">
-      <Tags :section="section" />
-      <!-- Render list of all articles in ./content/friends using `path` -->
-      <!-- Provide only defined fieldsin the `:query` prop -->
-      <NuxtLink to="/friends">
-        <p class="ml-1 text-2xl underline">Back to All Articles</p>
-      </NuxtLink>
-      <ContentList path="/friends"
-        :query="{
+          <h1 class="font-extrabold <md: text-3xl tb:text-5xl">
+            All articles with "{{ slug }}"
+          </h1>
+          <p class="font-medium text-lg">Here's a list of all friends great articles</p>
+        </div>
+      </header>
+      <section class="mx-auto max-w-3xl p-4 py-0">
+        <Tags :section="section" />
+        <!-- Render list of all articles in ./content/friends using `path` -->
+        <!-- Provide only defined fieldsin the `:query` prop -->
+        <NuxtLink to="/friends">
+          <p class="ml-1 text-2xl underline">Back to All Articles</p>
+        </NuxtLink>
+        <ContentList
+          path="/friends"
+          :query="{
             only: ['title', 'description', 'tags', '_path', 'img'],
             where: {
               tags: {
@@ -53,34 +52,36 @@ useHead({
               },
             },
             $sensitivity: 'base',
-          }">
-        <!-- Default list slot -->
-        <template v-slot="{ list }">
-          <ul class="mx-auto max-w-800px">
-            <li v-for="article in list"
-              :key="article._path"
-              class="border-t border-slate-200 mt-5rem grid pt-6 items-center <sm:grid-cols-1 tb:grid-cols-[1fr,2fr] first-of-type:border-none">
-              <!-- <NuxtLink :to="article._path"> -->
-              <!-- <div class="wrapper"> -->
-              <NuxtImg :src="article.img"
-                :alt="article.title"
-                fit="fill"
-                format="jpg"
-                class="rounded h-auto w-auto transition-all duration-400 <sm:(scale-150 block text-center) tb:scale-100 hover:scale-100" />
-              <header class="pl-0.8rem <md:(text-center mt-4) tb:text-left">
-                <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
-                <p>{{ article.description }}</p>
-                <ul class="tags-list">
-                  <li class="tags"
-                    v-for="(tag, n) in article.tags"
-                    :key="n">
-                    <NuxtLink :to="`/friends/tags/${tag}`">
-                      {{ replaceHyphen(tag) }}
-                    </NuxtLink>
-                  </li>
-                </ul>
-                <NuxtLink :to="article._path"
-                  class="linkButton">Read More</NuxtLink>
+          }"
+        >
+          <!-- Default list slot -->
+          <template v-slot="{ list }">
+            <ul class="mx-auto max-w-800px">
+              <li
+                v-for="article in list"
+                :key="article._path"
+                class="border-t border-slate-200 mt-5rem grid pt-6 items-center <sm:grid-cols-1 tb:grid-cols-[1fr,2fr] first-of-type:border-none"
+              >
+                <!-- <NuxtLink :to="article._path"> -->
+                <!-- <div class="wrapper"> -->
+                <NuxtImg
+                  :src="article.img"
+                  :alt="article.title"
+                  fit="fill"
+                  format="jpg"
+                  class="rounded h-auto w-auto transition-all duration-400 <sm:(scale-150 block text-center) tb:scale-100 hover:scale-100"
+                />
+                <header class="pl-0.8rem <md:(text-center mt-4) tb:text-left">
+                  <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
+                  <p>{{ article.description }}</p>
+                  <ul class="tags-list">
+                    <li class="tags" v-for="(tag, n) in article.tags" :key="n">
+                      <NuxtLink :to="`/friends/tags/${tag}`">
+                        {{ replaceHyphen(tag) }}
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                  <NuxtLink :to="article._path" class="linkButton">Read More</NuxtLink>
               </header>
               <!-- </div> -->
               <!-- </NuxtLink> -->
@@ -107,7 +108,7 @@ useHead({
 }
 
 .tags-list {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-ful gap-2 uppercase <md: (text-md justify-center);
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md: (text-base justify-center);
 
   .tags {
     @apply text-sm p-2 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;

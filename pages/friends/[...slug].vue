@@ -52,60 +52,63 @@ useHead({
     <NuxtLayout name="blog">
       <div class="article-main">
         <header class="article-header">
-          <NuxtImg :src="data.article.img"
-            :alt="data.article.title"
-            preset="blog"
-            class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px" />
-          <h1 class="heading">{{ data.article.title }}</h1>
-          <p class="supporting">{{ data.article.description }}</p>
-          <ul class="article-tags">
-            <li class="tag"
-              v-for="(tag, n) in data.article.tags"
-              :key="n">
-              {{ replaceHyphen(tag) }}
-            </li>
-          </ul>
-        </header>
-        <hr class="dark:bg-light-300" />
-        <section class="article-section">
-          <aside class="aside">
-            <!-- Toc Component -->
-            <Toc :links="data.article.body.toc.links" />
-          </aside>
-          <article class="article prose dark:prose-invert">
-            <!-- render document coming from query -->
-            <ContentRenderer :value="data.article">
-              <!-- render rich text from document -->
-              <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
-              <ContentRendererMarkdown :value="data.article" />
-              <!-- display if document content is empty -->
-              <template #empty>
-                <p>No content found.</p>
-              </template>
-            </ContentRenderer>
-            <hr />
-          </article>
-        </section>
-        <footer>
-          <div v-if="data.article.author !== null"
-            class="container mx-auto my-8 grid gap-x-4 <md:grid-cols-1 tb:grid-cols-2">
-            <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
-            <p class="grid grid-cols-1">
-              <NuxtImg :src="data.article.author.photo"
-                :alt="data.article.title"
-                preset="blog"
-                class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)" />
-            </p>
-            <div class="mt-4 grid grid-cols-1 row-span-6">
-              <p>{{ data.article.author.name }}</p>
-              <p class="mt-8">{{ data.article.author.bio }}</p>
+            <NuxtImg
+              :src="data.article.img"
+              :alt="data.article.title"
+              preset="blog"
+              class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
+            />
+            <h1 class="heading">{{ data.article.title }}</h1>
+            <p class="supporting">{{ data.article.description }}</p>
+            <ul class="article-tags">
+              <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
+                {{ replaceHyphen(tag) }}
+              </li>
+            </ul>
+          </header>
+          <hr class="dark:bg-light-300" />
+          <section class="article-section">
+            <aside class="aside">
+              <!-- Toc Component -->
+              <Toc :links="data.article.body.toc.links" />
+            </aside>
+            <article class="article prose dark:prose-invert">
+              <!-- render document coming from query -->
+              <ContentRenderer :value="data.article">
+                <!-- render rich text from document -->
+                <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
+                <ContentRendererMarkdown :value="data.article" />
+                <!-- display if document content is empty -->
+                <template #empty>
+                  <p>No content found.</p>
+                </template>
+              </ContentRenderer>
+              <hr />
+            </article>
+          </section>
+          <footer>
+            <div
+              v-if="data.article.author !== null"
+              class="container mx-auto my-8 grid gap-x-4 <md:grid-cols-1 tb:grid-cols-2"
+            >
+              <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
+              <p class="grid grid-cols-1">
+                <NuxtImg
+                  :src="data.article.author.photo"
+                  :alt="data.article.title"
+                  preset="blog"
+                  class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
+                />
+              </p>
+              <div class="mt-4 grid grid-cols-1 row-span-6">
+                <p>{{ data.article.author.name }}</p>
+                <p class="mt-8">{{ data.article.author.bio }}</p>
+              </div>
+              <!-- </NuxtLink> -->
             </div>
-            <!-- </NuxtLink> -->
-          </div>
-        </footer>
-        <!-- PrevNext Component -->
-        <PrevNext :prev="prev"
-          :next="next" />
+          </footer>
+          <!-- PrevNext Component -->
+          <PrevNext :prev="prev" :next="next" />
       </div>
     </NuxtLayout>
   </div>
@@ -139,13 +142,12 @@ useHead({
     @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
   }
 }
-
 .aside {
   @apply w-full col-span-full pt-14 lg: order-2 lg:col-span-2;
-}
 
-.aside .toc {
-  @apply top-24 z-5 sticky;
+  .toc {
+    @apply top-24 z-2 sticky;
+  }
 }
 
 .article {

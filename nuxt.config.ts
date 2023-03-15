@@ -14,9 +14,9 @@ export default defineNuxtConfig({
   typescript: {
     shim:false
   },
-  devServer: {
-    host:'0',
-  },
+  // devServer: {
+  //   host:'0',
+  // },
   // serverMiddleware: {
   //   '/_ipx': '@/server/middleware/ipx.js'
   // },

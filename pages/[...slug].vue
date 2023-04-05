@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const router = useRouter();
-setResponseStatus(404);
+  setResponseStatus(404);
 </script>
 
 <template>

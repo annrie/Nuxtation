@@ -1,5 +1,9 @@
+import { ContentDoc } from './.nuxt/components.d';
 import type { ParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
 export type Sections = 'blog' | 'friends' | 'genre'
+
+// let config = useRuntimeConfig()
+// let content = config.pulblic.content
 
 export interface BlogPost extends MarkdownParsedContent {
   title: string,

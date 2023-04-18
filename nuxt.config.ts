@@ -17,6 +17,12 @@ export default defineNuxtConfig({
     shim:false
   },
 
+  // runtimeConfig: {
+  //   public: {
+  //     content: process.env.content,
+  //   },
+  // },
+
   // devServer: {
   //   host:'0',
   // },

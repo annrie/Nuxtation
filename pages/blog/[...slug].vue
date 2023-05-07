@@ -92,10 +92,10 @@ useHead({
   </div>
 </template>
 
-<style scoped lang="scss">
-.article-main {
-  // @apply m-auto max-w-5xl p-4;
-}
+<style scoped lang="postcss">
+// .article-main {
+//   // @apply m-auto max-w-5xl p-4;
+// }
 
 .article-header {
   @apply text-center p-4 pb-12;
@@ -130,6 +130,6 @@ useHead({
 }
 
 .article {
-  @apply mx-auto w-full col-span-full p-4 md: col-start-1 lg:order-1 lg:col-span-6 ;
+  @apply mx-auto w-full col-span-full p-4 md:col-start-1 lg:order-1 lg:col-span-6 ;
 }
 </style>

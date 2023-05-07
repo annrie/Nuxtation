@@ -1,5 +1,5 @@
 import {defineNuxtConfig} from 'nuxt/config'
-import { typeNavigationGuard } from 'vue-router';
+import { NavigationGuard } from 'vue-router';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
@@ -10,10 +10,13 @@ const mySite = 'https://nuxtation.vercel.app/';
 const siteName = 'Nuxtation';
 
 export default defineNuxtConfig({
-  ssr: process.env.NODE_ENV !== "development", // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
+  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
+  ssr: process.env.NODE_ENV !== "development",
+
   typescript: {
     shim:false
   },
+
   // devServer: {
   //   host:'0',
   // },
@@ -71,15 +74,19 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'fade-layout', mode: 'in-out' },
   },
+
   pwa: {
     workbox: {
       enabled: true,
     }
   },
+
   components: {
     global: true,
     dirs: ['~/components'],
+    Sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml'
   },
+
   // plugins: ('~/plugins/youtube.client.ts'),
   modules: [
     '@vueuse/nuxt',
@@ -93,14 +100,16 @@ export default defineNuxtConfig({
     '@kevinmarrec/nuxt-pwa',
     'nuxt-pwa-public-manifest',
     '@nuxtjs/robots',
+    '@nuxt/devtools'
   ],
-  extends: '@nuxt-themes/typography',
+  // },
+
   content: {
     // documentDriven: true,
     watch: {
       ws: {
         port: 4000,
-        showUrl: true
+        showURL: true
       }
     },
     markdown: {
@@ -157,6 +166,7 @@ export default defineNuxtConfig({
     // },
     }
   },
+
   unocss: {
     uno: true,
     icons: true,
@@ -164,13 +174,17 @@ export default defineNuxtConfig({
     shortcuts: [],
     rules: [],
   },
+
   windicss: {
     analyze: true
   },
+
   experimental: {
-    emitRouteChunkError: 'reload',
+    restoreState: true,
     payloadExtraction: false,
+    viewTransition: true,
   },
+
   css: [
     '@unocss/reset/tailwind.css',
     // '~/assets/styles/scss/global.scss',
@@ -186,80 +200,111 @@ export default defineNuxtConfig({
 		'@/assets/styles/contact.css',
     '@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
   ],
-    image: {
-      screen: {
-        sm: 320,
-        md: 640,
-        tb: 768,
-        lg: 1024,
-        xl: 1280,
-        xxl: 1536,
-        '2xl': 1536
-      },
-      domains: [
-        'nuxtation.vercel.app'
-      ],
-      // alias: {
-      //   unsplash: 'https://images.unsplash.com'
-      // },
-      // cloudinary: {
-      //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
-      // },
 
-      // imgix: {
-      //   baseURL: 'https://images.unsplash.com/',
-      // },
-      presets: {
-        blog: {
-          modifiers: {
-            format: 'jpg',
-            fit: 'cover',
-            quality: '80',
-          },
+  image: {
+    screen: {
+      sm: 320,
+      md: 640,
+      tb: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      '2xl': 1536
+    },
+    domains: [
+      'nuxtation.vercel.app'
+    ],
+    // alias: {
+    //   unsplash: 'https://images.unsplash.com'
+    // },
+    // cloudinary: {
+    //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
+    // },
+
+    // imgix: {
+    //   baseURL: 'https://images.unsplash.com/',
+    // },
+    presets: {
+      blog: {
+        modifiers: {
+          format: 'jpg',
+          fit: 'cover',
+          quality: '80',
         },
       },
     },
+  },
 
   colorMode: {
     classSuffix: '',
     preference: 'system',
     // fallback: 'light',
   },
+
   sourcemap: {
     "server": true,
     "client": false,
   },
+
   robots: {
     UserAgent: '*',
-    Disallow: '/',
+    Disallow: '',
+    Allow: '/'
   },
-   nitro: {
-    // preset: 'vercel',
+
+  nitro: {
+     storage: {
+      data: { driver: 'vercelKV'}
+    },
     prerender: {
-      routes: ['/sitemap.xml']
-    }
+      routes: ['/sitemap.xml'],
+      crawlLinks: true
+    },
   },
+  routeRules: {
+    // all routes will be background revalidated (ISR) at most every 60 seconds
+    '/**': { isr: 60 },
+    // this page will be generated on demand and cached permanently
+    // '/static': { isr: true }
+  },
+
+    // compressPublicAssets: {
+    //   brotli: true
+    // },
+   // preset: 'vercel',
+
+
   build: {
     transpile: ['lite-youtube'],
   },
-   vite: {
-    css: {
-      preprocessorOptions: {
-        charset: false,
-        scss: {
-          additionalData: `@import "@/assets/styles/scss/global.scss";`,
-        },
+
+  vite: {
+   css: {
+     preprocessorOptions: {
+       charset: false,
+       scss: {
+         additionalData: `@import "@/assets/styles/scss/global.scss";`,
+       },
+     },
+   },
+   server: {
+     watch: {
+       usePolling: true,
+     }
+   },
+ },
+
+  vue: {
+      compilerOptions: {
+        isCustomElement: tag => ['lite-youtube'].includes(tag),
       },
     },
-    server: {
-      watch: {
-        usePolling: true,
-      }
-    },
-  },
-    vue: {
-        compilerOptions: {
-          isCustomElement: tag => ['lite-youtube'].includes(tag),
-        },
-      },
-})
+
+    devtools: {
+      // Enable devtools (default: true)
+      enabled: true,
+      // VS Code Server options
+      // vscode: {},
+      // ...other options
+    }
+  })

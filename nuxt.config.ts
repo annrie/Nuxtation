@@ -1,5 +1,5 @@
 import {defineNuxtConfig} from 'nuxt/config'
-import { typeNavigationGuard } from 'vue-router';
+import { NavigationGuard } from 'vue-router';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
@@ -17,12 +17,6 @@ export default defineNuxtConfig({
     shim:false
   },
 
-  // runtimeConfig: {
-  //   public: {
-  //     content: process.env.content,
-  //   },
-  // },
-
   // devServer: {
   //   host:'0',
   // },
@@ -35,7 +29,6 @@ export default defineNuxtConfig({
   //     apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
   //   }
   // },
-  // devtools: true,
   app: {
     head: {
       // charset: 'utf-8',
@@ -91,6 +84,7 @@ export default defineNuxtConfig({
   components: {
     global: true,
     dirs: ['~/components'],
+    Sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml'
   },
 
   // plugins: ('~/plugins/youtube.client.ts'),
@@ -108,15 +102,14 @@ export default defineNuxtConfig({
     '@nuxtjs/robots',
     '@nuxt/devtools'
   ],
-
-  extends: '@nuxt-themes/typography',
+  // },
 
   content: {
     // documentDriven: true,
     watch: {
       ws: {
         port: 4000,
-        showUrl: true
+        showURL: true
       }
     },
     markdown: {
@@ -187,7 +180,7 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    emitRouteChunkError: 'reload',
+    restoreState: true,
     payloadExtraction: false,
     viewTransition: true,
   },
@@ -255,15 +248,31 @@ export default defineNuxtConfig({
 
   robots: {
     UserAgent: '*',
-    Disallow: '/',
+    Disallow: '',
+    Allow: '/'
   },
 
   nitro: {
+     storage: {
+      data: { driver: 'vercelKV'}
+    },
+    prerender: {
+      routes: ['/sitemap.xml'],
+      crawlLinks: true
+    },
+  },
+  routeRules: {
+    // all routes will be background revalidated (ISR) at most every 60 seconds
+    '/**': { isr: 60 },
+    // this page will be generated on demand and cached permanently
+    // '/static': { isr: true }
+  },
+
+    // compressPublicAssets: {
+    //   brotli: true
+    // },
    // preset: 'vercel',
-   prerender: {
-     routes: ['/sitemap.xml']
-   }
- },
+
 
   build: {
     transpile: ['lite-youtube'],
@@ -285,7 +294,6 @@ export default defineNuxtConfig({
    },
  },
 
-  // devtools: false,
   vue: {
       compilerOptions: {
         isCustomElement: tag => ['lite-youtube'].includes(tag),
@@ -296,7 +304,7 @@ export default defineNuxtConfig({
       // Enable devtools (default: true)
       enabled: true,
       // VS Code Server options
-      vscode: {},
+      // vscode: {},
       // ...other options
     }
   })

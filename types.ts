@@ -1,3 +1,4 @@
+import { ContentDoc } from './.nuxt/components.d';
 import type { ParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
 export type Sections = 'blog' | 'friends' | 'genre'
 

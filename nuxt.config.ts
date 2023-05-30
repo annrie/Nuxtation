@@ -84,7 +84,7 @@ export default defineNuxtConfig({
   components: {
     global: true,
     dirs: ['~/components'],
-    Sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml'
+    Sitemap: 'https://nuxtation.vercel.app/sitemap.xml'
   },
 
   // plugins: ('~/plugins/youtube.client.ts'),

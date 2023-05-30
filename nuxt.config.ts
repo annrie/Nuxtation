@@ -94,7 +94,7 @@ export default defineNuxtConfig({
     'nuxt-windicss',
     '@nuxt/content',
     '@nuxt/image-edge',
-	  '@pinia/nuxt',
+      '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'unplugin-icons/nuxt',
     '@kevinmarrec/nuxt-pwa',
@@ -191,13 +191,13 @@ export default defineNuxtConfig({
     // windi preflight
     'virtual:windi-base.css',
     // your stylesheets which overrides the preflight
-	  // '~/assets/styles/less/main.less',
+      // '~/assets/styles/less/main.less',
     '@/assets/styles/scss/main.scss',
 
     // windi extras
     'virtual:windi-components.css',
     'virtual:windi-utilities.css',
-		'@/assets/styles/contact.css',
+        '@/assets/styles/contact.css',
     '@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
   ],
 

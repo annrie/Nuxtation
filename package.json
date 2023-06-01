@@ -27,8 +27,8 @@
     "@iconify/json": "^2.2.49",
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@nuxt/content": "^2.6.0",
-    "@nuxt/devtools": "npm:@nuxt/devtools-edge@0.5.5-28083344.e6cdbf3",
-    "@nuxt/image-edge": "1.0.0-28089462.3520a62",
+    "@nuxt/devtools": "npm:@nuxt/devtools-edge@latest",
+    "@nuxt/image-edge": "1.0.0-28050764.aaee7ac",
     "@nuxtjs/color-mode": "^3.2.0",
     "@pinia/nuxt": "^0.4.8",
     "@playwright/test": "^1.33.0",
@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@nuxtjs/robots": "^3.0.0",
-    "@vercel/kv": "^0.2.1",
+    "@vercel/kv": "latest",
     "ipx": "^1.1.0"
   }
 }

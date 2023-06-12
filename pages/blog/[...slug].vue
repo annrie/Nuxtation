@@ -23,13 +23,15 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 // };
 
 // destrucure `prev` and `next` value from data
+if(data.value !== null) {
 const [prev, next] = data.value.surround;
 console.log({ data, prev, next });
-
+}
 definePageMeta({
   layout: false,
 });
 
+if(data.value !== null) {
 // set the meta
 useHead({
   title: data.value.article.title,
@@ -45,13 +47,42 @@ useHead({
     },
   ],
 });
+}
 </script>
 <template>
   <div>
     <NuxtLayout name="blog">
       <div class="article-main">
+                        <!-- Breadcrumbs -->
+                        <div class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8">
+                          <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
+                                <meta itemprop="position" content="1" />
+                            </li>
+                            <li class="separator">/</li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <NuxtLink
+                                    itemscope
+                                    itemtype="https://schema.org/WebPage"
+                                    itemprop="item"
+                                    itemid="/blog/"
+                                    to="/blog/"
+                                >
+                                    <span itemprop="name">Blog</span></NuxtLink
+                                >
+                                <meta itemprop="position" content="2" />
+                            </li>
+                            <li class="separator">/</li>
+                            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                                <span itemprop="name">{{ data.article.title }}</span>
+                                <meta itemprop="position" content="3" />
+                            </li>
+                        </ol>
+                        </div>
+
         <header class="article-header">
-          <NuxtImg :src="data.article.img"
+          <nuxt-img :src="data.article.img"
             :alt="data.article.title"
             preset="blog"
             class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px" />
@@ -92,7 +123,7 @@ useHead({
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped lang="scss">
 // .article-main {
 //   // @apply m-auto max-w-5xl p-4;
 // }

@@ -93,7 +93,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     'nuxt-windicss',
     '@nuxt/content',
-    '@nuxt/image-edge',
+    '@nuxt/image',
       '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'unplugin-icons/nuxt',

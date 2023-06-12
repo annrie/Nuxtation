@@ -13,7 +13,7 @@ defineProps<{
       >
         <picture
           ><NuxtLink :to="item._path" :aria-label="item.title">
-              <NuxtImg
+              <nuxt-img
           :src="item.img"
           :alt="item.title"
           width="600"

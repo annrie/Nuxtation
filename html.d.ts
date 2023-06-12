@@ -4,6 +4,9 @@ declare module '@vue/runtime-dom' {
   interface HTMLAttributes {
     [key: string]: any
   }
+  interface SVGAttributes {
+    [key: string]: any
+  }
 }
 declare module '@vue/runtime-core' {
   interface AllowedComponentProps {

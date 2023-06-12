@@ -64,7 +64,7 @@ useHead({
               >
                 <!-- <NuxtLink :to="article._path"> -->
                 <!-- <div class="wrapper"> -->
-                <NuxtImg
+                <nuxt-img
                   :src="article.img"
                   :alt="article.title"
                   fit="fill"

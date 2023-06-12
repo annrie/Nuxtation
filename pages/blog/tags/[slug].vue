@@ -62,7 +62,7 @@ useHead({
               :key="article._path"
               class="border-t border-slate-200 mt-5rem grid pt-6 items-center <sm:grid-cols-1 tb:grid-cols-[1fr,2fr] first-of-type:border-none"
             >
-              <NuxtImg
+              <nuxt-img
                 :src="article.img"
                 :alt="article.title"
                 fit="fill"

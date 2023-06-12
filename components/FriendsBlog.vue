@@ -53,6 +53,19 @@ useHead({
 </script>
 <template>
   <div class="article-list">
+    <div class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8">
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
+                    <meta itemprop="position" content="1" />
+                </li>
+                <span>/</span>
+                <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">Friends Blog</span>
+                    <meta itemprop="position" content="2" />
+                </li>
+            </ol>
+        </div>
     <header class="p-12 sm:mt-15 <md:prose-md tb:mt-30 tb:prose-lg">
       <div class="mx-auto text-center w-full">
         <h1 class="font-extrabold text-5xl dark:text-light-500"> All Friends Posts({{ allBlogs.length }}) </h1>
@@ -88,7 +101,7 @@ useHead({
               :key="article._path"
               class="mt-3rem grid pt-0 blogCard items-center <md:grid-cols-1 tb:grid-cols-[1.5fr,1fr]">
               <div class="h-300px">
-                <NuxtImg :src="article.img"
+                <nuxt-img :src="article.img"
                   :alt="article.title"
                   format="jpg"
                   loading="lazy"

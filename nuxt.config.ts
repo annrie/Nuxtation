@@ -91,10 +91,11 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
-    'nuxt-windicss',
+    'nuxt-icon',
+    // 'nuxt-windicss',
     '@nuxt/content',
     '@nuxt/image',
-      '@pinia/nuxt',
+    '@pinia/nuxt',
     '@nuxtjs/color-mode',
     'unplugin-icons/nuxt',
     '@kevinmarrec/nuxt-pwa',
@@ -171,37 +172,40 @@ export default defineNuxtConfig({
     uno: true,
     icons: true,
     attributify: true,
-    shortcuts: [],
+    components: false,
+    shortcuts: ['btn', 'w-full px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
     rules: [],
   },
 
-  windicss: {
-    analyze: true
-  },
+  // windicss: {
+  //   analyze: true
+  // },
 
   experimental: {
     restoreState: true,
     payloadExtraction: false,
     viewTransition: true,
+    inlineSSRStyles: true
   },
 
   css: [
     '@unocss/reset/tailwind.css',
     // '~/assets/styles/scss/global.scss',
     // windi preflight
-    'virtual:windi-base.css',
+    // 'virtual:windi-base.css',
     // your stylesheets which overrides the preflight
       // '~/assets/styles/less/main.less',
     '@/assets/styles/scss/main.scss',
 
     // windi extras
-    'virtual:windi-components.css',
-    'virtual:windi-utilities.css',
-        '@/assets/styles/contact.css',
+    // 'virtual:windi-components.css',
+    // 'virtual:windi-utilities.css',
+    //     '@/assets/styles/contact.css',
     '@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
   ],
 
   image: {
+    inject: true,
     screen: {
       sm: 320,
       md: 640,

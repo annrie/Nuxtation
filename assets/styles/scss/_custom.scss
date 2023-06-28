@@ -1,16 +1,16 @@
 .flex-center-x {
-  @apply flex flex-wrap justify-center;
+ --at-apply: flex flex-wrap justify-center;
 }
 
 .flex-center-y {
-  @apply
+  --at-apply:
     flex
     flex-wrap
     items-center;
 }
 
 .flex-center-xy {
-  @apply
+  --at-apply:
     flex
     flex-wrap
     items-center
@@ -19,24 +19,24 @@
 /* Blog Breadcrumbs */
 
 .blog-breadcrumb {
-  @apply inline-block text-center font-light;
+  --at-apply: inline-block text-center font-light;
 }
 
 .blog-breadcrumb > span {
-  @apply mx-1 inline;
+  --at-apply: mx-1 inline;
 }
 
 .blog-breadcrumb > li {
-  @apply inline;
+  --at-apply: inline;
 }
 
 .blog-breadcrumb > li a {
-  @apply text-blue-300;
+  --at-apply: text-blue-300;
 }
 
 .blog-breadcrumb > li a:hover {
-  @apply underline;
+  --at-apply: underline;
 }
 .separator {
-  @apply mx-1;
+  --at-apply: mx-1;
 }

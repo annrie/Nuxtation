@@ -96,7 +96,7 @@ useHead({
 
 <style scope lang="scss">
 .tags-list {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md:(text-base justify-center);
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 
   .tags {
     @apply text-sm p-0 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;

@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
-import CopyToClipboard from "~icons/pajamas/copy-to-clipboard";
 const { copy, copied, text } = useClipboard();
 
 const props = withDefaults(
@@ -89,7 +88,7 @@ const languageColor = computed(() =>
         <div class="copy-container">
           <span class="copied-text" v-if="copied">Copied code!</span>
           <button @click="copy(code)" bg-transparent text-right>
-            <CopyToClipboard text-2xl text-blue-400 />
+            <Icon name="uil:copy-landscape" text-2xl text-blue-400 />
         </button>
       </div>
     </div>
@@ -174,7 +173,6 @@ const languageColor = computed(() =>
 }
 
 :slotted(pre code .highlight) {
-  // background-color: #b7c4cf;
   background-color: #363b46;
   display: block;
   margin-right: -1em;

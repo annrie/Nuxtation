@@ -102,7 +102,7 @@ useHead({
               :key="article._path"
               class="mt-3rem grid pt-0 blogCard items-center lt-md:grid-cols-1 at-tb:grid-cols-[1.5fr,1fr]"
             >
-              <div class="h-300px">
+              <div>
                 <nuxt-picture
                   :src="article.img"
                   :alt="article.title"
@@ -111,7 +111,7 @@ useHead({
                   fit="cover"
                   :imgAttrs="{
                     class:
-                      'rounded max-h-300px w-100vw transition-all duration-400 lt-sm:(mt-0 block text-center) hover:scale-100',
+                      'rounded w-full transition-all duration-400 at-sm:(mt-0 block text-center h-full) md:max-h-[450px]',
                   }"
                 />
               </div>

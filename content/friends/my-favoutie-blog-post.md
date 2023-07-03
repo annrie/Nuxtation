@@ -2,12 +2,12 @@
 title: 'My favorite Blog Post'
 description: 'This is a description for a blog post'
 publishedAt: '2022-12-30'
-img: 'img/bike.jpg'
+img: 'bike.jpg'
 alt: 'my fifth blog post'
 author:
   name: Peter
   bio: 'All about Peter and what he does and where he works'
-  photo: 'img/friends/peter.jpeg'
+  photo: 'friends/peter.jpeg'
 tags: [web development]
 ---
 ## Hello i'm a very interesting article

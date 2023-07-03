@@ -6,7 +6,7 @@
     "sourceMap": false,
     "lib":["ESNext", "DOM"],
     "types":[
-      "nuxt-windicss"
+      "@unocss/nuxt"
     ]
   }
 }

@@ -2,12 +2,12 @@
 title: 'Some Interesting title'
 description: 'Learning how to use @nuxt/content to create a blog again'
 publishedAt: '2022-12-30'
-img: 'img/sample.jpg'
+img: 'sample.jpg'
 alt: 'nice image'
 author:
   name: Choi
   bio: 'All about Choi and where he works and what he does'
-  photo: 'img/friends/choi.jpeg'
+  photo: 'friends/choi.jpeg'
 tags: [web development]
 ---
 ## Welcome to another blog post using content module

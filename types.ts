@@ -54,7 +54,7 @@ export type FriendsPostPreview = Omit<FriendsPost, 'body'>;
 
 export interface PrevNext {
   title?: string,
-  _path?: string
+  _path?: string,
 }
 
 export interface Navigation {

@@ -23,101 +23,157 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 // };
 
 // destrucure `prev` and `next` value from data
-const [prev, next] = data.value.surround;
-console.log({ data, prev, next });
+if (data.value !== null) {
+  const [prev, next] = data.value.surround;
+  console.log({ data, prev, next });
+}
 
 definePageMeta({
   layout: false,
 });
 
-// set the meta
-useHead({
-  title: data.value.article.title,
-  meta: [
-    { name: "description", content: data.value.article.description },
-    {
-      hid: "og:image",
-      property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
-    },
-    {
-      property: "og:title",
-      content: data.value.article.title,
-    },
-  ],
-});
+if (data.value !== null) {
+  // set the meta
+  useHead({
+    title: data.value.article.title,
+    meta: [
+      { name: "description", content: data.value.article.description },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
+      },
+      {
+        property: "og:title",
+        content: data.value.article.title,
+      },
+    ],
+  });
+}
 </script>
 <template>
   <div>
     <NuxtLayout name="blog">
       <div class="article-main">
-        <header class="article-header">
-            <NuxtImg
-              :src="data.article.img"
-              :alt="data.article.title"
-              preset="blog"
-              class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
-            />
-            <h1 class="heading">{{ data.article.title }}</h1>
-            <p class="supporting">{{ data.article.description }}</p>
-            <ul class="article-tags">
-              <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
-                {{ replaceHyphen(tag) }}
-              </li>
-            </ul>
-          </header>
-          <hr class="dark:bg-light-300" />
-          <section class="article-section">
-            <aside class="aside">
-              <!-- Toc Component -->
-              <Toc :links="data.article.body.toc.links" />
-            </aside>
-            <article class="article prose dark:prose-invert">
-              <!-- render document coming from query -->
-              <ContentRenderer :value="data.article">
-                <!-- render rich text from document -->
-                <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
-                <ContentRendererMarkdown :value="data.article" />
-                <!-- display if document content is empty -->
-                <template #empty>
-                  <p>No content found.</p>
-                </template>
-              </ContentRenderer>
-              <hr />
-            </article>
-          </section>
-          <footer>
-            <div
-              v-if="data.article.author !== null"
-              class="container mx-auto my-8 grid gap-x-4 <md:grid-cols-1 tb:grid-cols-2"
+        <!-- Breadcrumbs -->
+        <div
+          class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+        >
+          <ol
+            itemscope
+            itemtype="https://schema.org/BreadcrumbList"
+            class="blog-breadcrumb"
+          >
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
             >
-              <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
-              <p class="grid grid-cols-1">
-                <NuxtImg
-                  :src="data.article.author.photo"
-                  :alt="data.article.title"
-                  preset="blog"
-                  class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
-                />
-              </p>
-              <div class="mt-4 grid grid-cols-1 row-span-6">
-                <p>{{ data.article.author.name }}</p>
-                <p class="mt-8">{{ data.article.author.bio }}</p>
-              </div>
-              <!-- </NuxtLink> -->
+              <NuxtLink itemprop="item" to="/">
+                <span itemprop="name">Home</span></NuxtLink
+              >
+              <meta itemprop="position" content="1" />
+            </li>
+            <li class="separator">/</li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <NuxtLink
+                itemscope
+                itemtype="https://schema.org/WebPage"
+                itemprop="item"
+                itemid="/frinds/"
+                to="/friends/"
+              >
+                <span itemprop="name">Friends Blog</span></NuxtLink
+              >
+              <meta itemprop="position" content="2" />
+            </li>
+            <li class="separator">/</li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <span itemprop="name">{{ data.article.title }}</span>
+              <meta itemprop="position" content="3" />
+            </li>
+          </ol>
+        </div>
+        <header class="article-header">
+          <nuxt-picture
+            provider="imgix"
+            :src="data.article.img"
+            :alt="data.article.title"
+            format="avif,webp"
+            preset="blog"
+            class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
+          />
+          <h1 class="heading">{{ data.article.title }}</h1>
+          <p class="supporting">{{ data.article.description }}</p>
+          <ul class="article-tags">
+            <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
+              {{ replaceHyphen(tag) }}
+            </li>
+          </ul>
+        </header>
+        <hr class="dark:bg-light-300" />
+        <section class="article-section">
+          <aside class="aside">
+            <!-- Toc Component -->
+            <Toc :links="data.article.body.toc.links" />
+          </aside>
+          <article class="article prose dark:prose-invert">
+            <!-- render document coming from query -->
+            <ContentRenderer :value="data.article">
+              <!-- render rich text from document -->
+              <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
+              <ContentRendererMarkdown :value="data.article" />
+              <!-- display if document content is empty -->
+              <template #empty>
+                <p>No content found.</p>
+              </template>
+            </ContentRenderer>
+            <hr />
+          </article>
+        </section>
+        <footer>
+          <div
+            v-if="data.article.author !== null"
+            class="container mx-auto my-8 grid gap-x-4 <md:grid-cols-1 tb:grid-cols-2"
+          >
+            <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
+            <p class="grid grid-cols-1">
+              <nuxt-picture
+                provider="imgix"
+                :src="data.article.author.photo"
+                :alt="data.article.title"
+                preset="blog"
+                format="avif,webp"
+                fit="cover"
+                class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
+              />
+            </p>
+            <div class="mt-4 grid grid-cols-1 row-span-6">
+              <p>{{ data.article.author.name }}</p>
+              <p class="mt-8">{{ data.article.author.bio }}</p>
             </div>
-          </footer>
-          <!-- PrevNext Component -->
-          <PrevNext :prev="prev" :next="next" />
+            <!-- </NuxtLink> -->
+          </div>
+        </footer>
+        <!-- PrevNext Component -->
+        <PrevNext :prev="prev" :next="next" />
       </div>
     </NuxtLayout>
   </div>
 </template>
 
-<style lang="scss">
-.article-main {
-  // @apply m-auto max-w-5xl p-4;
-}
+<style lang="scss" scoped>
+// .article-main {
+//   // @apply m-auto max-w-5xl p-4;
+// }
 
 .article-header {
   @apply text-center p-4 pb-12;
@@ -128,7 +184,7 @@ useHead({
 }
 
 .article-header .supporting {
-  @apply font-medium text-lg sm: mt-4 tb:my-8;
+  @apply font-medium text-lg sm:mt-4 tb:my-8;
 }
 
 .article-section {
@@ -143,8 +199,7 @@ useHead({
   }
 }
 .aside {
-  @apply w-full col-span-full pt-14 lg: order-2 lg:col-span-2;
-
+  @apply w-full col-span-full pt-14 lg:(order-2 col-span-2);
   .toc {
     @apply top-24 z-2 sticky;
   }

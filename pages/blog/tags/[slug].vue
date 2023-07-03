@@ -27,9 +27,9 @@ useHead({
 <template>
   <div>
     <!-- <NuxtLayout> -->
-    <header class="<md:mt-5 <md:p-5 <md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
+    <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold <md: text-3xl tb:text-5xl">
+        <h1 class="font-extrabold lt-md: text-3xl tb:text-5xl">
           All articles with "{{ slug }}"
         </h1>
         <p class="font-medium text-lg">Here's a list of all my great articles</p>
@@ -60,16 +60,17 @@ useHead({
             <li
               v-for="article in list"
               :key="article._path"
-              class="border-t border-slate-200 mt-5rem grid pt-6 items-center <sm:grid-cols-1 tb:grid-cols-[1fr,2fr] first-of-type:border-none"
+              class="container border-t border-slate-200 mt-5rem grid pt-6 items-center lt-sm:grid-cols-1 md:grid-cols-[1fr_2fr] first-of-type:border-none"
             >
-              <NuxtImg
+              <nuxt-picture
+                provider="imgix"
                 :src="article.img"
                 :alt="article.title"
-                fit="fill"
-                format="jpeg"
-                class="rounded h-auto w-auto transition-all duration-400 <sm:(scale-150 block text-center) tb:scale-100 hover:scale-100"
+                fit="cover"
+                format="avif,webp"
+                class="rounded transition-all duration-400 hover:scale-100"
               />
-              <header class="pl-0.8rem <md:(text-center mt-4) tb:text-left">
+              <header class="pl-0.8rem lt-md:(text-center mt-4) tb:text-left">
                 <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
                 <p>{{ article.description }}</p>
                 <ul class="tags-list">
@@ -94,9 +95,9 @@ useHead({
   </div>
 </template>
 
-<style scope lang="scss">
+<style scope lang="postcss">
 .tags-list {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md:(text-base justify-center);
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 
   .tags {
     @apply text-sm p-0 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;
@@ -104,8 +105,9 @@ useHead({
       @apply py-1 px-0 transition-all  whitespace-nowrap hover:(bg-blue-500 underline);
     }
   }
+  .router-link-active,
   .router-link-exact-active {
-    @apply bg-blue-500;
+    @apply text-white bg-blue-500 px-1;
   }
 }
 </style>

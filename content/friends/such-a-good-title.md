@@ -2,12 +2,12 @@
 title: 'Such a good title'
 description: 'This is the description for and article about Lorem Ipsum'
 publishedAt: '2022-12-30'
-img: 'img/cloudinary-group.jpg'
+img: 'cloudinary-group.jpg'
 alt: 'Article 6'
 author:
   name: Choi
   bio: 'All about Choi and where he works and what he does'
-  photo: 'img/friends/choi.jpeg'
+  photo: 'friends/choi.jpeg'
 tags: [web development]
 ---
 ## This article is all about Lorem Ipsum

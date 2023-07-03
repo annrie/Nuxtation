@@ -2,12 +2,12 @@
 title: 'My Third Blog Post'
 description: 'Learning how to use @nuxt/content to create a blog'
 publishedAt: '2022-12-30'
-img: 'img/cld-sample.jpg'
+img: 'cld-sample.jpg'
 alt: 'my third blog post'
 author:
   name: Alexandra
   bio: 'All about Alexandra and where she works and what she does'
-  photo: 'img/friends/alexandra.jpeg'
+  photo: 'friends/alexandra.jpeg'
 tags: [ javascript, web development ]
 ---
 ## Welcome to my third blog post using content module

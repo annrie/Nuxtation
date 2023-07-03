@@ -2,12 +2,12 @@
 title: 'Into the unknown'
 description: 'This is a description for this article which describes what it is about'
 publishedAt: '2022-12-30'
-img:  'img/cld-sample-3.jpg'
+img:  'cld-sample-3.jpg'
 alt: "Hello i'm article 9"
 author:
   name: Peter
   bio: 'All about Peter and what he does and where he works'
-  photo: 'img/friends/peter.jpeg'
+  photo: 'friends/peter.jpeg'
 tags: [web development]
 ---
 ## Hello this article explores the unknown

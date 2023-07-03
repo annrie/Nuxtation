@@ -26,7 +26,7 @@ defineProps<{
   </ul>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .prev-next-cont {
   @apply border rounded-lg flex border-slate-200 p-4 gap-4 justify-between;
 }

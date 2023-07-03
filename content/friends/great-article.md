@@ -2,12 +2,12 @@
 title: 'Great Article'
 description: 'I am a description of a great article'
 publishedAt: '2022-12-30'
-img: 'img/imagecon-group.jpg'
+img: 'imagecon-group.jpg'
 alt: 'article 7'
 author:
  name: Maria
  bio: 'All about Maria and where she works and what she does'
- photo: 'img/friends/maria.jpeg'
+ photo: 'friends/maria.jpeg'
 tags: [web development]
 ---
 ## Hello this article is great

@@ -2,12 +2,12 @@
 title: 'My First Blog Post'
 description: 'Learning how to use @nuxt/content to create a blog'
 publishedAt: '2022-12-30'
-img: 'img/kitchen-bar.jpg'
+img: 'kitchen-bar.jpg'
 alt: 'my first blog post'
 author:
   name: Peter
   bio: 'All about Peter and what he does and where he works'
-  photo: 'img/friends/peter.jpeg'
+  photo: 'friends/peter.jpeg'
 tags: [ nuxtjs, javascript ]
 ---
 

@@ -2,12 +2,12 @@
 title:  'What we know'
 description:  'This is the description for the article about all the things we know'
 publishedAt: '2022-12-30'
-img:  'img/smiling-man.jpg'
+img:  'smiling-man.jpg'
 alt:  'Article 10'
 author:
   name:  Choi
   bio:  'All about Choi and where he works and what he does'
-  photo:  'img/friends/choi.jpeg'
+  photo:  'friends/choi.jpeg'
 tags: [ nuxtjs, web development ]
 ---
 ## what do you know and what do we not know

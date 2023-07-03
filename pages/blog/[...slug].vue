@@ -23,44 +23,97 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 // };
 
 // destrucure `prev` and `next` value from data
-const [prev, next] = data.value.surround;
-console.log({ data, prev, next });
-
+if (data.value !== null) {
+  const [prev, next] = data.value.surround;
+  console.log({ data, prev, next });
+}
 definePageMeta({
   layout: false,
 });
 
-// set the meta
-useHead({
-  title: data.value.article.title,
-  meta: [
-    { name: "description", content: data.value.article.description },
-    {
-      property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
-    },
-    {
-      property: "og:title",
-      content: data.value.article.title,
-    },
-  ],
-});
+if (data.value !== null) {
+  // set the meta
+  useHead({
+    title: data.value.article.title,
+    meta: [
+      { name: "description", content: data.value.article.description },
+      {
+        property: "og:image",
+        content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
+      },
+      {
+        property: "og:title",
+        content: data.value.article.title,
+      },
+    ],
+  });
+}
 </script>
 <template>
   <div>
     <NuxtLayout name="blog">
       <div class="article-main">
+        <!-- Breadcrumbs -->
+        <div
+          class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+        >
+          <ol
+            itemscope
+            itemtype="https://schema.org/BreadcrumbList"
+            class="blog-breadcrumb"
+          >
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <NuxtLink itemprop="item" to="/">
+                <span itemprop="name">Home</span></NuxtLink
+              >
+              <meta itemprop="position" content="1" />
+            </li>
+            <li class="separator">/</li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <NuxtLink
+                itemscope
+                itemtype="https://schema.org/WebPage"
+                itemprop="item"
+                itemid="/blog/"
+                to="/blog/"
+              >
+                <span itemprop="name">Blog</span></NuxtLink
+              >
+              <meta itemprop="position" content="2" />
+            </li>
+            <li class="separator">/</li>
+            <li
+              itemprop="itemListElement"
+              itemscope
+              itemtype="https://schema.org/ListItem"
+            >
+              <span itemprop="name">{{ data.article.title }}</span>
+              <meta itemprop="position" content="3" />
+            </li>
+          </ol>
+        </div>
+
         <header class="article-header">
-          <NuxtImg :src="data.article.img"
+          <nuxt-picture
+            provider="imgix"
+            :src="data.article.img"
             :alt="data.article.title"
+            format="avif,webp"
             preset="blog"
-            class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px" />
+            class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
+          />
           <h1 class="heading">{{ data.article.title }}</h1>
           <p class="supporting">{{ data.article.description }}</p>
           <ul class="article-tags">
-            <li class="tag"
-              v-for="(tag, n) in data.article.tags"
-              :key="n">
+            <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
               {{ replaceHyphen(tag) }}
             </li>
           </ul>
@@ -85,51 +138,49 @@ useHead({
           </article>
         </section>
         <!-- PrevNext Component -->
-        <PrevNext :prev="prev"
-          :next="next" />
+        <PrevNext :prev="prev" :next="next" />
       </div>
     </NuxtLayout>
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped lang="scss">
 // .article-main {
-//   // @apply m-auto max-w-5xl p-4;
+// @apply m-auto max-w-5xl p-4;
 // }
 
 .article-header {
-  @apply text-center p-4 pb-12;
+  --at-apply: text-center p-4 pb-12;
 }
 
 .article-header .heading {
-  @apply font-extrabold <md: text-3xl tb:text-5xl ;
+  --at-apply: font-extrabold lt-md: text-3xl tb:text-5xl;
 }
 
 .article-header .supporting {
-  @apply font-medium text-lg sm: mt-4 tb:my-8 ;
+  --at-apply: font-medium text-lg sm: mt-4 tb:my-8;
 }
 
 .article-section {
-  @apply m-auto max-w-5xl grid p-4 grid-cols-8;
+  --at-apply: m-auto max-w-5xl grid p-4 grid-cols-8;
 }
 
 .article-tags {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase <md: text-base ;
+  --uno: border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase <md: text-base;
 
   .tag {
-    @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5 ;
+    --at-apply: rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
   }
 }
 
 .aside {
-  @apply w-full col-span-full pt-14 lg: order-2 lg:col-span-2 ;
-}
-
-.aside .toc {
-  @apply top-24 z-2 sticky;
+  --at-apply: w-full col-span-full pt-14 lg: order-2 lg:col-span-2;
+  &.toc {
+    --uno: top-24 z-2 sticky;
+  }
 }
 
 .article {
-  @apply mx-auto w-full col-span-full p-4 md:col-start-1 lg:order-1 lg:col-span-6 ;
+  --at-apply: mx-auto w-full col-span-full p-4 md:col-start-1 lg:order-1 lg:col-span-6;
 }
 </style>

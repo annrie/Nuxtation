@@ -12,15 +12,19 @@ defineProps<{
     >
       <div class="h-full object-cover w-full">
         <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
-            <nuxt-img
+            <nuxt-picture
+                  provider="imgix"
           :src="item.img"
           :alt="item.title"
           width="300"
           height="300"
           fit="cover"
-          format="jpg"
+          format="avif,webp"
           loading="lazy"
-          class="rounded transition-all scale-90 duration-400 hover:scale-100"
+          :imgAttrs="{
+                    class:
+                      'rounded transition-all scale-90 duration-400 hover:scale-100',
+                  }"
         />
       </NuxtLink>
     </div>

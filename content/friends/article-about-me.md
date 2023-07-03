@@ -2,12 +2,12 @@
 title: 'Article about me'
 description: 'This is a description for the article about me'
 publishedAt: '2022-12-30'
-img: 'img/cld-sample-4.jpg'
+img: 'cld-sample-4.jpg'
 alt: 'nice image'
 author:
   name: Peter
   bio: 'All about Peter and what he does and where he works'
-  photo: 'img/friends/peter.jpeg'
+  photo: 'friends/peter.jpeg'
 tags: [web development]
 ---
 ## There is just so much to write about me. Where do I start?

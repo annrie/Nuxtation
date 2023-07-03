@@ -111,10 +111,11 @@ useHead({
               class="mt-3rem grid pt-0 blogCard items-center <md:grid-cols-1 tb:grid-cols-[1.5fr,1fr]"
             >
               <div>
-                <nuxt-img
+                <nuxt-picture
+                  provider="imgix"
                   :src="article.img"
                   :alt="article.title"
-                  format="jpg"
+                  format="avif,webp"
                   loading="lazy"
                   fit="cover"
                   class="rounded w-full transition-all duration-400 at-sm:(mt-0 block text-center h-full) md:max-h-[450px]"

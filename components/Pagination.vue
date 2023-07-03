@@ -26,14 +26,13 @@ function getPath(p: number) {
         :class="[page === current ? 'current' : 'link']"
         :to="getPath(page)">
         {{ page }} -->
-    <NuxtLink v-for="page in numPages"
-      :to="getPath(page)">
+    <NuxtLink v-for="page in numPages" :to="getPath(page)">
       {{ page }}
     </NuxtLink>
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .pagination {
   @apply font-body font-light mx-0 mt-4rem text-base text-center mb-0 w-full;
 }

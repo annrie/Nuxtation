@@ -104,6 +104,7 @@ useHead({
             >
               <div>
                 <nuxt-picture
+                  provider="imgix"
                   :src="article.img"
                   :alt="article.title"
                   format="avif,webp"

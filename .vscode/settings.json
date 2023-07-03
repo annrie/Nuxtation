@@ -263,6 +263,6 @@
   "nuxtr.vueFiles.style.addStyleTag": true,
   "nuxtr.vueFiles.style.alwaysScoped": true,
   "nuxtr.vueFiles.style.defaultLanguage": "scss",
-		"workbench.colorTheme": "Vitesse Light",
+		"workbench.colorTheme": "Vitesse Dark",
 		"vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }

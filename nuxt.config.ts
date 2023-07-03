@@ -215,6 +215,9 @@ export default defineNuxtConfig({
       xxl: 1536,
       '2xl': 1536
     },
+    imgix: {
+      baseURL: 'https://phantomoon.imgix.net/'
+    },
     domains: [
       'nuxtation.vercel.app'
     ],

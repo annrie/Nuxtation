@@ -11,18 +11,21 @@ defineProps<{
   <article
         class="container bg-white mx-auto my-5 p-5 blogCard sm:items-center lg:(-mx-6 flex items-left) dark:bg-gray-900 "
       >
-        <picture
-          ><NuxtLink :to="item._path" :aria-label="item.title">
-              <nuxt-img
+        <NuxtLink :to="item._path" :aria-label="item.title">
+              <nuxt-picture
+                  provider="imgix"
           :src="item.img"
           :alt="item.title"
           width="600"
           height="300"
           fit="cover"
-          format="jpg"
-          class="rounded transition-all duration-400 @tb:mx-auto lg:(scale-90 hover:scale-100) "
-        /> </NuxtLink
-    ></picture>
+                  format="avif,webp"
+           :imgAttrs="{
+                    class:
+         'rounded transition-all duration-400 at-tb:mx-auto lg:(scale-90 hover:scale-100)'
+                  }"
+       /> </NuxtLink
+    >
 
     <div class="mt-6 lg:(mx-6 mt-0 w-1/2 text-left) ">
       <TagsList

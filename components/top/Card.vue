@@ -21,6 +21,7 @@ defineProps<{
           fit="cover"
           format="avif,webp"
           loading="lazy"
+          :modifiers="{ auto: 'format,enhance', crop: 'entropy',q:60 }"
           :imgAttrs="{
                     class:
                       'rounded transition-all scale-90 duration-400 hover:scale-100',

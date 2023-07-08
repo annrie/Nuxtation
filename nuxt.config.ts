@@ -43,9 +43,7 @@ export default defineNuxtConfig({
         { property: "og:url", content: mySite },
         { property: "og:title", content: siteName },
         { property: "og:description", content: description },
-        { property: "og:image",
-           content: twitterCard,
-        },
+        { property: "og:image",  content: twitterCard },
         { name: "twitter:site", content: '@muraie_jin' },
         { name: "twitter:card", content: "summary_large_image" },
         {
@@ -101,7 +99,8 @@ export default defineNuxtConfig({
     '@kevinmarrec/nuxt-pwa',
     'nuxt-pwa-public-manifest',
     '@nuxtjs/robots',
-    '@nuxt/devtools'
+    '@nuxt/devtools',
+    'nuxt-og-image'
   ],
   // },
 
@@ -234,7 +233,7 @@ export default defineNuxtConfig({
     presets: {
       blog: {
         modifiers: {
-          format: 'jpg',
+          format: 'avif,webp,',
           fit: 'cover',
           quality: '80',
         },

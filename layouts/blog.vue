@@ -6,7 +6,7 @@ useHead({
   link: [
     {
       rel: "canonical",
-      href: "https://nuxtation.phantomoon.com",
+      href: "https://nuxtation.phantomoon.com/",
     },
   ],
 });

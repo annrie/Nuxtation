@@ -28,6 +28,8 @@ const { data: friendsPost } = await useAsyncData("friends-home", () =>
     .limit(3)
     .find()
 );
+
+
 useHead({
   title: "Home",
   // bodyAttrs: {
@@ -37,7 +39,7 @@ useHead({
 </script>
 <template>
   <div>
-    <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
+     <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
     <TopAppSubtitle id="featured-posts">注目記事</TopAppSubtitle>
     <TopFeaturedSection
       v-if="featuredPost !== null"

@@ -20,10 +20,12 @@ function getClass(page: number, current: number) {
 
 <template>
   <div class="pagination">
-    <NuxtLink v-for="page in numPages"
+    <NuxtLink
+      v-for="page in numPages"
       :key="page"
       :class="[page == current ? 'current' : 'link']"
-      :to="getPath(page)">
+      :to="getPath(page)"
+    >
       {{ page }}
       <!-- <NuxtLink v-for="page in numPages"
             :key="page"
@@ -34,7 +36,7 @@ function getClass(page: number, current: number) {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
 .pagination {
   @apply font-body font-light mx-0 mt-4rem text-base text-center mb-0 w-full;
 }

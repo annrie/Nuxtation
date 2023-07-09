@@ -215,22 +215,19 @@ export default defineNuxtConfig({
       '2xl': 1536
     },
     imgix: {
-      baseURL: 'https://phantomoon.imgix.net/'
+      baseURL: 'https://nuxtation.imgix.net/'
     },
     domains: [
       'nuxtation.vercel.app'
     ],
-    // alias: {
-    //   unsplash: 'https://images.unsplash.com'
-    // },
+//     alias: {
+//       imgix: 'https://nuxtation.imgix.net/'
+//     },
     // cloudinary: {
     //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
     // },
 
-    // imgix: {
-    //   baseURL: 'https://images.unsplash.com/',
-    // },
-    presets: {
+       presets: {
       blog: {
         modifiers: {
           format: 'avif,webp,',

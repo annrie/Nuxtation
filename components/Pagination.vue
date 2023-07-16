@@ -32,7 +32,7 @@ function getPath(p: number) {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .pagination {
   @apply font-body font-light mx-0 mt-4rem text-base text-center mb-0 w-full;
 }

@@ -99,7 +99,7 @@ useHead({
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped lang="scss">
 .article-header .supporting {
   @apply font-medium text-lg;
 }

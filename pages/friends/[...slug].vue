@@ -23,33 +23,29 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 // };
 
 // destrucure `prev` and `next` value from data
-if (data.value !== null) {
-  const [prev, next] = data.value.surround;
-  console.log({ data, prev, next });
-}
+const [prev, next] = data.value.surround;
+console.log({ data, prev, next });
 
 definePageMeta({
   layout: false,
 });
 
-if (data.value !== null) {
-  // set the meta
-  useHead({
-    title: data.value.article.title,
-    meta: [
-      { name: "description", content: data.value.article.description },
-      {
-        hid: "og:image",
-        property: "og:image",
-        content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
-      },
-      {
-        property: "og:title",
-        content: data.value.article.title,
-      },
-    ],
-  });
-}
+// set the meta
+useHead({
+  title: data.value.article.title,
+  meta: [
+    { name: "description", content: data.value.article.description },
+    {
+      hid: "og:image",
+      property: "og:image",
+      content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
+    },
+    {
+      property: "og:title",
+      content: data.value.article.title,
+    },
+  ],
+});
 </script>
 <template>
   <div>

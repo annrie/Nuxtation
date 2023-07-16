@@ -14,7 +14,7 @@ defineProps<Props>();
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .card-img {
   border-radius: 8px;
   width: 320px;

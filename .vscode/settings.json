@@ -277,6 +277,6 @@
  "nuxtr.defaultPackageManager": "pnpm",
  "nuxtr.vueFiles.pages.defaultTemplate": "default.page-template",
  "nuxtr.vueFiles.layouts.defaultTemplate": "default.layout-template",
-	"workbench.colorTheme": "Vitesse Light",
+	"workbench.colorTheme": "Vitesse Dark",
 	"vue3snippets.enable-compile-vue-file-on-did-save-code": true,
 }

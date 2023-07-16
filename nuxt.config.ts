@@ -17,6 +17,10 @@ export default defineNuxtConfig({
     shim:false
   },
 
+  vue: {
+    defineModel: true,
+    propsDestructure: true
+  },
   // devServer: {
   //   host:'0',
   // },

@@ -104,7 +104,6 @@ export default defineNuxtConfig({
     'nuxt-pwa-public-manifest',
     '@nuxtjs/robots',
     '@nuxt/devtools',
-    'nuxt-og-image'
   ],
   // },
 

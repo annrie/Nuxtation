@@ -95,7 +95,7 @@ useHead({
   </div>
 </template>
 
-<style scope lang="postcss">
+<style scope lang="scss">
 .tags-list {
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 

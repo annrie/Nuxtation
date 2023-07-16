@@ -63,7 +63,7 @@ console.log({ articleTags });
     >
       <NuxtLink
         :to="`/${section}/tags/${tag}`"
-          class="rounded-md font-header bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-0.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
+        class="rounded-md font-header bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-0.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
       >
         {{ replaceHyphen(tag) }}
       </NuxtLink>
@@ -71,7 +71,7 @@ console.log({ articleTags });
   </ul>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .router-link-exact-active {
   @apply bg-blue-500;
 }

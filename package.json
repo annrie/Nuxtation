@@ -55,7 +55,6 @@
     "lite-youtube-embed": "^0.2.0",
     "nuxt": "^3.6.3",
     "nuxt-icon": "^0.4.2",
-    "nuxt-og-image": "^2.0.10",
     "nuxt-pwa-public-manifest": "^1.0.0",
     "pinia": "^2.1.4",
     "sass": "^1.63.6",
@@ -70,5 +69,8 @@
     "@nuxtjs/robots": "^3.0.0",
     "@vercel/kv": "latest",
     "ipx": "^1.2.0"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }

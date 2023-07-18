@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import BackToTop from "@/components/footer/BackToTop.vue";
+// import BackToTop from "@/components/footer/BackToTop.vue";
 
 const thisYear = new Date().getFullYear();
 </script>
 
 <template>
   <div class="footer">
-    <BackToTop />
+    <!-- <BackToTop /> -->
     <footer class="AppFooter">
       Copyright &copy; 2020 - {{ thisYear }} nuxtation project. All Rights Reserved.
     </footer>
+    <!-- Scroll to top -->
+    <NavScrollTopIcon />
   </div>
 </template>
 

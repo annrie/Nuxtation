@@ -25,39 +25,70 @@ export default defineConfig({
       xl: '1280px',
       '2xl': '1536px',
     },
-//     colors: {
-//       'white': '#fefefe',
-//       'black': '#0a0a0a',
-//       'primary': '#1779ba',
-//       'secondary': '#767676',
-//       'success': '#3adb76',
-//       'warning': '#ffae00',
-//       'alert': '#cc4b37',
-//       'jis-red': '#ff4b00',
-//       'jis-orange': '"#f6aa00',
-//       'jis-yellow': '#f2e700',
-//       'jis-green': '#00b06b',
-//       'jis-blue': '#1971ff',
-//       'jis-magenta': '#990'
-//     },
-    // backgroundColor: (theme) => ({
-    //   ...theme('colors'),
-    //   'white': '#fefefe',
-    //   'black': '#0a0a0a',
-    //   'red': '#ff4b00', // rgb (255,75,0)
-    //   'orange': '#f6aa00', // rgb (246,170,0)
-    //   'yellow': '#f2e700', // rgb (242,231,0)
-    //   'green': '#00b06b', // rgb (0,176,107)
-    //   'blue': '#1971ff', //  rgb (25,113,255)
-    //   'magenta': '#990', // rgb (153,0,153)
-    //   'main': '#42b883',
-    //   'primary': '#1779ba',
-    //   'secondary': '#767676',
-    //   'success': '#3adb76',
-    //   'warning': '#ffae00',
-    //   'alert': '#cc4b37',
-    // }),
-  },
+    colors: {
+      'white': '#fefefe',
+      'black': '#0a0a0a',
+      'primary': '#1779ba',
+      'secondary': '#767676',
+      'success': '#3adb76',
+      'warning': '#ffae00',
+      'alert': '#cc4b37',
+      'jis-red': '#ff4b00',
+      'jis-orange': '"#f6aa00',
+      'jis-yellow': '#f2e700',
+      'jis-green': '#00b06b',
+      'jis-blue': '#1971ff',
+      'jis-magenta': '#990'
+    },
+        fontSize: {
+        'xxs': '0.5rem',
+        'xs': '0.75rem',
+        'sm': '0.875rem',
+        'base': '1rem',
+        'lg': '1.125rem',
+        'highlight': '5rem',
+        'h1': '4rem',
+        'h2': '3rem',
+        'h3': '2rem',
+        'h4': '1.5rem',
+        'h5': '1.25rem',
+        'highlight_sm': '3.5rem',
+        'h1_sm': '3rem',
+        'h2_sm': '2.25rem',
+        'h3_sm': '1.75rem',
+        'h4_sm': '1.5rem',
+        'h5_sm': '1.25rem'
+      },
+      lineHeight: {
+        'xxs': '0.75rem',
+        'xs': '1rem',
+        'sm': '1.25rem',
+        'base': '1.35rem',
+        'lg': '1.45rem',
+        'highlight': '5.5rem',
+        'h1': '4.25rem',
+        'h2': '3.25rem',
+        'h3': '2.25rem',
+        'h4': '1.75rem',
+        'h5': '1.5rem',
+        'highlight_sm': '3.75rem',
+        'h1_sm': '3.25rem',
+        'h2_sm': '2.5rem',
+        'h3_sm': '2rem',
+        'h4_sm': '1.75rem',
+        'h5_sm': '1.5rem',
+      },
+      padding: {
+        'section_x_sm': '1.5rem',
+        'section_x': '5rem',
+        'section_y_sm': '3rem',
+        'section_y': '5rem'
+      },
+      spacing: {
+        'nav': '120px',
+        'section_x': '5rem',
+      }
+     },
   shortcuts: [
     [
       'btn',

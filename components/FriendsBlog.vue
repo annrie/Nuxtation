@@ -61,7 +61,7 @@ useHead({
           <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
           <meta itemprop="position" content="1" />
         </li>
-        <span>/</span>
+        <span>&gt;</span>
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
           <span itemprop="name">Friends Blog</span>
           <meta itemprop="position" content="2" />
@@ -117,8 +117,15 @@ useHead({
                   :alt="article.title"
                   format="avif,webp"
                   loading="lazy"
-        :modifiers="{ auto: 'format,enhance', crop: 'entropy',q:'60' , w:'1200',h:'600',fit:'crop' }"
-                :imgAttrs="{
+                  :modifiers="{
+                    auto: 'format,enhance',
+                    crop: 'entropy',
+                    q: '60',
+                    w: '1200',
+                    h: '600',
+                    fit: 'crop',
+                  }"
+                  :imgAttrs="{
                     class:
                       'rounded transition-all duration-400 at-sm:(mt-0 block text-center h-full)',
                   }"

@@ -1,4 +1,4 @@
-<!--https://github.com/Mokkapps/nuxt-content-v2-custom-code-blocks/blob/master/components/content/ProseCode.vue-->
+// https://github.com/Mokkapps/nuxt-content-v2-custom-code-blocks/blob/master/components/content/ProseCode.vue
 
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
@@ -9,9 +9,9 @@ const props = withDefaults(
     code?: string;
     language?: string | null;
     filename?: string | null;
-    highlights?: Array<number> | [];
+    highlights?: Array<number>;
   }>(),
-  { code: "", language: null, filename: null, highlights: [] }
+  { code: '', language: null, filename: null, highlights: [] }
 );
 
 const languageMap: Record<
@@ -72,7 +72,7 @@ const languageColor = computed(() =>
 </script>
 
 <template>
-  <div class="container">
+  <div class="container group">
     <span v-if="filename" class="filename-text">
       {{ filename }}
     </span>
@@ -84,101 +84,76 @@ const languageColor = computed(() =>
       {{ languageText }}
     </span>
     <slot />
-    <div class="bottom-container">
+    <div class="bottom-container opacity-100 group-hover:md:opacity-100 md:opacity-0 transition-opacity duration-150">
       <div class="copy-container">
         <span class="copied-text" v-if="copied">Copied code!</span>
-        <button @click="copy(code)" bg-transparent text-right>
-          <Icon name="uil:copy-landscape" text-2xl text-blue-400 />
-        </button>
-      </div>
+                <button
+                    @click="copy(code)"
+                    class="p-1 text-background border rounded-md border-background hover:border-brand_primary hover:bg-brand_primary hover:text-background"
+                >
+                    <IconsCheck v-if="copied" class="w-5 h-5" width="20" height="20" />
+                    <IconsCopy v-else class="w-5 h-5" width="20" height="20" />
+                </button>
+         </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .container {
-  @apply rounded-lg bg-hex-1f2937 mt-0 mb-0 w-full pt-0 relative dark: bg-hex-1b1917;
+    @apply w-full my-6 rounded-md bg-black border border-jis-blue/50 pt-8 relative overflow-hidden;
 }
-
-.filename-text {
-  position: absolute;
-  top: 0;
-  left: 1rem;
-  padding: 0.25rem 0.5rem;
-  color: white;
-  font-size: 14px;
-  font-weight: bolder;
-}
-
-.language-text {
-  position: absolute;
-  top: 0;
-  right: 1rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 14px;
-  text-transform: uppercase;
-  border-bottom-right-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-.bottom-container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.copy-container {
-  display: flex;
-
-  button {
-    @apply bottom-0 relative sm: -right-2.5rem tb:-right-4.5rem lg:-right-7rem;
-  }
-}
-
-.copied-text {
-  margin-right: 1em;
-  font-size: 0.8rem;
-}
-
 :slotted(pre) {
-  margin-top: 0;
-  margin-bottom: 0;
-  display: flex;
-  flex: 1 1 0%;
-  overflow-x: auto;
-  padding: 1rem;
-  line-height: 1.625;
-  counter-reset: lines;
+    @apply flex overflow-x-auto px-4 pb-4 text-sm;
+    line-height: 1.625;
+    counter-reset: lines;
 }
-
+@screen md {
+    :slotted(pre) {
+        @apply text-base;
+    }
+}
+.container pre > code .line {
+    @apply break-words;
+}
+.bottom-container {
+    @apply absolute right-0 bottom-4 pr-2 pb-2;
+}
+@screen md {
+    .bottom-container {
+        @apply top-10;
+    }
+}
+.copy-container {
+    @apply flex;
+}
+.filename-text {
+    @apply absolute top-0 left-4 py-1 text-xs text-background/75;
+}
+@screen md {
+    .filename-text {
+        @apply text-sm;
+    }
+}
+.language-text {
+    @apply absolute right-0 top-0 bg-brand_primary text-background px-2 py-1 rounded-bl-md;
+}
 :slotted(pre code) {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
+    @apply w-full flex flex-col;
 }
-
 :slotted(pre code .line) {
-  display: inline-table;
-  min-height: 1rem;
+    @apply inline-table;
+    min-height: 1rem;
 }
-
 :slotted(pre code .line::before) {
-  counter-increment: lines;
-  content: counter(lines);
-  width: 1rem;
-  margin-right: 1.5rem;
-  display: inline-block;
-  text-align: left;
-  color: rgba(115, 138, 148, 0.4);
+    @apply w-4 mr-6 inline-block text-left;
+    counter-increment: lines;
+    content: counter(lines);
+    color: rgba(115, 138, 148, 0.4);
 }
-
 :slotted(pre code .highlight) {
-  background-color: #363b46;
-  display: block;
-  margin-right: -1em;
-  margin-left: -1em;
-  padding-right: 1em;
-  padding-left: 0.75em;
-  border-left: 0.25em solid red;
+    @apply block -mx-4 pr-4 pl-3 border-l-4 border-jin-blue;
+    content: '';
+    background-color: #363b46;
 }
 </style>

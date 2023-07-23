@@ -61,13 +61,13 @@ const languageMap: Record<
 };
 
 const languageText = computed(() =>
-  props.language ? languageMap[props.language]?.text : null
+  (props.language ? languageMap[props.language]?.text : null)
 );
 const languageBackground = computed(() =>
-  props.language ? languageMap[props.language]?.backgroundColor : null
+  (props.language ? languageMap[props.language]?.backgroundColor : null)
 );
 const languageColor = computed(() =>
-  props.language ? languageMap[props.language]?.color : null
+  (props.language ? languageMap[props.language]?.color : null)
 );
 </script>
 
@@ -89,7 +89,7 @@ const languageColor = computed(() =>
         <span class="copied-text" v-if="copied">Copied code!</span>
                 <button
                     @click="copy(code)"
-                    class="p-1 text-background border rounded-md border-background hover:border-brand_primary hover:bg-brand_primary hover:text-background"
+                    class="p-1 text-white border rounded-md border-white hover:border-jis-blue hover:bg-jis-blue hover:text-white"
                 >
                     <IconsCheck v-if="copied" class="w-5 h-5" width="20" height="20" />
                     <IconsCopy v-else class="w-5 h-5" width="20" height="20" />
@@ -104,7 +104,7 @@ const languageColor = computed(() =>
     @apply w-full my-6 rounded-md bg-black border border-jis-blue/50 pt-8 relative overflow-hidden;
 }
 :slotted(pre) {
-    @apply flex overflow-x-auto px-4 pb-4 text-sm;
+    @apply flex overflow-x-auto px-4 pb-4 text-sm text-white/75;
     line-height: 1.625;
     counter-reset: lines;
 }
@@ -127,8 +127,11 @@ const languageColor = computed(() =>
 .copy-container {
     @apply flex;
 }
+.copied-text {
+      @apply text-white;
+    }
 .filename-text {
-    @apply absolute top-0 left-4 py-1 text-xs text-background/75;
+    @apply absolute top-0 left-4 py-1 text-xs text-white/75;
 }
 @screen md {
     .filename-text {
@@ -136,7 +139,7 @@ const languageColor = computed(() =>
     }
 }
 .language-text {
-    @apply absolute right-0 top-0 bg-brand_primary text-background px-2 py-1 rounded-bl-md;
+    @apply absolute right-0 top-0 bg-black text-white px-2 py-1 rounded-bl-md;
 }
 :slotted(pre code) {
     @apply w-full flex flex-col;

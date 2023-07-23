@@ -68,7 +68,7 @@ const toggleToc = () => {
 }
 
 .toc-header {
-  @apply border-b border-slate-200 mb-2 pb-2 lt-lg:text-center;
+  @apply border-b border-slate-200 -mt-4 mb-2 pb-2 lt-lg:text-center;
 }
 
 .toc-links {

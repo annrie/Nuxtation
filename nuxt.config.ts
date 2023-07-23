@@ -117,7 +117,23 @@ export default defineNuxtConfig({
        showURL: true
      }
    },
-   markdown: {
+  highlight: {
+       // theme:'dark-plus',
+       theme: {
+        // Default theme (same as single string)
+        default: 'github-light',
+        // Theme used if `html.dark`
+        dark: 'github-dark',
+        // Theme used if `html.sepia`
+        sepia: 'monokai'
+      },
+       preload: [
+         'bash',
+         'javascript',
+         'vue'
+       ],
+},
+ markdown: {
      toc: {
        depth: 5,
        searchDepth: 5,
@@ -125,39 +141,24 @@ export default defineNuxtConfig({
      locales: ['ja', 'en'],
      defaultLocale: 'ja',
    // https://content.nuxtjs.org/api/configuration
-     highlight: {
-       // theme:'dark-plus',
-       theme: 'github-dark',
-       preload: [
-         'json',
-         'js',
-         'ts',
-         'css',
-         'shell',
-         'bash',
-         'html',
-         'md',
-         'yaml',
-         'javascript',
-         'vue'
-       ]
-     },
-     // Object syntax can be used to override default options
-     // remarkPlugins: {
-     //   // Override remark-emoji options
-     //   'remark-emoji': {
-     //     emoticon: true
-     //   },
-     //   // Disable remark-gfm
-     //   'remark-gfm': false,
-     //   // Add remark-oembed
-     //   'remark-oembed': {
-     //     // Options
-     //   }
-     // },
+      // Object syntax can be used to override default options
+      remarkPlugins: {
+        // Override remark-emoji options
+        'remark-emoji': {
+          emoticon: true
+        },
+
+        // Disable remark-gfm
+        'remark-gfm': false,
+
+        // Add remark-oembed
+        'remark-oembed': {
+          // Options
+        }
+      },
      // Array syntax can be used to add plugins
      rehypePlugins: [
-       // 'rehype-figure'
+        'rehype-figure'
        [
            'rehype-external-links',
            {
@@ -166,7 +167,6 @@ export default defineNuxtConfig({
            }
        ]
      ]
-   // },
    }
  },
 

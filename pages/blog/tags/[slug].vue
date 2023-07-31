@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import type { BlogPost, Sections } from "~/types";
 
+type Params = {
+  slug: string;
+};
+
 // get current route
+// useRoute()の戻り値をParams型にキャストする
 const {
   params: { slug },
-} = useRoute();
+} = useRoute() as { params: Params };
 
 const filtered = slug.split(",");
 console.log({ filtered });
@@ -46,11 +51,13 @@ useHead({
         path="/blog"
         :query="{
           only: ['title', 'description', 'tags', '_path', 'img'],
-          where: {
-            tags: {
-              $contains: filtered,
+          where: [
+            {
+              tags: {
+                $contains: filtered,
+              },
             },
-          },
+          ],
           $sensitivity: 'base',
         }"
       >

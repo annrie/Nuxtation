@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { appName } from "~/constants";
+
 useHead({
   htmlAttrs: {
     lang: "ja",
@@ -14,7 +16,8 @@ useHead({
 
 <template>
   <div>
-     <NuxtLoadingIndicator />
+    <NuxtLoadingIndicator />
+    <!-- <VitePwaManifest /> -->
     <TheTopBar />
     <main id="main" class="mx-auto mt-2 text-center mb-6 home md:px-4 lg:container">
       <slot />

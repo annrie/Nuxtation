@@ -148,10 +148,6 @@ useHead({
 </template>
 
 <style scoped lang="scss">
-// .article-main {
-//   @apply m-auto max-w-5xl p-4;
-// }
-
 .article-header {
   @apply: text-center p-4 pb-12;
 }
@@ -181,8 +177,13 @@ aside {
 }
 
 .aside {
-  @apply: sticky pt-10;
-  top: calc(theme("spacing.nav") + 0.25rem);
+  @apply: sticky pt-10 z-10;
+  @screen sm {
+    top: calc(theme("spacing.nav_sm") - 4.3rem);
+  }
+  @screen tb {
+    top: calc(theme("spacing.nav") - 3.25rem);
+  }
 }
 .article {
   @apply: mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);

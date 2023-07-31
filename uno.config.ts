@@ -86,6 +86,7 @@ export default defineConfig({
       },
       spacing: {
         'nav': '120px',
+        'nav_sm': '116px',
         'section_x': '5rem',
       }
      },
@@ -93,6 +94,10 @@ export default defineConfig({
     [
       'btn',
       'px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50',
+    ],
+   [
+      'btn-blue',
+      'block mx-auto px-4 py-1 rounded bg-jis-blue/50 text-white cursor-pointer hover:bg-success disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50',
     ],
     [
       'icon-btn',

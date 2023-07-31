@@ -1,13 +1,18 @@
 {
-  "Choi": {
+  "Author": {
     "@context": "http://www.schema.org",
+    "@id": "https://example.com/",
     "@type": "Person",
-    "@id": "Choi",
-    "name": "Choi",
-    "alternateName": "",
-    "nationality": "Nationality",
-    "gender": "Male",
+    "alternateName": "Sample Author",
+    "gender": "Gender",
+    "image": "https://example.com/meta-img.jpg",
     "jobTitle": "Job Title",
+    "name": "Sample Author",
+    "nationality": "Nationality",
+    "sameAs": [
+      "https://example.com/"
+    ],
+    "url": "https://example.com/",
     "worksFor": [
       {
         "@type": "Organization",
@@ -16,83 +21,5 @@
           "https://www.sample-organization.com/"
         ]
       }
-    ],
-    "url": "https://example.com/",
-    "image": "https://nuxtation.imgix.net/friends/choi.jpge",
-    "sameAs": [
-      "https://example.com/"
-    ]
-  },
-  "Alexandra": {
-    "@context": "http://www.schema.org",
-    "@type": "Person",
-    "@id": "Alexandra",
-    "name": "Alexandra",
-    "alternateName": "",
-    "nationality": "Nationality",
-    "gender": "Female",
-    "jobTitle": "Job Title",
-    "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "Sample Organization",
-        "sameAs": [
-          "https://www.sample-organization.com/"
-        ]
-      }
-    ],
-    "url": "https://example.com/",
-    "image": "https://nuxtation.imgix.net/friends/alexandra.jpge",
-    "sameAs": [
-      "https://example.com/"
-    ]
-  },
-  "Maria": {
-    "@context": "http://www.schema.org",
-    "@type": "Person",
-    "@id": "Maria",
-    "name": "Maria",
-    "alternateName": "",
-    "nationality": "Nationality",
-    "gender": "Female",
-    "jobTitle": "Job Title",
-    "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "Sample Organization",
-        "sameAs": [
-          "https://www.sample-organization.com/"
-        ]
-      }
-    ],
-    "url": "https://example.com/",
-    "image": "https://nuxtation.imgix.net/friends/maria.jpeg",
-    "sameAs": [
-      "https://example.com/"
-    ]
-  },
-  "Peter": {
-    "@context": "http://www.schema.org",
-    "@type": "Person",
-    "@id": "Peter",
-    "name": "Peter",
-    "alternateName": "",
-    "nationality": "Nationality",
-    "gender": "Female",
-    "jobTitle": "Job Title",
-    "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "Sample Organization",
-        "sameAs": [
-          "https://www.sample-organization.com/"
-        ]
-      }
-    ],
-    "url": "https://example.com/",
-    "image": "https://nuxtation.imgix.net/friends/peter.jpeg",
-    "sameAs": [
-      "https://example.com/"
     ]
   }
-}

@@ -2,15 +2,16 @@
 import type { FriendsPost } from "~/types";
 
 const { path } = useRoute();
-const { data } = await useAsyncData(`content-${path}`, async () => {
+const cleanPath = path.replace(/\/$/, "");
+const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // fetch document where the document path matches with the cuurent route
-  let article = queryContent<FriendsPost>().where({ _path: path }).findOne();
+  let article = queryContent<FriendsPost>().where({ _path: cleanPath }).findOne();
   // get the surround information,
   // which is an array of documeents that come before and after the current document
   let surround = queryContent<FriendsPost>()
     .only(["_path", "title", "description"])
     .sort({ publishedAt: 1 })
-    .findSurround(path);
+    .findSurround(cleanPath, { before: 1, after: 1 });
 
   return {
     article: await article,
@@ -18,9 +19,10 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
   };
 });
 
-// const components = {
-//   p: 'CustomParagraph'
-// };
+// Get the authors
+const { data: authorsData } = await useAsyncData("friends", () =>
+  queryContent("author/Maria").findOne()
+);
 
 // destrucure `prev` and `next` value from data
 const [prev, next] = data.value.surround;
@@ -142,9 +144,33 @@ useHead({
         </article>
       </section>
       <footer>
+        <!-- Author -->
+        <div class="flex flex-row items-center justify-center">
+          <p class="grid grid-cols-1">
+            <nuxt-picture
+              provider="imgix"
+              :src="data.article.author.image"
+              :alt="data.article.title"
+              preset="blog"
+              format="avif,webp"
+              fit="cover"
+              class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
+            />
+          </p>
+          <span class="blog-post-text text-lg leading-lg font-light"
+            >By
+            <a
+              class="hover:underline italic"
+              :href="data.article.authorUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ data.article.author }}</a
+            ></span
+          >
+        </div>
         <div
           v-if="data.article.author !== null"
-          class="container mx-auto my-8 grid gap-x-4 <md:grid-cols-1 tb:grid-cols-2"
+          class="container mx-auto my-8 grid gap-x-4 lt-md:grid-cols-1 tb:grid-cols-2"
         >
           <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
           <p class="grid grid-cols-1">
@@ -202,18 +228,23 @@ useHead({
 }
 
 aside {
-	@apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
+  @apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
 }
 
 .aside {
-  @apply: sticky pt-10;
-  top: calc(theme("spacing.nav") + 0.25rem);
- }
+  @apply: sticky pt-10 z-10;
+  @screen sm {
+    top: calc(theme("spacing.nav_sm") - 4.3rem);
+  }
+  @screen tb {
+    top: calc(theme("spacing.nav") - 3.25rem);
+  }
+}
 
 .separator {
   @apply mx-1;
 }
 .article {
-  @apply mx-auto w-full col-span-full p-4 md: col-start-1 lg:order-1 lg:col-span-6;
+  @apply mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
 }
 </style>

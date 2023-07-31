@@ -26,7 +26,7 @@
   "editor.stickyScroll.enabled": true,
   "editor.hover.sticky": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": false,
+    "source.fixAll": true,
     "source.fixAll.eslint": true, // this allows ESLint to auto fix on save
     "source.organizeImports": false
   },
@@ -183,6 +183,10 @@
   "iconify.annotations": true,
   "iconify.inplace": true,
   // "svg.preview.mode": "svg",
+  "volar.autoCompleteRefs": false,
+  "volar.completion.preferredTagNameCase": "pascal",
+  //"volar.autoImport": true,
+  "unocss.enableCodeFolding": false,
   "prettier.enable": false, // I only use Prettier for manually formatting
   "prettier.printWidth": 200,
   "prettier.semi": false,
@@ -257,12 +261,18 @@
   },
     "editor.inlayHints.enabled": "off",
     "editor.guides.indentation": false, // new API for indent guides. The old one is: "editor.renderIndentGuides": false,
+  "editor.guides.bracketPairs": false, // advanced indent guides (But only for brackets) (This does not turn off editor.bracketPairColorization)
     "editor.wordWrap": "on",
     "diffEditor.wordWrap": "off",
     "workbench.colorCustomizations": {
         "editor.lineHighlightBorder": "#9fced11f",
         "editor.lineHighlightBackground": "#1073cf2d"
     },
+  "workbench.colorTheme": "Vitesse Light",
+  "vue.features.codeActions.enable": false,
+  "scss.validate": false,
+	"css.validate": false,
+	"vue.codeActions.enabled": true,
   "nuxtr.vueFiles.firstTag": "template",
   "nuxtr.vueFiles.script.type": "setup",
   "nuxtr.vueFiles.style.addStyleTag": true,

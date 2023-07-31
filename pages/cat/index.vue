@@ -2,7 +2,7 @@
 import { CatResponse } from "~/types";
 
 const { pending, error, data, refresh } = useFetch<CatResponse[]>(
-  "https://api.thecatapi.com/v1/images/search?limit=9&order=rand"
+  "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"
 );
 
 definePageMeta({
@@ -18,17 +18,7 @@ useHead({
   <div>
     <NuxtLayout name="blog">
       <div
-        border-t-2
-        pt-8
-        border-typography_primary
-        flex
-        flex-col
-        md:flex-row
-        items-center
-        md:justify-between
-        md:text-right
-        mb-6
-        md:mb-8
+        class="border-t-2 pt-8 border-jis-blue flex flex-col md:(flex-row justify-between text-right mb-8) items-center mb-6"
       >
         <ol
           itemscope
@@ -47,11 +37,14 @@ useHead({
         </ol>
       </div>
       <div class="cat-wrapper">
-        <div class="container mx-auto w-full">
+        <div class="container">
           <h1 class="font-extrabold text-center mb-8 text-5xl dark:text-light-500">
             cats
           </h1>
-          <button @click="refresh" class="btn mb-4">Refresh</button>
+          <!-- refresh関数に引数を渡す必要がないので、refresh関数を無名関数でラップして、引数を無視するようにしている。 -->
+          <button @click="() => refresh()" class="btn-blue mb-4 w-[1200px]">
+            Refresh
+          </button>
           <div v-if="pending" grid place-items-center>Loading ...</div>
           <div v-else="!pending && data">
             <cat-card-list :cat-list="data" />
@@ -64,18 +57,6 @@ useHead({
 
 <style scoped lang="scss">
 .cat-wrapper {
-  padding: 7rem 0 5rem;
-}
-button {
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: 600;
-}
-.btn-blue {
-  background-color: #3490dc;
-  color: #fff;
-  &:hover {
-    background-color: #2779bd;
-  }
+  @apply w-[1200px] mx-auto grid grid-col-3 align-items-center justify-items-center px-0;
 }
 </style>

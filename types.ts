@@ -34,6 +34,7 @@ export interface FriendsPost extends MarkdownParsedContent {
     name?: string,
     bio?: string,
     photo?: string,
+    image?: string,
   }
 }
 export interface PostGenre extends MarkdownParsedContent {

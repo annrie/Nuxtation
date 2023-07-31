@@ -1,5 +1,7 @@
 import {defineNuxtConfig} from 'nuxt/config'
 import { NavigationGuard } from 'vue-router';
+import { pwaVite } from './config/pwa';
+import { appDescription } from './constants/index';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
@@ -37,11 +39,17 @@ export default defineNuxtConfig({
  app: {
    head: {
      // charset: 'utf-8',
-     // viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-     titleTemplate: `%s｜ Nuxtation`,
-     meta: [
-       { name: 'description', content: description },
-       //  {  name: "description", content: siteDesc },
+        viewport: 'width=device-width,initial-scale=1',
+        titleTemplate: `%s｜ Nuxtation`,
+      link: [
+        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+      ],
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: appDescription },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
 
        { property: "og:site_name", content: siteName },
        { property: "og:type", content: "website" },
@@ -95,7 +103,6 @@ export default defineNuxtConfig({
    '@vueuse/nuxt',
    '@unocss/nuxt',
    'nuxt-icon',
-   // 'nuxt-windicss',
    '@nuxt/content',
    '@nuxt/image',
    '@pinia/nuxt',
@@ -105,9 +112,8 @@ export default defineNuxtConfig({
    'nuxt-pwa-public-manifest',
    '@nuxtjs/robots',
    '@nuxt/devtools',
- ],
-
- // },
+   '@vite-pwa/nuxt',
+    ],
 
  content: {
    // documentDriven: true,
@@ -124,8 +130,8 @@ export default defineNuxtConfig({
         default: 'github-light',
         // Theme used if `html.dark`
         dark: 'github-dark',
-        // Theme used if `html.sepia`
-        sepia: 'monokai'
+        // Theme used if `html.light`
+        light: 'github-light'
       },
        preload: [
          'bash',
@@ -173,7 +179,9 @@ export default defineNuxtConfig({
    restoreState: true,
    payloadExtraction: false,
    viewTransition: true,
-   inlineSSRStyles: true
+   inlineSSRStyles: true,
+   renderJsonPayloads: true,
+   typedPages: true,
  },
 
  css: [
@@ -245,12 +253,19 @@ export default defineNuxtConfig({
  },
 
  nitro: {
-    storage: {
+  esbuild: {
+    options: {
+      target: 'esnext',
+    },
+  },
+  storage: {
      data: { driver: 'vercelKV'}
    },
    prerender: {
-     routes: ['/sitemap.xml'],
-     crawlLinks: true
+     routes: ['/blog','/friends','/cat','/sitemap.xml'],
+     crawlLinks: false,
+     routes: ['/'],
+    //  ignore: ['/blog','/friends','/cat']
    },
  },
 
@@ -299,9 +314,12 @@ export default defineNuxtConfig({
 
  vue: {
      compilerOptions: {
+      "types": ["vite-plugin-pages/client"],
        isCustomElement: tag => ['lite-youtube'].includes(tag),
      }
    },
+
+ pwaVite,
 
  devtools: {
    // Enable devtools (default: true)

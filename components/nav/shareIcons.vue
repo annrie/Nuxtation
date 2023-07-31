@@ -22,6 +22,7 @@
 
 <script setup>
 import Twitter from "../icons/twitter.vue";
+import X from "../icons/x.vue";
 import Pinterest from "../icons/pinterest.vue";
 import Linkedin from "../icons/linkedin.vue";
 import Facebook from "../icons/facebook.vue";
@@ -64,7 +65,16 @@ const icons = [
       )}&url=${encodedUrl}`;
     },
   },
-  {
+   {
+    icon: X,
+    alt: "Share this story on X.",
+    getHref: () => {
+      return `https://x.com/intent/tweet?text=${encodeURIComponent(
+        "Check out this article about " + props.headline
+      )}&url=${encodedUrl}`;
+    },
+  },
+ {
     icon: Facebook,
     alt: "Share this story on Facebook.",
     getHref: () => {

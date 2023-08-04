@@ -25,8 +25,12 @@ const { data: authorsData } = await useAsyncData("friends", () =>
 );
 
 // destrucure `prev` and `next` value from data
-const [prev, next] = data.value.surround;
-console.log({ data, prev, next });
+// findSurroundメソッドの返す配列はnullを含む場合があるので、配列の分割代入をするときには、nullを考慮する必要がある
+let prev: any, next: any;
+if (data?.value && data?.value?.surround) {
+  [prev, next] = data?.value?.surround;
+  console.log({ data, prev, next });
+};
 
 definePageMeta({
   layout: false,
@@ -34,17 +38,17 @@ definePageMeta({
 
 // set the meta
 useHead({
-  title: data.value.article.title,
+  title: data?.value?.article.title,
   meta: [
-    { name: "description", content: data.value.article.description },
+    { name: "description", content: data?.value?.article.description },
     {
       hid: "og:image",
       property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
+      content: `https://nuxtation.phantomoon.com/${data?.value?.article.img}`,
     },
     {
       property: "og:title",
-      content: data.value.article.title,
+      content: data?.value?.article.title,
     },
   ],
 });
@@ -66,7 +70,7 @@ useHead({
             <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
             <meta itemprop="position" content="1" />
           </li>
-          <l class="separator">&gt;</l>
+          <li class="separator">&gt;</li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <NuxtLink
               itemscope
@@ -81,38 +85,37 @@ useHead({
           </li>
           <li class="separator">&gt;</li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name">{{ data.article.title }}</span>
+            <span itemprop="name">{{ data?.article.title }}</span>
             <meta itemprop="position" content="3" />
           </li>
         </ol>
         <!-- Publish date -->
-        <span
-          class="font-light text-typography_primary/75 dark:text-typography_primary_dark/75 mt-2 md:mt-0"
-          >{{ $formatDate(data.article.publishedAt) }}</span
-        >
+        <span class="font-light text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
+          $formatDate(data?.article.publishedAt)
+        }}</span>
       </div>
       <header class="article-header">
         <nuxt-picture
           provider="imgix"
-          :src="data.article.img"
-          :alt="data.article.title"
+          :src="data?.article.img"
+          :alt="data?.article.title"
           format="avif,webp"
           preset="blog"
           class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
         />
-        <h1 class="heading">{{ data.article.title }}</h1>
-        <p class="supporting">{{ data.article.description }}</p>
+        <h1 class="heading">{{ data?.article.title }}</h1>
+        <p class="supporting">{{ data?.article.description }}</p>
         <ul class="article-tags">
-          <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
+          <li class="tag" v-for="(tag, n) in data?.article.tags" :key="n">
             {{ replaceHyphen(tag) }}
           </li>
         </ul>
         <!-- Social Share -->
         <div class="flex mt-6 md:mt-0 justify-center">
           <NavShareIcons
-            :headline="data.article.title"
-            :excerpt="data.article.description"
-            :path="data.article._path + '/'"
+            :headline="data?.article.title"
+            :excerpt="data?.article.description"
+            :path="data?.article._path + '/'"
           />
         </div>
       </header>
@@ -120,10 +123,10 @@ useHead({
       <section class="article-section">
         <aside class="aside h-fit">
           <!-- Toc Component -->
-          <Toc :links="data.article.body.toc.links" />
+          <Toc :links="data?.article?.body?.toc?.links" />
           <!-- Related articles -->
           <div
-            v-if="data.surround.filter((elem) => elem !== null)?.length > 0"
+            v-if="data && data.surround?.filter((elem) => elem !== null).length > 0"
             class="related lt-lg:hidden"
           >
             <RelatedArticles :surround="data?.surround" class="blog-post-text" />
@@ -131,10 +134,10 @@ useHead({
         </aside>
         <article class="article prose dark:prose-invert">
           <!-- render document coming from query -->
-          <ContentRenderer :value="data.article">
+          <ContentRenderer :value="data?.article">
             <!-- render rich text from document -->
             <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
-            <ContentRendererMarkdown :value="data.article" />
+            <ContentRendererMarkdown :value="data?.article" />
             <!-- display if document content is empty -->
             <template #empty>
               <p>No content found.</p>
@@ -145,48 +148,25 @@ useHead({
       </section>
       <footer>
         <!-- Author -->
-        <div class="flex flex-row items-center justify-center">
-          <p class="grid grid-cols-1">
-            <nuxt-picture
-              provider="imgix"
-              :src="data.article.author.image"
-              :alt="data.article.title"
-              preset="blog"
-              format="avif,webp"
-              fit="cover"
-              class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
-            />
-          </p>
-          <span class="blog-post-text text-lg leading-lg font-light"
-            >By
-            <a
-              class="hover:underline italic"
-              :href="data.article.authorUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              >{{ data.article.author }}</a
-            ></span
-          >
-        </div>
-        <div
-          v-if="data.article.author !== null"
+          <div
+          v-if="data?.article.author !== null"
           class="container mx-auto my-8 grid gap-x-4 lt-md:grid-cols-1 tb:grid-cols-2"
         >
           <!-- <NuxtLink :to="`/friends/author/${author}`"> -->
           <p class="grid grid-cols-1">
             <nuxt-picture
               provider="imgix"
-              :src="data.article.author.photo"
-              :alt="data.article.title"
+              :src="data?.article?.author?.photo"
+              :alt="data?.article.title"
               preset="blog"
               format="avif,webp"
               fit="cover"
-              class="rounded h-auto w-full transition-all duration-400 <md:(h-auto text-center)"
+              class="rounded h-auto w-full transition-all duration-400 lt-md:(h-a uto text-center)"
             />
           </p>
-          <div class="mt-4 grid grid-cols-1 row-span-6">
-            <p>{{ data.article.author.name }}</p>
-            <p class="mt-8">{{ data.article.author.bio }}</p>
+          <div class="mt-4 grid grid-cols-1 row-span -6">
+            <p>{{ data?.article?.author?.name }}</p>
+            <p class="mt-8">{{ data?.article?.author?.bio }}</p>
           </div>
           <!-- </NuxtLink> -->
         </div>

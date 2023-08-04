@@ -116,13 +116,13 @@ useHead({
 }
 
 .tags-list {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase <md: (text-base justify-center);
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md: (text-base justify-center);
 
   .tags {
     @apply text-sm p-2 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;
 
     a {
-      @apply py-0 px-0 transition-all whitespace-nowrap hover: (bg-blue-500 underline -translate-y-0.5);
+      @apply py-1 px-1 transition-all whitespace-nowrap hover: (bg-blue-500 underline -translate-y-0.5);
     }
   }
 

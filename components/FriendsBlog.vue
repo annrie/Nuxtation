@@ -79,6 +79,7 @@ useHead({
       </div>
     </header>
     <section class="page-section">
+      <!--Genres :section="section" /-->
       <Tags :section="section" />
       <!-- Render list of all articles in ./content/friends using `path` -->
       <!-- Provide only defined fieldsin the `:query` prop -->

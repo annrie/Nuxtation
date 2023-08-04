@@ -9,6 +9,8 @@ author:
   bio: 'All about Peter and what he does and where he works'
   photo: 'friends/peter.jpeg'
 tags: [web development]
+genres:
+ - 冒険・サスペンス
 ---
 ## Hello this article explores the unknown
 

@@ -1,6 +1,6 @@
 import { ContentDoc } from './.nuxt/components.d';
 import type { ParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
-export type Sections = 'blog' | 'friends' | 'genre'
+export type Sections = 'blog' | 'friends'
 
 export interface BlogPost extends MarkdownParsedContent {
   title: string,
@@ -35,7 +35,7 @@ export interface FriendsPost extends MarkdownParsedContent {
     bio?: string,
     photo?: string,
     image?: string,
-  }
+  },[],
 }
 export interface PostGenre extends MarkdownParsedContent {
   name: string,

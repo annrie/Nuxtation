@@ -9,6 +9,9 @@ author:
   bio: 'All about Maria and where she works and what she does'
   photo: 'friends/maria.jpeg'
 tags: [ nuxtjs ]
+genres:
+ - ホラー
+ - 短編集
 ---
 
 ## Welcome to my second blog post using content module

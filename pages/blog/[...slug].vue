@@ -2,15 +2,16 @@
 import type { BlogPost } from "~/types";
 
 const { path } = useRoute();
-const { data } = await useAsyncData(`content-${path}`, async () => {
+const cleanPath = path.replace(/\/$/, "");
+const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // fetch document where the document path matches with the cuurent route
-  let article = queryContent<BlogPost>().where({ _path: path }).findOne();
+  let article = queryContent<BlogPost>().where({ _path: cleanPath }).findOne();
   // get the surround information,
   // which is an array of documeents that come before and after the current document
   let surround = queryContent<BlogPost>()
     .only(["_path", "title", "description"])
     .sort({ publishedAt: 1 })
-    .findSurround(path);
+    .findSurround(cleanPath, { before: 1, after: 1 });
 
   return {
     article: await article,
@@ -23,8 +24,12 @@ const { data } = await useAsyncData(`content-${path}`, async () => {
 // };
 
 // destrucure `prev` and `next` value from data
-const [prev, next] = data.value.surround;
-console.log({ data, prev, next });
+// findSurroundメソッドの返す配列はnullを含む場合があるので、配列の分割代入をするときには、nullを考慮する必要がある
+let prev: any, next: any;
+if (data?.value && data?.value?.surround) {
+  [prev, next] = data?.value?.surround;
+  console.log({ data, prev, next });
+};
 
 definePageMeta({
   layout: false,
@@ -32,16 +37,16 @@ definePageMeta({
 
 // set the meta
 useHead({
-  title: data.value.article.title,
+  title: data?.value?.article.title,
   meta: [
-    { name: "description", content: data.value.article.description },
+    { name: "description", content: data?.value?.article.description },
     {
       property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data.value.article.img}`,
+      content: `https://nuxtation.phantomoon.com/${data?.value?.article.img}`,
     },
     {
       property: "og:title",
-      content: data.value.article.title,
+      content: data?.value?.article.title,
     },
   ],
 });
@@ -78,39 +83,39 @@ useHead({
           </li>
           <li class="separator">&gt;</li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name">{{ data.article.title }}</span>
+            <span itemprop="name">{{ data?.article.title }}</span>
             <meta itemprop="position" content="3" />
           </li>
         </ol>
         <!-- Publish date -->
         <span
-          class="font-light text-typography_primary/75 dark:text-typography_primary_dark/75 mt-2 md:mt-0"
-          >{{ $formatDate(data.article.publishedAt) }}</span
+          class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0"
+          >{{ $formatDate(data?.article.publishedAt) }}</span
         >
       </div>
 
       <header class="article-header">
         <nuxt-picture
           provider="imgix"
-          :src="data.article.img"
-          :alt="data.article.title"
+          :src="data?.article.img"
+          :alt="data?.article.title"
           format="avif,webp"
           preset="blog"
           class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
         />
-        <h1 class="heading">{{ data.article.title }}</h1>
-        <p class="supporting">{{ data.article.description }}</p>
+        <h1 class="heading">{{ data?.article.title }}</h1>
+        <p class="supporting">{{ data?.article.description }}</p>
         <ul class="article-tags">
-          <li class="tag" v-for="(tag, n) in data.article.tags" :key="n">
+          <li class="tag" v-for="(tag, n) in data?.article.tags" :key="n">
             {{ replaceHyphen(tag) }}
           </li>
         </ul>
         <!-- Social Share -->
         <div class="flex mt-6 md:mt-0 justify-center">
           <NavShareIcons
-            :headline="data.article.title"
-            :excerpt="data.article.description"
-            :path="data.article._path + '/'"
+            :headline="data?.article.title"
+            :excerpt="data?.article.description"
+            :path="data?.article._path + '/'"
           />
         </div>
       </header>
@@ -118,10 +123,10 @@ useHead({
       <section class="article-section">
         <aside class="aside h-fit">
           <!-- Toc Component -->
-          <Toc :links="data.article.body.toc.links" />
+          <Toc :links="data?.article?.body?.toc?.links" />
           <!-- Related articles -->
           <div
-            v-if="data.surround.filter((elem) => elem !== null)?.length > 0"
+            v-if="data && data.surround?.filter((elem) => elem !== null)?.length > 0"
             class="related lt-lg:hidden"
           >
             <RelatedArticles :surround="data?.surround" class="blog-post-text" />
@@ -129,10 +134,10 @@ useHead({
         </aside>
         <article class="article prose dark:prose-invert">
           <!-- render document coming from query -->
-          <ContentRenderer :value="data.article">
+          <ContentRenderer :value="data?.article">
             <!-- render rich text from document -->
             <!-- <ContentRendererMarkdown :value="data.article" :components="components" /> -->
-            <ContentRendererMarkdown :value="data.article" />
+            <ContentRendererMarkdown :value="data?.article" />
             <!-- display if document content is empty -->
             <template #empty>
               <p>No content found.</p>

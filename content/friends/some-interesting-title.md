@@ -9,6 +9,9 @@ author:
   bio: 'All about Choi and where he works and what he does'
   photo: 'friends/choi.jpeg'
 tags: [web development]
+genres:
+ - ミステリ・探偵小説
+ - 短編集
 ---
 ## Welcome to another blog post using content module
 

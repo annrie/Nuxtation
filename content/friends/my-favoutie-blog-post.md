@@ -9,6 +9,8 @@ author:
   bio: 'All about Peter and what he does and where he works'
   photo: 'friends/peter.jpeg'
 tags: [web development]
+genres:
+ - ミステリ・探偵小説
 ---
 ## Hello i'm a very interesting article
 

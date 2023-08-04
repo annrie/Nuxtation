@@ -12,7 +12,7 @@
       </p>
     </div>
     <NuxtImg
-      provider="cloudinary"
+      provider="imgix"
       src="v1668347473/debbie.codes/broken_vktobk.png"
       alt="broken connection"
       width="325"

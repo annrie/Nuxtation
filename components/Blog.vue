@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { BlogPost, Sections } from "~/types";
+import type { RouteQuery } from '@nuxt/nitro';
+
 
 interface Props {
   page: number;
@@ -25,7 +27,7 @@ const skipNumber = () => {
   return (currentPage - 1) * blogsPerPage;
 };
 
-// const nextPage = articles.value.length === 5
+// const nextPage = articles.value.length === 5;
 const title: string = `All Blog Posts(${currentPage || 1})`;
 const description: string = "Here's a list of all my blog posts";
 const section: Sections = "blog";
@@ -35,8 +37,8 @@ const {
   query: { tags },
 } = useRoute();
 
-const filtered = ref(tags?.split(","));
-
+//const filtered = ref(tags?.split(","));
+const filtered = ref(typeof tags === 'string' ? tags.split(',') : []);
 // set meta for page
 useHead({
   title,
@@ -90,7 +92,7 @@ useHead({
           ],
           limit: blogsPerPage,
           skip: offset,
-          sort: { publishedAt: -1 },
+          sort: [{ field: 'publishedAt', direction: '-1' }],
           $sensitivity: 'base',
         }"
       >
@@ -152,7 +154,7 @@ useHead({
           <SectionsError />
         </template>
       </ContentList>
-      <PaginationBlog v-if="allBlogs.length > 5" :numPages="numPages" :current="page" />
+               <PaginationBlog v-if="allBlogs.length > 5" :numPages="numPages" :current="page" />
     </section>
   </div>
 </template>

@@ -9,6 +9,8 @@ const props = defineProps<Props>();
 
 // tag list state
 // const expanded = ref(false);
+// replaceHyphenを自分で定義する
+const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
 
 // helper function to flatten tags array
 const flatten = (tags: Array<any>, key = "tags") => {

@@ -13,10 +13,10 @@ function getPath(p: number) {
 
 // クラスを返す
 // 現在のページの場合スタイルをかえるため
-// function getClass(page: number, current: number) {
-//   if (page == current) return "current";
-//   return "link";
-// }
+function getClass(page: number, current: number) {
+  if (page == current) return "current";
+  return "link";
+}
 </script>
 
 <template>

@@ -5,6 +5,7 @@ interface Props {
 }
 
 const { numPages, current } = defineProps<Props>();
+
 // ページリンクを返す
 function getPath(p: number) {
   return `/blog/page/${p}`;
@@ -20,18 +21,20 @@ function getClass(page: number, current: number) {
 
 <template>
   <div class="pagination">
-    <NuxtLink
+    <!-- <NuxtLink
       v-for="page in numPages"
       :key="page"
       :class="[page == current ? 'current' : 'link']"
       :to="getPath(page)"
     >
+      {{ page }} -->
+    <NuxtLink
+      v-for="page in numPages"
+      :key="page"
+      :to="getPath(page)"
+      :class="[page == current ? 'current' : 'link']"
+    >
       {{ page }}
-      <!-- <NuxtLink v-for="page in numPages"
-            :key="page"
-            :to="getPath(page)"
-            :class="[page == current ? 'current' : 'link']">
-            {{ page }} -->
     </NuxtLink>
   </div>
 </template>

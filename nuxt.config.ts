@@ -115,8 +115,23 @@ export default defineNuxtConfig({
    '@vite-pwa/nuxt',
     ],
 
+    router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: "blog",
+        path: "/blog/:pagination?",
+        component: resolve(__dirname, "pages/blog/index.vue")
+      });
+      routes.push({
+        name: "friends",
+        path: "/friends:pagination?",
+        component: resolve(__dirname, "pages/friends/index.vue")
+      });
+    }
+  },
+
  content: {
-   // documentDriven: true,
+   documentDriven: false,
    watch: {
      ws: {
        port: 4000,
@@ -130,8 +145,8 @@ export default defineNuxtConfig({
         default: 'github-light',
         // Theme used if `html.dark`
         dark: 'github-dark',
-        // Theme used if `html.light`
-        light: 'github-light'
+        // Theme used if `html.sepia`
+        sepia: 'monokai'
       },
        preload: [
          'bash',

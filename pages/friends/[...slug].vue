@@ -18,11 +18,13 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
     surround: await surround,
   };
 });
+// replaceHyphenを自分で定義する
+const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
 
 // Get the authors
-const { data: authorsData } = await useAsyncData("friends", () =>
-  queryContent("author/Maria").findOne()
-);
+// const { data: authorsData } = await useAsyncData("friends", () =>
+//   queryContent("author/Maria").findOne()
+// );
 
 // destrucure `prev` and `next` value from data
 // findSurroundメソッドの返す配列はnullを含む場合があるので、配列の分割代入をするときには、nullを考慮する必要がある
@@ -30,7 +32,7 @@ let prev: any, next: any;
 if (data?.value && data?.value?.surround) {
   [prev, next] = data?.value?.surround;
   console.log({ data, prev, next });
-};
+}
 
 definePageMeta({
   layout: false,
@@ -148,7 +150,7 @@ useHead({
       </section>
       <footer>
         <!-- Author -->
-          <div
+        <div
           v-if="data?.article.author !== null"
           class="container mx-auto my-8 grid gap-x-4 lt-md:grid-cols-1 tb:grid-cols-2"
         >

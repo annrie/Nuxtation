@@ -1,32 +1,19 @@
-// 一覧表示用
 <script setup lang="ts">
-import type { FriendsPost, Sections } from "~/types";
+import type { BlogPost, Sections } from "~/types";
 
 interface Props {
   page: number;
 }
 
+// const { navigation, page, surround, globals } = useContent();
 const { page } = defineProps<Props>();
 const blogsPerPage = 5;
-const currentPage = Number(useRoute().params.pagination);
+// const currentPage = Number(useRoute().params.pagination);
+const currentPage = Number(page);
 const allBlogs = await queryContent("/friends").find();
 const numPages = Math.ceil(allBlogs.length / blogsPerPage);
-const lastPage = Math.ceil(allBlogs.length / blogsPerPage);
-const lastPageCount = allBlogs.length / blogsPerPage;
 const offset = (currentPage - 1) * blogsPerPage;
 
-const skipNumber = () => {
-  // 計算が違う
-  if (currentPage === 1) {
-    return 0;
-  }
-  if (currentPage === lastPage) {
-    return allBlogs.length - lastPageCount;
-  }
-  return (currentPage - 1) * blogsPerPage;
-};
-
-// const nextPage = articles.value.length === 5
 const title: string = `All Member's Blog Posts(${currentPage || 1})`;
 const description: string = "Here's a list of all my member's blog posts";
 const section: Sections = "friends";
@@ -43,7 +30,7 @@ const {
   query: { tags },
 } = useRoute();
 
-const filtered = ref(tags?.split(","));
+const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
 
 // set meta for page
 useHead({
@@ -99,8 +86,7 @@ useHead({
           ],
           limit: blogsPerPage,
           skip: offset,
-          sort: { publishedAt: -1 },
-          $sensitivity: 'base',
+          sort: [{ publishedAt: -1, $sensitivity: 'base' }],
         }"
       >
         <!-- Default list slot -->
@@ -139,10 +125,10 @@ useHead({
                 </h1>
                 <p>{{ article.description }}</p>
                 <ul
-                  class="border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-auto text-white text-sm max-w-4xl gap-2 uppercase"
+                  class="rounded-lg flex flex-wrap font-normal my-4 mx-auto text-white text-sm max-w-4xl gap-2 uppercase"
                 >
                   <li
-                    class="rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 align-text-bottom underline dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5"
+                    class="flex rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 align-text-bottom underline dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5"
                     v-for="(tag, n) in article.tags"
                     :key="n"
                   >

@@ -2,12 +2,25 @@
 
 <script setup lang="ts">
 // define links prop
-defineProps(["links"]);
-
+defineProps({
+  links: {
+    type: Array as PropType<Link[]>,
+    required: true,
+  },
+});
+// define Link type
+interface Link {
+  label: string;
+  url: string;
+  children?: Link[];
+  id?: string;
+  depth?: number;
+  text?: string;
+};
 // flatten TOC links nested arrays to one array
-const flattenLinks = (links: String) => {
+const flattenLinks = (links: Link[]) => {
   let _links = links
-    .map((link) => {
+    .map((link: Link) => {
       let _link = [link];
       if (link.children) {
         let flattened = flattenLinks(link.children);

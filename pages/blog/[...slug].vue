@@ -29,12 +29,13 @@ let prev: any, next: any;
 if (data?.value && data?.value?.surround) {
   [prev, next] = data?.value?.surround;
   console.log({ data, prev, next });
-};
+}
 
 definePageMeta({
   layout: false,
 });
-
+// replaceHyphenを自分で定義する
+const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
 // set the meta
 useHead({
   title: data?.value?.article.title,
@@ -88,10 +89,9 @@ useHead({
           </li>
         </ol>
         <!-- Publish date -->
-        <span
-          class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0"
-          >{{ $formatDate(data?.article.publishedAt) }}</span
-        >
+        <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
+          $formatDate(data?.article.publishedAt)
+        }}</span>
       </div>
 
       <header class="article-header">

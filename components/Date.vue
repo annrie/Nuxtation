@@ -10,6 +10,6 @@ defineProps<{
     class="font-medium text-xs mb-1 tracking-widest text-gray-400 title-font block"
   >
     <!-- {{ date }} -->
-    {{ formatDate(date) }}
+    {{ $formatDate(date) }}
   </time>
 </template>

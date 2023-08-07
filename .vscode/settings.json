@@ -268,7 +268,7 @@
         "editor.lineHighlightBorder": "#9fced11f",
         "editor.lineHighlightBackground": "#1073cf2d"
     },
-  "workbench.colorTheme": "Vitesse Light",
+  "workbench.colorTheme": "Vitesse Dark",
   "vue.features.codeActions.enable": false,
   "scss.validate": false,
 	"css.validate": false,
@@ -282,6 +282,7 @@
  "nuxtr.defaultPackageManager": "pnpm",
  "nuxtr.vueFiles.pages.defaultTemplate": "default.page-template",
  "nuxtr.vueFiles.layouts.defaultTemplate": "default.layout-template",
-	"workbench.colorTheme": "Vitesse Dark",
+	// "workbench.colorTheme": "Vitesse Dark",
 	"vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+  "editor.formatOnSave": false
 }

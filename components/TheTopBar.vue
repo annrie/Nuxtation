@@ -8,11 +8,8 @@ const toggle = () => {
 
 <template>
   <header class="AppHeader">
-    <!-- <header class="bg-dark w-full py-4 top-0 left-0 z-10 fixed"> -->
     <nav class="AppHeader__nav" aria-label="グローバルメニュー">
-    <!-- <nav class="container mx-auto" aria-label="グローバルメニュー"> -->
       <div class="AppHeader__list" role="list">
-        <!-- <div class="flex h-auto w-full px-3 items-center justify-between" role="list"> -->
         <div class="AppHeader__home" role="listitem">
           <NuxtLink to="/" class="AppHeader__homeLink">
             <span class="AppHeader__homeLogo">
@@ -26,7 +23,7 @@ const toggle = () => {
             <span class="_VisuallyHidden">ホーム</span>
           </NuxtLink>
         </div>
-        <div class="text-white <md:hidden">
+        <div class="text-white lt-md:hidden">
           <TheNavigation class="text-white" />
         </div>
         <div class="inline-flex justify-between hidden lg:block">
@@ -66,10 +63,10 @@ const toggle = () => {
 <style lang="scss" scoped>
 /* Header */
 .AppHeader {
-  @apply bg-dark-500 border-slate-50 border-b-2 w-full py-4 top-0 right-0 left-0 z-10 fixed dark:(border-white border-opacity-10) ;
+  @apply bg-dark-500 border-slate-50 border-b-2 w-full py-4 top-0 right-0 left-0 z-10 fixed dark:(border-white border-opacity-10);
 }
 .AppHeader__nav {
-  @apply container mx-auto <tb:(py-0 pr-83px pl-24px) lg:(py-0 pr-140px pl-38px) ;
+  @apply container mx-auto lt-tb:(py-0 pr-83px pl-24px) lg:(py-0 pr-140px pl-38px);
 }
 
 .AppHeader__list {
@@ -105,11 +102,11 @@ const toggle = () => {
 
   font-size: em(18, 16);
 
-  @include lg(max) {
+  @screen lg {
     font-size: em(16, 16);
   }
 
-  @include tb(max) {
+  @screen tb {
     margin-left: em(6, 14);
     font-size: em(14, 16);
   }

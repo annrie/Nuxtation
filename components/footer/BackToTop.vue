@@ -7,13 +7,18 @@
       :class="{ 'show-scroll': scrollHeader }"
       @click="scrollTop"
     >
-      <IconCircleUpRounded text-red text-36px hover:(bg-transparent text-blue-400)  />
+      <MdiArrowUpCircleOutline
+        text-red
+        text-36px
+        hover:(bg-transparent
+        text-jis-blue-400)
+      />
     </a>
   </div>
 </template>
 
 <script setup lang="ts">
-import IconCircleUpRounded from '~icons/material-symbols/arrowCircleUp'
+import { mdiArrowUpCircleOutline } from "@mdi/js";
 
 const scrollHeader = ref(false);
 

@@ -5,6 +5,8 @@ defineProps<{
   tags: Array<string>;
   section: Sections;
 }>();
+// replaceHyphenを自分で定義する
+const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
 </script>
 
 <template>

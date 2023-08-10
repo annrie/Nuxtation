@@ -3,7 +3,8 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "strict": true,
-    "sourceMap": false,
+    "sourceMap": true,
+    "skipLibCheck": true,
     "lib":["ESNext", "DOM"],
     "types":[
       "@unocss/nuxt"

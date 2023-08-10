@@ -14,7 +14,13 @@ useHead({
 });
 
 onMounted(() => {
-  window.twttr.widgets.load();
+  if (window.twttr) {
+    window.twttr.widgets.load();
+  } else {
+    window.addEventListener("load", () => {
+      window.twttr.widgets.load();
+    });
+  }
 });
 </script>
 

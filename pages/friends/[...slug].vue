@@ -10,7 +10,7 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // which is an array of documeents that come before and after the current document
   let surround = queryContent<FriendsPost>()
     .only(["_path", "title", "description"])
-    .sort({ publishedAt: 1 })
+    .sort({ publishedAt: -1 })
     .findSurround(cleanPath, { before: 1, after: 1 });
 
   return {
@@ -19,10 +19,9 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   };
 });
 
-// Get the authors
-const { data: authorsData } = await useAsyncData("friends", () =>
-  queryContent("author/Maria").findOne()
-);
+// const components = {
+//   p: 'CustomParagraph'
+// };
 
 // destrucure `prev` and `next` value from data
 // findSurroundメソッドの返す配列はnullを含む場合があるので、配列の分割代入をするときには、nullを考慮する必要がある
@@ -30,19 +29,19 @@ let prev: any, next: any;
 if (data?.value && data?.value?.surround) {
   [prev, next] = data?.value?.surround;
   console.log({ data, prev, next });
-};
+}
 
 definePageMeta({
   layout: false,
 });
-
+// replaceHyphenを自分で定義する
+const replaceHyphen = (tags: string) => tags.replace(/-/g, " ");
 // set the meta
 useHead({
   title: data?.value?.article.title,
   meta: [
     { name: "description", content: data?.value?.article.description },
     {
-      hid: "og:image",
       property: "og:image",
       content: `https://nuxtation.phantomoon.com/${data?.value?.article.img}`,
     },
@@ -76,10 +75,10 @@ useHead({
               itemscope
               itemtype="https://schema.org/WebPage"
               itemprop="item"
-              itemid="/frinds/"
-              to="/friends/"
+              itemid="/blog/"
+              href="/blog/"
             >
-              <span itemprop="name">Friends Blog</span></NuxtLink
+              <span itemprop="name">FriendsBlog</span></NuxtLink
             >
             <meta itemprop="position" content="2" />
           </li>
@@ -90,10 +89,11 @@ useHead({
           </li>
         </ol>
         <!-- Publish date -->
-        <span class="font-light text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
+        <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
           $formatDate(data?.article.publishedAt)
         }}</span>
       </div>
+
       <header class="article-header">
         <nuxt-picture
           provider="imgix"
@@ -126,7 +126,7 @@ useHead({
           <Toc :links="data?.article?.body?.toc?.links" />
           <!-- Related articles -->
           <div
-            v-if="data && data.surround?.filter((elem) => elem !== null).length > 0"
+            v-if="data && data.surround?.filter((elem) => elem !== null)?.length > 0"
             class="related lt-lg:hidden"
           >
             <RelatedArticles :surround="data?.surround" class="blog-post-text" />
@@ -143,10 +143,9 @@ useHead({
               <p>No content found.</p>
             </template>
           </ContentRenderer>
-          <hr />
         </article>
       </section>
-      <footer>
+        <footer>
         <!-- Author -->
           <div
           v-if="data?.article.author !== null"
@@ -171,44 +170,40 @@ useHead({
           <!-- </NuxtLink> -->
         </div>
       </footer>
-      <!-- PrevNext Component -->
+    <!-- PrevNext Component -->
       <PrevNext :prev="prev" :next="next" />
       <!-- </div> -->
     </NuxtLayout>
   </div>
 </template>
 
-<style lang="scss" scoped>
-// .article-main {
-//   // @apply m-auto max-w-5xl p-4;
-// }
-
+<style scoped lang="scss">
 .article-header {
-  @apply text-center p-4 pb-12;
+  @apply: text-center p-4 pb-12;
 }
 
 .article-header .heading {
-  @apply font-extrabold mt-8 lt-md:text-3xl tb:text-5xl;
+  @apply: font-extrabold mt-8 lt-md: text-3xl tb:text-5xl;
 }
 
 .article-header .supporting {
-  @apply font-medium text-lg sm:mt-4 tb:my-8;
+  @apply: font-medium text-lg sm: mt-4 tb:my-8;
 }
 
 .article-section {
-  @apply m-auto max-w-5xl grid p-4 grid-cols-8;
+  @apply: relative m-auto max-w-5xl grid p-4 grid-cols-8;
 }
 
 .article-tags {
-  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase lt-md: text-base;
+  --uno: border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase lt-md:text-base;
 
   .tag {
-    @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
+    @apply: rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
   }
 }
 
 aside {
-  @apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
+	@apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
 }
 
 .aside {
@@ -220,11 +215,7 @@ aside {
     top: calc(theme("spacing.nav") - 3.25rem);
   }
 }
-
-.separator {
-  @apply mx-1;
-}
 .article {
-  @apply mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
+  @apply: mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
 }
 </style>

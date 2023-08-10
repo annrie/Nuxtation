@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { PrevNext } from "~/types";
+
 defineProps<{
   prev: PrevNext;
   next: PrevNext;
 }>();
 // define prev and next props
 // defineProps(["prev", "next"]);
-// const { prev, next } = useContent()
+// const { prev, next } = useContent();
 </script>
 
 <template>

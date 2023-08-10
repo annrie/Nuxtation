@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/annrie/Nuxtation/compare/v2.1.0...v2.2.0) (2023-08-10)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 correct settings.json ([41b940d](https://github.com/annrie/Nuxtation/commit/41b940d78f275367373c6161776d82828b07c8f6))
+* 🤖 update nuxt ([4c8e38f](https://github.com/annrie/Nuxtation/commit/4c8e38f3d471dcb351f16976c5cdf030900907cc))
+* 🤖 update to nuxt@3.6 ([e183e55](https://github.com/annrie/Nuxtation/commit/e183e55c59379ac76cfae38614e9b9ab62f3fad4))
+
+
+### 機能の追加、変更、削除
+
+* 🎸 imgix:baseURL変更 ([697584e](https://github.com/annrie/Nuxtation/commit/697584e79b399dcb50828f9bc050de7a8ef83c9a))
+* 🎸 provider追加 ([aeaaa1b](https://github.com/annrie/Nuxtation/commit/aeaaa1bcb6c2b8aa759f96f6760569b84eb12c5a))
+* 🎸 記事の体裁を調整。日付、social icon追加等。 ([b6bdeb6](https://github.com/annrie/Nuxtation/commit/b6bdeb6e20e4db8782aa16e5a00464aec17725fc))
+
+
+### コードスタイル
+
+* 💄 imgixのパラメータ修正 ([0fbc0da](https://github.com/annrie/Nuxtation/commit/0fbc0da5385babd33faa5d0225888712699625e9))
+* 💄 記事のコード部分のlightモード時の表示調整 ([a6a1855](https://github.com/annrie/Nuxtation/commit/a6a18555a84c04e7ee091928891fbaca020f8ed2))
+
+
+### バグ修正
+
+* 🐛 for typescript ([bbb716b](https://github.com/annrie/Nuxtation/commit/bbb716b24541fc1da10bd0496f1d51fbf00f33db))
+* 🐛 nuxt-pictureのイメージサイズの調整 ([a2fbcf3](https://github.com/annrie/Nuxtation/commit/a2fbcf31cf4d6935d88aa9fa5b4fdf4d0bee64f9))
+* 🐛 omit remark plugins ([a7a9dda](https://github.com/annrie/Nuxtation/commit/a7a9ddad4391bced0b9905dd52ff53973a7ffa54))
+* 🐛 pagination ([7a4a117](https://github.com/annrie/Nuxtation/commit/7a4a1177b04efdb915ba377f5e3bd3e1e6af4d2d))
+* 🐛 typescript ([ecbe950](https://github.com/annrie/Nuxtation/commit/ecbe95079112329b651b9aca3e877e740e1da257))
+* 🐛 余計なnull判定を削除 ([5aac3cc](https://github.com/annrie/Nuxtation/commit/5aac3cc5f78111d52d9e4ebda0887037f545b711))
+
 ## [2.1.0](https://github.com/annrie/Nuxtation/compare/v2.0.5...v2.1.0) (2023-06-28)
 
 

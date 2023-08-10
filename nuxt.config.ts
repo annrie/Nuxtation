@@ -115,23 +115,8 @@ export default defineNuxtConfig({
    '@vite-pwa/nuxt',
     ],
 
-    router: {
-    extendRoutes(routes, resolve) {
-      routes.push({
-        name: "blog",
-        path: "/blog/:pagination?",
-        component: resolve(__dirname, "pages/blog/index.vue")
-      });
-      routes.push({
-        name: "friends",
-        path: "/friends:pagination?",
-        component: resolve(__dirname, "pages/friends/index.vue")
-      });
-    }
-  },
-
  content: {
-   documentDriven: false,
+  // documentDriven: false,
    watch: {
      ws: {
        port: 4000,

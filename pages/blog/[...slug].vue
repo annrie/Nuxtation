@@ -10,7 +10,7 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // which is an array of documeents that come before and after the current document
   let surround = queryContent<BlogPost>()
     .only(["_path", "title", "description"])
-    .sort({ publishedAt: 1 })
+    .sort({ publishedAt: -1 })
     .findSurround(cleanPath, { before: 1, after: 1 });
 
   return {
@@ -35,7 +35,7 @@ definePageMeta({
   layout: false,
 });
 // replaceHyphenを自分で定義する
-const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
+const replaceHyphen = (tags: string) => tags.replace(/-/g, " ");
 // set the meta
 useHead({
   title: data?.value?.article.title,
@@ -76,7 +76,7 @@ useHead({
               itemtype="https://schema.org/WebPage"
               itemprop="item"
               itemid="/blog/"
-              to="/blog/"
+              href="/blog/"
             >
               <span itemprop="name">Blog</span></NuxtLink
             >

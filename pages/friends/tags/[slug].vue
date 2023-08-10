@@ -11,7 +11,8 @@ const {
   params: { slug },
 } = useRoute() as { params: Params };
 
-const filtered = slug.split(",");
+// const filtered = slug.split(",");
+const filtered = ref(slug ? (Array.isArray(slug) ? slug : slug.split(",")) : []);
 console.log({ filtered });
 
 // const topic: string = replaceHyphen(slug as string)
@@ -85,7 +86,7 @@ useHead({
                 <ul class="tags-list">
                   <li class="tags" v-for="(tag, n) in article.tags" :key="n">
                     <NuxtLink :to="`/friends/tags/${tag}`">
-                      {{ replaceHyphen(tag) }}
+                      {{ tag }}
                     </NuxtLink>
                   </li>
                 </ul>

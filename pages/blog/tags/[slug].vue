@@ -11,10 +11,11 @@ const {
   params: { slug },
 } = useRoute() as { params: Params };
 
-const filtered = slug.split(",");
+// const filtered = slug.split(",");
+const filtered = ref(slug ? (Array.isArray(slug) ? slug : slug.split(",")) : []);
 console.log({ filtered });
 
-const topic: string = replaceHyphen(slug as string);
+//const topic: string = replaceHyphen(slug as string);
 const title: string = `Blog Posts on ${slug}`;
 const description: string = `Here's a list of all my blog posts with the ${slug} tag`;
 const section: Sections = "blog";
@@ -50,7 +51,7 @@ useHead({
       <ContentList
         path="/blog"
         :query="{
-          only: ['title', 'description', 'tags', '_path', 'img'],
+          only:['title', 'description', 'tags', '_path', 'img'],
           where: [
             {
               tags: {
@@ -62,7 +63,7 @@ useHead({
         }"
       >
         <!-- Default list slot -->
-        <template v-slot="{ list }">
+        <template v-slot=" { list }">
           <ul class="mx-auto max-w-800px">
             <li
               v-for="article in list"
@@ -83,7 +84,7 @@ useHead({
                 <ul class="tags-list">
                   <li class="tags" v-for="(tag, n) in article.tags" :key="n">
                     <NuxtLink :to="`/blog/tags/${tag}`">
-                      {{ replaceHyphen(tag) }}
+                      {{ tag }}
                     </NuxtLink>
                   </li>
                 </ul>

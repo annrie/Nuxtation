@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 // tag list state
 // const expanded = ref(false);
 // replaceHyphenを自分で定義する
-const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
+const replaceHyphen:any = (tag: string) => tag.replace(/-/g, " ");
 
 // helper function to flatten tags array
 const flatten = (tags: Array<any>, key = "tags") => {
@@ -69,7 +69,7 @@ console.log({ articleTags });
         :to="`/${section}/tags/${tag}`"
         class="rounded-md font-header bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-1.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
       >
-        {{ replaceHyphen(tag) }}
+        {{ tag }}
       </NuxtLink>
     </li>
   </ul>

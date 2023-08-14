@@ -42,7 +42,7 @@ const props = defineProps(["type"]);
   @apply border rounded-lg flex bg-hex-1f2937 border-slate-200 my-8 p-4 pt-20px text-slate-500 gap-2 items-start;
 }
 details summary {
-  @apply cursor-pointer flex font-semibold leading-tight lt-md: w-280px;
+  @apply cursor-pointer flex font-semibold leading-tight lt-md:w-280px;
 }
 
 details {

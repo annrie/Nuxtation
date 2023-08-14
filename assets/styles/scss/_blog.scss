@@ -16,10 +16,10 @@
 }
 
 .linkButton {
-@apply bg-hex-108775 rounded-5px text-white text-lg py-[1rem] px-2rem inline-block;
+@apply bg-green rounded-5px text-white text-lg py-[1rem] px-[2rem] inline-block;
 }
 .linkButton:hover {
-   @apply  opacity-80 text-light-700;
+   @apply  opacity-80 text-dark-700;
 }
 .blogCard {
   box-shadow: 0 4px 16px 0 rgba(0,0,0,0.2);

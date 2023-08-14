@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 const props = defineProps({
   currentPage: {
     type: Number,
@@ -40,8 +39,8 @@ const prevLink = computed(() => {
 });
 </script>
 
-<template name="blog">
-  <div class="pagination-list text-white">
+<template>
+  <div class="pagination-list dark:text-white">
     <!-- Chevron -->
     <nuxt-link
       v-show="currentPage > 1"
@@ -83,7 +82,7 @@ const prevLink = computed(() => {
       ><IconsChevronDown class="transform -rotate-90 h-6 w-6" width="24" height="24"
     /></nuxt-link>
   </div>
-  </template>
+</template>
 
 <style scoped lang="scss">
 .pagination {
@@ -91,28 +90,28 @@ const prevLink = computed(() => {
 }
 
 a {
-  @apply bg-transparent border-solid border-dark-50 border-1 rounded-1/2 h-3rem my-0 mx-0.5rem text-center px-0 pt-6px pb-1px text-2xl w-3rem inline-block dark: border-white hover: bg-sky-500;
+  @apply bg-transparent border-solid border-dark-50 border-1 rounded-1/2 h-3rem my-0 mx-0.5rem text-center px-0 pt-6px pb-1px text-2xl w-3rem inline-block dark:border-white hover:bg-sky-500;
 }
 
 a[aria-current="page"] {
-  @apply bg-sky-500 text-dark-300 hover: (text-sky-900 bg-sky-100);
+  @apply bg-sky-500 text-dark-300 hover:(text-sky-900 bg-sky-100);
+}
+.pagination-item.active {
+  @apply bg-jis-blue:50 text-white;
 }
 .pagination-list {
   @apply flex flex-row w-full items-center justify-center;
 }
-.pagination-item.active {
-  @apply bg-brand_primary text-background;
-}
 .pagination-item {
-  @apply rounded-md border border-typography_primary px-2 py-1 mx-1 w-8 text-center h-full;
+  @apply rounded-md border border-black px-2 py-1 mx-1 w-8 text-center h-full;
 }
 .pagination-item:not(.active):hover {
-  @apply bg-brand_primary/25;
+  @apply  text-sky-900 bg-sky-100;
 }
 .pagination-extra {
   @apply w-8 text-lg leading-lg text-center;
 }
 .pagination-icon {
-  @apply w-10 text-center;
+  @apply w-10 text-center hover:bg-alert:25;
 }
 </style>

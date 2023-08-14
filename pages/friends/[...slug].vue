@@ -5,10 +5,12 @@ const { path } = useRoute();
 const cleanPath = path.replace(/\/$/, "");
 const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // fetch document where the document path matches with the cuurent route
-  let article = queryContent<FriendsPost>().where({ _path: cleanPath }).findOne();
+  let article = queryContent<FriendsPost>("friends")
+    .where({ _path: cleanPath })
+    .findOne();
   // get the surround information,
   // which is an array of documeents that come before and after the current document
-  let surround = queryContent<FriendsPost>()
+  let surround = queryContent<FriendsPost>("friends")
     .only(["_path", "title", "description"])
     .sort({ publishedAt: -1 })
     .findSurround(cleanPath, { before: 1, after: 1 });
@@ -75,11 +77,11 @@ useHead({
               itemscope
               itemtype="https://schema.org/WebPage"
               itemprop="item"
-              itemid="/blog/"
-              href="/blog/"
+              itemid="/friends/"
+              href="/friends/"
             >
-              <span itemprop="name">FriendsBlog</span></NuxtLink
-            >
+              <span itemprop="name">FriendsBlog</span>
+            </NuxtLink>
             <meta itemprop="position" content="2" />
           </li>
           <li class="separator">&gt;</li>
@@ -111,7 +113,7 @@ useHead({
           </li>
         </ul>
         <!-- Social Share -->
-        <div class="flex mt-6 md:mt-0 justify-center">
+        <div class="flex mt-6 mb-6 md:mt-0 justify-center">
           <NavShareIcons
             :headline="data?.article.title"
             :excerpt="data?.article.description"
@@ -145,9 +147,9 @@ useHead({
           </ContentRenderer>
         </article>
       </section>
-        <footer>
+      <footer>
         <!-- Author -->
-          <div
+        <div
           v-if="data?.article.author !== null"
           class="container mx-auto my-8 grid gap-x-4 lt-md:grid-cols-1 tb:grid-cols-2"
         >
@@ -170,7 +172,7 @@ useHead({
           <!-- </NuxtLink> -->
         </div>
       </footer>
-    <!-- PrevNext Component -->
+      <!-- PrevNext Component -->
       <PrevNext :prev="prev" :next="next" />
       <!-- </div> -->
     </NuxtLayout>
@@ -207,7 +209,7 @@ aside {
 }
 
 .aside {
-  @apply: sticky pt-10 z-10;
+  @apply: sticky pt-10 z-0;
   @screen sm {
     top: calc(theme("spacing.nav_sm") - 4.3rem);
   }

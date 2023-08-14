@@ -36,7 +36,7 @@
                   class="flex rounded-lg font-normal my-4 text-white text-sm gap-2 uppercase"
                 >
                   <li
-                    class="rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 align-text-bottom underline dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5"
+                    class="rounded-md bg-jis-blue/30 border-zinc-600 text-sm p-2 py-1 text-dark-700 align-text-bottom  dark:(bg-slate-100 text-slate-700)"
                     v-for="(tag, n) in article.tags"
                     :key="n"
                   >

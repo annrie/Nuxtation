@@ -25,17 +25,13 @@ body {
   #main.home {
     @apply mt-200px;
 
-    @include tb(max) {
-      @apply mt-70px;
+    @screen lt-tb {
+      @apply mt-150px;
     }
   }
 
   #main:not(.home) {
     @apply mt-100px;
-
-    @include tb(max) {
-      @apply mt-70px;
-    }
   }
 }
 

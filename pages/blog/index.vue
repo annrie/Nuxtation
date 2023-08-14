@@ -2,12 +2,12 @@
 import type { BlogPost, Sections } from "~/types";
 
 definePageMeta({
-  layout: false,
+  layout:'blog',
 });
 
 // Find the number of blogs present
 const blogCountLimit = 6;
-const { data } = await useAsyncData(`content-/blog`, async () => {
+const { data } = await useAsyncData(`content-blog`, async () => {
   const _posts = await queryContent("/blog").only("title").find();
   return Math.ceil(_posts.length / blogCountLimit);
 });
@@ -30,36 +30,27 @@ useHead({
 </script>
 <template>
   <div class="article-list">
-<NuxtLayout name="blog">
-  <BlogHero />
-    <section class="page-section">
-      <Tags :section="section" />
+      <BlogHero />
+      <section class="page-section">
+        <Tags :section="section" />
         <ContentQuery
-        path="/blog"
-        :only="[
-          'title',
-          'description',
-          'tags',
-          '_path',
-          'img',
-         'publishedAt',
-          ]"
-        :limit="blogCountLimit"
-        :sort="{ publishedAt: -1 }"
-        v-slot="{ data }"
-      >
-      <BlogList :data="data" />
-       </ContentQuery>
-      <BlogPagination
-        v-if="data && data > 1"
-        class="mt-8"
-        :currentPage="1"
-        :totalPages="data"
-        :nextPage="data > 1"
-        baseUrl="/blog/"
-        pageUrl="/blog/page/"
-      />
+          path="/blog"
+          :only="['title', 'description', 'tags', '_path', 'img', 'publishedAt']"
+          :limit="blogCountLimit"
+          :sort="{ publishedAt: -1 }"
+          v-slot="{ data }"
+        >
+          <BlogList :data="data" />
+        </ContentQuery>
+        <Pagination
+          v-if="data && data > 1"
+          class="mt-8"
+          :currentPage="1"
+          :totalPages="data"
+          :nextPage="data > 1"
+          baseUrl="/blog/"
+          pageUrl="/blog/page/"
+        />
       </section>
-  </NuxtLayout>
-  </div>
-</template>
+   </div>
+   </template>

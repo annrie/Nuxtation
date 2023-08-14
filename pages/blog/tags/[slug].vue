@@ -35,8 +35,8 @@ useHead({
     <!-- <NuxtLayout> -->
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold lt-md: text-3xl tb:text-5xl">
-          All articles with "{{ slug }}"
+        <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
+          All articles with <span underline underline-wavy uppercase>{{ slug }}</span>
         </h1>
         <p class="font-medium text-lg">Here's a list of all my great articles</p>
       </div>
@@ -76,7 +76,7 @@ useHead({
                 :alt="article.title"
                 fit="cover"
                 format="avif,webp"
-                class="rounded transition-all duration-400 hover:scale-100"
+                class="rounded-5px transition-all duration-400"
               />
               <header class="pl-0.8rem lt-md:(text-center mt-4) tb:text-left">
                 <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
@@ -108,14 +108,15 @@ useHead({
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 
   .tags {
-    @apply text-sm p-0 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;
+    @apply  rounded-5px text-sm p-0 py-1 text-dark-700 dark:text-jis-blue:500 hover:-translate-y-0.5;
     a {
-      @apply py-1 px-0 transition-all  whitespace-nowrap hover:(bg-blue-500 underline);
+      @apply py-1 px-3 transition-all  whitespace-nowrap hover:(bg-jis-blue:50 text-white:50 underline);
     }
   }
+
   .router-link-active,
   .router-link-exact-active {
-    @apply text-white bg-blue-500 px-1;
+    @apply text-white bg-jis-blue:500 px-3;
   }
 }
 </style>

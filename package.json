@@ -78,5 +78,8 @@
   "overrides": {
     "vue": "latest",
     "@vitejs/plugin-vue": "workspace:*"
+  },
+  "resolutions": {
+    "unstrage": "1.9.0"
   }
 }

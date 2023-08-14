@@ -32,13 +32,12 @@ useHead({
 </script>
 <template>
   <div>
-    <!-- <NuxtLayout> -->
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold lt-md: text-3xl tb:text-5xl">
-          All articles with "{{ slug }}"
+        <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
+          All articles with <span underline underline-wavy uppercase>{{ slug }}</span>
         </h1>
-        <p class="font-medium text-lg">Here's a list of all friends great articles</p>
+       <p class="font-medium text-lg">Here's a list of all my friends articles</p>
       </div>
     </header>
     <section class="mx-auto max-w-3xl p-4 py-0">
@@ -70,15 +69,13 @@ useHead({
               :key="article._path"
               class="border-t border-slate-200 mt-5rem grid pt-6 items-center lt-sm:grid-cols-1 tb:grid-cols-[1fr_2fr] first-of-type:border-none"
             >
-              <!-- <NuxtLink :to="article._path"> -->
-              <!-- <div class="wrapper"> -->
               <nuxt-picture
                 provider="imgix"
                 :src="article.img"
                 :alt="article.title"
                 fit="fill"
                 format="avif,webp"
-                class="rounded h-auto w-auto transition-all duration-400 lt-sm:(scale-150 block text-center) tb:scale-100 hover:scale-100"
+                class="rounded-5px transition-all duration-400"
               />
               <header pl-0.8rem lt-md:(text-center mt-4) tb:text-left>
                 <h1 class="font-semibold text-2xl">{{ article.title }}</h1>
@@ -92,8 +89,6 @@ useHead({
                 </ul>
                 <NuxtLink :to="article._path" class="linkButton">Read More</NuxtLink>
               </header>
-              <!-- </div> -->
-              <!-- </NuxtLink> -->
             </li>
           </ul>
         </template>
@@ -103,7 +98,6 @@ useHead({
         </template>
       </ContentList>
     </section>
-    <!-- </NuxtLayout> -->
   </div>
 </template>
 
@@ -120,10 +114,9 @@ useHead({
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md: (text-base justify-center);
 
   .tags {
-    @apply text-sm p-2 py-1 text-dark-700 dark: text-blue-500 hover:-translate-y-0.5;
-
+    @apply text-sm p-0 py-1 text-dark-700 dark:text-jis-blue:500 hover:-translate-y-0.5;
     a {
-      @apply py-1 px-1 transition-all whitespace-nowrap hover: (bg-blue-500 underline -translate-y-0.5);
+      @apply py-1 px-3 transition-all  whitespace-nowrap hover:(bg-jis-blue:50 text-white:50 underline);
     }
   }
 

@@ -10,9 +10,7 @@
       <MdiArrowUpCircleOutline
         text-red
         text-36px
-        hover:(bg-transparent
-        text-jis-blue-400)
-      />
+        />
     </a>
   </div>
 </template>
@@ -47,11 +45,11 @@ onMounted(() => {
 .scrolltop {
   @apply rounded-lg flex p-2 right-4 bottom-6 z-3 delay-400 fixed justify-center items-center invisible;
 
-  &:hover {
-    @apply bg-transparent text-light-300;
+   /* &:hover {
+    @apply bg-transparent text-jis-blue-400;
   }
 
-  /* & .icon {
+ & .icon {
     @apply text-24;
   } */
 }

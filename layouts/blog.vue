@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { appName } from "~/constants";
-
 useHead({
   htmlAttrs: {
     lang: "ja",

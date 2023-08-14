@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Twitter from "../icons/twitter.vue";
 import X from "../icons/x.vue";
 import Pinterest from "../icons/pinterest.vue";

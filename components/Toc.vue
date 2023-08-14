@@ -1,7 +1,6 @@
 <!-- ./components/Toc.vue -->
 
 <script setup lang="ts">
-// define links prop
 defineProps({
   links: {
     type: Array as PropType<Link[]>,

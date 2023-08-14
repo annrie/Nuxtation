@@ -32,7 +32,7 @@ defineProps<{
       <TagsList
         :tags="item.tags"
         section="blog"
-        class="sm:justify-center lg:justify-start hover:text-red"
+        class="sm:justify-center lg:justify-start hover:text-jis-red"
       />
 
       <p>

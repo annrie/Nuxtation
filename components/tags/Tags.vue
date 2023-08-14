@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 // tag list state
 // const expanded = ref(false);
 // replaceHyphenを自分で定義する
-const replaceHyphen:any = (tag: string) => tag.replace(/-/g, " ");
+const replaceHyphen: any = (tag: string) => tag.replace(/-/g, " ");
 
 // helper function to flatten tags array
 const flatten = (tags: Array<any>, key = "tags") => {
@@ -48,7 +48,7 @@ const sortedArticleTags = articleTags.sort();
 console.log({ articleTags });
 </script>
 <template>
-  <!-- <div class="mx-auto <md:max-w-full tb:max-w-full"> -->
+  <!-- <div class="mx-auto lt-md:max-w-full tb:max-w-full"> -->
   <!-- <div class="mx-auto max-w-3xl" :class="{ active: expanded }"> -->
   <!-- Button to toggle expand -->
   <!-- <button @click="toggleExpand" class="w-icon w-auto cta">
@@ -67,7 +67,7 @@ console.log({ articleTags });
     >
       <NuxtLink
         :to="`/${section}/tags/${tag}`"
-        class="rounded-md font-header bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-1.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
+        class="rounded-md bg-slate-600 px-2 transition-all whitespace-nowrap sm:text-base !py-1.5 tb:text-lg hover:bg-blue-500 hover:-translate-y-0.5"
       >
         {{ tag }}
       </NuxtLink>
@@ -77,6 +77,7 @@ console.log({ articleTags });
 
 <style scoped lang="scss">
 .router-link-exact-active {
-  @apply bg-blue-500;
+  //@apply bg-jis-blue-500;
+  background-color:#1971ff // jis-blue
 }
 </style>

@@ -14,7 +14,7 @@
         </li>
       </ol>
     </div>
-    <header class="p-12 sm:mt-15 <md:prose-sm tb:mt-30 tb:prose-lg">
+    <header class="p-1 sm:mt-5 lt-md:prose-sm tb:mt-20 tb:prose-lg">
       <div class="mx-auto text-center w-full">
         <h1 class="font-extrabold mb-4 text-5xl dark:text-light-500">All Blog Posts</h1>
         <p class="font-medium text-lg dark:text-light-500">Here's a list of all my blog posts</p>

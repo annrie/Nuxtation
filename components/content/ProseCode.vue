@@ -1,6 +1,3 @@
-//
-https://github.com/Mokkapps/nuxt-content-v2-custom-code-blocks/blob/master/components/content/ProseCode.vue
-
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
 const { copy, copied, text } = useClipboard();
@@ -104,10 +101,10 @@ const languageColor = computed(() =>
 
 <style scoped lang="scss">
 .container {
-  @apply w-full my-6 rounded-md bg-black border border-jis-blue/50 pt-8 relative overflow-hidden;
+  @apply w-full my-6 rounded-md bg-black border border-jis-blue:50 pt-8 relative overflow-hidden;
 }
 :slotted(pre) {
-  @apply flex overflow-x-auto px-4 pb-4 text-sm text-white/75;
+  @apply flex overflow-x-auto px-4 pb-4 text-sm text-white;
   counter-reset: lines;
 }
 @screen md {
@@ -133,7 +130,7 @@ const languageColor = computed(() =>
   @apply text-white;
 }
 .filename-text {
-  @apply absolute top-0 left-4 py-1 text-xs text-white/75;
+  @apply absolute top-0 left-4 py-1 text-xs text-white:75;
 }
 @screen md {
   .filename-text {
@@ -146,7 +143,7 @@ const languageColor = computed(() =>
 :slotted(pre code) {
   @apply w-full flex flex-col;
 }
-:slotted(pre code .line) {
+:slotted(pre code .line >*) {
   @apply inline-table;
   min-height: 1rem;
 }
@@ -158,8 +155,7 @@ const languageColor = computed(() =>
   color: rgba(115, 138, 148, 0.4);
 }
 :slotted(pre code .highlight) {
-  @apply block -mx-4 pr-4 pl-3 border-l-4 border-jis-blue;
+  @apply block -mx-4 pr-4 pl-3 border-l-4 border-jis-blue bg-neutral-100:10;
   content: "";
-  background-color: #363b46;
 }
 </style>

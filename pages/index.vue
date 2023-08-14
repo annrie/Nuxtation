@@ -32,9 +32,9 @@ const { data: friendsPost } = await useAsyncData("friends-home", () =>
 
 useHead({
   title: "Home",
-  // bodyAttrs: {
-  //   class: 'body-class'
-  // }
+//   bodyAttrs: {
+//     class: 'home'
+ //  }
 });
 </script>
 <template>

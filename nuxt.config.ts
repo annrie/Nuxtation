@@ -127,12 +127,10 @@ export default defineNuxtConfig({
        // theme:'dark-plus',
        theme: {
         // Default theme (same as single string)
-        default: 'github-light',
+        default: 'monokai',
         // Theme used if `html.dark`
         dark: 'github-dark',
-        // Theme used if `html.sepia`
-        sepia: 'monokai'
-      },
+       },
        preload: [
          'bash',
          'javascript',
@@ -171,13 +169,9 @@ export default defineNuxtConfig({
    rules: [],
  },
 
- // windicss: {
- //   analyze: true
- // },
-
  experimental: {
    restoreState: true,
-   payloadExtraction: false,
+   payloadExtraction: true,
    viewTransition: true,
    inlineSSRStyles: true,
    renderJsonPayloads: true,
@@ -262,11 +256,14 @@ export default defineNuxtConfig({
      data: { driver: 'vercelKV'}
    },
    prerender: {
-     routes: ['/blog','/friends','/cat','/sitemap.xml'],
-     crawlLinks: false,
-     routes: ['/'],
+  //   routes: ['/blog','/friends','/cat','/sitemap.xml'],
+     crawlLinks: true,
+  //   routes: ['/'],
     //  ignore: ['/blog','/friends','/cat']
    },
+   future: {
+    nativeSWR: true,
+    },
  },
 
  // compressPublicAssets: {
@@ -275,9 +272,9 @@ export default defineNuxtConfig({
  // preset: 'vercel',
  routeRules: {
    // all routes will be background revalidated (ISR) at most every 60 seconds
-   '/**': { isr: 60 },
+  //  '/**': { isr: 60 },
    // this page will be generated on demand and cached permanently
-   // '/static': { isr: true }
+   '/static': { isr: true }
  },
 
  router: {

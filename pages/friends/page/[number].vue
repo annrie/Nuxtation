@@ -2,6 +2,10 @@
 const { path, params } = useRoute();
 const blogCountLimit = 6;
 
+definePageMeta({
+  layout: "blog",
+});
+
 const getPageLimit = (totalPosts: any) => {
     return Math.ceil(totalPosts / blogCountLimit);
 };
@@ -16,11 +20,11 @@ let pageNo;
 try {
     pageNo = getPageNumber();
     if (isNaN(pageNo) || pageNo <= 0) {
-        router.replace('/blog/');
+        router.replace('/friends/');
     }
 } catch (err) {
     console.error(err);
-    router.replace('/blog/');
+    router.replace('/friends/');
 }
 </script>
 
@@ -45,21 +49,21 @@ try {
           >
         <!-- In case it is found -->
        <template v-slot="{ data }">
-          <BlogHero />
-          <BlogList :data="data" />
+          <FriendsHero />
+          <FriendsList :data="data" />
               <ContentQuery
-                        path="/blog"
+                        path="/friends"
                         :only="['title']"
                     >
                         <template v-slot="{ data }">
-                            <BlogPagination
+                            <Pagination
                                 v-if="getPageLimit(data.length) > 1"
                                 class="mt-8"
                                 :currentPage="getPageNumber()"
                                 :totalPages="getPageLimit(data.length)"
                                 :nextPage="getPageNumber() < getPageLimit(data.length)"
-                                baseUrl="/blog/"
-                                pageUrl="/blog/page/"
+                                baseUrl="/friends/"
+                                pageUrl="/friends/page/"
                             />
                         </template>
                         <template #not-found>
@@ -70,7 +74,7 @@ try {
               <!-- In case not found -->
               <template #not-found>
                   <!-- Show hero and message -->
-                  <BlogHero />
+                  <FriendsHero />
                   <FriendsList id="main" :data="[]" message="There are no posts in this page, maybe try searching on another one."/>
                </template>
         </ContentQuery>

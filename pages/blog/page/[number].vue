@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const { path, params } = useRoute();
+
 const blogCountLimit = 6;
+
+definePageMeta({
+  layout: "blog",
+});
 
 const getPageLimit = (totalPosts: any) => {
     return Math.ceil(totalPosts / blogCountLimit);
@@ -49,7 +54,7 @@ try {
                         :only="['title']"
                     >
                         <template v-slot="{ data }">
-                            <BlogPagination
+                            <Pagination
                                 v-if="getPageLimit(data.length) > 1"
                                 class="mt-8"
                                 :currentPage="getPageNumber()"

@@ -10,10 +10,10 @@ const replaceHyphen = (tag: string) => tag.replace(/-/g, " ");
 </script>
 
 <template>
-  <ul class="flex flex-wrap text-sm text-blue-600 uppercase dark:text-blue-500 gap-2">
+  <ul class="flex flex-wrap text-sm text-jis-blue-600 uppercase dark:text-jis-blue-500 gap-2">
     <li v-for="tag in tags" :key="tag" class="mr-5px underline whitespace-nowrap mt-1">
       <NuxtLink :to="`/${section}/tags/${tag}`">
-        {{ replaceHyphen(tag) }}
+        {{ tag }}
       </NuxtLink>
     </li>
   </ul>

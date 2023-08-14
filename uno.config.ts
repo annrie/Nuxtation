@@ -137,15 +137,29 @@ export default defineConfig({
       }
     },
   ],
-  rules: [[/^m-(\d)$/, ([, d]) => ({margin: `${d / 4}rem`})]],
+  rules: [
+    [/^m-([\.\d]+)$/, ([_, num]) => ({ margin: `${num}px` })],
+    [/^p-([\.\d]+)$/, ([_, num]) => ({ padding: `${num}px` })],
+  ],
+
   transformers: [transformerDirectives({
     applyVariable: ['--at-apply', '--uno-apply', '--uno'],
   }), transformerVariantGroup(),transformerCompileClass(),transformerAttributifyJsx()],
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
-	blocklist: ['container'],
-  content: [
-    './src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}',
+	//blocklist: ['container'],
+  content: {
+    pipeline: {
+      include: [
+        // the default
+        /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
+        // include js/ts files
+        'src/**/*.{js,ts}',
+      ],
+      // exclude files
+      // exclude: []
+    }
+//     './src/**/*.{html,js,ts,jsx,tsx,vue,svelte,astro}',
     // './node_modules/@formkit/themes/dist/unocss/genesis/index.cjs',
-  ],
+  },
   // plugins: [FormKitVariants],
 })

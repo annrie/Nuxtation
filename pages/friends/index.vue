@@ -2,12 +2,12 @@
 import type { FriendsPost, Sections } from "~/types";
 
 definePageMeta({
-  layout: false,
+  layout: "blog",
 });
 
 // Find the number of blogs present
 const blogCountLimit = 6;
-const { data } = await useAsyncData(`content-/friends`, async () => {
+const { data } = await useAsyncData(`content-friends`, async () => {
   const _posts = await queryContent("/friends").only("title").find();
   return Math.ceil(_posts.length / blogCountLimit);
 });
@@ -30,11 +30,10 @@ useHead({
 </script>
 <template>
   <div class="article-list">
-<NuxtLayout name="blog">
-  <FriendsHero />
+    <FriendsHero />
     <section class="page-section">
       <Tags :section="section" />
-        <ContentQuery
+      <ContentQuery
         path="/friends"
         :only="[
           'title',
@@ -42,18 +41,18 @@ useHead({
           'tags',
           '_path',
           'img',
-         'author',
-         'publishedAt',
-         'name',
-         'photo',
-          ]"
+          'author',
+          'publishedAt',
+          'name',
+          'photo',
+        ]"
         :limit="blogCountLimit"
-        :sort=" [{ publishedAt: -1, $sensitivity: 'base' }]"
+        :sort="[{ publishedAt: -1, $sensitivity: 'base' }]"
         v-slot="{ data }"
       >
-      <FriendsList :data="data" />
-       </ContentQuery>
-      <FriendsPagination
+        <FriendsList :data="data" />
+      </ContentQuery>
+      <Pagination
         v-if="data && data > 1"
         class="mt-8"
         :currentPage="1"
@@ -62,7 +61,6 @@ useHead({
         baseUrl="/friends/"
         pageUrl="/friends/page/"
       />
-      </section>
-  </NuxtLayout>
+    </section>
   </div>
 </template>

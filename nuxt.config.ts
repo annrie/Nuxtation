@@ -268,10 +268,39 @@ export default defineNuxtConfig({
  // },
  // preset: 'vercel',
  routeRules: {
+      "/**": {
+      swr: true,
+    },
+      "/**": {
+      static: true,
+    },
+  "/blog/**": {
+      swr: true,
+      // or
+      //cache: {
+       // maxAge: 60 * 60
+      //}
+    },
+     "/blog/**": {
+      static: true,
+    },
+   "/friends/**": {
+      swr: true,
+    },
+    "/friends/**": {
+      static: true,
+    },
+    "/cat/**": {
+      swr: false,
+    },
+    "/cat/**": {
+      static: true,
+    },
+  '/assets/**': { headers: { 'cache-control': 's-maxage=0' } },
    // all routes will be background revalidated (ISR) at most every 60 seconds
   //  '/**': { isr: 60 },
    // this page will be generated on demand and cached permanently
-   '/static': { isr: true }
+  // '/static': { isr: true }
  },
 
  router: {

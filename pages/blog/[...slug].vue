@@ -11,7 +11,7 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   let surround = queryContent<BlogPost>("blog")
     .only(["_path", "title", "description"])
     .sort({ publishedAt: -1 })
-    .findSurround(cleanPath, { before: 1, after: 1 });
+    .findSurround(path, { before: 1, after: 1 });
 
   return {
     article: await article,

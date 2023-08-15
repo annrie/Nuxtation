@@ -29,9 +29,8 @@ const { data: friendsPost } = await useAsyncData("friends-home", () =>
     .find()
 );
 
-
 useHead({
-  title: "Home",
+  title: null,
 //   bodyAttrs: {
 //     class: 'home'
  //  }

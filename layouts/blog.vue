@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { appName } from "~/constants";
 useHead({
+  titleTemplate: (productCategory) => {
+    return productCategory
+      ? `${productCategory} - Nuxtation`
+      : 'Nuxtation'
+  },
   htmlAttrs: {
     lang: "ja",
   },

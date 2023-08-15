@@ -28,7 +28,7 @@
     "@julr/unocss-preset-heropatterns": "^1.0.2",
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@mdi/js": "^7.2.96",
-    "@nuxt/content": "^2.7.2",
+    "@nuxt/content": "npm:@nuxt/content-edge@2.7.2-28197541.2e5c7f7",
     "@nuxt/devtools": "npm:@nuxt/devtools-edge@latest",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/color-mode": "^3.3.0",

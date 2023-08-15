@@ -5,15 +5,13 @@ const { path } = useRoute();
 const cleanPath = path.replace(/\/$/, "");
 const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
   // fetch document where the document path matches with the cuurent route
-  let article = queryContent<FriendsPost>("friends")
-    .where({ _path: cleanPath })
-    .findOne();
+  let article = queryContent<FriendsPost>("friends").where({ _path: cleanPath }).findOne();
   // get the surround information,
   // which is an array of documeents that come before and after the current document
   let surround = queryContent<FriendsPost>("friends")
     .only(["_path", "title", "description"])
     .sort({ publishedAt: -1 })
-    .findSurround(cleanPath, { before: 1, after: 1 });
+    .findSurround(path, { before: 1, after: 1 });
 
   return {
     article: await article,

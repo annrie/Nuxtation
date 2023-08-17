@@ -261,14 +261,13 @@
   },
     "editor.inlayHints.enabled": "off",
     "editor.guides.indentation": false, // new API for indent guides. The old one is: "editor.renderIndentGuides": false,
-  "editor.guides.bracketPairs": false, // advanced indent guides (But only for brackets) (This does not turn off editor.bracketPairColorization)
     "editor.wordWrap": "on",
     "diffEditor.wordWrap": "off",
     "workbench.colorCustomizations": {
         "editor.lineHighlightBorder": "#9fced11f",
         "editor.lineHighlightBackground": "#1073cf2d"
     },
-  "workbench.colorTheme": "Vitesse Light",
+  "workbench.colorTheme": "Vitesse Dark",
   "vue.features.codeActions.enable": false,
   "scss.validate": false,
 	"css.validate": false,

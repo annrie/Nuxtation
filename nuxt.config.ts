@@ -4,13 +4,6 @@ import { pwaVite } from './config/pwa';
 import { appDescription } from './constants/index';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-const description = 'annrieのNuxt,Vueを中心にしたポートフォリオサイト';
-const ogTitle = 'annrie\'s Nuxtation';
-const twitterDescription = 'Nuxt, contentで構築したブログサイト';
-const twitterCard = 'https://nuxtation.vercel.app/twitter-card.png';
-const mySite = 'https://nuxtation.vercel.app/';
-const siteName = 'Nuxtation';
-
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
@@ -37,48 +30,6 @@ export default defineNuxtConfig({
  //   }
  // },
  app: {
-   head: {
-        link: [
-        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-        { rel: 'icon', type: 'image/svg+xml', href: '/nuxt.svg' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-      ],
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: appDescription },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-
-       { property: "og:site_name", content: siteName },
-       { property: "og:type", content: "website" },
-       { property: "og:url", content: mySite },
-       { property: "og:title", content: siteName },
-       { property: "og:description", content: description },
-       { property: "og:image",  content: twitterCard },
-       { name: "twitter:site", content: '@muraie_jin' },
-       { name: "twitter:card", content: "summary_large_image" },
-       {
-         name: 'twitter:url',
-         content: mySite,
-       },
-       {
-         name: 'twitter:title',
-         content: ogTitle,
-       },
-       {
-         name: 'twitter:description',
-         content: twitterDescription,
-       },
-       {
-         name: 'twitter:image',
-         content: twitterCard,
-       },
-       // { property: "article:publisher", content: "FacebookURL" },
-       // { property: "fb:app_id", content: "FacebookAppID" },
-       // { name: "msapplication-TileColor", content:"#ffffff" },
-       // { name: "msapplication-TileImage", content: "/ms-icon-144x144.png" },
-       // { name: "theme-color", content: "#ffffff" },
-     ],
-   },
    pageTransition: { name: 'page', mode: 'out-in' },
    layoutTransition: { name: 'fade-layout', mode: 'in-out' },
  },
@@ -233,14 +184,15 @@ export default defineNuxtConfig({
  },
 
  sourcemap: {
-   "server": true,
+   "server": false,
    "client": false,
  },
 
  robots: {
    UserAgent: '*',
    Disallow: '',
-   Allow: '/'
+   Allow: '/',
+   Allow: '/api/og/*'
  },
 
  nitro: {
@@ -253,7 +205,7 @@ export default defineNuxtConfig({
      data: { driver: 'vercelKV'}
    },
    prerender: {
-  //   routes: ['/blog','/friends','/cat','/sitemap.xml'],
+     routes: ['/blog','/friends','/cat'],
      crawlLinks: true,
   //   routes: ['/'],
     //  ignore: ['/blog','/friends','/cat']
@@ -347,10 +299,14 @@ export default defineNuxtConfig({
  devtools: {
    // Enable devtools (default: true)
    enabled: true,
+
+  timeline: {
+   enabled: true,
    // VS Code Server options
    // vscode: {},
    // ...other options
- },
+    },
+  },
 
  plugins: ['~/plugins/vueapperrorhandler.ts', '~/plugins/format-date.ts', '~/plugins/utils.ts', '~/plugins/youtube.client.ts']
 })

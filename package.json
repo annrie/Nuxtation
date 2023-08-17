@@ -29,7 +29,7 @@
     "@kevinmarrec/nuxt-pwa": "^0.17.0",
     "@mdi/js": "^7.2.96",
     "@nuxt/content": "npm:@nuxt/content-edge@2.7.2-28197541.2e5c7f7",
-    "@nuxt/devtools": "npm:@nuxt/devtools-edge@latest",
+    "@nuxt/devtools": "^0.8.0",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/color-mode": "^3.3.0",
     "@pinia/nuxt": "^0.4.11",
@@ -73,6 +73,7 @@
     "@nuxtjs/robots": "^3.0.0",
     "@unocss/eslint-config": "^0.55.0",
     "@vercel/kv": "latest",
+    "@vercel/og": "^0.5.11",
     "ipx": "^1.2.0"
   },
   "overrides": {

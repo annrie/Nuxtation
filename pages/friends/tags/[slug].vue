@@ -22,6 +22,7 @@ const section: Sections = "friends";
 
 definePageMeta({
   key: (route) => route.fullPath,
+  layout: "blog",
 });
 
 // set meta for page
@@ -37,7 +38,7 @@ useHead({
         <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
           All articles with <span underline underline-wavy uppercase>{{ slug }}</span>
         </h1>
-       <p class="font-medium text-lg">Here's a list of all my friends articles</p>
+        <p class="font-medium text-lg">Here's a list of all my friends articles</p>
       </div>
     </header>
     <section class="mx-auto max-w-3xl p-4 py-0">

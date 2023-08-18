@@ -31,51 +31,51 @@ const { data: friendsPost } = await useAsyncData("friends-home", () =>
 
 useHead({
   title: null,
-//   bodyAttrs: {
-//     class: 'home'
- //  }
+  //   bodyAttrs: {
+  //     class: 'home'
+  //  }
 });
 </script>
 <template>
-  <div>
-     <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
-    <TopAppSubtitle id="featured-posts">注目記事</TopAppSubtitle>
-    <TopFeaturedSection
-      v-if="featuredPost !== null"
-      aria-labelledby="featured-posts"
-      :item="featuredPost"
+<div>
+  <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
+  <TopAppSubtitle id="featured-posts">注目記事</TopAppSubtitle>
+  <TopFeaturedSection
+    v-if="featuredPost !== null"
+    aria-labelledby="featured-posts"
+    :item="featuredPost"
+    section="blog"
+  />
+
+  <section aria-labelledby="recent-posts">
+    <NuxtLink to="/blog">
+      <TopAppSubtitle id="recent-posts">最近のブログ記事</TopAppSubtitle>
+    </NuxtLink>
+    <TopCardList
+      id="recnet-posts"
+      v-if="articles !== null"
+      :list="articles"
       section="blog"
     />
+  </section>
 
-    <section aria-labelledby="recent-posts">
-      <NuxtLink to="/blog">
-        <TopAppSubtitle id="recent-posts">最近のブログ記事</TopAppSubtitle>
-      </NuxtLink>
-      <TopCardList
-        id="recnet-posts"
-        v-if="articles !== null"
-        :list="articles"
-        section="blog"
-      />
-    </section>
+  <section aria-labelledby="recent-friends">
+    <NuxtLink to="/friends">
+      <TopAppSubtitle id="recent-friends">最新のメンバー記事</TopAppSubtitle>
+    </NuxtLink>
 
-    <section aria-labelledby="recent-friends">
-      <NuxtLink to="/friends">
-        <TopAppSubtitle id="recent-friends">最新のメンバー記事</TopAppSubtitle>
-      </NuxtLink>
+    <TopCardList
+      id="recent-friends"
+      v-if="friendsPost !== null"
+      :list="friendsPost"
+      section="friends"
+    />
+  </section>
 
-      <TopCardList
-        id="recent-friends"
-        v-if="friendsPost !== null"
-        :list="friendsPost"
-        section="friends"
-      />
-    </section>
-
-    <!-- <template #fallback>
-      <div op50 italic>
-        <span animate-pulse>Loading...</span>
-      </div>
-    </template> -->
+  <!-- <template #fallback>
+    <div op50 italic>
+      <span animate-pulse>Loading...</span>
+    </div>
+  </template> -->
   </div>
 </template>

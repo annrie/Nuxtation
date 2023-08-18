@@ -205,7 +205,7 @@ export default defineNuxtConfig({
      data: { driver: 'vercelKV'}
    },
    prerender: {
-     routes: ['/blog','/friends','/cat'],
+     routes: ['/','/blog','/friends','/cat'],
      crawlLinks: true,
   //   routes: ['/'],
     //  ignore: ['/blog','/friends','/cat']

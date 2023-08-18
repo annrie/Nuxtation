@@ -22,6 +22,7 @@ const section: Sections = "blog";
 
 definePageMeta({
   key: (route) => route.fullPath,
+  layout: "blog",
 });
 
 // set meta for page
@@ -32,7 +33,6 @@ useHead({
 </script>
 <template>
   <div>
-    <!-- <NuxtLayout> -->
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
         <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
@@ -51,7 +51,7 @@ useHead({
       <ContentList
         path="/blog"
         :query="{
-          only:['title', 'description', 'tags', '_path', 'img'],
+          only: ['title', 'description', 'tags', '_path', 'img'],
           where: [
             {
               tags: {
@@ -63,7 +63,7 @@ useHead({
         }"
       >
         <!-- Default list slot -->
-        <template v-slot=" { list }">
+        <template v-slot="{ list }">
           <ul class="mx-auto max-w-800px">
             <li
               v-for="article in list"
@@ -108,7 +108,7 @@ useHead({
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 
   .tags {
-    @apply  rounded-5px text-sm p-0 py-1 text-dark-700 dark:text-jis-blue:500 hover:-translate-y-0.5;
+    @apply rounded-5px text-sm p-0 py-1 text-dark-700 dark:text-jis-blue:500 hover:-translate-y-0.5;
     a {
       @apply py-1 px-3 transition-all  whitespace-nowrap hover:(bg-jis-blue:50 text-white:50 underline);
     }

@@ -2,7 +2,8 @@
 const description = ref("annrieのNuxt,Vueを中心にしたポートフォリオサイト");
 const ogTitle = ref("annrie's Nuxtation");
 const twitterDescription = ref("Nuxt, contentで構築したブログサイト");
-const twitterCard = ref("https://nuxtation.vercel.app/twitter-card.png");
+const twitterCard = ref("summary_large_image");
+const twitterImage = ref("https://nuxtation.vercel.app/twitter-card.png");
 const twitterSite = ref("@muraie_jin");
 const mySite = ref("https://nuxtation.vercel.app/");
 const siteName = ref("Nuxtation");
@@ -43,12 +44,12 @@ useSeoMeta({
   ogUrl: () => `${mySite.value}`,
   ogTitle,
   ogDescription: () => `${description.value}`,
-  ogImage: () => `${twitterCard.value}`,
+  ogImage: () => `${twitterImage.value}`,
   twitterSite: () => `${twitterSite.value}`,
-  twitterCard: () => `summary_large_image`,
+  twitterCard,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
-  twitterImage: () => `${twitterCard.value}`,
+  twitterImage: () => `${twitterImage.value}`,
   appleMobileWebAppStatusBarStyle,
 });
 </script>

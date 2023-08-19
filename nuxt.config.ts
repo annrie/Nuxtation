@@ -9,7 +9,7 @@ export default defineNuxtConfig({
  ssr: process.env.NODE_ENV !== "development",
 
  typescript: {
-   shim:false
+   shim:true
  },
 
  vue: {
@@ -64,7 +64,7 @@ export default defineNuxtConfig({
     ],
 
  content: {
-  // documentDriven: false,
+  documentDriven: false,
    watch: {
      ws: {
        port: 4000,
@@ -118,7 +118,7 @@ export default defineNuxtConfig({
  },
 
  experimental: {
-   restoreState: true,
+//    restoreState: true,
    payloadExtraction: true,
    viewTransition: true,
    inlineSSRStyles: true,
@@ -205,10 +205,10 @@ export default defineNuxtConfig({
      data: { driver: 'vercelKV'}
    },
    prerender: {
-     routes: ['/','/blog','/friends','/cat'],
-     crawlLinks: true,
-  //   routes: ['/'],
-    //  ignore: ['/blog','/friends','/cat']
+//      crawlLinks: true,
+//      routes: [ '/sitemap.xml', '/robots.txt'],
+     routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
+//      ignore: ['/api']
    },
    future: {
     nativeSWR: true,
@@ -218,42 +218,42 @@ export default defineNuxtConfig({
  // compressPublicAssets: {
  //   brotli: true
  // },
- // preset: 'vercel',
- routeRules: {
-      "/**": {
-      swr: true,
-    },
-      "/**": {
-      static: true,
-    },
-  "/blog/**": {
-      swr: true,
-      // or
-      //cache: {
-       // maxAge: 60 * 60
-      //}
-    },
-     "/blog/**": {
-      static: true,
-    },
-   "/friends/**": {
-      swr: true,
-    },
-    "/friends/**": {
-      static: true,
-    },
-    "/cat/**": {
-      swr: false,
-    },
-    "/cat/**": {
-      static: true,
-    },
-  '/assets/**': { headers: { 'cache-control': 's-maxage=0' } },
-   // all routes will be background revalidated (ISR) at most every 60 seconds
-  //  '/**': { isr: 60 },
-   // this page will be generated on demand and cached permanently
-  // '/static': { isr: true }
- },
+ preset: 'vercel_edge',
+//  routeRules: {
+//       "/**": {
+//       swr: true,
+//     },
+//       "/**": {
+//       static: true,
+//     },
+//   "/blog/**": {
+//       swr: true,
+//       // or
+//       //cache: {
+//        // maxAge: 60 * 60
+//       //}
+//     },
+//      "/blog/**": {
+//       static: true,
+//     },
+//    "/friends/**": {
+//       swr: true,
+//     },
+//     "/friends/**": {
+//       static: true,
+//     },
+//     "/cat/**": {
+//       swr: false,
+//     },
+//     "/cat/**": {
+//       static: true,
+//     },
+//   '/assets/**': { headers: { 'cache-control': 's-maxage=0' } },
+//    // all routes will be background revalidated (ISR) at most every 60 seconds
+//    '/**': { isr: 60 },
+//    // this page will be generated on demand and cached permanently
+//   '/static': { isr: true }
+//  },
 
  router: {
    options: {

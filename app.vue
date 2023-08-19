@@ -6,7 +6,7 @@ const twitterCard = ref("https://nuxtation.vercel.app/twitter-card.png");
 const twitterSite = ref("@muraie_jin");
 const mySite = ref("https://nuxtation.vercel.app/");
 const siteName = ref("Nuxtation");
-const appleMobileWebAppStatusBarStyle = ref("black-translucent");
+const appleMobileWebAppStatusBarStyle = "black-translucent";
 
 useHead({
   titleTemplate: (productCategory) => {
@@ -46,7 +46,6 @@ useSeoMeta({
   ogImage: () => `${twitterCard.value}`,
   twitterSite: () => `${twitterSite.value}`,
   twitterCard: () => `summary_large_image`,
-  twitterUrl: () => `${mySite.value}`,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
   twitterImage: () => `${twitterCard.value}`,

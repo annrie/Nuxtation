@@ -34,6 +34,7 @@
     "@nuxtjs/color-mode": "^3.3.0",
     "@pinia/nuxt": "^0.4.11",
     "@playwright/test": "^1.37.0",
+    "@types/node": "^20.5.1",
     "@unocss/inspector": "^0.55.0",
     "@unocss/nuxt": "^0.55.0",
     "@unocss/postcss": "^0.55.0",

@@ -12,7 +12,7 @@ const { data } = await useAsyncData(`content-friends`, async () => {
   return Math.ceil(_posts.length / blogCountLimit);
 });
 
-const title: string = `All Friends Blog Posts({pageNumber})`;
+const title: string = `All Friends Blog Posts`;
 const description: string = "Here's a list of all my friends posts";
 const section: Sections = "friends";
 

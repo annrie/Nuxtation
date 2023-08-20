@@ -46,7 +46,7 @@ useSeoMeta({
   ogDescription: () => `${description.value}`,
   ogImage: () => `${twitterImage.value}`,
   twitterSite: () => `${twitterSite.value}`,
-  twitterCard,
+  twitterCard: () => `${twitterCard.value}`,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
   twitterImage: () => `${twitterImage.value}`,
@@ -55,7 +55,13 @@ useSeoMeta({
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <div>
+    <NuxtLoadingIndicator />
+    <!-- <VitePwaManifest /> -->
+    <TheTopBar />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <AppFooter />
+  </div>
 </template>

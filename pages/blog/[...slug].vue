@@ -70,7 +70,7 @@ useHead({
             itemtype="https://schema.org/WebPage"
             itemprop="item"
             itemid="/blog/"
-            href="/blog/"
+            href="/blog/page/"
           >
             <span itemprop="name">Blog</span></NuxtLink
           >

@@ -35,7 +35,7 @@ useHead({
   <div>
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
+        <h1 class="font-extrabold mt-10 mb-5 !line-height-15 lt-md:text-3xl tb:text-5xl">
           All articles with <span underline underline-wavy uppercase>{{ slug }}</span>
         </h1>
         <p class="font-medium text-lg">Here's a list of all my great articles</p>
@@ -44,7 +44,7 @@ useHead({
     <section class="mx-auto max-w-3xl p-4 py-0">
       <Tags :section="section" />
       <NuxtLink to="/blog">
-        <p class="ml-1 text-2xl underline">Back to All Articles</p>
+        <p class="ml-1 text-2xl underline text-center">Back to All Articles</p>
       </NuxtLink>
       <!-- Render list of all articles in ./content/blog using `path` -->
       <!-- Provide only defined fields in the `:query` prop -->
@@ -104,6 +104,15 @@ useHead({
 </template>
 
 <style scope lang="scss">
+// html,
+// body {
+//   height: 100%;
+// }
+
+// body > div footer {
+//   position: sticky;
+//   top: 100vh;
+// }
 .tags-list {
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 

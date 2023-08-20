@@ -49,7 +49,7 @@ try {
     <!-- In case it is found -->
     <template v-slot="{ data }">
       <FriendsHero />
-      <FriendsList :data="data" />
+      <FriendsList v-slot="{ data }" />
       <ContentQuery path="/friends" :only="['title']">
         <template v-slot="{ data }">
           <Pagination
@@ -72,7 +72,6 @@ try {
       <!-- Show hero and message -->
       <FriendsHero />
       <FriendsList
-        id="main"
         :data="[]"
         message="There are no posts in this page, maybe try searching on another one."
       />

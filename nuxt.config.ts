@@ -180,12 +180,12 @@ export default defineNuxtConfig({
  colorMode: {
    classSuffix: '',
    preference: 'system',
-   // fallback: 'light',
+   fallback: 'dark',
  },
 
  sourcemap: {
    "server": false,
-   "client": false,
+   "client": true,
  },
 
  robots: {
@@ -257,7 +257,7 @@ export default defineNuxtConfig({
 
  router: {
    options: {
-     strict: false
+     strict: true
    }
  },
 

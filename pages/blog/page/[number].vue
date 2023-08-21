@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Sections } from "~/types";
 const { path, params } = useRoute();
 
 definePageMeta({
@@ -10,6 +11,8 @@ const blogCountLimit = 6;
 const getPageLimit = (totalPosts: any) => {
   return Math.ceil(totalPosts / blogCountLimit);
 };
+
+const section: Sections = "blog";
 
 const getPageNumber = () => {
   return Number((params as any).number);
@@ -30,18 +33,19 @@ try {
 </script>
 
 <template>
-<div>
-  <ContentQuery
-    path="/blog"
-    :only="['title', 'description', 'tags', '_path', 'img', 'publishedAt']"
-    :sort="{ publishedAt: -1 }"
-    :skip="blogCountLimit * (getPageNumber() - 1)"
-    :limit="blogCountLimit"
-  >
-    <!-- In case it is found -->
-    <template v-slot="{ data }">
-      <BlogHero />
-          <BlogList :data="data" />
+  <div>
+    <ContentQuery
+      path="/blog"
+      :only="['title', 'description', 'tags', '_path', 'img', 'publishedAt']"
+      :sort="{ publishedAt: -1 }"
+      :skip="blogCountLimit * (getPageNumber() - 1)"
+      :limit="blogCountLimit"
+    >
+      <!-- In case it is found -->
+      <template v-slot="{ data }">
+        <BlogHero />
+        <Tags :section="section" />
+        <BlogList :data="data" />
         <ContentQuery path="/blog" :only="['title']">
           <template v-slot="{ data }">
             <Pagination
@@ -59,15 +63,15 @@ try {
           </template>
         </ContentQuery>
       </template>
-    <!-- In case not found -->
-    <template #not-found>
-      <!-- Show hero and message -->
-      <BlogHero />
-      <BlogList
-        :data="[]"
-        message="There are no posts in this page, maybe try searching on another one."
-      />
-    </template>
-  </ContentQuery>
+      <!-- In case not found -->
+      <template #not-found>
+        <!-- Show hero and message -->
+        <BlogHero />
+        <BlogList
+          :data="[]"
+          message="There are no posts in this page, maybe try searching on another one."
+        />
+      </template>
+    </ContentQuery>
   </div>
 </template>

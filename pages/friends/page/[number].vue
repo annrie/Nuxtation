@@ -29,6 +29,7 @@ try {
 </script>
 
 <template>
+<div>
   <ContentQuery
     path="/friends"
     :only="[
@@ -49,7 +50,7 @@ try {
     <!-- In case it is found -->
     <template v-slot="{ data }">
       <FriendsHero />
-      <FriendsList v-slot="{ data }" />
+      <FriendsList :data="data" />
       <ContentQuery path="/friends" :only="['title']">
         <template v-slot="{ data }">
           <Pagination
@@ -77,4 +78,5 @@ try {
       />
     </template>
   </ContentQuery>
+  </div>
 </template>

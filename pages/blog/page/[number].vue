@@ -30,6 +30,7 @@ try {
 </script>
 
 <template>
+<div>
   <ContentQuery
     path="/blog"
     :only="['title', 'description', 'tags', '_path', 'img', 'publishedAt']"
@@ -40,8 +41,7 @@ try {
     <!-- In case it is found -->
     <template v-slot="{ data }">
       <BlogHero />
-      <Section class="!pt-0">
-        <BlogList :data="data" />
+          <BlogList :data="data" />
         <ContentQuery path="/blog" :only="['title']">
           <template v-slot="{ data }">
             <Pagination
@@ -58,8 +58,7 @@ try {
             <!-- Nothing -->
           </template>
         </ContentQuery>
-      </Section>
-    </template>
+      </template>
     <!-- In case not found -->
     <template #not-found>
       <!-- Show hero and message -->
@@ -70,4 +69,5 @@ try {
       />
     </template>
   </ContentQuery>
+  </div>
 </template>

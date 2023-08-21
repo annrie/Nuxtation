@@ -8,7 +8,7 @@ definePageMeta({
 
 // Find the number of blogs present
 const blogCountLimit = 6;
-const { data } = await useAsyncData(`content-/blog`, async () => {
+const { data } = await useAsyncData(`content-blog`, async () => {
   const _posts = await queryContent("/blog").only("title").find();
   return Math.ceil(_posts.length / blogCountLimit);
 });

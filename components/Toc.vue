@@ -15,7 +15,7 @@ interface Link {
   id?: string;
   depth?: number;
   text?: string;
-};
+}
 // flatten TOC links nested arrays to one array
 const flattenLinks = (links: Link[]) => {
   let _links = links

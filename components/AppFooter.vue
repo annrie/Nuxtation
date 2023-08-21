@@ -17,7 +17,7 @@ const thisYear = new Date().getFullYear();
 
 <style lang="scss" scoped>
 .AppFooter {
-  @apply bg-dark-500 border-slate-50 border-t-2 border-opacity-10 h-[70px] mt-120px text-center text-white py-21px px-0;
+  @apply bg-dark-500 border-slate-50 border-t-2 border-opacity-10 h-[70px] mt-20px text-center text-white py-21px px-0;
   font-weight: $FONT_WEIGHT_BASE_BOLD;
   font-size: em(12, 16);
   line-height: 1.5;

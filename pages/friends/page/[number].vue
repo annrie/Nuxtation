@@ -29,6 +29,7 @@ try {
 </script>
 
 <template>
+<div>
   <ContentQuery
     path="/friends"
     :only="[
@@ -72,10 +73,10 @@ try {
       <!-- Show hero and message -->
       <FriendsHero />
       <FriendsList
-        id="main"
         :data="[]"
         message="There are no posts in this page, maybe try searching on another one."
       />
     </template>
   </ContentQuery>
+  </div>
 </template>

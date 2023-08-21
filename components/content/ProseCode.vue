@@ -82,19 +82,19 @@ const languageColor = computed(() =>
       {{ languageText }}
     </span>
     <slot />
-      <div
-        class="bottom-container opacity-100 group-hover:md:opacity-100 md:opacity-0 transition-opacity duration-150"
-      >
-        <div class="copy-container">
-          <span class="copied-text" v-if="copied">Copied code!</span>
-          <button
-            @click="copy(code)"
-            class="p-1 text-white border rounded-md border-white hover:border-jis-blue hover:bg-jis-blue hover:text-white"
-          >
-            <IconsCheck v-if="copied" class="w-5 h-5" width="20" height="20" />
-            <IconsCopy v-else class="w-5 h-5" width="20" height="20" />
-          </button>
-        </div>
+    <div
+      class="bottom-container opacity-100 group-hover:md:opacity-100 md:opacity-0 transition-opacity duration-150"
+    >
+      <div class="copy-container">
+        <span class="copied-text" v-if="copied">Copied code!</span>
+        <button
+          @click="copy(code)"
+          class="p-1 text-white border rounded-md border-white hover:border-jis-blue hover:bg-jis-blue hover:text-white"
+        >
+          <IconsCheck v-if="copied" class="w-5 h-5" width="20" height="20" />
+          <IconsCopy v-else class="w-5 h-5" width="20" height="20" />
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -143,7 +143,7 @@ const languageColor = computed(() =>
 :slotted(pre code) {
   @apply w-full flex flex-col;
 }
-:slotted(pre code .line >*) {
+:slotted(pre code .line > *) {
   @apply inline-table;
   min-height: 1rem;
 }

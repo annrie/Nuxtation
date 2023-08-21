@@ -35,7 +35,7 @@ useHead({
   <div>
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
-        <h1 class="font-extrabold mb-5 lt-md:text-3xl tb:text-5xl">
+        <h1 class="font-extrabold mt-10 mb-5 !line-height-15 lt-md:text-3xl tb:text-5xl">
           All articles with <span underline underline-wavy uppercase>{{ slug }}</span>
         </h1>
         <p class="font-medium text-lg">Here's a list of all my friends articles</p>
@@ -46,7 +46,7 @@ useHead({
       <!-- Render list of all articles in ./content/friends using `path` -->
       <!-- Provide only defined fieldsin the `:query` prop -->
       <NuxtLink to="/friends">
-        <p class="ml-1 text-2xl underline">Back to All Articles</p>
+        <p class="ml-1 text-2xl underline text-center">Back to All Articles</p>
       </NuxtLink>
       <ContentList
         path="/friends"
@@ -103,6 +103,15 @@ useHead({
 </template>
 
 <style scoped lang="scss">
+// html,
+// body {
+//   height: 100%;
+// }
+
+// body > div footer {
+//   position: sticky;
+//   top: 100vh;
+// }
 .article-header .supporting {
   @apply font-medium text-lg;
 }

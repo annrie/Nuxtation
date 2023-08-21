@@ -3,6 +3,7 @@ import type { BlogPost, Sections } from "~/types";
 
 definePageMeta({
   layout: "blog",
+  key: (route) => route.fullPath,
 });
 
 // Find the number of blogs present
@@ -12,7 +13,7 @@ const { data } = await useAsyncData(`content-blog`, async () => {
   return Math.ceil(_posts.length / blogCountLimit);
 });
 
-// const count = await queryContent("blog").count();
+// const count = (await queryContent("blog").only([]).fetch()).length;
 // console.log(count);
 const title: string = `All Blog Posts`;
 const description: string = "Here's a list of all my blog posts";

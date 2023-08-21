@@ -46,7 +46,6 @@ export default defineNuxtConfig({
    Sitemap: 'https://nuxtation.vercel.app/sitemap.xml'
  },
 
- // plugins: ('~/plugins/youtube.client.ts'),
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
@@ -60,6 +59,7 @@ export default defineNuxtConfig({
    'nuxt-pwa-public-manifest',
    '@nuxtjs/robots',
    '@nuxt/devtools',
+   'nuxt-typed-router',
    '@vite-pwa/nuxt',
     ],
 
@@ -180,12 +180,12 @@ export default defineNuxtConfig({
  colorMode: {
    classSuffix: '',
    preference: 'system',
-   // fallback: 'light',
+   fallback: 'dark',
  },
 
  sourcemap: {
    "server": false,
-   "client": false,
+   "client": true,
  },
 
  robots: {

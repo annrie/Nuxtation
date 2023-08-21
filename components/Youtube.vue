@@ -1,6 +1,6 @@
 <template>
   <div class="youtube">
-      <lite-youtube :videoid="id" :playlabel="label" />
+    <lite-youtube :videoid="id" :playlabel="label" />
   </div>
 </template>
 <script setup lang="ts">

@@ -267,7 +267,7 @@
         "editor.lineHighlightBorder": "#9fced11f",
         "editor.lineHighlightBackground": "#1073cf2d"
     },
-  "workbench.colorTheme": "Vitesse Light",
+  "workbench.colorTheme": "Vitesse Dark",
   "vue.features.codeActions.enable": false,
   "scss.validate": false,
 	"css.validate": false,

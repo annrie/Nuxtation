@@ -217,25 +217,26 @@ export default defineNuxtConfig({
   storage: {
      data: { driver: 'vercelKV'}
    },
-   prerender: {
-     crawlLinks: true,
-//      routes: [ '/sitemap.xml', '/robots.txt'],
-    //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
-     routes: ['/','/blog','/friends','/cat','/sitemap.xml'],
-//      ignore: ['/api']
-   },
-   future: {
-    nativeSWR: true,
-    },
+//    prerender: {
+//      crawlLinks: true,
+// //      routes: [ '/sitemap.xml', '/robots.txt'],
+//     //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
+//      routes: ['/','/blog','/friends','/cat','/sitemap.xml'],
+// //      ignore: ['/api']
+//    },
+//    future: {
+//     nativeSWR: true,
+//     },
  },
 
  $production: {
   routeRules: {
-    "/**": { isr: true },
+  "/modify-headers-route": { headers: { 'x-magic-of': 'nuxt and vercel' }},
+   "/**": { isr: true },
   },
   $development: {
     routeRules: {
-      "/**": { isr: false },
+       "/**": { isr: false },
     },
   },
 },

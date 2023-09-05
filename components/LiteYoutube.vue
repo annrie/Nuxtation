@@ -1,6 +1,6 @@
 <template>
   <div class="youtube">
-    <lite-youtube :videoid="id" :playlabel="label" />
+    <lite-youtube :videoid="id" :playlabel="label"></lite-youtube>
   </div>
 </template>
 <script setup lang="ts">
@@ -9,8 +9,10 @@ defineProps<{
   label: String;
 }>();
 
+//fetchOnServer: false;
+
 onMounted(() => {
-  const target = document.getElementsByClassName("youtube");
+  const target = document.getElementsByClassName("youtube")[0];
   setTimeout(() => {
     // target を unknown 型にキャストする
     const unknownTarget = target as unknown;

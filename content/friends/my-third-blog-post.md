@@ -9,8 +9,6 @@ author:
   bio: 'All about Alexandra and where she works and what she does'
   photo: 'friends/alexandra.jpeg'
 tags: [ javascript, web development ]
-genres:
- - 時代・伝奇
 ---
 ## Welcome to my third blog post using content module
 

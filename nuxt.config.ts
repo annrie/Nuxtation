@@ -1,25 +1,29 @@
 import {defineNuxtConfig} from 'nuxt/config'
 import { NavigationGuard } from 'vue-router';
-import { pwaVite } from './config/pwa';
+// import { pwaVite } from './config/pwa';
 import { appDescription } from './constants/index';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
+// ssr: false, // for generate
+
+  telemetry:false,
 
  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        isolatedModules: false,
+        useDefineForClassFields: false
+      }
+    },
    shim:true
  },
 
- vue: {
-   defineModel: true,
-   propsDestructure: true
- },
-
- // devServer: {
- //   host:'0',
- // },
+//  devServer: {
+//    host:'0',
+//  },
  // serverMiddleware: {
  //   '/_ipx': '@/server/middleware/ipx.js'
  // },
@@ -34,18 +38,23 @@ export default defineNuxtConfig({
    layoutTransition: { name: 'fade-layout', mode: 'in-out' },
  },
 
- pwa: {
-   workbox: {
-     enabled: true,
-   }
- },
-
- components: {
-   global: true,
-   dirs: ['~/components'],
-   Sitemap: 'https://nuxtation.vercel.app/sitemap.xml'
- },
-
+// components: [
+//  {
+// //    'path': '~/components/content',
+//    global: true,
+//    dirs: ['~/components']
+//   },
+//   //  { path: '~/node_modules/@nuxt/content/dist/runtime/components/', prefix: 'mdc' },
+//   //  { path: '~/node_modules/nuxt-mdc/dist/runtime/components/', prefix: 'nuxt-mdc' },
+// //   '~/components' ,
+// //   path: '~/components/content',
+// //   pathPrefix: true,
+// //   level: 1,
+// //  },
+// //  '~/components',
+// //  { path: '~/node_modules/@nuxt/content/dist/runtime/components/', prefix: 'mdc' },
+//   // Sitemap: 'https://nuxtation.vercel.app/sitemap.xml',
+//  ],
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
@@ -55,16 +64,15 @@ export default defineNuxtConfig({
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
-   '@kevinmarrec/nuxt-pwa',
-   'nuxt-pwa-public-manifest',
    '@nuxtjs/robots',
    '@nuxt/devtools',
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
-    ],
+   'nuxt-og-image',
+      ],
 
  content: {
-  documentDriven: false,
+  documentDriven: true,
    watch: {
      ws: {
        port: 4000,
@@ -124,6 +132,10 @@ export default defineNuxtConfig({
    inlineSSRStyles: true,
    renderJsonPayloads: true,
    typedPages: true,
+   headNext: true,
+   asyncContext: true,
+   clientFallback: true,
+   polyfillVueUseHead: false,
  },
 
  css: [
@@ -185,7 +197,7 @@ export default defineNuxtConfig({
 
  sourcemap: {
    "server": false,
-   "client": true,
+   "client": false,
  },
 
  robots: {
@@ -196,6 +208,7 @@ export default defineNuxtConfig({
  },
 
  nitro: {
+//    preset: 'service-worker', // for generate
   esbuild: {
     options: {
       target: 'esnext',
@@ -205,9 +218,10 @@ export default defineNuxtConfig({
      data: { driver: 'vercelKV'}
    },
    prerender: {
-//      crawlLinks: true,
+     crawlLinks: true,
 //      routes: [ '/sitemap.xml', '/robots.txt'],
-     routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
+    //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
+     routes: ['/','/blog','/friends','/cat','/sitemap.xml'],
 //      ignore: ['/api']
    },
    future: {
@@ -215,6 +229,16 @@ export default defineNuxtConfig({
     },
  },
 
+ $production: {
+  routeRules: {
+    "/**": { isr: true },
+  },
+  $development: {
+    routeRules: {
+      "/**": { isr: false },
+    },
+  },
+},
  // compressPublicAssets: {
  //   brotli: true
  // },
@@ -261,17 +285,16 @@ export default defineNuxtConfig({
    }
  },
 
- build: {
-   transpile: ['lite-youtube'],
+vue: {
+  defineModel: true,
+//   propsDestructure: true
+   compilerOptions: {
+     isCustomElement: (tag) => ['lite-youtube'].includes(tag),
+    //  isCustomElement: (tag) => tag.includes(['lite-youtube']),
+   },
  },
 
  vite: {
-   vue: {
-     script: {
-       defineModel: true,
-       propsDestructure: true
-     }
-   },
   css: {
     preprocessorOptions: {
       charset: false,
@@ -285,16 +308,64 @@ export default defineNuxtConfig({
       usePolling: true,
     }
   },
-},
+  $client: {
+    build: {
+      rollupOptions: {
+        output: {
+          chunkFileNames: '_nuxt/[hash].js',
+          assetFileNames: '_nuxt/[hash][extname]',
+          entryFileNames: '_nuxt/[hash].js',
+        },
+      },
+    },
+  },
+ },
 
- vue: {
-     compilerOptions: {
-      "types": ["vite-plugin-pages/client"],
-       isCustomElement: tag => ['lite-youtube'].includes(tag),
-     }
-   },
-
- pwaVite,
+//  pwaVite,
+  pwa: {
+    registerType: 'autoUpdate',
+    manifest: {
+      name: 'Nuxt Vite PWA',
+      short_name: 'NuxtVitePWA',
+      theme_color: '#ffffff',
+      icons: [
+        {
+          src: 'pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+        {
+          src: 'pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
+        },
+      ],
+      id: "/?source=NuxtVitePWA",
+      start_url: "/?source=NuxtVitePWA"
+    },
+    workbox: {
+      navigateFallback: '/',
+      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+    },
+    client: {
+      installPrompt: true,
+      // you don't need to include this: only for testing purposes
+      // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+      periodicSyncForUpdates: 20,
+    },
+    devOptions: {
+      enabled: true,
+      suppressWarnings: true,
+      navigateFallbackAllowlist: [/^\/$/],
+      type: 'module',
+    },
+  },
 
  devtools: {
    // Enable devtools (default: true)
@@ -309,4 +380,4 @@ export default defineNuxtConfig({
   },
 
  plugins: ['~/plugins/vueapperrorhandler.ts', '~/plugins/format-date.ts', '~/plugins/utils.ts', '~/plugins/youtube.client.ts']
-})
+});

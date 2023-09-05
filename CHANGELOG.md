@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/annrie/Nuxtation/compare/v2.3.0...v2.4.0) (2023-09-05)
+
+
+### 機能の追加、変更、削除
+
+* 🎸 add cache control ([0f49014](https://github.com/annrie/Nuxtation/commit/0f49014b80e45da15cd71dac4feeccefc856aebe))
+
+
+### ドキュメント
+
+* ✏️ README.mdを現状に沿うように変更 ([81e02ea](https://github.com/annrie/Nuxtation/commit/81e02ead4610555d120c174fcfcff5ff334d78f3))
+
+
+### バグ修正
+
+* 🐛 'findSurround' was incorrectly specified ([d43eee2](https://github.com/annrie/Nuxtation/commit/d43eee2250428d2223399f5d0801aaa80269da75))
+* 🐛 add "unstrage":"1.9.0" at "resolutions" section ([3573c1b](https://github.com/annrie/Nuxtation/commit/3573c1b69f877b48949a8f145386d15f2e4051c1))
+* 🐛 add Tags on [number].vue ([5ca8d0c](https://github.com/annrie/Nuxtation/commit/5ca8d0c9f08ba6e725125e812ed62e0828cbdf7c))
+* 🐛 for build failed ([86ee0fa](https://github.com/annrie/Nuxtation/commit/86ee0fa34b057c7dc9fd5f6c0ae920027617b8bc))
+* 🐛 formatting error ([cfa71bf](https://github.com/annrie/Nuxtation/commit/cfa71bf55587ed0cc9183d8e078ed4b0c2f93546))
+* 🐛 router:options:strict:false ([a9447fe](https://github.com/annrie/Nuxtation/commit/a9447feb2c598403fd11a5bc9cafa5f6e8149e5e))
+* 🐛 title tag on <head> ([e659a1c](https://github.com/annrie/Nuxtation/commit/e659a1c25e810d0d8f084ae30bc2944d7128a0bf))
+* 🐛 twitterCard value ([73e0ffd](https://github.com/annrie/Nuxtation/commit/73e0ffd1300f3cf42f6161041339c4bd4498583d))
+
 ## [2.3.0](https://github.com/annrie/Nuxtation/compare/v2.2.0...v2.3.0) (2023-08-14)
 
 ## [2.2.0](https://github.com/annrie/Nuxtation/compare/v2.1.0...v2.2.0) (2023-08-10)

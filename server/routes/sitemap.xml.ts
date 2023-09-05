@@ -6,7 +6,7 @@ import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 
-const BASE_URL = 'https://nuxtation.phantomoon.com'
+const BASE_URL = 'https://nuxtation.vercel.app'
 
 export default defineEventHandler(async (event) => {
   const sitemap = new SitemapStream({ hostname: BASE_URL })

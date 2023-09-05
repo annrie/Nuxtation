@@ -9,9 +9,6 @@ author:
   bio: 'All about Peter and what he does and where he works'
   photo: 'friends/peter.jpeg'
 tags: [ nuxtjs, javascript ]
-genres:
- - SF
- - 短編集
 ---
 
 Welcome to my first blog post using content module

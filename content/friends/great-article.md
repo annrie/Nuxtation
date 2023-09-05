@@ -9,8 +9,6 @@ author:
  bio: 'All about Maria and where she works and what she does'
  photo: 'friends/maria.jpeg'
 tags: [web development]
-genres:
- - SF
 ---
 ## Hello this article is great
 

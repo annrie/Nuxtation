@@ -10,10 +10,6 @@ author:
   bio: 'All about Choi and where he works and what he does'
   photo: 'friends/choi.jpeg'
 tags: [web development]
-genres:
- - 冒険・サスペンス
- - 短編集
-
 ---
 
 ## This article is all about Lorem Ipsum

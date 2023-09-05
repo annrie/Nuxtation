@@ -9,9 +9,6 @@ author:
   bio:  'All about Choi and where he works and what he does'
   photo:  'friends/choi.jpeg'
 tags: [ nuxtjs, web development ]
-genres:
-    - SF
-
 ---
 
 ## what do you know and what do we not know

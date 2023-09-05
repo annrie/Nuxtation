@@ -1,5 +1,9 @@
 <template>
-  <button @click="handleError">Clear errors</button>
+  <div>
+    <NuxtLayout name="default">
+      <button @click="handleError">Clear errors</button>
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup>

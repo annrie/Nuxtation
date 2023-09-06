@@ -217,29 +217,29 @@ export default defineNuxtConfig({
   storage: {
      data: { driver: 'vercelKV'}
    },
-//    prerender: {
-//      crawlLinks: true,
-// //      routes: [ '/sitemap.xml', '/robots.txt'],
-//     //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
+   prerender: {
+     crawlLinks: true,
+//      routes: [ '/sitemap.xml', '/robots.txt'],
+    //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
 //      routes: ['/','/blog','/friends','/cat','/sitemap.xml'],
-// //      ignore: ['/api']
-//    },
+//      ignore: ['/api']
+   },
 //    future: {
 //     nativeSWR: true,
 //     },
  },
 
- $production: {
-  routeRules: {
-  "/modify-headers-route": { headers: { 'x-magic-of': 'nuxt and vercel' }},
-   "/**": { isr: true },
-  },
-  $development: {
-    routeRules: {
-       "/**": { isr: false },
-    },
-  },
-},
+//  $production: {
+//   routeRules: {
+//   "/modify-headers-route": { headers: { 'x-magic-of': 'nuxt and vercel' }},
+//    "/**": { isr: true },
+//   },
+// },
+//   $development: {
+//     routeRules: {
+//        "/**": { isr: false },
+//     },
+//   },
  // compressPublicAssets: {
  //   brotli: true
  // },
@@ -309,17 +309,17 @@ vue: {
       usePolling: true,
     }
   },
-  $client: {
-    build: {
-      rollupOptions: {
-        output: {
-          chunkFileNames: '_nuxt/[hash].js',
-          assetFileNames: '_nuxt/[hash][extname]',
-          entryFileNames: '_nuxt/[hash].js',
-        },
-      },
-    },
-  },
+//   $client: {
+//     build: {
+//       rollupOptions: {
+//         output: {
+//           chunkFileNames: '_nuxt/[hash].js',
+//           assetFileNames: '_nuxt/[hash][extname]',
+//           entryFileNames: '_nuxt/[hash].js',
+//         },
+//       },
+//     },
+//   },
  },
 
 //  pwaVite,

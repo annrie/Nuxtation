@@ -7,7 +7,6 @@ import { appDescription } from './constants/index';
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
-// ssr: false, // for generate
 
   telemetry:false,
 
@@ -206,17 +205,16 @@ export default defineNuxtConfig({
    Allow: '/',
    Allow: '/api/og/*'
  },
-
  nitro: {
-//    preset: 'service-worker', // for generate
+//    preset: 'node-server', // for generate
   esbuild: {
     options: {
       target: 'esnext',
     },
   },
-  storage: {
-     data: { driver: 'vercelKV'}
-   },
+//   storage: {
+//      data: { driver: 'vercelKV'}
+//    },
    prerender: {
      crawlLinks: true,
 //      routes: [ '/sitemap.xml', '/robots.txt'],
@@ -243,7 +241,7 @@ export default defineNuxtConfig({
  // compressPublicAssets: {
  //   brotli: true
  // },
- preset: 'vercel_edge',
+//  preset: 'vercel_edge',
 //  routeRules: {
 //       "/**": {
 //       swr: true,

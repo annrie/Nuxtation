@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.3](https://github.com/annrie/Nuxtation/compare/v2.3.2...v2.3.3) (2023-09-13)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 update to nuxt@3.7.2 ([8221d25](https://github.com/annrie/Nuxtation/commit/8221d250b3a5bb9cb647484fde7fcea239b49276))
+
+
+### バグ修正
+
+* 🐛 :slotted(pre code) wordの区切りがなくなっていた。 ([9ea22dd](https://github.com/annrie/Nuxtation/commit/9ea22ddb81462b90d878e9ba9e2c0a97e4e77333))
+
+### [2.3.2](https://github.com/annrie/Nuxtation/compare/v2.3.1...v2.3.2) (2023-09-13)
+
 ### [2.3.1](https://github.com/annrie/Nuxtation/compare/v2.4.0...v2.3.1) (2023-09-06)
 
 

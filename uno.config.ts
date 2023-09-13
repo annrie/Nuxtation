@@ -13,6 +13,8 @@ import transformerCompileClass from '@unocss/transformer-compile-class'
 import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
 import { presetHeroPatterns } from '@julr/unocss-preset-heropatterns'
 import { presetExtra } from 'unocss-preset-extra';
+import extractorMdc from '@unocss/extractor-mdc';
+
 // const FormKitVariants = require('@formkit/themes/unocss')
 
 export default defineConfig({
@@ -145,7 +147,10 @@ export default defineConfig({
   transformers: [transformerDirectives({
     applyVariable: ['--at-apply', '--uno-apply', '--uno'],
   }), transformerVariantGroup(),transformerCompileClass(),transformerAttributifyJsx()],
-  safelist: 'prose prose-sm m-auto text-left'.split(' '),
+  extractors: [
+    extractorMdc(),
+    ],
+//   safelist: 'prose prose-sm m-auto text-left'.split(' '),
 	//blocklist: ['container'],
   content: {
     pipeline: {

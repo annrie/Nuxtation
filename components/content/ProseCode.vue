@@ -101,7 +101,7 @@ const languageColor = computed(() =>
 
 <style scoped lang="scss">
 .container {
-  @apply w-full my-6 rounded-md bg-black border border-jis-blue:50 pt-8 relative overflow-hidden;
+  @apply w-full my-6 bg-zinc-800 dark:bg-middlegray:10 rounded-md border border-jis-blue:50 pt-8 relative overflow-hidden;
 }
 :slotted(pre) {
   @apply flex overflow-x-auto px-4 pb-4 text-sm text-white;
@@ -138,13 +138,13 @@ const languageColor = computed(() =>
   }
 }
 .language-text {
-  @apply absolute right-0 top-0 bg-black text-white px-2 py-1 rounded-bl-md;
+  @apply absolute right-0 top-0 text-white px-2 py-1 rounded-bl-md;
 }
 :slotted(pre code) {
   @apply w-full flex flex-col;
 }
 :slotted(pre code .line > *) {
-  @apply inline-table;
+  @apply inline-block;
   min-height: 1rem;
 }
 :slotted(pre code .line::before) {

@@ -302,22 +302,22 @@ vue: {
       },
     },
   },
-  server: {
-    watch: {
-      usePolling: true,
-    }
+  $server: {
+//     watch: {
+//       usePolling: true,
+//     }
   },
-//   $client: {
-//     build: {
-//       rollupOptions: {
-//         output: {
-//           chunkFileNames: '_nuxt/[hash].js',
-//           assetFileNames: '_nuxt/[hash][extname]',
-//           entryFileNames: '_nuxt/[hash].js',
-//         },
-//       },
-//     },
-//   },
+  $client: {
+    build: {
+      rollupOptions: {
+        output: {
+          chunkFileNames: '_nuxt/[hash].js',
+          assetFileNames: '_nuxt/[hash][extname]',
+          entryFileNames: '_nuxt/[hash].js',
+        },
+      },
+    },
+  },
  },
 
 //  pwaVite,

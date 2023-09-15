@@ -5,3 +5,9 @@
     </main>
   </div>
 </template>
+<script setup lang="ts">
+definePageMeta({
+  redirect: "/",
+  scrollToTop: true,
+});
+</script>

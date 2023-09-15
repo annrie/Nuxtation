@@ -2,5 +2,8 @@
   "extends": [
     "@antfu",
     "@unocss"
-  ]
+  ],
+  "rules": {
+    "@unocss/blocklist": "warn"
+  }
 }

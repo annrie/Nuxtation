@@ -7,8 +7,8 @@ import { appDescription } from './constants/index';
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
-
-  telemetry:false,
+// ssr: false, // for generate
+telemetry:false,
 
  typescript: {
     tsConfig: {
@@ -71,6 +71,9 @@ export default defineNuxtConfig({
       ],
 
  content: {
+   experimental: {
+     clientDB: true
+   },
   documentDriven: true,
    watch: {
      ws: {
@@ -205,37 +208,48 @@ export default defineNuxtConfig({
    Allow: '/',
    Allow: '/api/og/*'
  },
+//  ssr: false,
+// generate: {
+//   routes: ['/blog'],
+//   },
  nitro: {
-//    preset: 'node-server', // for generate
+//    preset: 'service-worker', // for generate
   esbuild: {
     options: {
       target: 'esnext',
     },
+    plugins: [ '~/plugins/nitro.error.ts' ],
   },
-//   storage: {
-//      data: { driver: 'vercelKV'}
-//    },
+  storage: {
+     data: { driver: 'vercelKV'}
+   },
    prerender: {
      crawlLinks: true,
+     failOnError: false,
 //      routes: [ '/sitemap.xml', '/robots.txt'],
-    //  routes: ['/','/blog','/friends','/cat', '/sitemap.xml', '/robots.txt'],
-//      routes: ['/','/blog','/friends','/cat','/sitemap.xml'],
-//      ignore: ['/api']
+//      routes: [ '/sitemap.xml', '/robots.txt' ],
+//      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate 
+//      ignore: ['/blog', '/friends'],
    },
 //    future: {
 //     nativeSWR: true,
 //     },
  },
-
+// target: 'static',
 //  $production: {
 //   routeRules: {
 //   "/modify-headers-route": { headers: { 'x-magic-of': 'nuxt and vercel' }},
-//    "/**": { isr: true },
+//     routeRules: {
+//         '/': {ssr: false} ,
+//         '/blog': {ssr: false} ,
+//       '/friends': {ssr: false} ,
+//       '/cat': {ssr: false} ,
+//   },
 //   },
 // },
 //   $development: {
 //     routeRules: {
-//        "/**": { isr: false },
+//         '/': {ssr: false} ,
 //     },
 //   },
  // compressPublicAssets: {

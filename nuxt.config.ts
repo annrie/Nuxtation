@@ -7,7 +7,7 @@ import { appDescription } from './constants/index';
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
-
+// ssr: false, // for generate
 telemetry:false,
 
  typescript: {
@@ -71,6 +71,9 @@ telemetry:false,
       ],
 
  content: {
+   experimental: {
+     clientDB: true
+   },
   documentDriven: true,
    watch: {
      ws: {
@@ -205,9 +208,12 @@ telemetry:false,
    Allow: '/',
    Allow: '/api/og/*'
  },
-
+//  ssr: false,
+// generate: {
+//   routes: ['/blog'],
+//   },
  nitro: {
-   preset: 'node-server', // for generate
+//    preset: 'service-worker', // for generate
   esbuild: {
     options: {
       target: 'esnext',
@@ -222,12 +228,12 @@ telemetry:false,
      failOnError: false,
 //      routes: [ '/sitemap.xml', '/robots.txt'],
 //      routes: [ '/sitemap.xml', '/robots.txt' ],
-     routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ],
+//      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate 
 //      ignore: ['/blog', '/friends'],
    },
-   future: {
-    nativeSWR: true,
-    },
+//    future: {
+//     nativeSWR: true,
+//     },
  },
 // target: 'static',
 //  $production: {

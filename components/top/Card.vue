@@ -12,7 +12,7 @@ defineProps<{
     >
       <div class="h-full object-cover w-full">
         <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
-            <nuxt-picture
+            <NuxtPicture
                   provider="imgix"
                   :src="item.img"
                   :alt="item.title"

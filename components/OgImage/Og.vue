@@ -3,6 +3,11 @@
 defineOptions({
   inheritAttrs: false,
 });
+defineOgImage({
+  component: 'Example',
+  title: 'Welcome to my site!',
+  backgroundColor: 'bg-green-500'
+})
 const props = defineProps({
   title: String,
 });

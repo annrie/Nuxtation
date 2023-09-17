@@ -20,9 +20,9 @@ telemetry:false,
    shim:true
  },
 
-//  devServer: {
-//    host:'0',
-//  },
+ devServer: {
+   host: '',
+ },
  // serverMiddleware: {
  //   '/_ipx': '@/server/middleware/ipx.js'
  // },
@@ -68,7 +68,7 @@ telemetry:false,
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
    'nuxt-og-image',
-      ],
+  ],
 
  content: {
    experimental: {
@@ -158,38 +158,44 @@ telemetry:false,
 
  image: {
    inject: true,
-   screen: {
-     sm: 320,
-     md: 640,
-     tb: 768,
-     lg: 1024,
-     xl: 1280,
-     xxl: 1536,
+   screens: {
+     'sm': 320,
+     'md': 640,
+     'tb': 768,
+     'lg': 1024,
+     'xl': 1280,
+     'xxl': 1536,
      '2xl': 1536
    },
+   provider: 'imgix',
    imgix: {
-     baseURL: 'https://nuxtation.imgix.net/'
+     baseURL: 'https://nuxtation.imgix.net/',
+     modifiers: {
+      effect: 'sharpen:100',
+      quality: 'auto:best',
+    },
    },
    domains: [
-     'nuxtation.vercel.app'
+     'nuxtation.imgix.net',
    ],
-//     alias: {
-//       imgix: 'https://nuxtation.imgix.net/'
-//     },
+    alias: {
+      imgix: 'https://nuxtation.imgix.net/',
+    },
    // cloudinary: {
    //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
    // },
 
   presets: {
-     blog: {
+     cover: {
        modifiers: {
-         format: 'avif,webp,',
+         format: 'avif, webp',
          fit: 'cover',
          quality: '80',
        },
      },
    },
  },
+
 
  colorMode: {
    classSuffix: '',
@@ -220,15 +226,12 @@ telemetry:false,
     },
     plugins: [ '~/plugins/nitro.error.ts' ],
   },
-  storage: {
-     data: { driver: 'vercelKV'}
-   },
    prerender: {
      crawlLinks: true,
      failOnError: false,
 //      routes: [ '/sitemap.xml', '/robots.txt'],
 //      routes: [ '/sitemap.xml', '/robots.txt' ],
-//      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate 
+//      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate
 //      ignore: ['/blog', '/friends'],
    },
 //    future: {

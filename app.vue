@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useHead } from "unhead";
-// import { useSeoMeta } from "nuxt-use-seo-meta";
 
-const head = createHead();
 const description = ref("annrieのNuxt,Vueを中心にしたポートフォリオサイト");
 const ogTitle = ref("annrie's Nuxtation");
 const twitterDescription = ref("Nuxt, contentで構築したブログサイト");
 const twitterCard = "summary_large_image";
-const twitterImage = ref("https://nuxtation.vercel.app/twitter-card.png");
+// const twitterImage = ref("https://nuxtation.vercel.app/twitter-card.png");
 const twitterSite = ref("@muraie_jin");
 const mySite = ref("https://nuxtation.vercel.app/");
 const siteName = ref("Nuxtation");

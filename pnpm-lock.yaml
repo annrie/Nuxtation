@@ -25,9 +25,6 @@ dependencies:
   sharp:
     specifier: ^0.32.5
     version: 0.32.5
-  unhead:
-    specifier: ^1.4.1
-    version: 1.4.1
 
 devDependencies:
   '@antfu/eslint-config':
@@ -3490,25 +3487,18 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@unhead/dom@1.4.1:
-    resolution: {integrity: sha512-lNm51/afHrTRcQmgRudGBwceTXZ3wm8x6es4dx31Vku37J1AzVRkYIwG1hpCTIRMSxejPqm+2ydVlDHSosUxxg==}
-    dependencies:
-      '@unhead/schema': 1.4.1
-      '@unhead/shared': 1.4.1
-    dev: false
-
   /@unhead/dom@1.7.3:
     resolution: {integrity: sha512-igJ2ZxU5x4CQQQ3iM+CPOPHdjpam/Q89xIvDSE0crK11TU00WOl0bWl1yQp/EI0pyza1G3ZQ1JyDmi7OcCM9eQ==}
     dependencies:
       '@unhead/schema': 1.7.3
       '@unhead/shared': 1.7.3
 
-  /@unhead/schema@1.4.1:
-    resolution: {integrity: sha512-/TMNCSDRc3Qpc9KQJRPv/fRNiPA7YMKKKQOahbvh7DqUBbRhUtrdjJ6GTPpum8ny8d6iZGmIw61KPfYR+tz/wA==}
+  /@unhead/dom@1.7.4:
+    resolution: {integrity: sha512-xanQMtGmgikqTvDtuyJy6GXgqvUXOdrdnIyqAabpeS8goD8udxo0stzjtbT8ERbMQibzPGSGcN+Ux+MKoWzrjQ==}
     dependencies:
-      hookable: 5.5.3
-      zhead: 2.0.10
-    dev: false
+      '@unhead/schema': 1.7.4
+      '@unhead/shared': 1.7.4
+    dev: true
 
   /@unhead/schema@1.7.3:
     resolution: {integrity: sha512-w2Yvt1++bAnSmsYc7bwLTMalSbff6HFnNmlpFIjNUTSkquOg+oavm62TrgxAwq753dedDOzCXr5cUvzCswc2Yg==}
@@ -3516,22 +3506,27 @@ packages:
       hookable: 5.5.3
       zhead: 2.1.1
 
-  /@unhead/shared@1.4.1:
-    resolution: {integrity: sha512-PGqUJtXWHZCgimNS2V7PX2a8BUABCSJPQhChVnwUtCO4MmDFL/aFEmQa73MFoLj/fYZkIw0skAT5peNsU0zEdw==}
+  /@unhead/schema@1.7.4:
+    resolution: {integrity: sha512-wUL4CK0NSEm3KH4kYsiqVYQw5xBk1hpBi5tiNj0BTZgpQVrRufICdK5EHA9Fh7OIAR6tOTWwTvsf5+nK0BgQDA==}
     dependencies:
-      '@unhead/schema': 1.4.1
-    dev: false
+      hookable: 5.5.3
+      zhead: 2.1.1
 
   /@unhead/shared@1.7.3:
     resolution: {integrity: sha512-eqAn3n+T6WMecDUzdqGyedpZwT0u04pZwHEvD0bxmVen1FU6VHiL49azyv1W7MCiCHNFNAcR1py2Eolsr6+E7g==}
     dependencies:
       '@unhead/schema': 1.7.3
 
-  /@unhead/ssr@1.7.3:
-    resolution: {integrity: sha512-icN3OmrbuXd0NbqarGRa3ixeqdpQzhldTzcN3LPHpmfgN+CFVS7kI9oo5znoIjW7nZaxAUH95knyAi1+Mt6ThQ==}
+  /@unhead/shared@1.7.4:
+    resolution: {integrity: sha512-YUNA2UxAuDPnDps41BQ8aEIY5hdyvruSB1Vs3AALhRo07MxMivSq5DjNKfYr/JvRN6593RtfI1NHnP9x5M57xA==}
     dependencies:
-      '@unhead/schema': 1.7.3
-      '@unhead/shared': 1.7.3
+      '@unhead/schema': 1.7.4
+
+  /@unhead/ssr@1.7.4:
+    resolution: {integrity: sha512-2QqaHdC48XJGP9Pd0F2fblPv9/6G4IU04iZ5qLRAs6MFFmFEzrdvoooFlcwdcoH/WDGRnpYBmo+Us2nzQz1MMQ==}
+    dependencies:
+      '@unhead/schema': 1.7.4
+      '@unhead/shared': 1.7.4
 
   /@unhead/vue@1.7.3(vue@3.3.4):
     resolution: {integrity: sha512-QSy2Qsc4IurrRrvpnnNzBWL/g4ecz3eblSVJ41QwqBnaUIRdPaSY8EdobA/NR0rtWzHicV6Fy3nEYXSXSRDELQ==}
@@ -4065,9 +4060,9 @@ packages:
     peerDependencies:
       vue: '>=2.7 || >=3'
     dependencies:
-      '@unhead/dom': 1.7.3
-      '@unhead/schema': 1.7.3
-      '@unhead/ssr': 1.7.3
+      '@unhead/dom': 1.7.4
+      '@unhead/schema': 1.7.4
+      '@unhead/ssr': 1.7.4
       '@unhead/vue': 1.7.3(vue@3.3.4)
       vue: 3.3.4
     dev: true
@@ -10024,7 +10019,7 @@ packages:
       '@nuxt/vite-builder': 3.7.3(@types/node@20.5.8)(eslint@8.48.0)(less@4.2.0)(rollup@2.79.1)(sass@1.66.1)(typescript@5.2.2)(vue-tsc@1.8.8)(vue@3.3.4)
       '@types/node': 20.5.8
       '@unhead/dom': 1.7.3
-      '@unhead/ssr': 1.7.3
+      '@unhead/ssr': 1.7.4
       '@unhead/vue': 1.7.3(vue@3.3.4)
       '@vue/shared': 3.3.4
       acorn: 8.10.0
@@ -12693,15 +12688,6 @@ packages:
       node-fetch-native: 1.4.0
       pathe: 1.1.1
 
-  /unhead@1.4.1:
-    resolution: {integrity: sha512-aPl01L1N5H8UsxvPEURDUAfTvxbGT1KaT7mEn/39wBAaPrdIo+OfSBg+JZSP4r0pQsAs5XhIQAa9BC5xJWT2Kw==}
-    dependencies:
-      '@unhead/dom': 1.4.1
-      '@unhead/schema': 1.4.1
-      '@unhead/shared': 1.4.1
-      hookable: 5.5.3
-    dev: false
-
   /unhead@1.7.3:
     resolution: {integrity: sha512-6LbBOVgsr+JCmeWH9okxlBtMtFHGIECX93ySWBnposnOqzSUtnUsEgB0nVB8Qa7uozfHlmJfSBJMUeTztzPfSQ==}
     dependencies:
@@ -13995,10 +13981,6 @@ packages:
 
   /yoga-wasm-web@0.3.3:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
-
-  /zhead@2.0.10:
-    resolution: {integrity: sha512-irug8fXNKjqazkA27cFQs7C6/ZD3qNiEzLC56kDyzQART/Z9GMGfg8h2i6fb9c8ZWnIx/QgOgFJxK3A/CYHG0g==}
-    dev: false
 
   /zhead@2.1.1:
     resolution: {integrity: sha512-FRmjAFioi07R+bmL+fqbkXF/pCbC9PwcKQ8RDluC5xTaVbNBgYRQ4eKuS1C8c7Sil//UIxet/AGp7D6royoHhA==}

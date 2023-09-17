@@ -70,6 +70,7 @@
     "vue-tsc": "^1.8.8"
   },
   "dependencies": {
+    "@nuxthq/studio": "^0.14.1",
     "@nuxtjs/robots": "^3.0.0",
     "@unocss/eslint-config": "^0.55.3",
     "@vercel/og": "^0.5.11",

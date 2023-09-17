@@ -68,6 +68,7 @@ telemetry:false,
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
    'nuxt-og-image',
+   '@nuxthq/studio',
   ],
 
  content: {

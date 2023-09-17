@@ -91,12 +91,12 @@ useHead({
     </div>
 
     <header class="article-header">
-      <nuxt-picture
+      <NuxtPicture
         provider="imgix"
         :src="data?.article.img"
         :alt="data?.article.title"
         format="avif,webp"
-        preset="blog"
+        preset="cover"
         class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
       />
       <h1 class="heading">{{ data?.article.title }}</h1>

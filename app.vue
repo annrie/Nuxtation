@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { useHead } from "unhead";
 // import { useSeoMeta } from "nuxt-use-seo-meta";
 
+const head = createHead();
 const description = ref("annrieのNuxt,Vueを中心にしたポートフォリオサイト");
 const ogTitle = ref("annrie's Nuxtation");
 const twitterDescription = ref("Nuxt, contentで構築したブログサイト");
@@ -56,12 +57,12 @@ useSeoMeta({
   ogUrl: () => `${mySite.value}`,
   ogTitle,
   ogDescription: () => `${description.value}`,
-  ogImage: () => `${twitterImage.value}`,
+  // ogImage: () => `${twitterImage.value}`,
   twitterSite: () => `${twitterSite.value}`,
   twitterCard,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
-  twitterImage: () => `${twitterImage.value}`,
+  //twitterImage: () => `${twitterImage.value}`,
   appleMobileWebAppStatusBarStyle,
 });
 defineOgImage(ogImageOptions);

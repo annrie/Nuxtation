@@ -12,7 +12,7 @@ defineProps<{
     class="container bg-white mx-auto my-5 p-5 blogCard sm:items-center lg:(-mx-6 flex items-left) dark:bg-gray-900"
   >
     <NuxtLink :to="item._path" :aria-label="item.title">
-      <nuxt-picture
+      <NuxtPicture
         provider="imgix"
         :src="item.img"
         :alt="item.title"

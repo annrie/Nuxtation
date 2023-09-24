@@ -60,7 +60,15 @@ useHead({
     <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
-      <!-- Publish date -->
+       <SBreadcrumb flex>
+        <template #breadcrumb="{ to, title }">
+          <NuxtLink :to="to">
+            {{ title }}
+          </NuxtLink>
+        </template>
+      </SBreadcrumb>
+
+     <!-- Publish date -->
       <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
         $formatDate(data?.article.publishedAt)
       }}</span>

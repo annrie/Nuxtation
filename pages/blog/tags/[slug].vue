@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost, Sections } from "~/types";
+import type { Sections } from "~/types";
 
 type Params = {
   slug: string;
@@ -33,6 +33,17 @@ useHead({
 </script>
 <template>
   <div>
+    <div
+      class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+    >
+      <SBreadcrumb flex>
+        <template #breadcrumb="{ to, title }">
+          <NuxtLink :to="to">
+            {{ title }}
+          </NuxtLink>
+        </template>
+      </SBreadcrumb>
+    </div>
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
         <h1 class="font-extrabold mt-10 mb-5 !line-height-15 lt-md:text-3xl tb:text-5xl">
@@ -70,7 +81,7 @@ useHead({
               :key="article._path"
               class="container border-t border-slate-200 mt-5rem grid pt-6 items-center lt-sm:grid-cols-1 md:grid-cols-[1fr_2fr] first-of-type:border-none"
             >
-              <nuxt-picture
+              <NuxtPicture
                 provider="imgix"
                 :src="article.img"
                 :alt="article.title"

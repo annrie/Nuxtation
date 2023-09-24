@@ -45,7 +45,7 @@ useHead({
     { name: "description", content: data?.value?.article.description },
     {
       property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data?.value?.article.img}`,
+      content: `https://nuxtation.vercel.app/${data?.value?.article.img}`,
     },
     {
       property: "og:title",
@@ -60,30 +60,6 @@ useHead({
     <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
-          <meta itemprop="position" content="1" />
-        </li>
-        <li class="separator">&gt;</li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <NuxtLink
-            itemscope
-            itemtype="https://schema.org/WebPage"
-            itemprop="item"
-            itemid="/friends/"
-            to="/friends"
-          >
-            <span itemprop="name">FriendsBlog</span>
-          </NuxtLink>
-          <meta itemprop="position" content="2" />
-        </li>
-        <li class="separator">&gt;</li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name">{{ data?.article.title }}</span>
-          <meta itemprop="position" content="3" />
-        </li>
-      </ol>
       <!-- Publish date -->
       <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
         $formatDate(data?.article.publishedAt)
@@ -153,7 +129,7 @@ useHead({
             provider="imgix"
             :src="data?.article?.author?.photo"
             :alt="data?.article.title"
-            preset="blog"
+            preset="cover"
             format="avif,webp"
             fit="cover"
             class="rounded h-auto w-full transition-all duration-400 lt-md:(h-a uto text-center)"

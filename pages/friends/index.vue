@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FriendsPost, Sections } from "~/types";
+import type { Sections, ParsedContent } from "~/types";
 
 definePageMeta({
   layout: "blog",
@@ -17,11 +17,11 @@ const description: string = "Here's a list of all my friends posts";
 const section: Sections = "friends";
 
 // get tag query
-const {
-  query: { tags },
-} = useRoute();
+// const {
+//   query: { tags },
+// } = useRoute();
 
-const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
+// const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
 // set meta for page
 useHead({
   title,
@@ -50,7 +50,7 @@ useHead({
         :sort="[{ publishedAt: -1, $sensitivity: 'base' }]"
         v-slot="{ data }"
       >
-        <FriendsList :data="data" />
+        <FriendsList :data="data as ParsedContent[]" />
       </ContentQuery>
       <Pagination
         v-if="data && data > 1"

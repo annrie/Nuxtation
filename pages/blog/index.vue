@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost, Sections } from "~/types";
+import type { Sections, ParsedContent } from "~/types";
 
 definePageMeta({
   layout: "blog",
@@ -20,11 +20,11 @@ const description: string = "Here's a list of all my blog posts";
 const section: Sections = "blog";
 
 // get tag query
-const {
-  query: { tags },
-} = useRoute();
+// const {
+//   query: { tags },
+// } = useRoute();
 
-const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
+// const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
 // set meta for page
 useHead({
   title,
@@ -43,7 +43,7 @@ useHead({
         :sort="{ publishedAt: -1 }"
         v-slot="{ data }"
       >
-        <BlogList :data="data" />
+        <BlogList :data="data as ParsedContent[]" />
       </ContentQuery>
       <Pagination
         v-if="data && data > 1"

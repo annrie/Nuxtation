@@ -1,7 +1,15 @@
 import { ContentDoc } from './.nuxt/components.d';
-import type { ParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
+import type { ParsedContent as DefaultParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
 import type { VitePWAOptions } from 'vite-plugin-pwa'
 import { type Ref, type UnwrapNestedRefs } from 'vue'
+import type { StorageMeta } from 'unstorage'
+
+
+export interface ParsedContent extends DefaultParsedContent {
+  storageMeta: StorageMeta
+  prose?: boolean
+  schemaOrg: Record<string, any>
+}
 
 export type Sections = 'blog' | 'friends'
 
@@ -125,3 +133,15 @@ export interface ModuleOptions extends Partial<VitePWAOptions> {
    */
   client?: ClientOptions
 }
+import type { MicroCMSImage, MicroCMSListContent } from "microcms-js-sdk";
+import { Category } from ".";
+
+export type Blog = {
+  title?: string;
+  content?: string;
+  eyecatch?: MicroCMSImage;
+  category: (MicroCMSListContent & Category) | null;
+};
+export type Category = {
+  name?: string;
+};

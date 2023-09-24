@@ -6,7 +6,7 @@
       class="mt-3rem grid pt-0 blogCard items-center lt-md:grid-cols-1 tb:grid-cols-[1.5fr_1fr] gap-x-2"
     >
       <div>
-        <nuxt-picture
+        <NuxtPicture
           provider="imgix"
           :src="article.img"
           :alt="article.title"

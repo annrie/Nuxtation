@@ -23,7 +23,7 @@ const props = defineProps({
 });
 
 const getPageUrl = (pageNo: any) => {
-  return `${props.pageUrl}${pageNo}/`;
+  return `${props.pageUrl}${pageNo}`;
 };
 // Calculate the page range to show
 const pageRange = [
@@ -42,45 +42,45 @@ const prevLink = computed(() => {
 <template>
   <div class="pagination-list dark:text-white">
     <!-- Chevron -->
-    <nuxt-link
+    <NuxtLink
       v-show="currentPage > 1"
       class="pagination-item pagination-icon"
       :to="prevLink"
       ><IconsChevronDown class="transform rotate-90 h-6 w-6" width="24" height="24"
-    /></nuxt-link>
+    /></NuxtLink>
     <!-- First Page -->
-    <nuxt-link
+    <NuxtLink
       :class="['pagination-item', currentPage === 1 ? 'active' : '']"
       :to="baseUrl"
-      >1</nuxt-link
+      >1</NuxtLink
     >
     <!-- ... -->
     <span v-show="currentPage > 2" class="pagination-extra"> ... </span>
     <template v-for="page in pageRange" :key="page">
-      <nuxt-link
+      <NuxtLink
         v-show="page !== 1 && page !== totalPages"
         :class="['pagination-item', currentPage === page ? 'active' : '']"
         :to="getPageUrl(page)"
-        >{{ page }}</nuxt-link
+        >{{ page }}</NuxtLink
       >
     </template>
     <!-- ... -->
     <span v-show="currentPage < totalPages - 1" class="pagination-extra"> ... </span>
 
     <!-- Last Page -->
-    <nuxt-link
+    <NuxtLink
       v-show="totalPages > 1"
       :class="['pagination-item', currentPage === totalPages ? 'active' : '']"
       :to="getPageUrl(totalPages)"
-      >{{ totalPages }}</nuxt-link
+      >{{ totalPages }}</NuxtLink
     >
     <!-- Chevron -->
-    <nuxt-link
+    <NuxtLink
       v-show="currentPage < totalPages"
       class="pagination-item pagination-icon"
       :to="getPageUrl(currentPage + 1)"
       ><IconsChevronDown class="transform -rotate-90 h-6 w-6" width="24" height="24"
-    /></nuxt-link>
+    /></NuxtLink>
   </div>
 </template>
 
@@ -106,7 +106,7 @@ a[aria-current="page"] {
   @apply rounded-md border border-black px-2 py-1 mx-1 w-8 text-center h-full;
 }
 .pagination-item:not(.active):hover {
-  @apply  text-sky-900 bg-sky-100;
+  @apply text-sky-900 bg-sky-100;
 }
 .pagination-extra {
   @apply w-8 text-lg leading-lg text-center;

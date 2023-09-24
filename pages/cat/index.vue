@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { CatResponse } from "~/types";
 
-const { pending, error, data, refresh } = useFetch<CatResponse[]>(
+const { pending, data, refresh } = useFetch<CatResponse[]>(
   "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"
 );
 
@@ -19,17 +19,14 @@ useHead({
     <div
       class="border-t-2 pt-8 border-jis-blue flex flex-col md:(flex-row justify-between text-right mb-8) items-center mb-6"
     >
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <NuxtLink itemprop="item" to="/"> <span itemprop="name">Home</span></NuxtLink>
-          <meta itemprop="position" content="1" />
-        </li>
-        <span>/</span>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name">Cats</span>
-          <meta itemprop="position" content="2" />
-        </li>
-      </ol>
+      <SBreadcrumb flex>
+        <template #breadcrumb="{ to, title }">
+          <NuxtLink :to="to">
+            {{ title }}
+          </NuxtLink>
+        </template>
+      </SBreadcrumb>
+
     </div>
     <div class="cat-wrapper">
       <div class="container">

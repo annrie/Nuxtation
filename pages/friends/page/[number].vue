@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Sections } from "~/types";
-const { path, params } = useRoute();
+const { params } = useRoute();
 const blogCountLimit = 6;
 
 definePageMeta({
@@ -63,8 +63,8 @@ try {
               :currentPage="getPageNumber()"
               :totalPages="getPageLimit(data.length)"
               :nextPage="getPageNumber() < getPageLimit(data.length)"
-              baseUrl="/friends/"
-              pageUrl="/friends/page/"
+              baseUrl="/friends"
+              pageUrl="/friends/page"
             />
           </template>
           <template #not-found>

@@ -5,11 +5,13 @@ const description = ref("annrieのNuxt,Vueを中心にしたポートフォリ�
 const ogTitle = ref("annrie's Nuxtation");
 const twitterDescription = ref("Nuxt, contentで構築したブログサイト");
 const twitterCard = "summary_large_image";
-// const twitterImage = ref("https://nuxtation.vercel.app/twitter-card.png");
+const twitterImage = ref("/twitter-card.png");
 const twitterSite = ref("@muraie_jin");
 const mySite = ref("https://nuxtation.vercel.app/");
 const siteName = ref("Nuxtation");
 const appleMobileWebAppStatusBarStyle = "black-translucent";
+
+defineRobotMeta();
 
 useHead({
   titleTemplate: (productCategory) => {
@@ -39,14 +41,14 @@ useHead({
     },
   ],
 });
-const ogImageOptions = {
-  title: "Nuxtation",
-  width: 1200,
-  height: 630,
-  fit: "cover",
-  format: "png",
-  background: "rgb:ffffff",
-};
+ const ogImageOptions = {
+   title: "Nuxtation",
+   width: 1200,
+   height: 630,
+   fit: "cover",
+   format: "png",
+   background: "rgb:ffffff",
+ };
 useSeoMeta({
   description,
   ogSiteName: () => `${siteName.value}`,
@@ -54,12 +56,12 @@ useSeoMeta({
   ogUrl: () => `${mySite.value}`,
   ogTitle,
   ogDescription: () => `${description.value}`,
-  // ogImage: () => `${twitterImage.value}`,
+  ogImage: () => `${twitterImage.value}`,
   twitterSite: () => `${twitterSite.value}`,
   twitterCard,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
-  //twitterImage: () => `${twitterImage.value}`,
+  twitterImage: () => `${twitterImage.value}`,
   appleMobileWebAppStatusBarStyle,
 });
 defineOgImage(ogImageOptions);
@@ -69,7 +71,7 @@ defineOgImage(ogImageOptions);
   <div>
     <VitePwaManifest />
     <NuxtLoadingIndicator />
-    <OgImage v-bind="ogImageOptions" />
+    <OgImage />
     <TheTopBar />
     <NuxtLayout>
       <NuxtPage />

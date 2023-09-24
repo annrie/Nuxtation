@@ -2,7 +2,7 @@
 import type { BlogPostPreview, FriendsPostPreview } from "~/types";
 
 const { data: articles } = await useAsyncData("articles-home", () =>
-  queryContent<BlogPostPreview>("blog")
+  queryContent<BlogPostPreview>("/blog")
     // .where({ published: { $ne: false } })
     .without("body")
     .skip(1)
@@ -12,7 +12,7 @@ const { data: articles } = await useAsyncData("articles-home", () =>
 );
 
 const { data: featuredPost } = await useAsyncData("featured-article", () =>
-  queryContent<BlogPostPreview>("blog")
+  queryContent<BlogPostPreview>("/blog")
     .where({ published: { $ne: false } })
     .without("body")
     .sort({ publishedAt: -1 })
@@ -21,7 +21,7 @@ const { data: featuredPost } = await useAsyncData("featured-article", () =>
 );
 
 const { data: friendsPost } = await useAsyncData("friends-home", () =>
-  queryContent<FriendsPostPreview>("friends")
+  queryContent<FriendsPostPreview>("/friends")
     .where({ published: { $ne: false } })
     .without("body")
     .sort({ publishedAt: -1 })
@@ -35,6 +35,17 @@ useHead({
   //     class: 'home'
   //  }
 });
+
+const ogImageOptions = {
+  title: "Nuxtation",
+  width: 1200,
+  height: 630,
+  fit: "cover",
+  format: "png",
+  background: "rgb:ffffff",
+};
+
+defineOgImage(ogImageOptions);
 </script>
 <template>
   <div>

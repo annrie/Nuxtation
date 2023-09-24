@@ -1,14 +1,21 @@
+import { SiteName, SiteDescription } from './logic/constants';
+import { RuntimeConfig } from 'nuxt/schema';
+// import { OgImage } from './.nuxt/components.d';
 import {defineNuxtConfig} from 'nuxt/config'
 import { NavigationGuard } from 'vue-router';
-// import { pwaVite } from './config/pwa';
-import { appDescription } from './constants/index';
+import { pwaVite } from './config/pwa';
+import { appDescription } from './logic/index';
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
+// import { BASE_URL, API_KEY } from process.env;
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
-// ssr: false, // for generate
 telemetry:false,
+
+publicRuntimeConfig: {
+  baseURL: process.env.MICROCMS_SERVICE_DOMAIN,
+  apiKey: process.env.MICROCMS_API_KEY,
+},
 
  typescript: {
     tsConfig: {
@@ -37,29 +44,22 @@ telemetry:false,
    layoutTransition: { name: 'fade-layout', mode: 'in-out' },
  },
 
-// components: [
-//  {
-// //    'path': '~/components/content',
-//    global: true,
-//    dirs: ['~/components']
-//   },
-//   //  { path: '~/node_modules/@nuxt/content/dist/runtime/components/', prefix: 'mdc' },
-//   //  { path: '~/node_modules/nuxt-mdc/dist/runtime/components/', prefix: 'nuxt-mdc' },
-// //   '~/components' ,
-// //   path: '~/components/content',
-// //   pathPrefix: true,
-// //   level: 1,
-// //  },
-// //  '~/components',
-// //  { path: '~/node_modules/@nuxt/content/dist/runtime/components/', prefix: 'mdc' },
-//   // Sitemap: 'https://nuxtation.vercel.app/sitemap.xml',
-//  ],
+ OgImage: {
+  // runtimeBrouwser: true,
+  fonts: [
+    'Noto+Sans:400,700',
+    'Noto+Sans+JP:400,700',
+    ],
+  },
+
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
    'nuxt-icon',
    '@nuxt/content',
    '@nuxt/image',
+   '@nuxtseo/module',
+   'nuxt-og-image',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
@@ -68,13 +68,48 @@ telemetry:false,
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
    'nuxt-og-image',
+   'nuxt-link-checker',
+   '@nuxtjs/critters',
+   'nuxt-microcms-module',
    '@nuxthq/studio',
   ],
+    // generate: {
+    //  async routes () {
+    //   const { $content } = require('@nuxt/content')
+    //   const files = await $content().only(['path']).fetch()
+    //   return files.map(file => file.path === '/index' ? '/' : file.path)
+    // }
+    // },
+
+
+   microCMS: {
+     serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
+     apiKey: process.env.MICROCMS_API_KEY,
+   },
+
+    site: {
+      identity: {
+        type: 'person',
+      },
+    name: 'annrie',
+    logo: '/icon.png',
+    titleSeparator: '-',
+    url: 'https://nuxtation.vercel.app',
+    description: 'Nuxt, contentで構築したブログサイト',
+    language: 'ja',
+    twitter: '@muraie_jin',
+    trailingSlash: true,
+  },
+
 
  content: {
+  // api: {
+  //   baseURL: 'api/_content',
+  // },
    experimental: {
      clientDB: true
    },
+//   contentHead: false,
   documentDriven: true,
    watch: {
      ws: {
@@ -84,30 +119,31 @@ telemetry:false,
    },
   highlight: {
        // theme:'dark-plus',
-       theme: {
+      theme: {
+        dark: true,
         // Default theme (same as single string)
-        default: 'monokai',
+        default: 'github-light',
         // Theme used if `html.dark`
         dark: 'github-dark',
+        // Theme used if `html.sepia`
+//         sepia: 'monokai'
        },
        preload: [
          'bash',
          'javascript',
          'vue'
        ],
-},
+  },
  markdown: {
      toc: {
        depth: 5,
        searchDepth: 5,
      },
-     locales: ['ja', 'en'],
-     defaultLocale: 'ja',
    // https://content.nuxtjs.org/api/configuration
       // Object syntax can be used to override default options
       // Array syntax can be used to add plugins
      rehypePlugins: [
-  //      'rehype-figure'
+      //  'rehype-figure',
        [
            'rehype-external-links',
            {
@@ -128,9 +164,23 @@ telemetry:false,
    rules: [],
  },
 
+critters: {
+  config: {
+    preload: 'swap',
+  }
+  },
+
+linkChecker: {
+  // failOnError: false,
+    enabled: false,
+    excludeLinks: [
+      'https://twitter.com/muraie_jin',
+    ],
+  },
+
  experimental: {
 //    restoreState: true,
-   payloadExtraction: true,
+   payloadExtraction: false,
    viewTransition: true,
    inlineSSRStyles: true,
    renderJsonPayloads: true,
@@ -143,17 +193,7 @@ telemetry:false,
 
  css: [
    '@unocss/reset/tailwind.css',
-   // '~/assets/styles/scss/global.scss',
-   // windi preflight
-   // 'virtual:windi-base.css',
-   // your stylesheets which overrides the preflight
-     // '~/assets/styles/less/main.less',
    '@/assets/styles/scss/main.scss',
-
-   // windi extras
-   // 'virtual:windi-components.css',
-   // 'virtual:windi-utilities.css',
-   //     '@/assets/styles/contact.css',
    '@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
  ],
 
@@ -197,8 +237,7 @@ telemetry:false,
    },
  },
 
-
- colorMode: {
+colorMode: {
    classSuffix: '',
    preference: 'system',
    fallback: 'dark',
@@ -219,6 +258,18 @@ telemetry:false,
 // generate: {
 //   routes: ['/blog'],
 //   },
+// routeRules: {
+//         '/**': { prerender: true },
+//         '/blog/**': { ssr: true },
+//         '/friends/**': { ssr: true },
+//         '/cat/**': { ssr: false },
+//         '/cms/**': { ssr: false },
+//     },
+
+studio: {
+  enabled: false,
+  },
+
  nitro: {
 //    preset: 'service-worker', // for generate
   esbuild: {
@@ -230,7 +281,7 @@ telemetry:false,
    prerender: {
      crawlLinks: true,
      failOnError: false,
-//      routes: [ '/sitemap.xml', '/robots.txt'],
+     routes: [ '/', '/sitemap.xml', '/robots.txt' ],
 //      routes: [ '/sitemap.xml', '/robots.txt' ],
 //      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate
 //      ignore: ['/blog', '/friends'],
@@ -239,66 +290,10 @@ telemetry:false,
 //     nativeSWR: true,
 //     },
  },
-// target: 'static',
-//  $production: {
-//   routeRules: {
-//   "/modify-headers-route": { headers: { 'x-magic-of': 'nuxt and vercel' }},
-//     routeRules: {
-//         '/': {ssr: false} ,
-//         '/blog': {ssr: false} ,
-//       '/friends': {ssr: false} ,
-//       '/cat': {ssr: false} ,
-//   },
-//   },
-// },
-//   $development: {
-//     routeRules: {
-//         '/': {ssr: false} ,
-//     },
-//   },
- // compressPublicAssets: {
- //   brotli: true
- // },
-//  preset: 'vercel_edge',
-//  routeRules: {
-//       "/**": {
-//       swr: true,
-//     },
-//       "/**": {
-//       static: true,
-//     },
-//   "/blog/**": {
-//       swr: true,
-//       // or
-//       //cache: {
-//        // maxAge: 60 * 60
-//       //}
-//     },
-//      "/blog/**": {
-//       static: true,
-//     },
-//    "/friends/**": {
-//       swr: true,
-//     },
-//     "/friends/**": {
-//       static: true,
-//     },
-//     "/cat/**": {
-//       swr: false,
-//     },
-//     "/cat/**": {
-//       static: true,
-//     },
-//   '/assets/**': { headers: { 'cache-control': 's-maxage=0' } },
-//    // all routes will be background revalidated (ISR) at most every 60 seconds
-//    '/**': { isr: 60 },
-//    // this page will be generated on demand and cached permanently
-//   '/static': { isr: true }
-//  },
 
  router: {
    options: {
-     strict: false
+     strict: true,
    }
  },
 
@@ -307,7 +302,6 @@ vue: {
 //   propsDestructure: true
    compilerOptions: {
      isCustomElement: (tag) => ['lite-youtube'].includes(tag),
-    //  isCustomElement: (tag) => tag.includes(['lite-youtube']),
    },
  },
 
@@ -326,63 +320,63 @@ vue: {
 //     }
   },
   $client: {
-    build: {
-      rollupOptions: {
-        output: {
-          chunkFileNames: '_nuxt/[hash].js',
-          assetFileNames: '_nuxt/[hash][extname]',
-          entryFileNames: '_nuxt/[hash].js',
-        },
-      },
-    },
+//     build: {
+//       rollupOptions: {
+//         output: {
+//           chunkFileNames: '_nuxt/[hash].js',
+//           assetFileNames: '_nuxt/[hash][extname]',
+//           entryFileNames: '_nuxt/[hash].js',
+//         },
+//       },
+//     },
   },
  },
 
-//  pwaVite,
-  pwa: {
-    registerType: 'autoUpdate',
-    manifest: {
-      name: 'Nuxt Vite PWA',
-      short_name: 'NuxtVitePWA',
-      theme_color: '#ffffff',
-      icons: [
-        {
-          src: 'pwa-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-        },
-        {
-          src: 'pwa-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-        },
-        {
-          src: 'pwa-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'maskable'
-        },
-      ],
-      id: "/?source=NuxtVitePWA",
-      start_url: "/?source=NuxtVitePWA"
-    },
-    workbox: {
-      navigateFallback: '/',
-      globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-    },
-    client: {
-      installPrompt: true,
-      // you don't need to include this: only for testing purposes
-      // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-      periodicSyncForUpdates: 20,
-    },
-    devOptions: {
-      enabled: true,
-      suppressWarnings: true,
-      navigateFallbackAllowlist: [/^\/$/],
-      type: 'module',
-    },
-  },
+ pwaVite,
+//   pwa: {
+//     registerType: 'autoUpdate',
+//     manifest: {
+//       name: 'Nuxt Vite PWA',
+//       short_name: 'NuxtVitePWA',
+//       theme_color: '#ffffff',
+//       icons: [
+//         {
+//           src: 'pwa-192x192.png',
+//           sizes: '192x192',
+//           type: 'image/png',
+//         },
+//         {
+//           src: 'pwa-512x512.png',
+//           sizes: '512x512',
+//           type: 'image/png',
+//         },
+//         {
+//           src: 'pwa-512x512.png',
+//           sizes: '512x512',
+//           type: 'image/png',
+//           purpose: 'maskable'
+//         },
+//       ],
+//       id: "/?source=NuxtVitePWA",
+//       start_url: "/?source=NuxtVitePWA"
+//     },
+//     workbox: {
+//       navigateFallback: '/',
+//       globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+//     },
+//     client: {
+//       installPrompt: true,
+//       // you don't need to include this: only for testing purposes
+//       // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+//       periodicSyncForUpdates: 20,
+//     },
+//     devOptions: {
+//       enabled: true,
+//       suppressWarnings: true,
+//       navigateFallbackAllowlist: [/^\/$/],
+//       type: 'module',
+//     },
+//   },
 
  devtools: {
    // Enable devtools (default: true)

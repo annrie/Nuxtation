@@ -10,6 +10,10 @@ export const NavLinks: Navigation[] = [
     link: 'Friends',
   },
   {
+    url: '/cms',
+    link: 'MicroCms',
+  },
+  {
     url: '/cat',
     link: 'Cats',
   },

@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.5](https://github.com/annrie/Nuxtation/compare/v2.3.4...v2.3.5) (2023-09-25)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 add nuxt.studio ([8c4efd7](https://github.com/annrie/Nuxtation/commit/8c4efd7aa7f291b785f412bff5134f34ac8a8a63))
+* 🤖 Add provisional treatment for generate ([b944d42](https://github.com/annrie/Nuxtation/commit/b944d420db55c801ed4eac643ed6f57319151750))
+
+
+### バグ修正
+
+* 🐛 Eliminate 404 (Document not found!) ([4c20754](https://github.com/annrie/Nuxtation/commit/4c20754211f940cf391c0570ac62bb19af92548e))
+* 🐛 Forgot to include breadcrumbs ([55835ea](https://github.com/annrie/Nuxtation/commit/55835ea7fecd88dacf584e6a15935176d0326361))
+* 🐛 middlewareを元に戻した。scrollToTopが効いていない。 ([84385b0](https://github.com/annrie/Nuxtation/commit/84385b0e053caaf76386ccc4985b51e73294efe0))
+
 ### [2.3.4](https://github.com/annrie/Nuxtation/compare/v2.3.3...v2.3.4) (2023-09-14)
 
 

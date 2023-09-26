@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.6](https://github.com/annrie/Nuxtation/compare/v2.3.5...v2.3.6) (2023-09-26)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 update nuxt, @nuxt/content and unocss ([590d84b](https://github.com/annrie/Nuxtation/commit/590d84bd90bd68c3c13557085bfc5639b67309c8))
+* 🤖 update unocss to v0.56.2 ([81fc39e](https://github.com/annrie/Nuxtation/commit/81fc39ee2f899fd74ca4fec04be2cc1207ae313b))
+
 ### [2.3.5](https://github.com/annrie/Nuxtation/compare/v2.3.4...v2.3.5) (2023-09-25)
 
 

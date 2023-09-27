@@ -36,13 +36,31 @@ useHead({
     <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
-      <SBreadcrumb flex>
-        <template #breadcrumb="{ to, title }">
-          <NuxtLink :to="to">
-            {{ title }}
-          </NuxtLink>
-        </template>
-      </SBreadcrumb>
+      <!-- Breadcrumbs -->
+      <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a itemprop="item" href="/"> <span itemprop="name">Home</span></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li class="separator">/</li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a
+            itemscope
+            itemtype="https://schema.org/WebPage"
+            itemprop="item"
+            itemid="/blog/"
+            href="/blog"
+          >
+            <span itemprop="name">Blog</span></a
+          >
+          <meta itemprop="position" content="2" />
+        </li>
+        <li class="separator">/</li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ slug }}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+      </ol>
     </div>
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">

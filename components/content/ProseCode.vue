@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
-const { copy, copied, text } = useClipboard();
+const { copy, copied } = useClipboard();
 
 const props = withDefaults(
   defineProps<{
@@ -67,6 +67,16 @@ const languageBackground = computed(() =>
 const languageColor = computed(() =>
   props.language ? languageMap[props.language]?.color : null
 );
+const languageStyle = computed(() => {
+  const style: StyleValue = {};
+  if (languageBackground.value) {
+    style.backgroundColor = languageBackground.value;
+  }
+  if (languageColor.value) {
+    style.color = languageColor.value;
+  }
+  return style;
+});
 </script>
 
 <template>

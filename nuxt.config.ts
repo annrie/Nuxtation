@@ -10,7 +10,9 @@ import { appDescription } from './logic/index';
 export default defineNuxtConfig({
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
-telemetry:false,
+spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
+
+  telemetry:false,
 
 publicRuntimeConfig: {
   baseURL: process.env.MICROCMS_SERVICE_DOMAIN,
@@ -265,6 +267,7 @@ colorMode: {
 //         '/cat/**': { ssr: false },
 //         '/cms/**': { ssr: false },
 //     },
+ preset: 'vercel_edge',
 
 studio: {
   enabled: false,
@@ -278,7 +281,10 @@ studio: {
     },
     plugins: [ '~/plugins/nitro.error.ts' ],
   },
-   prerender: {
+  //  storage: {
+  //    data: { driver: 'vercelKV'}
+  //  },
+  prerender: {
      crawlLinks: true,
      failOnError: false,
      routes: [ '/', '/sitemap.xml', '/robots.txt' ],
@@ -390,5 +396,5 @@ vue: {
     },
   },
 
- plugins: ['~/plugins/vueapperrorhandler.ts', '~/plugins/format-date.ts', '~/plugins/utils.ts', '~/plugins/youtube.client.ts']
+ plugins: ['~/plugins/vueapperrorhandler.ts', '~/plugins/format-date.ts', '~/plugins/utils.ts', '~/plugins/youtube.client.ts', '~/plugins/my-plugin.ts']
 });

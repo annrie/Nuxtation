@@ -27,7 +27,7 @@
   "editor.hover.sticky": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
-    // "source.fixAll.eslint": true, // this allows ESLint to auto fix on save
+    "source.fixAll.eslint": true, // this allows ESLint to auto fix on save
     "source.organizeImports": false
   },
   "explorer.confirmDelete": false,
@@ -112,7 +112,6 @@
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
-    { "rule": "@stylistic/*", "severity": "off" },
     { "rule": "style*", "severity": "off" },
     { "rule": "*-indent", "severity": "off" },
     { "rule": "*-spacing", "severity": "off" },

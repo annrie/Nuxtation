@@ -6,7 +6,7 @@ const { page } = useContent();
 // Page not found, set correct status code on SSR
 if (!(page as any).value && process.server) {
   const event = useRequestEvent();
-  event.res.statusCode = 404;
+  event.node.res.statusCode = 404;
 }
 
 useSeoMeta({

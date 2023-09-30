@@ -27,7 +27,7 @@
     "@iconify/json": "^2.2.120",
     "@julr/unocss-preset-heropatterns": "^1.0.2",
     "@mdi/js": "^7.2.96",
-    "@nuxt/content": "npm:@nuxt/content-edge@latest",
+    "@nuxt/content": "^2.8.5",
     "@nuxt/devtools": "^0.8.5",
     "@nuxt/image": "rc",
     "@nuxtjs/color-mode": "^3.3.0",

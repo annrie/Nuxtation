@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.7](https://github.com/annrie/Nuxtation/compare/v2.3.6...v2.3.7) (2023-09-30)
+
+
+### バグ修正
+
+* 🐛 Adjustment of breadcrumbs ([0b7c7a9](https://github.com/annrie/Nuxtation/commit/0b7c7a9ff172db8dafd8ff022e564348e34e0207))
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 add target option to microCMS ([f71f4d1](https://github.com/annrie/Nuxtation/commit/f71f4d162c57d34e7056da50cc998f4ad1e02dd4))
+* 🤖 update @nuxt/content to v2.8.5 ([79fe7f9](https://github.com/annrie/Nuxtation/commit/79fe7f976aa57e41fc0153d18a275cd102e1dee1))
+* 🤖 update nuxt,content and uno.css ([5c47a55](https://github.com/annrie/Nuxtation/commit/5c47a5545bf282cdee5c1128c3f3da4927927245))
+
 ### [2.3.6](https://github.com/annrie/Nuxtation/compare/v2.3.5...v2.3.6) (2023-09-26)
 
 

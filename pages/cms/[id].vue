@@ -16,7 +16,19 @@ const { $formatDate } = useNuxtApp();
 </script>
 
 <template>
-  <template v-if="data">
+  <div v-if="data" class="pt-10 mx-auto">
+    <!-- Breadcrumbs -->
+    <div
+      class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+    >
+      <SBreadcrumb flex>
+        <template #breadcrumb="{ to, title }">
+          <NuxtLink :to="to">
+            {{ title }}
+          </NuxtLink>
+        </template>
+      </SBreadcrumb>
+    </div>
     <h1 class="text-3xl font-semibold">
       {{ data.title }}
     </h1>
@@ -40,5 +52,5 @@ const { $formatDate } = useNuxtApp();
       </div>
     </div>
     <div v-html="data.content" class="prose mt-6 md:mt-10"></div>
-  </template>
+  </div>
 </template>

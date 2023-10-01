@@ -3,6 +3,10 @@ import { Blog } from "~/blog";
 
 definePageMeta({
   layout: "blog",
+  queries: {
+    limit: 100,
+    fields: ["id", "title", "eyecatch", "category", "publishedAt", "createdAt"].join(","),
+  },
 });
 
 const { data } = await useMicroCMSGetList<Blog>({
@@ -29,7 +33,7 @@ const { $formatDate } = useNuxtApp();
     <ul class="mt-16 grid grid-cols-1 gap-8">
       <li v-for="blog in data?.contents" :key="blog.id">
         <NuxtLink
-          :to="`/${blog.id}`"
+          :to="`/cms/${blog.id}`"
           class="flex flex-col gap-4 sm:transition-shadow sm:hover:shadow md:flex-row md:items-center lg:gap-6"
         >
           <img

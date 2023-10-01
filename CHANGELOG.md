@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.10](https://github.com/annrie/Nuxtation/compare/v2.3.9...v2.3.10) (2023-10-01)
+
+
+### バグ修正
+
+* 🐛 Adjustment of cms/[id].vue ([a7eddb4](https://github.com/annrie/Nuxtation/commit/a7eddb4aa0d70e117b76ba31aadede52f2afe49c))
+* 🐛 nitro:hooks was commented on ([27b4ca4](https://github.com/annrie/Nuxtation/commit/27b4ca46b21c9499bc3cdb5d82175639fe5048b7))
+
 ### [2.3.9](https://github.com/annrie/Nuxtation/compare/v2.3.8...v2.3.9) (2023-10-01)
 
 ### [2.3.8](https://github.com/annrie/Nuxtation/compare/v2.3.7...v2.3.8) (2023-09-30)

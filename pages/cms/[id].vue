@@ -2,7 +2,7 @@
 import { Blog } from "~/blog";
 
 definePageMeta({
-  layout: "blog",
+  layout: "cms",
 });
 
 const { params } = useRoute();

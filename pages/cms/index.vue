@@ -2,7 +2,7 @@
 import { Blog } from "~/blog";
 
 definePageMeta({
-  layout: "blog",
+  layout: "cms",
   queries: {
     limit: 100,
     fields: ["id", "title", "eyecatch", "category", "publishedAt", "createdAt"].join(","),

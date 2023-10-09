@@ -1,4 +1,4 @@
-import type { MicroCMSImage, MicroCMSListContent } from "microcms-js-sdk";
+import type { MicroCMSImage, MicroCMSListContent } from "nuxt-microcms-module";
 import { Category } from "~/category";
 
 export type Blog = {

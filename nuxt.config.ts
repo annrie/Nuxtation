@@ -14,10 +14,10 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
 
   telemetry:false,
 
-publicRuntimeConfig: {
-  baseURL: process.env.MICROCMS_SERVICE_DOMAIN,
-  apiKey: process.env.MICROCMS_API_KEY,
-},
+// publicRuntimeConfig: {
+//   baseURL: process.env.MICROCMS_SERVICE_DOMAIN,
+//   apiKey: process.env.MICROCMS_API_KEY,
+// },
 
  typescript: {
     tsConfig: {
@@ -72,7 +72,7 @@ publicRuntimeConfig: {
    'nuxt-og-image',
    'nuxt-link-checker',
    '@nuxtjs/critters',
-   'nuxt-microcms-module',
+  //  'nuxt-microcms-module',
    '@nuxthq/studio',
   ],
     // generate: {
@@ -84,11 +84,11 @@ publicRuntimeConfig: {
     // },
 
 
-   microCMS: {
-     serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
-     apiKey: process.env.MICROCMS_API_KEY,
-     target: 'server',
-   },
+  //  microCMS: {
+  //    serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
+  //    apiKey: process.env.MICROCMS_API_KEY,
+  //    target: 'server',
+  //  },
 
     site: {
       identity: {

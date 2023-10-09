@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.12](https://github.com/annrie/Nuxtation/compare/v2.3.11...v2.3.12) (2023-10-09)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 commented microCMS ([018dd88](https://github.com/annrie/Nuxtation/commit/018dd88d1a2102d7eff0fb04c65140d203dd137a))
+
 ### [2.3.11](https://github.com/annrie/Nuxtation/compare/v2.3.10...v2.3.11) (2023-10-02)
 
 ### [2.3.10](https://github.com/annrie/Nuxtation/compare/v2.3.9...v2.3.10) (2023-10-01)

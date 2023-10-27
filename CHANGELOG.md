@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.2](https://github.com/annrie/Nuxtation/compare/v2.4.1...v2.4.2) (2023-10-27)
+
+
+### コードスタイル
+
+* 💄 [...slug].vue margin-top ([6868008](https://github.com/annrie/Nuxtation/commit/686800814affe27897ad2643030550653a0fb3d5))
+
 ### [2.4.1](https://github.com/annrie/Nuxtation/compare/v2.3.12...v2.4.1) (2023-10-27)
 
 

@@ -58,7 +58,7 @@ useHead({
   <div>
     <!-- Breadcrumbs -->
     <div
-      class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+      class="pt-10 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
       <!-- <SBreadcrumb :items="items" :ui="ui" /> -->
       <!-- Publish date -->

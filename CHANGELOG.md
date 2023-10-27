@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/annrie/Nuxtation/compare/v2.3.12...v2.4.0) (2023-10-27)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 update Nuxt to v3.8.0 ann add Vercel KV ([785497a](https://github.com/annrie/Nuxtation/commit/785497af9bcc797969ecb1291e5406e7d7fd1f49))
+
 ### [2.3.12](https://github.com/annrie/Nuxtation/compare/v2.3.11...v2.3.12) (2023-10-09)
 
 

@@ -11,7 +11,7 @@ export interface ParsedContent extends DefaultParsedContent {
   schemaOrg: Record<string, any>
 }
 
-export type Sections = 'blog' | 'friends'
+export type Sections = 'blog' | 'friends' | 'catResponse'
 
 export interface BlogPost extends MarkdownParsedContent {
   title: string,
@@ -46,7 +46,7 @@ export interface FriendsPost extends MarkdownParsedContent {
     bio?: string,
     photo?: string,
     image?: string,
-  },[],
+  }
 }
 export interface PostGenre extends MarkdownParsedContent {
   name: string,

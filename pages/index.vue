@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { BlogPostPreview, FriendsPostPreview } from "~/types";
 
+const { data: pageVisits } = await useFetch(() => `/api/kv`);
+const refreshPage = () => {
+  window.location.reload();
+};
 const { data: articles } = await useAsyncData("articles-home", () =>
   queryContent<BlogPostPreview>("/blog")
     // .where({ published: { $ne: false } })
@@ -83,6 +87,15 @@ defineOgImage(ogImageOptions);
       />
     </section>
 
+    <section aria-labelledby="vercel-kv" class="mt-10">
+      <button
+        @click="refreshPage()"
+        class="mb-6 font-bold underline opacity-70 hover:opacity-100"
+      >
+        Refresh page
+      </button>
+      <div class="" text-5xl font-bold>{{ pageVisits?.pageVisits }}</div>
+    </section>
     <!-- <template #fallback>
     <div op50 italic>
       <span animate-pulse>Loading...</span>

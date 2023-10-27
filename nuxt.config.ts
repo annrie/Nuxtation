@@ -47,7 +47,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  },
 
  OgImage: {
-  // runtimeBrouwser: true,
+  runtimeBrouwser: true,
   fonts: [
     'Noto+Sans:400,700',
     'Noto+Sans+JP:400,700',
@@ -261,13 +261,13 @@ colorMode: {
 // generate: {
 //   routes: ['/blog'],
 //   },
-// routeRules: {
-//         '/**': { prerender: true },
-//         '/blog/**': { ssr: true },
-//         '/friends/**': { ssr: true },
-//         '/cat/**': { ssr: false },
-//         '/cms/**': { ssr: false },
-//     },
+routeRules: {
+        '/**': { isr: 60 },
+        // '/blog/**': { ssr: true },
+        // '/friends/**': { ssr: true },
+        // '/cat/**': { ssr: false },
+        // '/cms/**': { ssr: false },
+    },
  preset: 'vercel_edge',
 
 studio: {
@@ -282,9 +282,9 @@ studio: {
     },
     plugins: [ '~/plugins/nitro.error.ts' ],
   },
-  //  storage: {
-  //    data: { driver: 'vercelKV'}
-  //  },
+   storage: {
+     data: { driver: 'vercelKV'}
+   },
   prerender: {
      crawlLinks: true,
      failOnError: false,

@@ -60,20 +60,12 @@ useHead({
     <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
-       <SBreadcrumb flex>
-        <template #breadcrumb="{ to, title }">
-          <NuxtLink :to="to">
-            {{ title }}
-          </NuxtLink>
-        </template>
-      </SBreadcrumb>
-
-     <!-- Publish date -->
+      <!-- <SBreadcrumb :items="items" :ui="ui" /> -->
+      <!-- Publish date -->
       <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
         $formatDate(data?.article.publishedAt)
       }}</span>
     </div>
-
     <header class="article-header">
       <NuxtPicture
         provider="imgix"
@@ -181,18 +173,22 @@ useHead({
 }
 
 aside {
-	@apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
+  @apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
 }
 
 .aside {
   @apply: sticky pt-10 z-0;
+
   @screen sm {
     top: calc(theme("spacing.nav_sm") - 4.3rem);
   }
+
+
   @screen tb {
     top: calc(theme("spacing.nav") - 3.25rem);
   }
 }
+
 .article {
   @apply: mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
 }

@@ -33,10 +33,9 @@ useHead({
 </script>
 <template>
   <div>
-    <div
+    <!-- <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
-      <!-- Breadcrumbs -->
       <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
           <a itemprop="item" href="/"> <span itemprop="name">Home</span></a>
@@ -61,7 +60,7 @@ useHead({
           <meta itemprop="position" content="3" />
         </li>
       </ol>
-    </div>
+    </div> -->
     <header class="lt-md:mt-5 lt-md:p-5 lt-md:prose-md tb:mt-15 tb:p-12 tb:prose-lg">
       <div class="mx-auto text-center max-w-3xl">
         <h1 class="font-extrabold mt-10 mb-5 !line-height-15 lt-md:text-3xl tb:text-5xl">

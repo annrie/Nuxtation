@@ -2,8 +2,8 @@
 import type { PrevNext } from "~/types";
 
 defineProps<{
-  prev: PrevNext;
-  next: PrevNext;
+  prev: PrevNext | null;
+  next: PrevNext | null;
 }>();
 // define prev and next props
 // defineProps(["prev", "next"]);

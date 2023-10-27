@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CatResponse } from "~/types";
+import type { CatResponse } from "~/types";
 
 const { pending, data, refresh } = useFetch<CatResponse[]>(
   "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"
@@ -15,8 +15,8 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <div
+  <div pt-10>
+    <!-- <div
       class="border-t-2 pt-8 border-jis-blue flex flex-col md:(flex-row justify-between text-right mb-8) items-center mb-6"
     >
       <SBreadcrumb flex>
@@ -26,8 +26,7 @@ useHead({
           </NuxtLink>
         </template>
       </SBreadcrumb>
-
-    </div>
+    </div> -->
     <div class="cat-wrapper">
       <div class="container">
         <h1 class="font-extrabold text-center mb-8 text-5xl dark:text-light-500">cats</h1>
@@ -35,7 +34,7 @@ useHead({
         <button @click="() => refresh()" class="btn-blue mb-4 w-[1200px]">Refresh</button>
         <div v-if="pending" grid place-items-center>Loading ...</div>
         <div v-else="!pending && data">
-          <cat-card-list :cat-list="data" />
+          <CatCardList :cat-list="data" />
         </div>
       </div>
     </div>

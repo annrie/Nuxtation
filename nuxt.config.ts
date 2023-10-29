@@ -466,6 +466,4 @@ vue: {
    // ...other options
     },
   },
-
- plugins: ['~/plugins/vueapperrorhandler.ts', '~/plugins/format-date.ts', '~/plugins/utils.ts', '~/plugins/youtube.client.ts', '~/plugins/my-plugin.ts']
 });

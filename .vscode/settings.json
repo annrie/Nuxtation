@@ -39,7 +39,7 @@
   "workbench.editor.closeOnFileDelete": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.tabCloseButton": "left",
-  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.enabled": false,
   "workbench.editor.limit.perEditorGroup": true,
   "workbench.editor.limit.value": 5,
   "workbench.list.smoothScrolling": true,

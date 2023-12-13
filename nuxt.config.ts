@@ -1,13 +1,27 @@
-import { SiteName, SiteDescription } from './logic/constants';
+import { defineNuxtConfig } from 'nuxt/config'
+// import { SiteName, SiteDescription } from './logic/constants';
 import { RuntimeConfig } from 'nuxt/schema';
-// import { OgImage } from './.nuxt/components.d';
-import {defineNuxtConfig} from 'nuxt/config'
+import { OgImage } from './.nuxt/components.d';
 import { NavigationGuard } from 'vue-router';
 import { pwaVite } from './config/pwa';
 import { appDescription } from './logic/index';
+// import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
+
 export default defineNuxtConfig({
+   devtools: {
+   // Enable devtools (default: true)
+   enabled: true,
+
+  timeline: {
+   enabled: true,
+   // VS Code Server options
+   // vscode: {},
+   // ...other options
+    },
+  },
+
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
 spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
@@ -42,6 +56,46 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  //   }
  // },
  app: {
+        head: {
+          prefix: 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#',
+          meta: [
+              { property: "fb:app_id", content: "process.env.FB_APP_ID"},
+              { name: 'twitter:card', content: 'summary_large_image' },
+              { name: 'msapplication-TileColor', content: '#da532c' },
+              { name: 'theme-color', content: '#ffffff' },
+            ],
+          link: [
+             {
+               rel: 'manifest',
+                href: '/manifest.webmanifest'
+              },
+              {
+              rel: "canonical",
+              href: "https://nuxtation.phantomoon.com/",
+              },
+              {
+                rel: "icon",
+                href: "/favicon-32x32.png",
+                sizes: "32x32",
+              },
+              {
+                rel: "icon",
+                href: "/favicon-16x16.png",
+                sizes: "16x16",
+              },
+              {
+                rel: "mask-icon",
+                type: "image/svg+xml",
+                href: "/safari-pinned-tab.svg",
+                color: "#5bbad5",
+              },
+              {
+                rel: "apple-touch-icon",
+                href: "/apple-touch-icon.png",
+                sizes: "180x180",
+              },
+            ],
+        },
    pageTransition: { name: 'page', mode: 'out-in' },
    layoutTransition: { name: 'fade-layout', mode: 'in-out' },
  },
@@ -57,25 +111,33 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
-   'nuxt-icon',
    '@nuxt/content',
    '@nuxt/image',
    '@nuxtseo/module',
-   'nuxt-og-image',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
-   '@nuxtjs/robots',
    '@nuxt/devtools',
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
    'nuxt-og-image',
    'nuxt-link-checker',
-   '@nuxtjs/critters',
   //  'nuxt-microcms-module',
    '@nuxthq/studio',
+   'nuxt-gtag',
+   'nuxt-simple-robots',
   ],
-    // generate: {
+  gtag: {
+    id: process.env.GA_MEASUREMENT_ID,
+    loadingStrategy: 'async',
+  },
+  nuxtIcon: {
+    size: '24px',
+    class: 'icon',
+    color: '#000000',
+  },
+
+  // generate: {
     //  async routes () {
     //   const { $content } = require('@nuxt/content')
     //   const files = await $content().only(['path']).fetch()
@@ -94,14 +156,13 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
       identity: {
         type: 'person',
       },
-    name: 'annrie',
-    logo: '/icon.png',
+    name: 'Nuxtation',
+    logo: '/logo.png',
     titleSeparator: '-',
     url: 'https://nuxtation.vercel.app',
     description: 'Nuxt, contentで構築したブログサイト',
     language: 'ja',
     twitter: '@muraie_jin',
-    trailingSlash: true,
   },
 
 
@@ -112,7 +173,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    experimental: {
      clientDB: true
    },
-//   contentHead: false,
+  contentHead: false,
   documentDriven: true,
    watch: {
      ws: {
@@ -125,7 +186,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
       theme: {
         dark: true,
         // Default theme (same as single string)
-        default: 'github-light',
+        default: 'github-dark',
         // Theme used if `html.dark`
         dark: 'github-dark',
         // Theme used if `html.sepia`
@@ -154,24 +215,40 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
                rel: 'noopener noreferer'
            }
        ]
-     ]
-   }
+     ],
+    remarkPlugins: {
+       'remark-rehype': false,
+
+        // Disable remark-gfm
+       'remark-gfm': false,
+
+       // Override remark-emoji options
+       'remark-emoji': {
+          emoticon: true,
+        },
+
+        // 'remark-html': false,
+
+        // Add remark-oembed
+        // 'remark-oembed': {
+        //   // options
+        //   mode: 'extract',
+        //   usePrefix: false,
+        //   providers: {
+        //     include: ['Twitter', 'YouTube']
+        //   },
+        // },
+      },
  },
+},
 
  unocss: {
    uno: true,
    icons: true,
    attributify: true,
    components: false,
-   shortcuts: ['btn', 'w-full px-4 py-1 rounded inline-block bg-teal-600 text-white cursor-pointer hover:bg-teal-700 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
    rules: [],
  },
-
-critters: {
-  config: {
-    preload: 'swap',
-  }
-  },
 
 linkChecker: {
   // failOnError: false,
@@ -191,6 +268,7 @@ linkChecker: {
    headNext: true,
    asyncContext: true,
    clientFallback: true,
+   appManifest: true,
    polyfillVueUseHead: false,
  },
 
@@ -251,16 +329,10 @@ colorMode: {
    "client": false,
  },
 
- robots: {
-   UserAgent: '*',
-   Disallow: '',
-   Allow: '/',
-   Allow: '/api/og/*'
- },
-//  ssr: false,
-// generate: {
-//   routes: ['/blog'],
-//   },
+robots: {
+  blockNonSeoBots: true,
+},
+
 routeRules: {
         '/**': { isr: 60 },
         // '/blog/**': { ssr: true },
@@ -268,14 +340,21 @@ routeRules: {
         // '/cat/**': { ssr: false },
         // '/cms/**': { ssr: false },
     },
- preset: 'vercel_edge',
 
-studio: {
-  enabled: false,
+//  preset: 'vercel_edge',
+
+ studio: {
+  enabled: true,
+  },
+
+
+  hooks: {
+    'robots:config': (config) => {
+      config.Sitemap = '/sitemap.xml';
+    },
   },
 
  nitro: {
-//    preset: 'service-worker', // for generate
   esbuild: {
     options: {
       target: 'esnext',
@@ -289,85 +368,20 @@ studio: {
      crawlLinks: true,
      failOnError: false,
      routes: [ '/', '/sitemap.xml', '/robots.txt' ],
-//      routes: [ '/sitemap.xml', '/robots.txt' ],
-//      routes: [ '/','/blog','/friends','/cat','/sitemap.xml', '/robots.txt' ], // for generate
-//      ignore: ['/blog', '/friends'],
    },
+// hooks: {
+//   'robots:config': (config) => {
+//      config.sitemap = '/sitemap.xml';
+//      },
+// },
+        // hooks: {
+        //     'compiled': genSitemap,
+        // }
 //    future: {
 //     nativeSWR: true,
 //     },
  },
-    // hooks: {
-    //     async "nitro:config"(nitroConfig) {
-    //         if (nitroConfig.dev) {
-    //             return;
-    //         }
-    //         nitroConfig.prerender.crawlLinks = false
-    //         const limit = 10
-    //         const client = createClient({
-    //             serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
-    //             apiKey: process.env.MICROCMS_API_KEY,
-    //         })
-    //         const data = await client.getList(
-    //             {
-    //                 endpoint: 'blogs',
-    //                 queries: {
-    //                     limit: 100,
-    //                     fields: 'id'
-    //                 }
-    //             }
-    //         )
-    //         const totalCount = data.totalCount
-    //         const perRequestCount = 50
-    //         const reqCount = Math.ceil(totalCount / perRequestCount)
-    //         const allPostData = []
-    //         for (let i = 0; i < reqCount; i++) {
-    //             const offset = i * perRequestCount
-    //             const data = await client.getList(
-    //                 {
-    //                     endpoint: 'blogs',
-    //                     queries: {
-    //                         limit: perRequestCount,
-    //                         offset: offset,
-    //                         fields: 'id,tag'
-    //                     }
-    //                 })
-    //             for (const elm of data.contents) {
-    //                 allPostData.push(elm)
-    //             }
-    //         }
-    //         // タグに紐づいている記事の数
-    //         const tagCount: Record<string, number> = {}
-    //         // 記事を繰り返す
-    //         for (const elm of allPostData) {
-    //             const slug = elm.id
-    //             const tags = elm.tag
-    //             // 記事の数をカウントアップ
-    //             for (const tag of tags) {
-    //                 if (tagCount[tag.id]) {
-    //                     tagCount[tag.id]++
-    //                 } else {
-    //                     tagCount[tag.id] = 1
-    //                 }
-    //             }
-    //             // 記事詳細をルートに加える
-    //             nitroConfig.prerender.routes.push(`/${slug}`)
-    //         }
-    //         // ページ数をルートに加える
-    //         const pageCount = Math.ceil(totalCount / limit)
-    //         for (let p = 1; p < pageCount + 1; p++) {
-    //             nitroConfig.prerender.routes.push(`/page/${p}`)
-    //         }
-    //         // タグごとにページ数を計算してルートに加える
-    //         for (const tagId in tagCount) {
-    //             const cnt = tagCount[tagId]
-    //             const tagPageCount = Math.ceil(cnt / limit)
-    //             for (let p = 1; p < tagPageCount + 1; p++) {
-    //                 nitroConfig.prerender.routes.push(`/tags/${tagId}/page/${p}`)
-    //             }
-    //         }
-    //     },
-    // },
+
  router: {
    options: {
      strict: true,
@@ -376,7 +390,7 @@ studio: {
 
 vue: {
   defineModel: true,
-//   propsDestructure: true
+//   propsDestructure: true,
    compilerOptions: {
      isCustomElement: (tag) => ['lite-youtube'].includes(tag),
    },
@@ -410,60 +424,4 @@ vue: {
  },
 
  pwaVite,
-//   pwa: {
-//     registerType: 'autoUpdate',
-//     manifest: {
-//       name: 'Nuxt Vite PWA',
-//       short_name: 'NuxtVitePWA',
-//       theme_color: '#ffffff',
-//       icons: [
-//         {
-//           src: 'pwa-192x192.png',
-//           sizes: '192x192',
-//           type: 'image/png',
-//         },
-//         {
-//           src: 'pwa-512x512.png',
-//           sizes: '512x512',
-//           type: 'image/png',
-//         },
-//         {
-//           src: 'pwa-512x512.png',
-//           sizes: '512x512',
-//           type: 'image/png',
-//           purpose: 'maskable'
-//         },
-//       ],
-//       id: "/?source=NuxtVitePWA",
-//       start_url: "/?source=NuxtVitePWA"
-//     },
-//     workbox: {
-//       navigateFallback: '/',
-//       globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-//     },
-//     client: {
-//       installPrompt: true,
-//       // you don't need to include this: only for testing purposes
-//       // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-//       periodicSyncForUpdates: 20,
-//     },
-//     devOptions: {
-//       enabled: true,
-//       suppressWarnings: true,
-//       navigateFallbackAllowlist: [/^\/$/],
-//       type: 'module',
-//     },
-//   },
-
- devtools: {
-   // Enable devtools (default: true)
-   enabled: true,
-
-  timeline: {
-   enabled: true,
-   // VS Code Server options
-   // vscode: {},
-   // ...other options
-    },
-  },
 });

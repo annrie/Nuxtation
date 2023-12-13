@@ -1,7 +1,3 @@
-// * {
-//   @apply snap-m-20;
-// }
-
 html,
 body {
   height: 100%;
@@ -35,10 +31,10 @@ body {
   }
 }
 
-.dark-mode body {
-  background-color: #091a28;
-  color: #ebf4f1;
-}
+// .dark-mode body {
+//   background-color: #091a28;
+//   color: #ebf4f1;
+// }
 
 a {
   @apply no-underline;

@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import type { BlogPostPreview, FriendsPostPreview } from "~/types";
+import type { BlogPostPreview } from "~/types";
+// import type { BlogPostPreview, FriendsPostPreview } from "~/types";
 
 const { data: pageVisits } = await useFetch(() => `/api/kv`);
 const refreshPage = () => {
   window.location.reload();
 };
-const { data: articles } = await useAsyncData("articles-home", () =>
-  queryContent<BlogPostPreview>("/blog")
-    // .where({ published: { $ne: false } })
-    .without("body")
-    .skip(1)
-    .sort({ publishedAt: -1 })
-    .limit(6)
-    .find()
-);
 
 const { data: featuredPost } = await useAsyncData("featured-article", () =>
   queryContent<BlogPostPreview>("/blog")
@@ -24,14 +16,24 @@ const { data: featuredPost } = await useAsyncData("featured-article", () =>
     .findOne()
 );
 
-const { data: friendsPost } = await useAsyncData("friends-home", () =>
-  queryContent<FriendsPostPreview>("/friends")
-    .where({ published: { $ne: false } })
+const { data: articles } = await useAsyncData("articles-home", () =>
+  queryContent<BlogPostPreview>("/blog")
+    // .where({ published: { $ne: false } })
     .without("body")
+    .skip(1)
     .sort({ publishedAt: -1 })
-    .limit(3)
+    .limit(6)
     .find()
 );
+
+// const { data: friendsPost } = await useAsyncData("friends-home", () =>
+//   queryContent<FriendsPostPreview>("/friends")
+//     .where({ published: { $ne: false } })
+//     .without("body")
+//     .sort({ publishedAt: -1 })
+//     .limit(3)
+//     .find()
+// );
 
 useHead({
   title: null,
@@ -39,17 +41,19 @@ useHead({
   //     class: 'home'
   //  }
 });
+useSeoMeta({
+  ogUrl: () => "https\://nuxtation.vercel.app/",
+});
+// const ogImageOptions = {
+//   title: "Nuxtation",
+//   width: 1200,
+//   height: 630,
+//   fit: "cover",
+//   format: "png",
+//   background: "rgb:ffffff",
+// };
 
-const ogImageOptions = {
-  title: "Nuxtation",
-  width: 1200,
-  height: 630,
-  fit: "cover",
-  format: "png",
-  background: "rgb:ffffff",
-};
-
-defineOgImage(ogImageOptions);
+// defineOgImage(ogImageOptions);
 </script>
 <template>
   <div>
@@ -74,7 +78,7 @@ defineOgImage(ogImageOptions);
       />
     </section>
 
-    <section aria-labelledby="recent-friends">
+    <!-- <section aria-labelledby="recent-friends">
       <NuxtLink to="/friends">
         <TopAppSubtitle id="recent-friends">最新のメンバー記事</TopAppSubtitle>
       </NuxtLink>
@@ -85,7 +89,7 @@ defineOgImage(ogImageOptions);
         :list="friendsPost"
         section="friends"
       />
-    </section>
+    </section> -->
 
     <section aria-labelledby="vercel-kv" class="mt-10">
       <button

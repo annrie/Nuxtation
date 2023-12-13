@@ -2,7 +2,7 @@
   "unocss.root": ".",
 
   // Visuals
-  // "workbench.colorTheme": "Vitesse Dark",
+  "window.autoDetectColorScheme": true,
   "workbench.preferredDarkColorTheme": "Vitesse Dark",
   "workbench.preferredLightColorTheme": "Vitesse Light",
   "workbench.productIconTheme": "icons-carbon",
@@ -26,9 +26,9 @@
   "editor.stickyScroll.enabled": true,
   "editor.hover.sticky": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true, // this allows ESLint to auto fix on save
-    "source.organizeImports": false
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
@@ -303,5 +303,6 @@
  "nuxtr.vueFiles.layouts.defaultTemplate": "default.layout-template",
 	// "workbench.colorTheme": "Vitesse Dark",
 	"vue3snippets.enable-compile-vue-file-on-did-save-code": true,
-  "editor.formatOnSave": false
+  "editor.formatOnSave": false,
+  "workbench.editor.tabActionLocation": "left"
 }

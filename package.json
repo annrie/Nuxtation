@@ -83,10 +83,7 @@
     "github-markdown-css": "^5.5.0",
     "lite-youtube-embed": "^0.3.0",
     "mdast-util-to-string": "^4.0.0",
-    "microcms-js-sdk": "^2.7.0",
-    "micromark-util-types": "^2.0.0",
     "nuxt": "^3.8.2",
-    "nuxt-microcms-module": "^3.0.2",
     "sharp": "^0.33.0",
     "unist-util-stringify-position": "^4.0.0"
   },

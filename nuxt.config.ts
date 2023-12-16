@@ -5,6 +5,8 @@ import { OgImage } from './.nuxt/components.d';
 import { NavigationGuard } from 'vue-router';
 import { pwaVite } from './config/pwa';
 import { appDescription } from './logic/index';
+// import wasm from 'shikiji/onig.wasm';
+
 // import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
@@ -100,14 +102,6 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    layoutTransition: { name: 'fade-layout', mode: 'in-out' },
  },
 
- OgImage: {
-  runtimeBrouwser: true,
-  fonts: [
-    'Noto+Sans:400,700',
-    'Noto+Sans+JP:400,700',
-    ],
-  },
-
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
@@ -120,9 +114,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxt/devtools',
    'nuxt-typed-router',
    '@vite-pwa/nuxt',
-   'nuxt-og-image',
    'nuxt-link-checker',
-  //  'nuxt-microcms-module',
    '@nuxthq/studio',
    'nuxt-gtag',
    'nuxt-simple-robots',
@@ -334,14 +326,12 @@ robots: {
 },
 
 routeRules: {
-        '/**': { isr: 60 },
+        '/**': { isr: 60, spa: true },
         // '/blog/**': { ssr: true },
         // '/friends/**': { ssr: true },
         // '/cat/**': { ssr: false },
         // '/cms/**': { ssr: false },
     },
-
-//  preset: 'vercel_edge',
 
  studio: {
   enabled: true,
@@ -355,6 +345,13 @@ routeRules: {
   },
 
  nitro: {
+  // preset: 'node-server',
+  preset: 'vercel-edge',
+  wasm: {
+    rollup: {
+      targetEnv: 'browser',
+    }
+  },
   esbuild: {
     options: {
       target: 'esnext',

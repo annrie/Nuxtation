@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPostPreview } from "~/types";
+import type { BlogPostPreview } from "~/types/index.ts";
 // import type { BlogPostPreview, FriendsPostPreview } from "~/types";
 
 const { data: pageVisits } = await useFetch(() => `/api/kv`);

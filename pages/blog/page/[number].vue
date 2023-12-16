@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Sections, ParsedContent } from "~/types";
-const { path, params } = useRoute();
+import type { Sections, ParsedContent } from "~/types/index.ts";
+const { params } = useRoute();
 
 definePageMeta({
   layout: "blog",

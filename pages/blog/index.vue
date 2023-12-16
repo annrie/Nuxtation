@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Sections, ParsedContent } from "~/types";
+import type { Sections, ParsedContent } from "~/types/index.ts";
 import { Buffer } from "buffer";
 
 definePageMeta({

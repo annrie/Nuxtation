@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CatResponse } from "~/types";
+import type { CatResponse } from "~/types/index.ts";
 
 const { pending, data, refresh } = useFetch<CatResponse[]>(
   "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Sections } from "~/types";
+import type { Sections } from "~/types/index.ts";
 
 type Params = {
   slug: string;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost } from "~/types";
+import type { BlogPost } from "~/types/index.ts";
 
 const { path } = useRoute();
 const cleanPath = path.replace(/\/$/, "");
@@ -28,26 +28,21 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
 let prev: any, next: any;
 if (data?.value && data?.value?.surround) {
   [prev, next] = data?.value?.surround;
-  console.log({ data, prev, next });
 }
 
 definePageMeta({
-  layout: "blog",
+  layout: false,
 });
 // replaceHyphenを自分で定義する
 const replaceHyphen = (tags: string) => tags.replace(/-/g, " ");
-useSeoMeta({
-  ogImage: () => data?.value?.article.img,
-});
 
-// set the meta
 useHead({
   title: data?.value?.article.title,
   meta: [
     { name: "description", content: data?.value?.article.description },
     {
       property: "og:image",
-      content: `https://nuxtation.phantomoon.com/${data?.value?.article.img}`,
+      content: `https://nuxtation.imgix.app/${data?.value?.article.img}`,
     },
     {
       property: "og:title",
@@ -56,45 +51,73 @@ useHead({
   ],
 });
 
-const ui = {
-  nav: "max-w-full block mb-0",
-  ol:
-    "max-w-full flex justify-start gap-2 m-0 p-0 list-none border-blue-100 border-2 px-3 py-2 dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden",
-  li:
-    "inline-flex relative items-center justify-start text-sm whitespace-nowrap leading-loose group",
-  liLast: "overflow-hidden",
-  liMultiLine: "w-full",
-  item: {
-    icon:
-      "text-blue-300 dark:text-gray-400 h-5 w-5 group-hover:opacity-80 transition-all",
-    iconWithLabel: "mr-1",
-    default:
-      "mt-0 mb-0 relative text-gray-600 inline-flex items-center dark:text-gray-400 focus:underline hover:underline hover:text-gray-700",
-    current: "text-blue-700 leading-loose font-bold dark:text-gray-400 hover:none",
-    disabled: "text-gray-400 dark:text-gray-700 outline-none",
-    separator: "ml-2 text-blue-400 dark:text-gray-600",
-    last: "overflow-hidden text-ellipsis truncate !block",
-  },
-};
-const items = useBreadcrumbItems();
+useSeoMeta({
+  title: () => data?.value?.article.title,
+  ogTitle: () => data?.value?.article.title,
+  ogType: () => "article",
+  ogUrl: () => `https://nuxtation.phantomoon.com/${data?.value?.article._path}`,
+  twitterTitle: () => data?.value?.article.title,
+  description: () => data?.value?.article.description,
+  ogImage: () =>
+    `https://nuxtation.imgix.net/${data?.value?.article.img}?txt=${data?.value?.article.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=crop&blur=50`,
+  twitterImage: () =>
+    `https://nuxtation.imgix.net/${data?.value?.article.img}?txt=${data?.value?.article.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&blur=50&auto=format,compress&fit=crop`,
+  ogDescription: () => data?.value?.article.description,
+  twitterDescription: () => data?.value?.article.description,
+});
+const { $formatDate } = useNuxtApp();
 </script>
 <template>
-  <div>
-    <!-- Breadcrumbs -->
+    <div>
+      <NuxtLayout name="blog">
+          <!-- Breadcrumbs -->
     <div
-      class="pt-10 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
+      class="md:(flex flex-row justify-between mb-8 pt-8) mb-6 at-sm:(flex-none text-center pt-12 mb-8)"
     >
-      <!-- <SBreadcrumb flex>
-        <template #breadcrumb="{ to, title }">
-          <NuxtLink :to="to">
-            {{ title }}
-          </NuxtLink>
-        </template>
-      </SBreadcrumb> -->
+      <!-- Breadcrumbs -->
+      <ol
+        itemscope
+        itemtype="https://schema.org/BreadcrumbList"
+        class="blog-breadcrumb at-sm:(border-r-none)"
+      >
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a itemprop="item" href="/">
+            <span itemprop="name"
+              ><Icon align-top mb-5px name="line-md:home-md-twotone" /></span
+          ></a>
+          <meta itemprop="position" content="1" />
+        </li>
+        <li class="separator">&gt;</li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a
+            itemscope
+            itemtype="https://schema.org/WebPage"
+            itemprop="item"
+            itemid="/blog/"
+            href="/blog"
+          >
+            <span itemprop="name">Blog</span></a
+          >
+          <meta itemprop="position" content="2" />
+        </li>
+        <li class="separator">&gt;</li>
+        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span itemprop="name">{{ data?.article.title }}</span>
+          <meta itemprop="position" content="3" />
+        </li>
+      </ol>
       <!-- Publish date -->
-      <span class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0">{{
-        $formatDate(data?.article.publishedAt)
-      }}</span>
+      <span
+        class="font-light text-text-jis-blue/75 dark:text-white/75 mt-2 md:mt-0 at-sm:block"
+        ><Icon pr-2 name="streamline:chat-bubble-square-write" />{{
+          $formatDate(data?.article.publishedAt)
+        }}<span v-if="data?.article.updatedAt"
+          ><Icon name="eos-icons:arrow-rotate" />
+          <Icon pr-2 name="streamline:chat-bubble-square-write-solid" />{{
+            $formatDate(data?.article.updatedAt)
+          }}</span
+        ></span
+      >
     </div>
 
     <header class="article-header">
@@ -103,8 +126,13 @@ const items = useBreadcrumbItems();
         :src="data?.article.img"
         :alt="data?.article.title"
         format="avif,webp"
-        preset="cover"
-        class="rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px"
+        :modifiers="{
+          auto: 'format,enhance',
+        }"
+        :imgAttrs="{
+          class:
+            'rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px',
+        }"
       />
       <h1 class="heading">{{ data?.article.title }}</h1>
       <p class="supporting">{{ data?.article.description }}</p>
@@ -129,7 +157,7 @@ const items = useBreadcrumbItems();
         <Toc :links="data?.article?.body?.toc?.links" />
         <!-- Related articles -->
         <div
-          v-if="data && data?.surround?.filter((elem) => elem !== null)?.length > 0"
+          v-if="data && data?.surround?.filter((elem: any) => elem !== null)?.length > 0"
           class="related lt-lg:hidden"
         >
           <RelatedArticles :surround="data?.surround" class="blog-post-text" />
@@ -150,6 +178,7 @@ const items = useBreadcrumbItems();
     </section>
     <!-- PrevNext Component -->
     <PrevNext :prev="prev" :next="next" />
+    </NuxtLayout>
   </div>
 </template>
 
@@ -159,31 +188,31 @@ const items = useBreadcrumbItems();
 }
 
 .article-header .heading {
-  @apply: font-extrabold mt-8 lt-md: text-3xl tb:text-5xl;
+  @apply: font-extrabold mt-8 lt-md:text-3xl tb:text-5xl;
 }
 
 .article-header .supporting {
-  @apply: font-medium text-lg sm: mt-4 tb:my-8;
+  @apply font-medium text-lg sm:mt-4 tb:my-8;
 }
 
 .article-section {
-  @apply: relative m-auto max-w-5xl grid p-4 grid-cols-8;
+  @apply relative m-auto max-w-5xl grid p-4 grid-cols-8;
 }
 
 .article-tags {
-  --uno: border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase lt-md:text-base;
+  @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 items-center justify-center uppercase lt-md:text-base;
 
   .tag {
-    @apply: rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
+    @apply rounded-md bg-pink-100 border-zinc-600 text-sm p-2 py-1 text-dark-700 items-center justify-center dark: (bg-slate-100 text-slate-700) hover:-translate-y-0.5;
   }
 }
 
 aside {
-	@apply: w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
+  @apply w-full col-span-full sm:(order-1 col-span-full) lg:(order-2 col-span-2);
 }
 
 .aside {
-  @apply: sticky pt-10 z-0;
+  @apply sticky pt-10 z-0;
   @screen sm {
     top: calc(theme("spacing.nav_sm") - 4.3rem);
   }
@@ -192,6 +221,6 @@ aside {
   }
 }
 .article {
-  @apply: mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
+  @apply mx-auto w-full col-span-full p-4 md:col-start-1 sm:order-2 lg:(order-1 col-span-6);
 }
 </style>

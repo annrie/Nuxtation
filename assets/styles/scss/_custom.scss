@@ -16,27 +16,3 @@
     items-center
     justify-center;
 }
-/* Blog Breadcrumbs */
-
-.blog-breadcrumb {
-  @apply inline-block text-center font-light;
-}
-
-.blog-breadcrumb > span {
-  @apply mx-1 inline;
-}
-
-.blog-breadcrumb > li {
-  @apply inline;
-}
-
-.blog-breadcrumb > li a {
-  @apply text-jis-blue;
-}
-
-.blog-breadcrumb > li a:hover {
-  @apply underline;
-}
-.separator {
-  @apply mx-1;
-}

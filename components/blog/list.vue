@@ -27,7 +27,13 @@
         />
       </div>
       <header class="tb:text-left lt-md:text-center">
-        <p>{{ article.publishedAt }}</p>
+        <p v-if="article.updatedAt">
+          <Icon name="eos-icons:arrow-rotate" />
+          {{ article.updatedAt }}
+        </p>
+        <p v-else>
+          {{ article.publishedAt }}
+        </p>
         <h1 class="font-semibold text-2xl">
           {{ article.title }}
         </h1>

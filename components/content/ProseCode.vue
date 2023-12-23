@@ -67,16 +67,6 @@ const languageBackground = computed(() =>
 const languageColor = computed(() =>
   props.language ? languageMap[props.language]?.color : null
 );
-const languageStyle = computed(() => {
-  const style: StyleValue = {};
-  if (languageBackground.value) {
-    style.backgroundColor = languageBackground.value;
-  }
-  if (languageColor.value) {
-    style.color = languageColor.value;
-  }
-  return style;
-});
 </script>
 
 <template>
@@ -111,52 +101,69 @@ const languageStyle = computed(() => {
 
 <style scoped lang="scss">
 .container {
-  @apply w-full my-6 bg-zinc-800 dark:bg-middlegray:10 rounded-md border border-jis-blue:50 pt-8 relative overflow-hidden;
+  @apply w-full my-6 bg-zinc-800 rounded-md border border-jis-blue:50 pt-8 relative overflow-hidden;
 }
+
 :slotted(pre) {
   @apply flex overflow-x-auto px-4 pb-4 text-sm text-white;
   counter-reset: lines;
 }
+
 @screen md {
   :slotted(pre) {
     @apply text-base;
   }
 }
+
+:slotted(pre code) {
+  @apply w-full flex flex-col line-height-normal;
+}
+
 .container pre > code .line {
   @apply break-words;
 }
+
 .bottom-container {
   @apply absolute right-0 bottom-4 pr-2 pb-2;
 }
+
 @screen md {
   .bottom-container {
     @apply top-10;
   }
 }
+
 .copy-container {
   @apply flex;
 }
+
 .copied-text {
   @apply text-white;
 }
+
 .filename-text {
   @apply absolute top-0 left-4 py-1 text-xs text-white:75;
 }
-@screen md {
+
+@screen lt-md {
   .filename-text {
-    @apply text-sm;
+    @apply text-base;
   }
 }
+
 .language-text {
-  @apply absolute right-0 top-0 text-white px-2 py-1 rounded-bl-md;
+  @apply absolute right-0 top-0 text-white px-2 py-1 rounded-bl-md at-sm:text-xs;
 }
+
 :slotted(pre code) {
   @apply w-full flex flex-col;
 }
+
 :slotted(pre code .line > *) {
   @apply inline-block;
   min-height: 1rem;
 }
+
 :slotted(pre code .line::before) {
   @apply w-4 mr-6 inline-block text-left;
   line-height: 1.825;
@@ -164,6 +171,7 @@ const languageStyle = computed(() => {
   content: counter(lines);
   color: rgba(115, 138, 148, 0.4);
 }
+
 :slotted(pre code .highlight) {
   @apply block -mx-4 pr-4 pl-3 border-l-4 border-jis-blue bg-neutral-100:10;
   content: "";

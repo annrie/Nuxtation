@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Sections } from "~/types";
+import type { Sections } from "~/types/index.ts";
 
 type Params = {
   slug: string;
@@ -21,8 +21,7 @@ const description: string = `Here's a list of all my blog posts with the ${slug}
 const section: Sections = "blog";
 
 definePageMeta({
-  key: (route) => route.fullPath,
-  layout: "blog",
+  layout: false,
 });
 
 // set meta for page
@@ -32,8 +31,9 @@ useHead({
 });
 </script>
 <template>
-  <div>
-    <!-- <div
+      <div>
+        <NuxtLayout name="blog">
+      <!-- <div
       class="pt-8 flex flex-col md:flex-row items-center md:justify-between md:text-right mb-6 md:mb-8"
     >
       <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="blog-breadcrumb">
@@ -128,6 +128,7 @@ useHead({
         </template>
       </ContentList>
     </section>
+    </NuxtLayout>
   </div>
 </template>
 

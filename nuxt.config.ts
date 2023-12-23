@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 // import { SiteName, SiteDescription } from './logic/constants';
 import { RuntimeConfig } from 'nuxt/schema';
-import { OgImage } from './.nuxt/components.d';
+// import { OgImage } from './.nuxt/components.d';
 import { NavigationGuard } from 'vue-router';
 import { pwaVite } from './config/pwa';
 import { appDescription } from './logic/index';
@@ -128,7 +128,9 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     class: 'icon',
     color: '#000000',
   },
-
+ogImage: {
+  enable: false,
+},
   // generate: {
     //  async routes () {
     //   const { $content } = require('@nuxt/content')
@@ -346,7 +348,7 @@ routeRules: {
 
  nitro: {
   // preset: 'node-server',
-  preset: 'vercel-edge',
+  // preset: 'vercel-edge',
   wasm: {
     rollup: {
       targetEnv: 'browser',

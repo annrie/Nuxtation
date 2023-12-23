@@ -31,7 +31,7 @@ if (data?.value && data?.value?.surround) {
 }
 
 definePageMeta({
-  layout: "blog",
+  layout: false,
 });
 // replaceHyphenを自分で定義する
 const replaceHyphen = (tags: string) => tags.replace(/-/g, " ");
@@ -68,8 +68,9 @@ useSeoMeta({
 const { $formatDate } = useNuxtApp();
 </script>
 <template>
-  <div>
-    <!-- Breadcrumbs -->
+    <div>
+      <NuxtLayout name="blog">
+          <!-- Breadcrumbs -->
     <div
       class="md:(flex flex-row justify-between mb-8 pt-8) mb-6 at-sm:(flex-none text-center pt-12 mb-8)"
     >
@@ -177,6 +178,7 @@ const { $formatDate } = useNuxtApp();
     </section>
     <!-- PrevNext Component -->
     <PrevNext :prev="prev" :next="next" />
+    </NuxtLayout>
   </div>
 </template>
 

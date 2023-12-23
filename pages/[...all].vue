@@ -17,11 +17,13 @@ useSeoMeta({
 
 <template>
   <div>
-    <ContentRenderer v-if="page" :key="(page as any)._id" :value="page">
-      <template #empty="{ value }">
-        <DocumentDrivenEmpty :value="value" />
-      </template>
-    </ContentRenderer>
-    <DocumentDrivenNotFound v-else />
+    <NuxtLayout>
+      <ContentRenderer v-if="page" :key="(page as any)._id" :value="page">
+        <template #empty="{ value }">
+          <DocumentDrivenEmpty :value="value" />
+        </template>
+      </ContentRenderer>
+      <DocumentDrivenNotFound v-else />
+    </NuxtLayout>
   </div>
 </template>

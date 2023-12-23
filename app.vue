@@ -92,9 +92,7 @@ const { $pwa } = useNuxtApp();
     <NuxtLoadingIndicator />
     <!-- <OgImage /> -->
     <TheTopBar />
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <NuxtPage />
     <AppFooter />
     <!-- <ClientOnly> -->
     <div v-if="$pwa?.offlineReady || $pwa?.needRefresh" class="pwa-toast" role="alert">

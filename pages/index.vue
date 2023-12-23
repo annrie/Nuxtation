@@ -56,8 +56,8 @@ useSeoMeta({
 // defineOgImage(ogImageOptions);
 </script>
 <template>
-  <div>
-    <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
+    <div>
+      <NuxtLayout>    <TopAppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
     <TopAppSubtitle id="featured-posts">注目記事</TopAppSubtitle>
     <TopFeaturedSection
       v-if="featuredPost !== null"
@@ -105,5 +105,6 @@ useSeoMeta({
       <span animate-pulse>Loading...</span>
     </div>
   </template> -->
+  </NuxtLayout>
   </div>
 </template>

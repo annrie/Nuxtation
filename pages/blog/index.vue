@@ -3,7 +3,7 @@ import type { Sections, ParsedContent } from "~/types/index.ts";
 import { Buffer } from "buffer";
 
 definePageMeta({
-  layout: "blog",
+  layout: false,
 });
 
 // Find the number of blogs present
@@ -54,7 +54,7 @@ useSeoMeta({
 </script>
 <template>
   <div class="article-list">
-    <BlogHero :pageNo="pageNo" />
+      <NuxtLayout>    <BlogHero :pageNo="pageNo" />
     <section class="page-section">
       <Tags :section="section" />
       <ContentQuery
@@ -84,5 +84,6 @@ useSeoMeta({
         pageUrl="/blog/page/"
       />
     </section>
+    </NuxtLayout>
   </div>
 </template>

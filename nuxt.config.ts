@@ -107,6 +107,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@unocss/nuxt',
    '@nuxt/content',
    '@nuxt/image',
+   '@nuxtjs/mdc',
    '@nuxtseo/module',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
@@ -118,6 +119,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxthq/studio',
    'nuxt-gtag',
    'nuxt-simple-robots',
+   'nuxt-icon',
   ],
   gtag: {
     id: process.env.GA_MEASUREMENT_ID,

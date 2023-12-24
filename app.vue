@@ -23,8 +23,6 @@ const ogLocale = ref("ja_JP");
 const siteName = ref("Nuxtation");
 const appleMobileWebAppStatusBarStyle = "black-translucent";
 
-defineRobotMeta();
-
 // let encoded1 = Buffer.from(`${ogTitle.value}`)
 //   .toString("base64")
 //   .replace(/\s/g, "+")

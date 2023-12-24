@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto VueToNuxtLogo <md:-mt-10 tb:mt-1 lg:mt-4">
+  <div class="mx-auto VueToNuxtLogo lt-md:mt-10 tb:mt-1 lg:mt-4">
     <div class="Triangle Triangle--one" />
     <div class="Triangle Triangle--two" />
     <div class="Triangle Triangle--three" />
@@ -18,6 +18,7 @@
   transform: rotateX(180deg);
   animation: turn 2s linear forwards 1s;
 }
+
 .Triangle {
   position: absolute;
   top: 0;
@@ -25,6 +26,7 @@
   width: 0;
   height: 0;
 }
+
 .Triangle--one {
   // https: //abillyz.com/moco/studies/241
   top: 60px;
@@ -34,6 +36,8 @@
   background-color: #7aefc2;
   transform: rotate(30deg) skewY(30deg) scaleX(0.86666);
   border-top-left-radius: 16px;
+  z-index: -1;
+
   &::before,
   &::after {
     content: "";
@@ -43,6 +47,7 @@
     width: 80px;
     height: 80px;
   }
+
   &::before {
     background-color: #7aefc2;
     transform: translateX(50%) skewX(-45deg);
@@ -55,18 +60,22 @@
     border-bottom-left-radius: 16px;
   }
 }
+
 .Triangle--two {
   top: 75px;
   left: 190px;
   height: 70px;
   width: 70px;
   background-color: var(--bg);
+
   @at-root.dark {
     background-color: #222;
   }
+
   transform: rotate(30deg) skewY(30deg) scaleX(0.86666);
   border-top-left-radius: 16px;
   animation: goright 3.5s linear forwards 3.5s;
+  z-index: -1;
 
   &::before,
   &::after {
@@ -84,6 +93,7 @@
     @at-root.dark {
       background-color: #222;
     }
+
     transform: translateX(50%) skewX(-45deg);
     border-top-right-radius: 16px;
   }
@@ -94,10 +104,12 @@
     @at-root.dark {
       background-color: #222;
     }
+
     transform: translateY(50%) skewY(-45deg);
     border-bottom-left-radius: 16px;
   }
 }
+
 .Triangle--three {
   top: 88px;
   left: 135px;
@@ -107,6 +119,8 @@
   transform: rotate(30deg) skewY(30deg) scaleX(0.86666);
   border-top-left-radius: 8px;
   animation: goright2 2.5s linear forwards 3.5s;
+  z-index: -1;
+
   &::before,
   &::after {
     content: "";
@@ -116,6 +130,7 @@
     width: 60px;
     height: 60px;
   }
+
   &::before {
     background-color: #00de88;
     transform: translateX(50%) skewX(-45deg);
@@ -129,6 +144,7 @@
     border-bottom-left-radius: 8px;
   }
 }
+
 .Text {
   @apply font-header font-bold text-shadow-xl grid inset-0 text-dark-500 text-2xl z-15 grid-cols-9 place-items-center dark:text-neutral-50;
   margin-top: 97px;
@@ -143,9 +159,11 @@
     transform: rotateX(180deg);
     opacity: 0;
   }
+
   30% {
     opacity: 0;
   }
+
   100% {
     transform: rotateX(0deg);
     opacity: 1;
@@ -156,9 +174,11 @@
   0% {
     opacity: 0;
   }
+
   30% {
     opacity: 0.3;
   }
+
   100% {
     opacity: 1;
   }
@@ -169,32 +189,39 @@
     top: 180px;
   }
 }
+
 @keyframes fade {
   0% {
     opacity: 0;
   }
+
   70% {
     opacity: 0.6;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @keyframes goright {
   100% {
     left: 73px;
   }
 }
+
 @keyframes goright2 {
   100% {
     left: 90px;
   }
 }
+
 @keyframes goleft {
   0% {
     opacity: 0;
     transform: translateX(0);
   }
+
   // 70% {
   //   opacity: 0.3;
   // }

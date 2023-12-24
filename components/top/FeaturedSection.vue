@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPostPreview, Sections } from "~/types";
+import type { BlogPostPreview, Sections } from "~/types/index.ts";
 
 defineProps<{
   item: BlogPostPreview;
@@ -20,21 +20,26 @@ defineProps<{
         height="300"
         fit="cover"
         format="avif,webp"
-        :modifiers="{ auto: 'format,compress', crop: 'entropy,q:60' }"
+        :modifiers="{ auto: 'format,compress', q: 60 }"
         :imgAttrs="{
           class:
-            'rounded transition-all duration-400 at-tb:mx-auto lg:(scale-90 hover:scale-100)',
+            'rounded transition-all duration-400 mx-auto tb:(w-100vw mt-0 mx-0)  lg:(hover:scale-110)',
         }"
       />
     </NuxtLink>
-
     <div class="mt-6 lg:(mx-6 mt-0 w-1/2 text-left)">
       <TagsList
         :tags="item.tags"
         section="blog"
         class="sm:justify-center lg:justify-start hover:text-jis-red"
       />
-
+      <p v-if="item.updatedAt" pt-4>
+        <Icon class="inline-block mr-10px" name="eos-icons:arrow-rotate" />
+        <Date :date="item.updatedAt" />
+      </p>
+      <p pt-4 v-else>
+        <Date :date="item.publishedAt" />
+      </p>
       <p>
         <NuxtLink
           :to="item._path"
@@ -43,17 +48,15 @@ defineProps<{
           {{ item.title }}
         </NuxtLink>
       </p>
-
       <p class="mt-3 text-sm text-gray-500 md:text-sm dark:text-gray-300">
         {{ item.description }}
       </p>
-
       <NuxtLink
         :to="item._path"
         :aria-label="`read more about ${item.title}`"
-        class="mt-5 linkButton"
+        class="text-white at-sm:text-white mt-5 linkButton hover:(text-pink-100 scale-110 duration-400)"
       >
-        Read more
+        読んでみる
       </NuxtLink>
     </div>
   </article>

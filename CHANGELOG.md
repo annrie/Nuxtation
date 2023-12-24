@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.4](https://github.com/annrie/Nuxtation/compare/v2.4.3...v2.4.4) (2023-12-24)
+
+
+### バグ修正
+
+* 🐛 remove fireinds from components adn pages ([c1d3c8d](https://github.com/annrie/Nuxtation/commit/c1d3c8dd4ee1111596bbb624f7e691f666913ad4))
+
+
+### コードスタイル
+
+* 💄 npm-check-updates ([a413e33](https://github.com/annrie/Nuxtation/commit/a413e33e30f572d8623cb41b67effb7685e6c9ff))
+
 ### [2.4.3](https://github.com/annrie/Nuxtation/compare/v2.4.2...v2.4.3) (2023-11-06)
 
 

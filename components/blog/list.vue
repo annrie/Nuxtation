@@ -34,20 +34,24 @@
         <p v-else>
           {{ article.publishedAt }}
         </p>
-        <h1 class="font-semibold text-2xl">
+        <h1 class="font-semibold tb:text-xl lg:text-2xl">
           {{ article.title }}
         </h1>
-        <p>{{ article.description }}</p>
+        <p leading-7 tb:text-base lg:text-l>{{ article.description }}</p>
         <ul class="flex rounded-lg font-normal my-4 text-white gap-2 uppercase">
           <li
-            class="rounded-md bg-jis-blue/30 border-zinc-600 text-lg p-2 py-1 text-dark-700 align-text-bottom tb:text-left lt-md:mx-auto dark:(bg-slate-100 text-slate-700)"
+            class="rounded-md bg-jis-blue/30 border-zinc-600 sm:text-base tb:text-14px lg:text-lg p-2 text-dark-700 align-text-bottom tb:text-left dark:(bg-slate-100 text-slate-700)"
             v-for="(tag, n) in article.tags"
             :key="n"
           >
             {{ tag }}
           </li>
         </ul>
-        <NuxtLink :to="article._path" class="linkButton sm:mb-4">Read More</NuxtLink>
+        <NuxtLink
+          :to="article._path"
+          class="linkButton at-sm:(mb-4 text-white mx-auto) hover:(text-white scale-110 duration-400)"
+          >Read More</NuxtLink
+        >
       </header>
     </li>
   </ul>

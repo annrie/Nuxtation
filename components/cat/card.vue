@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CatResponse } from "~/types";
+import type { CatResponse } from "~/types/index.ts";
 
 interface Props {
   catData: CatResponse;

@@ -1,7 +1,7 @@
 import { ContentDoc } from './.nuxt/components.d';
 import type { ParsedContent as DefaultParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
 import type { VitePWAOptions } from 'vite-plugin-pwa'
-import { type Ref, type UnwrapNestedRefs } from 'vue'
+import type { Ref, UnwrapNestedRefs } from 'vue'
 import type { StorageMeta } from 'unstorage'
 
 
@@ -11,7 +11,7 @@ export interface ParsedContent extends DefaultParsedContent {
   schemaOrg: Record<string, any>
 }
 
-export type Sections = 'blog' | 'friends' | 'catResponse'
+export type Sections = 'blog' | 'catResponse'
 
 export interface BlogPost extends MarkdownParsedContent {
   title: string,
@@ -30,30 +30,7 @@ export interface BlogPost extends MarkdownParsedContent {
     photo?: string,
   }
 }
-export interface FriendsPost extends MarkdownParsedContent {
-  title: string,
-  publishedAt: string,
-  description: string,
-  url?: string,
-  img: string,
-  alt: string,
-  ogImage?: string,
-  provider?: string,
-  tags: string[],
-  published?: boolean,
-  author?:  {
-    name?: string,
-    bio?: string,
-    photo?: string,
-    image?: string,
-  }
-}
-export interface PostGenre extends MarkdownParsedContent {
-  name: string,
-  description: string,
-  img: string,
-  alt?: string,
-}
+
 export interface CatResponse {
   id: string;
   url: string;
@@ -62,7 +39,6 @@ export interface CatResponse {
 }
 
 export type BlogPostPreview = Omit<BlogPost, 'body'>;
-export type FriendsPostPreview = Omit<FriendsPost, 'body'>;
 
 export interface PrevNext {
   title?: string,

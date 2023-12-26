@@ -109,6 +109,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxt/image',
    '@nuxtjs/mdc',
    '@nuxtseo/module',
+   'nuxt-og-image',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
@@ -130,23 +131,9 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     class: 'icon',
     color: '#000000',
   },
-ogImage: {
-  enable: false,
-},
-  // generate: {
-    //  async routes () {
-    //   const { $content } = require('@nuxt/content')
-    //   const files = await $content().only(['path']).fetch()
-    //   return files.map(file => file.path === '/index' ? '/' : file.path)
-    // }
-    // },
-
-
-  //  microCMS: {
-  //    serviceDomain: process.env.MICROCMS_SERVICE_DOMAIN,
-  //    apiKey: process.env.MICROCMS_API_KEY,
-  //    target: 'server',
-  //  },
+// ogImage: {
+//   enabled: false,
+// },
 
     site: {
       identity: {
@@ -186,7 +173,7 @@ ogImage: {
         // Theme used if `html.dark`
         dark: 'github-dark',
         // Theme used if `html.sepia`
-//         sepia: 'monokai'
+        // sepia: 'monokai'
        },
        preload: [
          'bash',

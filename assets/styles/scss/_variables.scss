@@ -57,21 +57,21 @@ $PATH: "@/assets/images/";
 $SEC: 0.3s;
 
 // dummy fonts
-@font-face {
-    font-family: "Redacted";
-    src: url("@/assets/redacted-font/fonts/web/redacted-regular.eot");
-    src: url("@/assets/redacted-font/fonts/web/redacted-regular.woff2") format("woff2"),
-         url("@/assets/redacted-font/fonts/web/redacted-regular.woff") format("woff"),
-         url("@/assets/redacted-font/fonts/web/redacted-regular.ttf") format("opentype"),
-         url("@/assets/redacted-font/fonts/web/redacted-regular.svg#filename") format("svg");
-}
+// @font-face {
+//     font-family: "Redacted";
+//     src: url("@/assets/redacted-font/fonts/web/redacted-regular.eot");
+//     src: url("@/assets/redacted-font/fonts/web/redacted-regular.woff2") format("woff2"),
+//          url("@/assets/redacted-font/fonts/web/redacted-regular.woff") format("woff"),
+//          url("@/assets/redacted-font/fonts/web/redacted-regular.ttf") format("opentype"),
+//          url("@/assets/redacted-font/fonts/web/redacted-regular.svg#filename") format("svg");
+// }
 
-.prototype {
-    font-family: "Redacted";
-      // color: #999;
-}
+// .prototype {
+//     font-family: "Redacted";
+//       // color: #999;
+// }
 
-.prototype-script {
-    font-family: "Redacted Script";
-    // color: #999;
-}
+// .prototype-script {
+//     font-family: "Redacted Script";
+//     // color: #999;
+// }

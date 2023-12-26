@@ -12,7 +12,8 @@ import { appDescription } from './logic/index';
 // import { BASE_URL, API_KEY } from process.env;
 
 export default defineNuxtConfig({
-   devtools: {
+  // debug: true,
+  devtools: {
    // Enable devtools (default: true)
    enabled: true,
 
@@ -242,6 +243,9 @@ linkChecker: {
   },
 
  experimental: {
+  componentIslands: {
+    selectiveClient: true,
+  },
 //    restoreState: true,
    payloadExtraction: false,
    viewTransition: true,
@@ -330,6 +334,9 @@ routeRules: {
 
 
   hooks: {
+    'vite:extendConfig' (config) {
+      delete config.define!.document;
+    },
     'robots:config': (config) => {
       config.Sitemap = '/sitemap.xml';
     },
@@ -337,7 +344,7 @@ routeRules: {
 
  nitro: {
   // preset: 'node-server',
-  // preset: 'vercel-edge',
+  preset: 'vercel-edge',
   wasm: {
     rollup: {
       targetEnv: 'browser',

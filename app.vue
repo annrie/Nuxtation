@@ -82,6 +82,9 @@ useSeoMeta({
 // If you want to use it in setup, import from the nuxtApp.
 const { $pwa } = useNuxtApp();
 // defineOgImage(ogImageOptions);
+// defineOgImage({
+//   fonts: ["Noto+Sans:400"],
+// });
 </script>
 
 <template>

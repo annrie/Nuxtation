@@ -343,8 +343,9 @@ routeRules: {
   },
 
  nitro: {
-  // preset: 'node-server',
-  preset: 'vercel-edge',
+  preset: 'node-server',
+  // preset: 'vercel-edge',
+  static: true,
   wasm: {
     rollup: {
       targetEnv: 'browser',

@@ -12,6 +12,10 @@ const { data: article } = await useAsyncData("home", () =>
     .findOne()
 );
 
+if (document) {
+  console.log(document.querySelector("div"));
+}
+
 const description = ref("annrieのNuxt,Vueを中心にしたポートフォリオサイト");
 const ogTitle = ref("annrie's Nuxtation");
 const twitterDescription = ref("Nuxt, contentで構築したブログサイト");
@@ -93,29 +97,33 @@ const { $pwa } = useNuxtApp();
     <NuxtLoadingIndicator />
     <!-- <OgImage /> -->
     <TheTopBar />
-    <NuxtPage />
-    <AppFooter />
-    <!-- <ClientOnly> -->
-    <div v-if="$pwa?.offlineReady || $pwa?.needRefresh" class="pwa-toast" role="alert">
-      <div class="message">
-        <span v-if="$pwa.offlineReady"> App ready to work offline </span>
-        <span v-else> New content available, click on reload button to update. </span>
-      </div>
-      <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">Reload</button>
-      <button @click="$pwa.cancelPrompt()">Close</button>
+    <div>
+      <NuxtPage />
     </div>
-    <div
-      v-if="$pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh"
-      class="pwa-toast"
-      role="alert"
-    >
-      <div class="message">
-        <span> Install PWA </span>
+    <!-- <AppFooter /> -->
+    <ClientOnly>
+      <div v-if="$pwa?.offlineReady || $pwa?.needRefresh" class="pwa-toast" role="alert">
+        <div class="message">
+          <span v-if="$pwa.offlineReady"> App ready to work offline </span>
+          <span v-else> New content available, click on reload button to update. </span>
+        </div>
+        <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
+          Reload
+        </button>
+        <button @click="$pwa.cancelPrompt()">Close</button>
       </div>
-      <button @click="$pwa.install()">Install</button>
-      <button @click="$pwa.cancelInstall()">Cancel</button>
-    </div>
-    <!-- </ClientOnly> -->
+      <div
+        v-if="$pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh"
+        class="pwa-toast"
+        role="alert"
+      >
+        <div class="message">
+          <span> Install PWA </span>
+        </div>
+        <button @click="$pwa.install()">Install</button>
+        <button @click="$pwa.cancelInstall()">Cancel</button>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 <style>

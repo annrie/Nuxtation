@@ -53,37 +53,59 @@ useSeoMeta({
 });
 </script>
 <template>
-  <div class="article-list">
-      <NuxtLayout>    <BlogHero :pageNo="pageNo" />
-    <section class="page-section">
-      <Tags :section="section" />
-      <ContentQuery
-        path="/blog"
-        :only="[
-          'title',
-          'description',
-          'tags',
-          '_path',
-          'img',
-          'publishedAt',
-          'updatedAt',
-        ]"
-        :limit="blogCountLimit"
-        :sort="{ publishedAt: -1 }"
-        v-slot="{ data }"
-      >
-        <BlogList :data="data as ParsedContent[]" />
-      </ContentQuery>
-      <Pagination
-        v-if="data && data > 1"
-        class="mt-8"
-        :currentPage="1"
-        :totalPages="data"
-        :nextPage="data > 1"
-        baseUrl="/blog/"
-        pageUrl="/blog/page/"
-      />
-    </section>
+  <div>
+    <NuxtLayout name="blog">
+      <div class="article-list mt-0 pt-10">
+        <!-- Breadcrumbs -->
+        <ol
+          itemscope
+          itemtype="https://schema.org/BreadcrumbList"
+          class="blog-breadcrumb"
+        >
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <NuxtLink itemprop="item" to="/">
+              <span itemprop="name"
+                ><Icon align-top mb-5px name="line-md:home-md-twotone" /></span
+            ></NuxtLink>
+            <meta itemprop="position" content="1" />
+          </li>
+          <li class="separator">&gt;</li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name">Blog</span>
+            <meta itemprop="position" content="2" />
+          </li>
+        </ol>
+        <BlogHero :pageNo="pageNo" />
+        <section class="page-section">
+          <Tags :section="section" />
+          <ContentQuery
+            path="/blog"
+            :only="[
+              'title',
+              'description',
+              'tags',
+              '_path',
+              'img',
+              'publishedAt',
+              'updatedAt',
+            ]"
+            :limit="blogCountLimit"
+            :sort="{ publishedAt: -1 }"
+            v-slot="{ data }"
+          >
+            <BlogList :data="data as ParsedContent[]" />
+          </ContentQuery>
+          <Pagination
+            v-if="data && data > 1"
+            class="mt-8"
+            :currentPage="1"
+            :totalPages="data"
+            :nextPage="data > 1"
+            baseUrl="/blog/"
+            pageUrl="/blog/page/"
+          />
+        </section>
+      </div>
     </NuxtLayout>
   </div>
 </template>

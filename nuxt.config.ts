@@ -17,13 +17,18 @@ export default defineNuxtConfig({
    // Enable devtools (default: true)
    enabled: true,
 
-  timeline: {
+   timeline: {
    enabled: true,
    // VS Code Server options
    // vscode: {},
    // ...other options
     },
   },
+
+  features: {
+    inlineStyles: false,
+  },
+
 
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
  ssr: process.env.NODE_ENV !== "development",
@@ -132,9 +137,9 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     class: 'icon',
     color: '#000000',
   },
-// ogImage: {
-//   enabled: false,
-// },
+ogImage: {
+  enabled: false,
+},
 
     site: {
       identity: {

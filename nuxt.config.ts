@@ -339,6 +339,17 @@ routeRules: {
 
 
   hooks: {
+    'build:manifest': (manifest) => {
+      // find the app entry, css list
+      const css = manifest['node_modules/nuxt/dist/app/entry.js']?.css
+      if (css) {
+        // start from the end of the array and go to the beginning
+        for (let i = css.length - 1; i >= 0; i--) {
+          // if it starts with 'entry', remove it from the list
+          if (css[i].startsWith('entry')) css.splice(i, 1)
+        }
+      }
+    },
     'vite:extendConfig' (config) {
       delete config.define!.document;
     },
@@ -350,12 +361,12 @@ routeRules: {
  nitro: {
   preset: 'node-server',
   // preset: 'vercel-edge',
-  static: true,
-  wasm: {
-    rollup: {
-      targetEnv: 'browser',
-    }
-  },
+  // static: true,
+  // wasm: {
+  //   rollup: {
+  //     targetEnv: 'browser',
+  //   }
+  // },
   esbuild: {
     options: {
       target: 'esnext',
@@ -406,12 +417,12 @@ vue: {
       },
     },
   },
-  $server: {
+  // $server: {
 //     watch: {
 //       usePolling: true,
 //     }
-  },
-  $client: {
+  // },
+  // $client: {
 //     build: {
 //       rollupOptions: {
 //         output: {
@@ -421,7 +432,7 @@ vue: {
 //         },
 //       },
 //     },
-  },
+  // },
  },
 
  pwaVite,

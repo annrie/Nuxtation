@@ -90,8 +90,6 @@
     "vue-router": "^4.2.5"
   },
   "overrides": {
-    "vue": "latest",
-    "vite": "latest",
     "@vitejs/plugin-vue": "latest"
   },
   "resolutions": {

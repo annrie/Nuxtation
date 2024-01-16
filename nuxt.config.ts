@@ -154,7 +154,6 @@ ogImage: {
     twitter: '@muraie_jin',
   },
 
-
  content: {
   // api: {
   //   baseURL: 'api/_content',
@@ -325,14 +324,6 @@ robots: {
   blockNonSeoBots: true,
 },
 
-routeRules: {
-        '/**': { isr: 60, spa: true },
-        // '/blog/**': { ssr: true },
-        // '/friends/**': { ssr: true },
-        // '/cat/**': { ssr: false },
-        // '/cms/**': { ssr: false },
-    },
-
  studio: {
   enabled: true,
   },
@@ -359,23 +350,23 @@ routeRules: {
   },
 
  nitro: {
-  preset: 'node-server',
-  // preset: 'vercel-edge',
+  // preset: 'node-server',
+  preset: 'vercel-edge',
   // static: true,
   // wasm: {
   //   rollup: {
   //     targetEnv: 'browser',
   //   }
   // },
-  esbuild: {
-    options: {
-      target: 'esnext',
-    },
-    plugins: [ '~/plugins/nitro.error.ts' ],
-  },
-   storage: {
-     data: { driver: 'vercelKV'}
-   },
+  // esbuild: {
+  //   options: {
+  //     target: 'esnext',
+  //   },
+  //   plugins: [ '~/plugins/nitro.error.ts' ],
+  // },
+  //  storage: {
+  //    data: { driver: 'vercelKV'}
+  //  },
   prerender: {
      crawlLinks: true,
      failOnError: false,
@@ -403,9 +394,11 @@ routeRules: {
 vue: {
   defineModel: true,
 //   propsDestructure: true,
-   compilerOptions: {
-     isCustomElement: (tag) => ['lite-youtube'].includes(tag),
+  //  template: {
+    compilerOptions: {
+     isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
    },
+  // },
  },
 
  vite: {
@@ -434,6 +427,13 @@ vue: {
 //     },
   // },
  },
+$production: {
+  routeRules: {
+        '/**': { isr: true },
+        // '/blog/**': { prerender: true },
+    },
+  },
+$development: {},
 
  pwaVite,
 });

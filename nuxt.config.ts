@@ -350,6 +350,9 @@ robots: {
   },
 
  nitro: {
+  future: {
+    nativeSWR: true,
+  },
   // preset: 'node-server',
   preset: 'vercel-edge',
   // static: true,

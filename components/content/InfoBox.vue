@@ -7,7 +7,7 @@ const props = defineProps(["type"]);
 
 <template>
   <!-- Access `type` prop in Dynamic class  -->
-  <div class="info-box not-prose" :class="[type]">
+  <div class="info-box" :class="[type]">
     <!-- Conditionally render icons based on prop -->
     <div
       i-carbon-checkmark-filled-warning

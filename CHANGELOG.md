@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.4.5](https://github.com/annrie/Nuxtation/compare/v2.4.4...v2.4.5) (2024-01-18)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 npm-check-updates ([3946966](https://github.com/annrie/Nuxtation/commit/394696667a3b05cd334b0ad9d80429e1209a7f7b))
+* 🤖 remove shamefull ([18198c9](https://github.com/annrie/Nuxtation/commit/18198c93e123fe8bbc504b71764fe073b0cecf61))
+* 🤖 update @nuxt/image to version 1.3.0 ([bb23998](https://github.com/annrie/Nuxtation/commit/bb239989b4d6ca5f6ef928a70f257c65629ef90e))
+* 🤖 update Nuxt to v3.9.0 ([085e27b](https://github.com/annrie/Nuxtation/commit/085e27bb04a73128af43693c584dbf800e7c8da7))
+* 🤖 update nuxt to v3.9.1 ([7bdb0f2](https://github.com/annrie/Nuxtation/commit/7bdb0f2a9343d58eb098b5b32fe5baede395ebaa))
+* 🤖 依存関係のアップデート ([711cdda](https://github.com/annrie/Nuxtation/commit/711cdda2a5103f8d153efc8254e30013dcb9b0d0))
+
 ### [2.4.4](https://github.com/annrie/Nuxtation/compare/v2.4.3...v2.4.4) (2023-12-24)
 
 

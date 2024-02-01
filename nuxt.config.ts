@@ -31,7 +31,8 @@ export default defineNuxtConfig({
 
 
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
- ssr: process.env.NODE_ENV !== "development",
+//  ssr: process.env.NODE_ENV !== "development",
+ssr: true,
 spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
 
   telemetry:false,
@@ -53,6 +54,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
 
  devServer: {
    host: '',
+   port: 3100,
  },
  // serverMiddleware: {
  //   '/_ipx': '@/server/middleware/ipx.js'
@@ -153,7 +155,9 @@ ogImage: {
     language: 'ja',
     twitter: '@muraie_jin',
   },
-
+  schemaOrg: {
+    identity: 'Person',
+    },
  content: {
   // api: {
   //   baseURL: 'api/_content',
@@ -247,13 +251,15 @@ linkChecker: {
   },
 
  experimental: {
-  componentIslands: {
-    selectiveClient: true,
-  },
+  // componentIslands: {
+  //   selectiveClient: true,
+  // },
 //    restoreState: true,
    payloadExtraction: false,
+   sharedPrerenderData: true,
    viewTransition: true,
    inlineSSRStyles: true,
+   scanPageMeta: true,
    renderJsonPayloads: true,
    typedPages: true,
    headNext: true,
@@ -319,7 +325,10 @@ colorMode: {
    "server": false,
    "client": false,
  },
-
+  sitemap: {
+    xsl: false,
+    credits: false,
+  },
 robots: {
   blockNonSeoBots: true,
 },
@@ -330,20 +339,20 @@ robots: {
 
 
   hooks: {
-    'build:manifest': (manifest) => {
-      // find the app entry, css list
-      const css = manifest['node_modules/nuxt/dist/app/entry.js']?.css
-      if (css) {
-        // start from the end of the array and go to the beginning
-        for (let i = css.length - 1; i >= 0; i--) {
-          // if it starts with 'entry', remove it from the list
-          if (css[i].startsWith('entry')) css.splice(i, 1)
-        }
-      }
-    },
-    'vite:extendConfig' (config) {
-      delete config.define!.document;
-    },
+    // 'build:manifest': (manifest) => {
+    //   // find the app entry, css list
+    //   const css = manifest['node_modules/nuxt/dist/app/entry.js']?.css
+    //   if (css) {
+    //     // start from the end of the array and go to the beginning
+    //     for (let i = css.length - 1; i >= 0; i--) {
+    //       // if it starts with 'entry', remove it from the list
+    //       if (css[i].startsWith('entry')) css.splice(i, 1)
+    //     }
+    //   }
+    // },
+    // 'vite:extendConfig' (config) {
+    //   delete config.define!.document;
+    // },
     'robots:config': (config) => {
       config.Sitemap = '/sitemap.xml';
     },
@@ -394,17 +403,15 @@ robots: {
    }
  },
 
-vue: {
-  defineModel: true,
-//   propsDestructure: true,
-  //  template: {
-    compilerOptions: {
-     isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
-   },
-  // },
- },
-
  vite: {
+  vue: {
+    defineModel: true,
+    customElement: true,
+    propsDestructure: true,
+    compilerOptions: {
+      isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
+    },
+  },
   css: {
     preprocessorOptions: {
       charset: false,
@@ -430,6 +437,7 @@ vue: {
 //     },
   // },
  },
+
 $production: {
   routeRules: {
         '/**': { isr: true },

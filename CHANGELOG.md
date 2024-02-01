@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/annrie/Nuxtation/compare/v2.4.5...v2.5.0) (2024-02-01)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 update Nuxt and Vue to version 3.9.3 and 3.4.15 ([6e605c6](https://github.com/annrie/Nuxtation/commit/6e605c6980cbe2d375cc25037f6b4070bf315091))
+
+
+### 機能の追加、変更、削除
+
+* 🎸 update nuxt to v3.10.0 ([68b6944](https://github.com/annrie/Nuxtation/commit/68b6944e72d83348624758d9b995c0c9d4095d4c))
+
 ### [2.4.5](https://github.com/annrie/Nuxtation/compare/v2.4.4...v2.4.5) (2024-01-18)
 
 

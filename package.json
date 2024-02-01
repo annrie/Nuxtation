@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.4.5",
+  "version": "2.5.0",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -51,7 +51,6 @@
     "@unocss/transformer-directives": "^0.58.4",
     "@unocss/transformer-variant-group": "^0.58.4",
     "@unocss/vite": "^0.58.4",
-    "@vercel/kv": "latest",
     "@vite-pwa/nuxt": "^0.4.0",
     "@vueuse/core": "^10.7.2",
     "@vueuse/nuxt": "^10.7.2",

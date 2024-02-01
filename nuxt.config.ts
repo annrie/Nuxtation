@@ -363,8 +363,8 @@ robots: {
     nativeSWR: true,
   },
   // preset: 'node-server',
-  preset: 'vercel-edge',
-  // static: true,
+  preset: 'vercel',
+//   static: true,
   // wasm: {
   //   rollup: {
   //     targetEnv: 'browser',
@@ -412,6 +412,10 @@ robots: {
       isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
     },
   },
+  build: {
+    target: 'esnext',
+    chunkSizeWarningLimit: 1600, // Adjust as needed
+  },
   css: {
     preprocessorOptions: {
       charset: false,
@@ -440,7 +444,7 @@ robots: {
 
 $production: {
   routeRules: {
-        '/**': { isr: true },
+        '/**': { isr: 60 },
         // '/blog/**': { prerender: true },
     },
   },

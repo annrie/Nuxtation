@@ -258,7 +258,7 @@ linkChecker: {
    payloadExtraction: false,
    sharedPrerenderData: true,
    viewTransition: true,
-   inlineSSRStyles: true,
+   inlineSSRStyles: false,
    scanPageMeta: true,
    renderJsonPayloads: true,
    typedPages: true,
@@ -322,7 +322,7 @@ colorMode: {
  },
 
  sourcemap: {
-   "server": false,
+   "server": true,
    "client": false,
  },
   sitemap: {
@@ -359,12 +359,20 @@ robots: {
   },
 
  nitro: {
-  future: {
-    nativeSWR: true,
+  devProxy: {
+    host: 'localhost',
   },
-  // preset: 'node-server',
+  // future: {
+  //   nativeSWR: true,
+  // },
   preset: 'vercel',
 //   static: true,
+ esbuild: {
+    options: {
+      target: 'esnext',
+    },
+    plugins: [ '~/plugins/nitro.error.ts' ],
+  },
   // wasm: {
   //   rollup: {
   //     targetEnv: 'browser',
@@ -399,19 +407,27 @@ robots: {
 
  router: {
    options: {
-     strict: true,
+     scrollBehaviorType: 'smooth',
+     strict: false,
    }
  },
-
- vite: {
   vue: {
     defineModel: true,
-    customElement: true,
+    // customElement: true,
     propsDestructure: true,
     compilerOptions: {
       isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
     },
   },
+ vite: {
+  // vue: {
+  //   defineModel: true,
+  //   customElement: true,
+  //   propsDestructure: true,
+  //   compilerOptions: {
+  //     isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
+  //   },
+  // },
   build: {
     target: 'esnext',
     chunkSizeWarningLimit: 1600, // Adjust as needed
@@ -444,7 +460,7 @@ robots: {
 
 $production: {
   routeRules: {
-        '/**': { isr: 60 },
+        '/**': { prerender: true },
         // '/blog/**': { prerender: true },
     },
   },

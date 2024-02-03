@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/annrie/Nuxtation/compare/v2.5.0...v2.5.1) (2024-02-03)
+
+
+### バグ修正
+
+* 🐛 change preset to vercel ([4914794](https://github.com/annrie/Nuxtation/commit/4914794abd8a966f3b2c946c9d89706944869abc))
+
 ## [2.5.0](https://github.com/annrie/Nuxtation/compare/v2.4.5...v2.5.0) (2024-02-01)
 
 

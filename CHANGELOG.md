@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.2](https://github.com/annrie/Nuxtation/compare/v2.5.1...v2.5.2) (2024-02-23)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 update nuxt to 3.10.3 and npm-check-updates ([552fa70](https://github.com/annrie/Nuxtation/commit/552fa706e9343aa0f3d24ecb19805388d889b405))
+
 ### [2.5.1](https://github.com/annrie/Nuxtation/compare/v2.5.0...v2.5.1) (2024-02-03)
 
 

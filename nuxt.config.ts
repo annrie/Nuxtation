@@ -5,8 +5,7 @@ import { RuntimeConfig } from 'nuxt/schema';
 import { NavigationGuard } from 'vue-router';
 import { pwaVite } from './config/pwa';
 import { appDescription } from './logic/index';
-// import wasm from 'shikiji/onig.wasm';
-
+import { bundledLanguages } from 'shiki';
 // import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
@@ -174,7 +173,8 @@ ogImage: {
      }
    },
   highlight: {
-       // theme:'dark-plus',
+      langs: Object.keys(bundledLanguages),
+      // theme:'dark-plus',
       theme: {
         dark: true,
         // Default theme (same as single string)
@@ -255,8 +255,8 @@ linkChecker: {
   //   selectiveClient: true,
   // },
 //    restoreState: true,
-   payloadExtraction: false,
-   sharedPrerenderData: true,
+   payloadExtraction: true,
+   sharedPrerenderData: false,
    viewTransition: true,
    inlineSSRStyles: false,
    scanPageMeta: true,

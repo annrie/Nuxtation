@@ -212,6 +212,8 @@
   "prettier.semi": false,
   "prettier.singleQuote": true,
 
+  "eslint.experimental.useFlatConfig": true,
+
   // File Nesting
   // this might not be up to date with the repo, please check yourself
   // updated 2022-07-12 03:35

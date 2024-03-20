@@ -116,6 +116,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxt/image',
    '@nuxtjs/mdc',
    '@nuxtseo/module',
+   '@nuxt/eslint',
    'nuxt-og-image',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
@@ -129,7 +130,15 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    'nuxt-simple-robots',
    'nuxt-icon',
   ],
-  gtag: {
+eslint: {
+  config: {
+    stylistic: {
+      indent: 'tab',
+      semi: true,
+    },
+  },
+ },
+ gtag: {
     id: process.env.GA_MEASUREMENT_ID,
     loadingStrategy: 'async',
   },

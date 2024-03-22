@@ -6,6 +6,9 @@ import { NavigationGuard } from 'vue-router';
 import { pwaVite } from './config/pwa';
 import { appDescription } from './logic/index';
 import { bundledLanguages } from 'shiki';
+import { imagetools } from "vite-imagetools";
+import vsharp from 'vite-plugin-vsharp';
+
 // import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
@@ -116,6 +119,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxt/image',
    '@nuxtjs/mdc',
    '@nuxtseo/module',
+   '@nuxt/eslint',
    'nuxt-og-image',
    '@pinia/nuxt',
    '@nuxtjs/color-mode',
@@ -126,12 +130,26 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    'nuxt-link-checker',
    '@nuxthq/studio',
    'nuxt-gtag',
+   '@nuxtjs/web-vitals',
    'nuxt-simple-robots',
    'nuxt-icon',
   ],
-  gtag: {
+eslint: {
+  config: {
+    stylistic: {
+      indent: 'tab',
+      semi: true,
+    },
+  },
+ },
+ gtag: {
     id: process.env.GA_MEASUREMENT_ID,
     loadingStrategy: 'async',
+  },
+  webVitals: {
+    provider: 'google-analytics',
+    debug: false,
+    disabled: true, // Enable to test locally
   },
   nuxtIcon: {
     size: '24px',
@@ -390,7 +408,7 @@ robots: {
   prerender: {
      crawlLinks: true,
      failOnError: false,
-     routes: [ '/', '/sitemap.xml', '/robots.txt' ],
+     routes: [ '/', '/sitemap.xml', '/robots.txt', '/_vercel/speed-insights/*' ],
    },
 // hooks: {
 //   'robots:config': (config) => {
@@ -440,7 +458,8 @@ robots: {
       },
     },
   },
-  // $server: {
+  plugins: [imagetools(), vsharp()],
+    // $server: {
 //     watch: {
 //       usePolling: true,
 //     }

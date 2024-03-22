@@ -3,6 +3,7 @@ import { ref } from "vue";
 import "github-markdown-css/github-markdown.css";
 // import { Buffer } from "buffer";
 import { withoutTrailingSlash } from "ufo";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
 const route = useRoute();
 const currentPath = computed(() => `https://nuxtation.vercel.app${route.fullPath}`);
@@ -95,6 +96,7 @@ const { $pwa } = useNuxtApp();
   <div>
     <VitePwaManifest />
     <NuxtLoadingIndicator />
+    <SpeedInsights />
     <!-- <OgImage /> -->
     <TheTopBar />
     <div>

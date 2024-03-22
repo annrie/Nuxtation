@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.5](https://github.com/annrie/Nuxtation/compare/v2.5.4...v2.5.5) (2024-03-22)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 🤖 Add eslint experimental config ([3b12363](https://github.com/annrie/Nuxtation/commit/3b123634b58f6f33fe2e7f8e1c20956e2ce68a8a))
+* 🤖 add vite-imagetools and vite-plugin-vsharp ([65dde48](https://github.com/annrie/Nuxtation/commit/65dde48e6ad505e3c91656b9113df804aa1a4b44))
+
 ### [2.5.4](https://github.com/annrie/Nuxtation/compare/v2.5.3...v2.5.4) (2024-03-20)
 
 

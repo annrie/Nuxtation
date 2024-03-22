@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -29,8 +29,10 @@
     "@mdi/js": "^7.4.47",
     "@nuxt/content": "^2.12.1",
     "@nuxt/devtools": "^1.0.8",
+    "@nuxt/eslint": "0.3.0-alpha.0",
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/web-vitals": "^0.2.6",
     "@nuxtseo/module": "^2.0.0-beta.55",
     "@pinia/nuxt": "^0.5.1",
     "@playwright/test": "^1.42.1",
@@ -74,6 +76,8 @@
     "unocss": "^0.58.6",
     "unocss-preset-extra": "^0.5.3",
     "unplugin-icons": "^0.18.5",
+    "vite-imagetools": "^6.2.9",
+    "vite-plugin-vsharp": "^1.7.3",
     "vue-tsc": "^2.0.6"
   },
   "dependencies": {
@@ -82,6 +86,7 @@
     "@nuxthq/studio": "^1.0.13",
     "@nuxtjs/mdc": "^0.6.1",
     "@unocss/eslint-config": "^0.58.6",
+    "@vercel/speed-insights": "^1.0.10",
     "buffer": "^6.0.3",
     "github-markdown-css": "^5.5.1",
     "lite-youtube-embed": "^0.3.2",

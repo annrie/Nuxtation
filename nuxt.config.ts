@@ -348,6 +348,7 @@ colorMode: {
     credits: false,
   },
 robots: {
+  allow: '/',
   blockNonSeoBots: true,
 },
 

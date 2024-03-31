@@ -19,8 +19,9 @@
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
     "vercel": "vercel --prod",
-    "oco": "opencommit"
-  },
+    "oco": "opencommit",
+    "lloco": "OCO_AI_PROVIDER='ollama' opencommit"
+},
   "devDependencies": {
     "@antfu/eslint-config": "^2.11.5",
     "@iconify-json/carbon": "^1.1.31",

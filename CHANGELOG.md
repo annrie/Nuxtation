@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.6](https://github.com/annrie/Nuxtation/compare/v2.5.5...v2.5.6) (2024-04-06)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* **package.json:** update devDependencies versions for eslint-config, @nuxt/devtools, @nuxt/eslint, @nuxtjs/color-mode, @types/node, and various [@unocss](https://github.com/unocss) packages ([5902557](https://github.com/annrie/Nuxtation/commit/590255708fd649f8d139760f9ab7c2f8345d8485))
+
+
+### 機能の追加、変更、削除
+
+* **nuxt.config.ts:** add allow rule to robots.txt to allow all bots to crawl the site ([2697959](https://github.com/annrie/Nuxtation/commit/2697959a74d0a1273e0c50e0440c7b49806e5f8c))
+
+
+### バグ修正
+
+* **kv:** update pageVisits count from 71 to 74 ([5fe672b](https://github.com/annrie/Nuxtation/commit/5fe672b653390fec5f1444fd570a889caec0e4eb))
+
 ### [2.5.5](https://github.com/annrie/Nuxtation/compare/v2.5.4...v2.5.5) (2024-03-22)
 
 

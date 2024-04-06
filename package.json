@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.5.5",
+  "version": "2.5.6",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {
@@ -21,7 +21,7 @@
     "vercel": "vercel --prod",
     "oco": "opencommit",
     "lloco": "OCO_AI_PROVIDER='ollama' opencommit"
-},
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^2.12.2",
     "@iconify-json/carbon": "^1.1.31",

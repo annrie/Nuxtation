@@ -118,7 +118,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    '@nuxt/content',
    '@nuxt/image',
    '@nuxtjs/mdc',
-   '@nuxtseo/module',
+   '@nuxtjs/seo',
    '@nuxt/eslint',
    'nuxt-og-image',
    '@pinia/nuxt',

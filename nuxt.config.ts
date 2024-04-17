@@ -113,12 +113,13 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  },
 
  modules: [
+   'nuxt-content-twoslash',
    '@vueuse/nuxt',
    '@unocss/nuxt',
    '@nuxt/content',
    '@nuxt/image',
    '@nuxtjs/mdc',
-   '@nuxtseo/module',
+   '@nuxtjs/seo',
    '@nuxt/eslint',
    'nuxt-og-image',
    '@pinia/nuxt',
@@ -130,6 +131,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    'nuxt-link-checker',
    '@nuxthq/studio',
    'nuxt-gtag',
+   'nuxt-shiki',
    '@nuxtjs/web-vitals',
    'nuxt-simple-robots',
    'nuxt-icon',
@@ -196,9 +198,9 @@ ogImage: {
       theme: {
         dark: true,
         // Default theme (same as single string)
-        default: 'github-dark',
+        default: 'vitesse-dark',
         // Theme used if `html.dark`
-        dark: 'github-dark',
+        dark: 'vitesse-dark',
         // Theme used if `html.sepia`
         // sepia: 'monokai'
        },
@@ -208,50 +210,78 @@ ogImage: {
          'vue'
        ],
   },
+   mdc: {
+    remarkPlugins: {
+      plugins: {
+        // Register/Configure remark plugin to extend the parser
+      }
+    },
+    rehypePlugins: {
+      options: {
+        // Configure rehype options to extend the parser
+      },
+      plugins: {
+        // Register/Configure rehype plugin to extend the parser
+      }
+    },
+    headings: {
+      anchorLinks: {
+        // Enable/Disable heading anchor links. { h1: true, h2: false }
+      }
+    },
+    highlight: 'shiki', // Control syntax highlighting
+    components: {
+      prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
+      map: {
+        // This map will be used in `<MDCRenderer>` to control rendered components
+      }
+    }
+  },
  markdown: {
      toc: {
        depth: 5,
        searchDepth: 5,
      },
-   // https://content.nuxtjs.org/api/configuration
-      // Object syntax can be used to override default options
-      // Array syntax can be used to add plugins
-     rehypePlugins: [
-      //  'rehype-figure',
-       [
-           'rehype-external-links',
-           {
-               target: '_blank',
-               rel: 'noopener noreferer'
-           }
-       ]
-     ],
-    remarkPlugins: {
-       'remark-rehype': false,
+  //  // https://content.nuxtjs.org/api/configuration
+  //     // Object syntax can be used to override default options
+  //     // Array syntax can be used to add plugins
+  //    rehypePlugins: [
+  //     //  'rehype-figure',
+  //      [
+  //          'rehype-external-links',
+  //          {
+  //              target: '_blank',
+  //              rel: 'noopener noreferer'
+  //          }
+  //      ]
+  //    ],
+  //   remarkPlugins: {
+  //      'remark-rehype': false,
 
-        // Disable remark-gfm
-       'remark-gfm': false,
+  //       // Disable remark-gfm
+  //      'remark-gfm': false,
 
-       // Override remark-emoji options
-       'remark-emoji': {
-          emoticon: true,
-        },
+  //      // Override remark-emoji options
+  //      'remark-emoji': {
+  //         emoticon: true,
+  //       },
 
-        // 'remark-html': false,
+  //       // 'remark-html': false,
 
-        // Add remark-oembed
-        // 'remark-oembed': {
-        //   // options
-        //   mode: 'extract',
-        //   usePrefix: false,
-        //   providers: {
-        //     include: ['Twitter', 'YouTube']
-        //   },
-        // },
-      },
+  //       // Add remark-oembed
+  //       // 'remark-oembed': {
+  //       //   // options
+  //       //   mode: 'extract',
+  //       //   usePrefix: false,
+  //       //   providers: {
+  //       //     include: ['Twitter', 'YouTube']
+  //       //   },
+  //       // },
+      // },
  },
 },
-
+ twoflash: {
+ },
  unocss: {
    uno: true,
    icons: true,
@@ -378,6 +408,9 @@ robots: {
   },
 
  nitro: {
+  experimental: {
+      wasm: true,
+    },
   devProxy: {
     host: 'localhost',
   },

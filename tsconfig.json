@@ -1,13 +1,13 @@
 {
-  // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "preserve",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
     "strict": true,
     "noImplicitAny": true,
     "allowJs": true,
@@ -16,8 +16,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "jsx": "preserve",
-    "lib": ["ESNext", "DOM"],
-    "types":[
+    "lib":["ESNext", "DOM", "WebWorker"],
+     "types":[
       "@unocss/nuxt",
       "node",
     ]

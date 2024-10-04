@@ -6,7 +6,7 @@
 
 旧オリジナル"[Nuxtation](https://github.com/annrie/Nuxtation-nuxt2-)"から**Nuxt3**仕様に全面的に作り直してポートフォリオ用に再公開しました。
 
-諸々最新環境で動くようにはしています。
+諸々最新環境で動くようにはしています。※ Nuxt 4 Ready
 
 ## セットアップ
 
@@ -34,7 +34,7 @@ pnpm install
 最後に、 `pnpm dev`,`npm dev`,`yarn dev` いずれかを実行して サーバーを立ち上げます。
 
 ```bash
-http://localhost:3000
+http://localhost:3100
 ```
 
 ## ライセンス

@@ -1,6 +1,4 @@
-import process from 'node:process'
 import type { ModuleOptions } from '@vite-pwa/nuxt'
-import { SiteDescription, SiteName } from '../logic/index'
 
 const scope = '/'
 

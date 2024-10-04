@@ -14,6 +14,11 @@ import vsharp from 'vite-plugin-vsharp';
 // import { BASE_URL, API_KEY } from process.env;
 
 export default defineNuxtConfig({
+  future: {
+    compatibilityVersion: 4,
+    // inlineStyles: false,
+    // devLogs: 'silent'
+  },
   // debug: true,
   devtools: {
    // Enable devtools (default: true)
@@ -26,11 +31,6 @@ export default defineNuxtConfig({
    // ...other options
     },
   },
-
-  features: {
-    inlineStyles: false,
-  },
-
 
  // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
 //  ssr: process.env.NODE_ENV !== "development",
@@ -61,12 +61,11 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  // serverMiddleware: {
  //   '/_ipx': '@/server/middleware/ipx.js'
  // },
- // runtimeConfig: {
- //   apiSecret: '123',
- //   public: {
- //     apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
- //   }
- // },
+  runtimeConfig: {
+    public: {
+      apiBase: import.meta.env.NUXT_PUBLIC_API_BASE || '/api',
+    },
+  },
  app: {
         head: {
           prefix: 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#',
@@ -113,39 +112,80 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  },
 
  modules: [
-   'nuxt-content-twoslash',
    '@vueuse/nuxt',
    '@unocss/nuxt',
    '@nuxt/content',
+   '@nuxtjs/mdc',
    '@nuxt/image',
    '@nuxtjs/mdc',
    '@nuxtjs/seo',
    '@nuxt/eslint',
    'nuxt-og-image',
-   '@pinia/nuxt',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
    '@nuxt/devtools',
-   'nuxt-typed-router',
+//   'nuxt-typed-router',
    '@vite-pwa/nuxt',
+   '@nuxtjs/sitemap',
+   '@nuxtjs/robots',
    'nuxt-link-checker',
    '@nuxthq/studio',
    'nuxt-gtag',
    'nuxt-shiki',
    '@nuxtjs/web-vitals',
-   'nuxt-simple-robots',
    'nuxt-icon',
   ],
-eslint: {
-  config: {
-    stylistic: {
-      indent: 'tab',
-      semi: true,
+
+  icon: {
+    provider: 'iconify',
+    clientBundle: {
+      scan: true,
+    },
+    serverBundle: false,
+    // serverBundle: {
+    //   collections: ['uil', 'mdi', 'logos', 'carbon'] // Specify the collections you want to include
+    // }
+  },
+  mdc: {
+    remarkPlugins: {},
+    rehypePlugins: {
+      // options: {
+      // // Configure rehype options to extend the parser
+      // },
+      // plugins: {
+      // // Register/Configure rehype plugin to extend the parser
+      // },
+    },
+    headings: {
+      anchorLinks: {
+      // Enable/Disable heading anchor links. { h1: true, h2: false }
+      },
+    },
+    highlight: 'shiki', // Control syntax highlighting
+    components: {
+      prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
+      map: {
+      // This map will be used in `<MDCRenderer>` to control rendered components
+      },
     },
   },
- },
+
+  shiki: {},
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        semi: true,
+      },
+      stadalone: false,
+    },
+   },
  gtag: {
-    id: process.env.GA_MEASUREMENT_ID,
+    enabled: import.meta.env.NODE_ENV === 'production',
+    id: require('node:process').env.GA_MEASUREMENT_ID,
+    config: {
+      page_title: 'Nuxtation',
+    },
     loadingStrategy: 'async',
   },
   webVitals: {
@@ -158,9 +198,9 @@ eslint: {
     class: 'icon',
     color: '#000000',
   },
-ogImage: {
-  enabled: false,
-},
+  ogImage: {
+    enabled: false,
+  },
 
     site: {
       identity: {
@@ -173,19 +213,18 @@ ogImage: {
     description: 'Nuxt, contentで構築したブログサイト',
     language: 'ja',
     twitter: '@muraie_jin',
+    trailingSlash: true,
   },
   schemaOrg: {
     identity: 'Person',
     },
  content: {
-  // api: {
-  //   baseURL: 'api/_content',
-  // },
+   contentHead: false,
+   documentDriven: true,
    experimental: {
-     clientDB: true
+     clientDB: true,
+     search: false,
    },
-  contentHead: false,
-  documentDriven: true,
    watch: {
      ws: {
        port: 4000,
@@ -210,117 +249,86 @@ ogImage: {
          'vue'
        ],
   },
-   mdc: {
-    remarkPlugins: {
-      plugins: {
-        // Register/Configure remark plugin to extend the parser
-      }
-    },
-    rehypePlugins: {
-      options: {
-        // Configure rehype options to extend the parser
+     markdown: {
+      anchorLinks: true,
+       toc: {
+        depth: 5,
+        searchDepth: 5,
       },
-      plugins: {
-        // Register/Configure rehype plugin to extend the parser
-      }
+      // // Object syntax can be used to override default options
+      remarkPlugins: {
+//        'remark-emoji': {
+//          emoticon: true,
+//        },
+       'remark-gfm': true,
+      //   'remark-oembed': {
+      //     // Options
+      //   }
     },
-    headings: {
-      anchorLinks: {
-        // Enable/Disable heading anchor links. { h1: true, h2: false }
-      }
-    },
-    highlight: 'shiki', // Control syntax highlighting
-    components: {
-      prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
-      map: {
-        // This map will be used in `<MDCRenderer>` to control rendered components
-      }
-    }
-  },
- markdown: {
-     toc: {
-       depth: 5,
-       searchDepth: 5,
-     },
-  //  // https://content.nuxtjs.org/api/configuration
-  //     // Object syntax can be used to override default options
-  //     // Array syntax can be used to add plugins
-  //    rehypePlugins: [
-  //     //  'rehype-figure',
-  //      [
-  //          'rehype-external-links',
-  //          {
-  //              target: '_blank',
-  //              rel: 'noopener noreferer'
-  //          }
-  //      ]
-  //    ],
-  //   remarkPlugins: {
-  //      'remark-rehype': false,
-
-  //       // Disable remark-gfm
-  //      'remark-gfm': false,
-
-  //      // Override remark-emoji options
-  //      'remark-emoji': {
-  //         emoticon: true,
-  //       },
-
-  //       // 'remark-html': false,
-
-  //       // Add remark-oembed
-  //       // 'remark-oembed': {
-  //       //   // options
-  //       //   mode: 'extract',
-  //       //   usePrefix: false,
-  //       //   providers: {
-  //       //     include: ['Twitter', 'YouTube']
-  //       //   },
-  //       // },
+      //   // Override remark-emoji options
+      //   // 'remark-emoji': {
+      //   //   emoticon: true
       // },
- },
-},
- twoflash: {
- },
+      rehypePlugins: [
+        // [
+        //   'rehype-external-links',
+        //   {
+        //       target: '_blank',
+        //       rel: 'noopener'
+        //   }
+        // ],
+        // 'rehype-slug',
+        // 'rehype-autolink-headings',
+        // 'rehype-highlight',
+        // 'rehype-prism-plus',
+        // 'rehype-figure',
+      ],
+      //   // Disable remark-gfm
+      //   // Add remark-oembed
+       // },
+    },
+  externals: {
+      // 外部リソースのタイムアウト時間を30秒に設定（デフォルトは5秒）
+      timeout: 30000,
+      // エラーが発生してもビルド処理を続行する
+      skipBroken: true,
+    },
+  },
+
  unocss: {
    uno: true,
    icons: true,
    attributify: true,
    components: false,
+   nuxtLayers: true,
    rules: [],
  },
 
 linkChecker: {
-  // failOnError: false,
+    failOnError: false,
     enabled: false,
     excludeLinks: [
       'https://twitter.com/muraie_jin',
     ],
   },
 
- experimental: {
-  // componentIslands: {
-  //   selectiveClient: true,
-  // },
-//    restoreState: true,
-   payloadExtraction: true,
-   sharedPrerenderData: false,
-   viewTransition: true,
-   inlineSSRStyles: false,
-   scanPageMeta: true,
-   renderJsonPayloads: true,
-   typedPages: true,
-   headNext: true,
-   asyncContext: true,
-   clientFallback: true,
-   appManifest: true,
-   polyfillVueUseHead: false,
- },
+  experimental: {
+    sharedPrerenderData: false,
+    appManifest: {
+      override: true,
+    },
+    defaults: {
+      useAsyncData: {
+        deep: true,
+      },
+    },
+  },
+
 
  css: [
    '@unocss/reset/tailwind.css',
-   '@/assets/styles/scss/main.scss',
-   '@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
+   'assets/styles/scss/main.scss',
+   '@@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
  ],
 
  image: {
@@ -374,12 +382,12 @@ colorMode: {
    "client": false,
  },
   sitemap: {
+   strictNuxtContentPaths: true,
     xsl: false,
     credits: false,
   },
 robots: {
-  allow: '/',
-  blockNonSeoBots: true,
+    blockNonSeoBots: false,
 },
 
  studio: {
@@ -388,20 +396,6 @@ robots: {
 
 
   hooks: {
-    // 'build:manifest': (manifest) => {
-    //   // find the app entry, css list
-    //   const css = manifest['node_modules/nuxt/dist/app/entry.js']?.css
-    //   if (css) {
-    //     // start from the end of the array and go to the beginning
-    //     for (let i = css.length - 1; i >= 0; i--) {
-    //       // if it starts with 'entry', remove it from the list
-    //       if (css[i].startsWith('entry')) css.splice(i, 1)
-    //     }
-    //   }
-    // },
-    // 'vite:extendConfig' (config) {
-    //   delete config.define!.document;
-    // },
     'robots:config': (config) => {
       config.Sitemap = '/sitemap.xml';
     },
@@ -425,99 +419,59 @@ robots: {
     },
     plugins: [ '~/plugins/nitro.error.ts' ],
   },
-  // wasm: {
-  //   rollup: {
-  //     targetEnv: 'browser',
-  //   }
-  // },
-  // esbuild: {
-  //   options: {
-  //     target: 'esnext',
-  //   },
-  //   plugins: [ '~/plugins/nitro.error.ts' ],
-  // },
-  //  storage: {
-  //    data: { driver: 'vercelKV'}
-  //  },
   prerender: {
      crawlLinks: true,
      failOnError: false,
-     routes: [ '/', '/sitemap.xml', '/robots.txt', '/_vercel/speed-insights/*' ],
+     routes: [ '/', '/sitemap.xml', '/_vercel/speed-insights/*' ],
    },
-// hooks: {
-//   'robots:config': (config) => {
-//      config.sitemap = '/sitemap.xml';
-//      },
-// },
-        // hooks: {
-        //     'compiled': genSitemap,
-        // }
-//    future: {
-//     nativeSWR: true,
-//     },
+    experimental: {
+      wasm: true,
+    },
  },
 
- router: {
-   options: {
-     scrollBehaviorType: 'smooth',
-     strict: false,
-   }
- },
+  routeRules: {
+       '/': { prerender: true },
+    },
+
   vue: {
     defineModel: true,
     // customElement: true,
     propsDestructure: true,
     compilerOptions: {
-      isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
-    },
+      isCustomElement: (tag: string) => {
+        return [
+          'LiteYoutube',
+        ].includes(tag)
+      }
+    }
   },
  vite: {
-  // vue: {
-  //   defineModel: true,
-  //   customElement: true,
-  //   propsDestructure: true,
-  //   compilerOptions: {
-  //     isCustomElement: (tag: string) => ['LiteYoutube'].includes(tag),
-  //   },
-  // },
+    define: {
+      'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
+    },
   build: {
     target: 'esnext',
     chunkSizeWarningLimit: 1600, // Adjust as needed
-  },
+      assetsInclude: '**/*.wasm',
+      rollupOptions: {
+        external: [
+          'shiki/onig.wasm', // !Important: externalize the wasm import
+        ],
+      },
+    },
   css: {
     preprocessorOptions: {
       charset: false,
       scss: {
+        api: 'modern-compiler',
         additionalData: `@import "@/assets/styles/scss/global.scss";`,
       },
     },
-  },
   plugins: [imagetools(), vsharp()],
-    // $server: {
-//     watch: {
-//       usePolling: true,
-//     }
-  // },
-  // $client: {
-//     build: {
-//       rollupOptions: {
-//         output: {
-//           chunkFileNames: '_nuxt/[hash].js',
-//           assetFileNames: '_nuxt/[hash][extname]',
-//           entryFileNames: '_nuxt/[hash].js',
-//         },
-//       },
-//     },
-  // },
+  preprocessorMaxWorkers: true,
+ },
  },
 
-$production: {
-  routeRules: {
-        '/**': { prerender: true },
-        // '/blog/**': { prerender: true },
-    },
-  },
-$development: {},
-
- pwaVite,
+  pwaVite,
+  compatibilityDate: '2024-04-03',
 });

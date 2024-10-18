@@ -25,12 +25,12 @@ const toggle = () => {
                 loading="lazy"
               />
             </span>
-            <span class="AppHeader__homeText">
+            <!-- <span class="AppHeader__homeText">
               <span class="AppHeader__homeTextMain">
-                <!-- <span>Nuxtation</span> -->
+                <span>Nuxtation</span>
               </span>
-            </span>
-            <span class="_VisuallyHidden">ホーム</span>
+            </span> -->
+            <span class="visually-hidden">ホーム</span>
           </NuxtLink>
         </div>
         <div class="text-white lt-md:hidden">

@@ -1,6 +1,6 @@
-@import "@unocss/reset/tailwind.css";
+@use "@unocss/reset/tailwind.css";
 
-@import "easing.scss";
-@import "base.scss";
-@import "blog.scss";
-@import "custom.scss";
+@use "easing.scss";
+@use "base.scss";
+@use "blog.scss";
+@use "custom.scss";

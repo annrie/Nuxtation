@@ -79,8 +79,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       '@iconify-json/material-symbols':
-        specifier: ^1.2.4
-        version: 1.2.4
+        specifier: ^1.2.5
+        version: 1.2.5
       '@iconify-json/mdi':
         specifier: ^1.2.1
         version: 1.2.1
@@ -94,8 +94,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       '@iconify/json':
-        specifier: ^2.2.261
-        version: 2.2.261
+        specifier: ^2.2.262
+        version: 2.2.262
       '@julr/unocss-preset-heropatterns':
         specifier: ^1.0.2
         version: 1.0.2(unocss@0.63.4(@unocss/webpack@0.63.4(rollup@4.24.0)(webpack@5.95.0(esbuild@0.23.1)))(postcss@8.4.47)(rollup@4.24.0)(vite@5.4.9(@types/node@22.7.7)(less@4.2.0)(sass-embedded@1.80.3)(terser@5.36.0)))
@@ -1685,8 +1685,8 @@ packages:
   '@iconify-json/logos@1.2.3':
     resolution: {integrity: sha512-JLHS5hgZP1b55EONAWNeqBUuriRfRNKWXK4cqYx0PpVaJfIIMiiMxFfvoQiX/bkE9XgkLhcKmDUqL3LXPdXPwQ==}
 
-  '@iconify-json/material-symbols@1.2.4':
-    resolution: {integrity: sha512-qZy0wJWZsfPVwXRyIwltCdfVI/aANnKI99IcIo7MXYPmPkMVEfIo+sr1LEnpxvYtC5klLY4rEcLPxEPm3Y935g==}
+  '@iconify-json/material-symbols@1.2.5':
+    resolution: {integrity: sha512-CXG4noUsqBrbr0npZVldxlf8XGUW3LF3VEGvgk/2k+A3GQt/DM/04PsbjkO2wOI/ORP8rcaHz2pw8F2TPL+CKA==}
 
   '@iconify-json/mdi@1.2.1':
     resolution: {integrity: sha512-dSkQU78gsZV6Yxnq78+LuX7jzeFC/5NAmz7O3rh558GimGFcwMVY/OtqRowIzjqJBmMmWZft7wkFV4TrwRXjlg==}
@@ -1709,8 +1709,8 @@ packages:
   '@iconify/collections@1.0.472':
     resolution: {integrity: sha512-InZG7/qgqzkmlGVlXojDmH84Z84k6ohYIdYjmBkFs/F9bQ/935Df3dNv3iTMQX+j+d3fKMTV903QXdCdbkGiog==}
 
-  '@iconify/json@2.2.261':
-    resolution: {integrity: sha512-uUm8Svulz5aRRF0X+r2/UG5P0xcUCGOGVmAFJ/ZANx29wqE79PvGCYXHuznNC0h8+UW1fnvprj7FmgJELvMYZw==}
+  '@iconify/json@2.2.262':
+    resolution: {integrity: sha512-h7zMbLxsKohKXvf2Lpq6Xob7dxkqXxrUVR58ZvZBgCSrHcE69QJmcFG/KaAwM1eGuKToWvgPWeb1xE6zy7juqg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -10022,7 +10022,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify-json/material-symbols@1.2.4':
+  '@iconify-json/material-symbols@1.2.5':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -10054,7 +10054,7 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.261':
+  '@iconify/json@2.2.262':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2

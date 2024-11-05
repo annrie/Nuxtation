@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     // inlineStyles: false,
     // devLogs: 'silent'
   },
+  compatibilityDate: '2024-04-03',
   // debug: true,
   devtools: {
    // Enable devtools (default: true)
@@ -464,7 +465,7 @@ robots: {
       charset: false,
       scss: {
         api: 'modern-compiler',
-        additionalData: `@import "@/assets/styles/scss/global.scss";`,
+        additionalData: `@use "@/assets/styles/scss/global.scss";`,
       },
     },
   plugins: [imagetools(), vsharp()],
@@ -473,5 +474,4 @@ robots: {
  },
 
   pwaVite,
-  compatibilityDate: '2024-04-03',
 });

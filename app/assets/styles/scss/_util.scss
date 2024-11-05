@@ -1,0 +1,11 @@
+.VisuallyHidden {
+  @include visually-hidden;
+}
+
+[class*='before:']::before {
+  content: '';
+}
+
+[class*='after:']::after {
+  content: '';
+}

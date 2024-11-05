@@ -77,7 +77,7 @@
   }
 }
 
-@mixin visually-hidden {
+.visually-hidden {
   position: absolute !important;
   overflow: hidden !important;
   width: 1px !important;

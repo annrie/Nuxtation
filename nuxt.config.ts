@@ -215,6 +215,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     language: 'ja',
     twitter: '@muraie_jin',
     trailingSlash: true,
+    indexable: false,
   },
   schemaOrg: {
     identity: 'Person',
@@ -314,6 +315,7 @@ linkChecker: {
   },
 
   experimental: {
+    scanPageMeta:'after-resolve',
     sharedPrerenderData: false,
     appManifest: {
       override: true,
@@ -388,7 +390,9 @@ colorMode: {
     credits: false,
   },
 robots: {
-    blockNonSeoBots: false,
+    UserAgent: "*",
+    Allow: "",
+    cacheControl: 'max-age=14400, must-revalidate',
 },
 
  studio: {
@@ -432,6 +436,7 @@ robots: {
 
   routeRules: {
        '/': { prerender: true },
+       robots: false,
     },
 
   vue: {

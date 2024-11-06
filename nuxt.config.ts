@@ -215,7 +215,6 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     language: 'ja',
     twitter: '@muraie_jin',
     trailingSlash: true,
-    indexable: false,
   },
   schemaOrg: {
     identity: 'Person',
@@ -301,7 +300,7 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
    uno: true,
    icons: true,
    attributify: true,
-   components: false,
+   components: true,
    nuxtLayers: true,
    rules: [],
  },
@@ -390,9 +389,7 @@ colorMode: {
     credits: false,
   },
 robots: {
-    UserAgent: "*",
-    Allow: "",
-    cacheControl: 'max-age=14400, must-revalidate',
+    blockNonSeoBots: false,
 },
 
  studio: {
@@ -400,11 +397,11 @@ robots: {
   },
 
 
-  hooks: {
-    'robots:config': (config) => {
-      config.Sitemap = '/sitemap.xml';
-    },
-  },
+//  hooks: {
+//    'robots:config': (config) => {
+//      config.Sitemap = '/sitemap.xml';
+//    },
+//  },
 
  nitro: {
   experimental: {

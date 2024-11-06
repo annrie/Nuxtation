@@ -118,7 +118,10 @@ const languageColor = computed(() =>
 //   }
 // }
 :slotted(pre code) {
-  @apply w-full flex flex-col line-height-normal;
+  @apply w-full flex flex-col line-height-normal text-black dark:text-white;
+}
+:slotted(pre.language-json code span) {
+  @apply text-gray-600 dark:text-rose-200;
 }
 .container pre > code .line {
   @apply break-words;

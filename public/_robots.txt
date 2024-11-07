@@ -1,3 +1,2 @@
 User-agent: *
 Allow: /
-cacheControl: 'max-age=14400, must-revalidate',

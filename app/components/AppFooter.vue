@@ -1,29 +1,20 @@
 <script setup lang="ts">
-// import BackToTop from "@/components/footer/BackToTop.vue";
-
 const thisYear = new Date().getFullYear();
 </script>
 
 <template>
   <div class="footer">
-    <!-- <BackToTop /> -->
     <footer class="AppFooter">
       Copyright &copy; 2020 - {{ thisYear }} nuxtation project. All Rights Reserved.
     </footer>
-    <!-- Scroll to top -->
     <NavScrollTopIcon />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .AppFooter {
-  @apply bg-hex-0B0A0A border-slate-50 border-t-2 border-opacity-10 h-[70px] mt-20px text-center text-white py-21px px-0 tb:(mt-60px text-0.8rem);
-  // font-weight: $FONT_WEIGHT_BASE_BOLD;
+  @apply bg-hex-0B0A0A text-0.8rem border-slate-50 border-t-2 border-opacity-10 h-[70px] mt-20px text-center text-white py-21px px-0 tb:(mt-60px text-base);
   font-size: rem(16, 16);
   line-height: 1.5;
-  // @screen tb {
-  //   @apply mt-60px;
-  //   font-size: em(10, 16);
-  // }
 }
 </style>

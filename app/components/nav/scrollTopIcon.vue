@@ -1,26 +1,22 @@
 <template>
   <div
     :class="[
-      'fixed flex flex-col items-center w-section_x z-20 bottom-[50px] right-1 text-black transform duration-150',
+      'fixed flex flex-col items-center w-section_x z-20 bottom-[50px] right-1 transform duration-150',
       isVisible ? '' : 'translate-x-full',
     ]"
   >
-    <a
-      href="#"
+    <NuxtLink
+      to="#main"
       aria-label="Scroll to Top"
       class="flex flex-col items-center py-2 text-center"
     >
-      <!-- <span class="text-xxs leading-xxs uppercase text-highlight sm:w-6/12"
-        >Scroll to Top</span
-      > -->
       <IconCircleUpRounded
-        text-jis-red
-        text-36px
-        hover:(bg-transparent
-        text-jis-blue-400)
+        text-red
+        w-56px
+        h-56px
+        hover:(text-lightblue-600 dark:text-fuchsia-200)
       />
-      <!-- <IconsArrowUp class="w-4 h-4" width="16" height="16" /> -->
-    </a>
+    </NuxtLink>
   </div>
 </template>
 

@@ -387,9 +387,13 @@ colorMode: {
    strictNuxtContentPaths: true,
     xsl: false,
     credits: false,
+    exclude: ['/_content'],
+    cacheMaxAgeSeconds: 10000,
   },
 robots: {
-    blockNonSeoBots: false,
+    blockAiBots: false,
+    blockNonSeoBots: true,
+    cacheControl: 'max-age=14400, must-revalidate',
 },
 
  studio: {

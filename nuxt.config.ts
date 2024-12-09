@@ -8,7 +8,6 @@ import { appDescription } from './logic/index';
 import { bundledLanguages } from 'shiki';
 import { imagetools } from "vite-imagetools";
 import vsharp from 'vite-plugin-vsharp';
-import UnoCSS from '@unocss/vite'
 
 // import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -475,7 +474,7 @@ robots: {
 //        additionalData: `@use "@/assets/styles/scss/global.scss";`,
       },
     },
-  plugins: [imagetools(), vsharp(), UnoCSS({ mode: 'vue-scoped' })],
+  plugins: [imagetools(), vsharp()],
   preprocessorMaxWorkers: true,
  },
  },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost } from "~~/types/index.ts";
+import type { BlogPost, Sections } from "~~/types/index.ts";
 
 const { path } = useRoute();
 const cleanPath = path.replace(/\/$/, "");
@@ -18,6 +18,8 @@ const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
     surround: await surround,
   };
 });
+
+const section: Sections = "blog";
 
 // const components = {
 //   p: 'CustomParagraph'
@@ -175,7 +177,7 @@ const { $formatDate } = useNuxtApp();
           </article>
     </section>
     <!-- PrevNext Component -->
-    <PrevNext :prev="prev" :next="next" :section="'blog'" class="w-90% mx-auto" />
+    <PrevNext :prev="prev" :next="next" :section="section" class="w-90% mx-auto" />
       </ContentRenderer>
       <DocumentDrivenNotFound v-else />
     </NuxtLayout>

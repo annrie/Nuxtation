@@ -316,6 +316,7 @@ linkChecker: {
   experimental: {
     scanPageMeta:'after-resolve',
     sharedPrerenderData: false,
+    renderJsonPayloads: false,
     appManifest: {
       override: true,
     },
@@ -329,7 +330,7 @@ linkChecker: {
 
  css: [
    '@unocss/reset/tailwind.css',
-   'assets/styles/scss/main.scss',
+   'assets/styles/scss/global.scss',
    '@@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
  ],
 
@@ -471,7 +472,7 @@ robots: {
       charset: false,
       scss: {
         api: 'modern-compiler',
-        additionalData: `@use "@/assets/styles/scss/global.scss";`,
+//        additionalData: `@use "@/assets/styles/scss/global.scss";`,
       },
     },
   plugins: [imagetools(), vsharp()],

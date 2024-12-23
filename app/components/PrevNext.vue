@@ -1,38 +1,62 @@
 <script setup lang="ts">
-import type { PrevNext } from "~~/types";
+import type { PrevNext as PrevNextType } from "~~/types";
+import type { Ref } from "vue";
 
-defineProps<{
-  prev: PrevNext | null;
-  next: PrevNext | null;
+// prev / next に渡される型のサンプル (プロジェクトに合わせて修正してください)
+interface ArticleData {
+  _path: string;
+  title: string;
+}
+
+// Props 定義:
+//   - prev, next: 前後の記事データ
+//   - section: "blog" または "biblio" などを想定
+const props = defineProps<{
+  prev: PrevNextType | null;
+  next: PrevNextType | null;
+  section: string;
 }>();
-// define prev and next props
-// defineProps(["prev", "next"]);
-// const { prev, next } = useContent();
 </script>
 
 <template>
   <ul class="prev-next-cont">
-    <li class="link-item prev">
-      <NuxtLink v-if="prev" :to="prev._path">
-        <div i-carbon-arrow-left class="stroke icon" />
-        <span> {{ prev.title }} </span>
+    <li class="prev link-item">
+      <NuxtLink v-if="prev && section === 'biblio'" :to="prev._path">
+        <div class="i-tabler:arrow-big-left-line w-2em h-2em"></div>
+        <span mt-2> {{ prev.title }} </span>
+      </NuxtLink>
+      <NuxtLink v-else-if="prev && section === 'blog'" :to="prev._path">
+        <div class="i-tabler:arrow-big-left-line w-2em h-2em"></div>
+        <span mt-2> {{ prev.title }} </span>
       </NuxtLink>
     </li>
     <li class="link-item next">
-      <NuxtLink v-if="next" :to="next._path">
-        <span> {{ next.title }} </span>
-        <div i-carbon-arrow-right class="stroke icon" />
+      <NuxtLink v-if="next && section === 'biblio'" :to="next._path">
+        <span mt-2> {{ next.title }} </span>
+        <div class="i-tabler:arrow-big-right-line w-2em h-2em"></div>
+      </NuxtLink>
+      <NuxtLink v-else-if="next && section === 'blog'" :to="next._path">
+        <span mt-2> {{ next.title }} </span>
+        <div class="i-tabler:arrow-big-right-line w-2em h-2em"></div>
       </NuxtLink>
     </li>
   </ul>
 </template>
 
 <style scoped lang="scss">
+@forward '@/assets/styles/scss/global';
+@use '@/assets/styles/scss/global' as *;
+
 .prev-next-cont {
-  @apply border rounded-lg flex border-slate-200 p-4 gap-4 justify-between;
+  @apply border rounded-lg flex border-slate-400 dark:border-slate-100 p-1rem gap-1rem justify-between;
 }
 
 .link-item a {
-  @apply flex gap-2 font-display;
+  @apply flex gap-2 text-dark-700 dark:text-white no-underline;
+  @media (hover: hover) {
+    &:where(:any-link, :enabled, summary):hover {
+      @apply underline;
+    }
+  }
 }
 </style>

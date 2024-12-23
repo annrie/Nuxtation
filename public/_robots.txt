@@ -1,5 +1,5 @@
 User-agent: *
-Allow: /
+Allow:
 # block search results
 Disallow: /*?query=
 # block pagination

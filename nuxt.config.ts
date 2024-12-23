@@ -316,6 +316,7 @@ linkChecker: {
   experimental: {
     scanPageMeta:'after-resolve',
     sharedPrerenderData: false,
+    renderJsonPayloads: false,
     appManifest: {
       override: true,
     },

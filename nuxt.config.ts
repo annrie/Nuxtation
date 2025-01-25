@@ -58,6 +58,9 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
  devServer: {
    host: '',
    port: 3100,
+    cors: {
+      origin: ['https://nuxtation.phantomoon.com'],
+    },
  },
  // serverMiddleware: {
  //   '/_ipx': '@/server/middleware/ipx.js'

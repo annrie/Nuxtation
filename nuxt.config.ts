@@ -449,12 +449,8 @@ robots: {
     // customElement: true,
     propsDestructure: true,
     compilerOptions: {
-      isCustomElement: (tag: string) => {
-        return [
-          'LiteYoutube',
-        ].includes(tag)
+      isCustomElement: (tag: string) => ['lite-youtube'].includes(tag)
       }
-    }
   },
  vite: {
     define: {

@@ -37,7 +37,7 @@
     "@iconify/json": "^2.2.312",
     "@julr/unocss-preset-heropatterns": "^2.0.0",
     "@mdi/js": "^7.4.47",
-    "@nuxt/content": "^2.13.4",
+    "@nuxt/content": "2.13.4",
     "@nuxt/devtools": "^2.1.1",
     "@nuxt/eslint": "1.1.0",
     "@nuxt/icon": "^1.10.3",
@@ -79,7 +79,7 @@
     "lint-staged": "^15.4.3",
     "mdast-util-gfm-strikethrough": "^2.0.0",
     "micromark-extension-gfm-strikethrough": "^2.1.0",
-    "nuxt": "^3.15.4",
+    "nuxt": "3.15.4",
     "nuxt-gtag": "^3.0.2",
     "nuxt-icon": "^0.6.10",
     "nuxt-shiki": "^0.3.0",
@@ -91,13 +91,14 @@
     "remark-mdc": "^3.5.3",
     "remark-rehype": "^11.1.1",
     "sass-embedded": "^1.85.1",
-    "shiki": "^2.5.0",
+    "shiki": "2.5.0",
     "simple-git-hooks": "^2.11.1",
     "sitemap": "^8.0.0",
     "standard-version": "^9.5.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.6.3",
     "typescript-eslint": "^8.25.0",
+    "unocss": "66.0.0",
     "unocss-preset-extra": "^0.5.3",
     "unocss-transformer-alias": "^0.0.8",
     "unplugin-icons": "^22.1.0",
@@ -125,9 +126,9 @@
     "unconfig": "0.4.1"
   },
   "resolutions": {
-    "unplugin": "2.0.0-beta.1",
-    "vite": "^6.0.1",
-    "vite-plugin-inspect": "^0.10.1"
+    "@nuxt/devtools": "^2.2.0",
+    "unplugin": "^2.2.0",
+    "vite": "^6.2.0"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
@@ -147,6 +148,13 @@
     },
     "ignoredBuiltDependencies": [
       "@vercel/speed-insights"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "sharp",
+      "simple-git-hooks",
+      "vue-demi"
     ]
   },
   "packageManager": "pnpm@10.5.2"

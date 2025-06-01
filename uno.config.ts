@@ -1,17 +1,17 @@
 // @unocss-include
 
-import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
 import {
   defineConfig,
   presetAttributify,
   presetIcons,
   presetTypography,
-  presetUno,
+  presetWind4,
   presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-import presetRemToPx from '@unocss/preset-rem-to-px'
+import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
+import { createRemToPxProcessor } from '@unocss/preset-wind4/utils'
 import presetTagify from '@unocss/preset-tagify'
 import transformerCompileClass from '@unocss/transformer-compile-class'
 import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
@@ -30,7 +30,7 @@ export default defineConfig({
         chrono_1: '1px 1px 0 #fff, 2px 2px 0 #999',
       },
     },
-    breakpoints: {
+    breakpoint: {
       'sm': '320px',
       'md': '640px',
       'tb': '768px',
@@ -76,7 +76,7 @@ export default defineConfig({
       'surface-900': 'rgb(var(--surface-900))',
       'surface-950': 'rgb(var(--surface-950))',
     },
-    fontSize: {
+    font: {
       xxs: '0.5rem',
       xs: '0.75rem',
       sm: '0.875rem',
@@ -95,7 +95,7 @@ export default defineConfig({
       h4_sm: '1.5rem',
       h5_sm: '1.25rem',
     },
-    lineHeight: {
+    leading: {
       xxs: '0.75rem',
       xs: '1rem',
       sm: '1.25rem',
@@ -125,6 +125,52 @@ export default defineConfig({
       nav_sm: '116px',
       section_x: '5rem',
     },
+    font: {
+      'sans': '"Noto Serif JP", "Hiragino Sans", メイリオ, Meiryo, sans',
+      'serif': '"Roboto", "Noto Sans Japanese", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Open Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif',
+      'mono': '"Fira Code", "Fira Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+      'en': '"Source Sans Pro", Lato, Lobster, sans',
+    },
+    //transitionのイージング設定（Tailwind CSSでは transitionTimingFunction）
+    ease: {
+      DEFAULT: 'cubic-bezier(.16,1,.3,1)'
+    },
+    //transitionのアニメーション時間設定（Tailwind CSSでは transitionDuration）
+    duration: {
+      DEFAULT: '0.8s'
+    },
+    animation: {
+      keyframes: {
+        'custom-anime': `{
+          /* タイムラインをここに記述 */
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }`
+      },
+      //animation-duration
+      durations: {
+        'custom-anime': '0.8s'
+      },
+      //animation-timing-function
+      timingFns: {
+        'custom-anime': 'cubic-bezier(.16,1,.3,1)'
+      },
+      //animation-delay
+      counts: {
+        'custom-anime': 0
+      },
+      //animation設定を自分で定義する
+      properties: {
+        'custom-anime02': {
+          //ここに書いたanimation設定がそのまま出力される
+          animation: '3s ease-in 1s 2 reverse both paused custom-anime02'
+        }
+      },
+    },
   },
   shortcuts: [
     [
@@ -133,13 +179,16 @@ export default defineConfig({
     ],
     [
       'button-blue',
-      'inline-block mx-auto px-4 py-1 rounded bg-jis-blue/50 text-white dark:(text-white hover:text-dark) cursor-pointer hover:(bg-success text-dark-600)  disabled:bg-gray-600 disabled:opacity-50',
+      'inline-block mx-auto px-4 py-1 rounded bg-blue-500 text-white dark:(text-white hover:text-dark) cursor-pointer hover:(bg-success text-dark-600)  disabled:bg-gray-600 disabled:opacity-50',
     ],
     [
       'icon-btn',
       'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600 no-underline width[fit-content]',
     ],
-    [/^btn-(.*)$/, ([, c]) => `btn bg-${c}4:10 text-${c}5 rounded`],
+//		[/^btn-(.*)$/, ([, c], { theme }) => {
+//			if (Object.keys(theme.colors).includes(c))
+//			return `bg-${c}4:10 text-${c}5 rounded`
+//		}],
      ['flex-center', 'flex justify-center items-center'],
     ['bg-my-20', 'bg-#e5e5e5 bg-opacity-20'],
     ['flex-col-center', 'flex items-center'],
@@ -157,11 +206,24 @@ export default defineConfig({
     ['bg-com', 'dark:bg-#333 bg-white'],
     ['shadow-com', 'border-t-1 border-#333 shadow-md border-op-20 dark:border-op-60 dark:shadow-#333'],
   ],
+  layers: {
+    "components": -1,
+    "default": 1,
+    "utilities": 2,
+    "my-layer": 3,
+  },
   presets: [
-    presetUno({
-      dark: 'class',
+    presetWind4({
+      preflights:  {
+        reset: true,
+      },
+      theme: {
+        mode: 'on-demand', // Default by 'on-demand'
+        process: createRemToPxProcessor(),
+      },
+//      dark: 'class',
     }),
-    presetRemToPx(),
+    //presetRemToPx(),
     presetAttributify(),
     presetTagify({
       prefix: 'un-',
@@ -176,22 +238,42 @@ export default defineConfig({
       prefix: 'i-',
       extraProperties: {
         'display': 'inline-block',
-        'vertical-align': 'align-middle',
+        'vertical-align': 'middle',
       },
       collections: {
         carbon: async () => import('@iconify-json/carbon/icons.json').then(i => i.default),
         mdi: async () => import('@iconify-json/mdi/icons.json').then(i => i.default),
         logos: async () => import('@iconify-json/logos/icons.json').then(i => i.default),
       },
+       customizations: {
+           customize: (defaultCustomizations, data, name) => {
+               // Make icon square
+               const width = data.width ?? 16;
+               const height = data.height ?? 16;
+               if (height > width) {
+                 // Set width to match height
+                 data.width = height;
+                 // Center icon horizontally by changing viewBox left position
+                 data.left = (data.left ?? 0) - (height - width) / 2;
+               }
+
+               return defaultCustomizations
+
+               if (name === 'twemoji:blue-square') {
+                   // Turn blue square into red square
+                   data.body = data.body.replaceAll('#55ACEE', '#e83933')
+               }
+
+               return defaultCustomizations
+           },
+       }
     }),
     presetTypography(),
     presetHeroPatterns(),
     presetExtra(),
     animatedUno(),
-    presetTagify({
-      prefix: 'un-',
-    }),
     presetWebFonts({
+      themeKey: 'font',
       provider: 'none',
       fonts: {
         sans: 'Noto Sans JP',

@@ -1,3 +1,6 @@
+@forward "variables";
+@use "variables" as *;
+
 // mediaquery
 @mixin xxl($scope) {
   @if $scope == min {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { BlogPostPreview, FriendsPostPreview, Sections } from "~~/types/index.ts";
+import type { BlogPostPreview, Sections } from "~~/types/index.ts";
 defineProps<{
-  item: BlogPostPreview | FriendsPostPreview;
+  item: BlogPostPreview;
   section: Sections;
 }>();
 </script>
@@ -11,7 +11,7 @@ defineProps<{
       class="container bg-white rounded-2xl grid p-15 gap-6 auto-cols-[minmax(0,_2fr)] grid-cols-3 blogCard dark:(bg-gray-900)"
     >
       <div class="h-full object-cover w-full">
-        <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
+        <NuxtLink :to="item.url || item.path" :target="item.url ? '_blank' : '_self'">
             <NuxtPicture
                   provider="imgix"
                   :src="item.img"
@@ -30,7 +30,7 @@ defineProps<{
       </NuxtLink>
     </div>
     <div class="col-span-2">
-      <NuxtLink :to="item.url || item._path" :target="item.url ? '_blank' : '_self'">
+      <NuxtLink :to="item.url || item.path" :target="item.url ? '_blank' : '_self'">
         <h3 class="font-medium text-lg mb-2 leading-tight text-gray-600 dark:text-gray-300">
           {{ item.title }}
         </h3>

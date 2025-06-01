@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { withoutTrailingSlash } from "ufo";
+import { computed, ref } from "vue";
 import "github-markdown-css/github-markdown.css";
 // import { Buffer } from "buffer";
-import { withoutTrailingSlash } from "ufo";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 
 const route = useRoute();
 const currentPath = computed(() => `https://nuxtation.vercel.app${route.fullPath}`);
 const { data: article } = await useAsyncData("home", () =>
   queryContent()
-    .where({ _path: { $eq: withoutTrailingSlash(route.fullPath) } })
+    .where({ path: { $eq: withoutTrailingSlash(route.fullPath) } })
     .findOne()
 );
 
@@ -93,40 +93,15 @@ const { $pwa } = useNuxtApp();
 </script>
 
 <template>
-  <div>
-    <NuxtPwaManifest />
-    <NuxtLoadingIndicator />
-    <SpeedInsights />
-    <!-- <OgImage /> -->
-    <TheTopBar />
-    <div>
-      <NuxtPage />
-    </div>
-    <!-- <AppFooter /> -->
-    <ClientOnly>
-      <div v-if="$pwa?.offlineReady || $pwa?.needRefresh" class="pwa-toast" role="alert">
-        <div class="message">
-          <span v-if="$pwa.offlineReady"> App ready to work offline </span>
-          <span v-else> New content available, click on reload button to update. </span>
-        </div>
-        <button v-if="$pwa.needRefresh" @click="$pwa.updateServiceWorker()">
-          Reload
-        </button>
-        <button @click="$pwa.cancelPrompt()">Close</button>
-      </div>
-      <div
-        v-if="$pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh"
-        class="pwa-toast"
-        role="alert"
-      >
-        <div class="message">
-          <span> Install PWA </span>
-        </div>
-        <button @click="$pwa.install()">Install</button>
-        <button @click="$pwa.cancelInstall()">Cancel</button>
-      </div>
-    </ClientOnly>
-  </div>
+<div>
+	<NuxtPwaManifest />
+	<NuxtLoadingIndicator />
+	<TheTopBar />
+	<NuxtPage :transition="{
+	  name: 'fade',
+	  mode: 'out-in'
+	}" />
+</div>
 </template>
 <style>
 .pwa-toast {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Sections } from "~/types/index.ts";
+import { Buffer } from "buffer";
+import type { BlogPost, Sections } from "~~/types/index.ts";
 
 type Params = {
   slug: string;
@@ -11,24 +12,52 @@ const {
   params: { slug },
 } = useRoute() as { params: Params };
 
+const route = useRoute();
+const { data: articles } = await useAsyncData(`articles-${slug}`,
+	() => queryCollection('blog')
+	.where('tags', 'LIKE', `%${slug}%`)
+	.order('updatedAt', 'DESC')
+	.all(),
+)
+
+// get current route
+// useRoute()の戻り値をParams型にキャストする
+//const {
+//  params: { slug },
+//} = useRoute() as { params: Params };
+
 // const filtered = slug.split(",");
 const filtered = ref(slug ? (Array.isArray(slug) ? slug : slug.split(",")) : []);
-console.log({ filtered });
 
-//const topic: string = replaceHyphen(slug as string);
+
+// const topic: string = replaceHyphen(slug as string);
 const title: string = `Blog Posts on ${slug.toUpperCase()}`;
 const description: string = `Here\'s a list of all my blog posts with the ${slug.toUpperCase()} tag`;
 const section: Sections = "blog";
 
 definePageMeta({
-  layout: false,
+		layout: false,
 });
 
-// set meta for page
-useHead({
-  title,
-  meta: [{ name: "description", content: description }],
-});
+const encoded1 = Buffer.from(`${title}`)
+.toString("base64")
+.replace(/\s/g, "%20")
+.replace(/=/g, "");
+	// set meta for page
+	useHead({
+			title,
+			meta: [{ name: "description", content: description }],
+	});
+
+	useSeoMeta({
+			ogType: () => "article",
+			// ogUrl: () => `https://nuxtation.phantomoon.com/blog/tags/${slug}`,
+			twitterDescription: () => description,
+			twitterImage: () =>
+			`https://nuxtation.imgix.net/ogp.png?txt64=${encoded1}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
+			ogImage: () =>
+			`https://nuxtation.imgix.net/ogp.png?txt64=${encoded1}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
+	});
 </script>
 <template>
       <div>
@@ -71,7 +100,7 @@ useHead({
             <h1
               class="mb-5 mt-10 font-extrabold lt-md:text-3xl tb:text-5xl !line-height-15"
             >
-              All articles with <span uppercase underline underline-wavy>{{ slug }}</span>
+              <span>All</span> <span>articles</span> <span>with</span> <span uppercase underline underline-wavy>{{ slug }}</span>
             </h1>
             <p class="text-lg font-medium">Here's a list of all my great articles</p>
           </div>
@@ -81,65 +110,8 @@ useHead({
           <NuxtLink to="/blog">
             <p class="ml-1 text-center text-2xl underline">Back to All Articles</p>
           </NuxtLink>
-          <!-- Render list of all articles in ./content/blog using `path` -->
-          <!-- Provide only defined fields in the `:query` prop -->
-          <ContentList
-            path="/blog"
-            :query="{
-              only: ['title', 'description', 'tags', '_path', 'img'],
-              where: [
-                {
-                  tags: {
-                    $contains: filtered,
-                  },
-                },
-              ],
-              $sensitivity: 'base',
-            }"
-          >
-            <!-- Default list slot -->
-            <template #default="{ list }">
-              <ul class="mx-auto w-full">
-                <li
-                  v-for="article in list"
-                  :key="article._path"
-                  class="blogCard grid mt-3rem items-center gap-x-2 pt-0 tb:grid-cols-[1.5fr_1fr] lt-md:grid-cols-1"
-                >
-                  <NuxtPicture
-                    provider="imgix"
-                    :src="article.img"
-                    :alt="article.title"
-                    fit="cover"
-                    format="avif,webp"
-                    class="rounded-5px transition-all duration-400 at-sm:ml-10%"
-                  />
-                  <header class="pl-0.8rem lt-md:(mt-4 text-center) tb:text-left">
-                    <h1 class="text-xl font-semibold">
-                      {{ article.title }}
-                    </h1>
-                    <p text-base>
-                      {{ article.description }}
-                    </p>
-                    <ul class="tags-list">
-                      <li v-for="(tag, n) in article.tags" :key="n" class="tags">
-                        <NuxtLink :to="`/blog/tags/${tag}`">
-                          {{ tag }}
-                        </NuxtLink>
-                      </li>
-                    </ul>
-                    <NuxtLink :to="article._path" class="linkButton_s">
-                      読んでみる
-                    </NuxtLink>
-                  </header>
-                </li>
-              </ul>
-            </template>
-
-            <!-- Not found slot to display message when no content us is found -->
-            <template #not-found>
-              <p>No articles found.</p>
-            </template>
-          </ContentList>
+			<BlogItemList v-if="articles !== null" :list="articles" :showImages="true" :section="section" />
+			<NotFound v-else />
         </section>
       </div>
     </NuxtLayout>
@@ -147,15 +119,12 @@ useHead({
 </template>
 
 <style scope lang="scss">
-// html,
-// body {
-//   height: 100%;
-// }
-
-// body > div footer {
-//   position: sticky;
-//   top: 100vh;
-// }
+h1 span:not(:last-child) {
+  @apply at-sm:(block lh-0.75);
+}
+h1 span:last-child {
+  @apply at-sm:(block lh-loose);
+}
 .tags-list {
   @apply border border-transparent rounded-lg flex flex-wrap font-normal my-4 mx-0 text-white text-sm w-full gap-2 uppercase lt-md:(text-base justify-center);
 

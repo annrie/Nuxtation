@@ -4,7 +4,7 @@ defineProps(['type'])
 
 <template>
   <div :class="[type]" class="custom-block">
-    <ContentSlot :use="$slots.default" unwrap="p" />
+	<slot :use="$slots.default" unwrap="p" />
   </div>
 </template>
 

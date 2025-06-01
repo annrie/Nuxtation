@@ -1,78 +1,85 @@
 <script setup lang="ts">
-import type { BlogPost, Sections } from "~~/types/index.ts";
+import { useRoute } from 'vue-router'
+import { computed } from "vue";
+import type { BlogPost, PrevNext, Sections } from "~~/types/index.ts";
+import { parseDate } from "~/utils/format";
 
-const { path } = useRoute();
-const cleanPath = path.replace(/\/$/, "");
-const { data } = await useAsyncData(`content-${cleanPath}`, async () => {
-  // fetch document where the document path matches with the cuurent route
-  let article = queryContent<BlogPost>("blog").where({ _path: cleanPath }).findOne();
-  // get the surround information,
-  // which is an array of documeents that come before and after the current document
-  let surround = queryContent<BlogPost>("blog")
-    .only(["_path", "title", "description"])
-    .sort({ publishedAt: -1 })
-    .findSurround(path, { before: 1, after: 1 });
-
-  return {
-    article: await article,
-    surround: await surround,
-  };
-});
+const route = useRoute()
+const path    = route.path
+const slug = computed(() => route.params.slug as string)
+const keyPost    = `post-${slug.value}`
+const keyRelated = `related-${slug.value}`
+const keyBlog    = `blog-${slug.value}`
 
 const section: Sections = "blog";
 
-// const components = {
-//   p: 'CustomParagraph'
-// };
+// 関連記事データを取得
+const { data: relatedBlogArticles } = await useAsyncData( keyRelated,
+	() => queryCollection('blog',  route.path)
+	.select('title', 'path')
+	.where('path', '<>', route.path)
+	.order('updatedAt', 'DESC')
+	.limit('5')
+	.all()
+)
+
+const { data: article } = await useAsyncData(keyBlog,
+	() =>
+	queryCollection('blog').path(`/blog/${slug.value}`).first()
+)
+
+const { data: surroundData } = await useAsyncData(`surround-blog-${path}`, () =>
+	queryCollectionItemSurroundings('docs', path)
+	.order('publishedAt', 'ASC')
+)
 
 // destrucure `prev` and `next` value from data
 // findSurroundメソッドの返す配列はnullを含む場合があるので、配列の分割代入をするときには、nullを考慮する必要がある
 let prev: any, next: any;
-if (data?.value && data?.value?.surround) {
-  [prev, next] = data?.value?.surround;
-}
+if (surroundData.value) [prev, next] = surroundData.value || [];
 
 definePageMeta({
   layout: false,
 });
+
 // replaceHyphenを自分で定義する
 const replaceHyphen = (tags: string) => tags.replace(/-/g, " ");
 
 useHead({
-  title: data?.value?.article.title,
-  meta: [
-    { name: "description", content: data?.value?.article.description },
-    {
-      property: "og:image",
-      content: `https://nuxtation.imgix.app/${data?.value?.article.img}`,
-    },
-    {
-      property: "og:title",
-      content: data?.value?.article.title,
-    },
-  ],
+		title: article?.value?.title || '',
+		meta: [
+		{ name: "description", content: article?.value?.description },
+		{
+			property: "og:image",
+			content: `https://nuxtation.imgix.app/${article?.value?.img}`,
+		},
+		{
+			property: "og:title",
+			content: article?.value?.title,
+		},
+		],
 });
 
 useSeoMeta({
-  title: () => data?.value?.article.title,
-  ogTitle: () => data?.value?.article.title,
-  ogType: () => "article",
-  ogUrl: () => `https://nuxtation.phantomoon.com/${data?.value?.article._path}`,
-  twitterTitle: () => data?.value?.article.title,
-  description: () => data?.value?.article.description,
-  ogImage: () =>
-    `https://nuxtation.imgix.net/${data?.value?.article.img}?txt=${data?.value?.article.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=crop&blur=50`,
-  twitterImage: () =>
-    `https://nuxtation.imgix.net/${data?.value?.article.img}?txt=${data?.value?.article.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&blur=50&auto=format,compress&fit=crop`,
-  ogDescription: () => data?.value?.article.description,
-  twitterDescription: () => data?.value?.article.description,
+		title: () => article.value?.title,
+		ogTitle: () => article?.value?.title,
+		ogType: () => "article",
+		ogUrl: () => `https://nuxtation.phantomoon.com/${article?.value?.path}`,
+		twitterTitle: () => article?.value?.title,
+		description: () => article?.value?.description,
+		ogImage: () =>
+		`https://nuxtation.imgix.net/${article?.value?.img}?txt=${article?.value?.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=crop&blur=50`,
+		twitterImage: () =>
+		`https://nuxtation.imgix.net/${article?.value?.img}?txt=${article?.value?.title}&txt-size=132&txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&blur=50&auto=format,compress&fit=crop`,
+		ogDescription: () => article?.value?.description,
+		twitterDescription: () => article?.value?.description,
 });
 const { $formatDate } = useNuxtApp();
 </script>
 <template>
     <div>
       <NuxtLayout name="blog">
-      <ContentRenderer v-if="data" :value="data">
+	<article v-if="article !== null">
         <div
           class="mb-6 lt-lg:(mb-2 flex-none pt-2) lg:(w-full mb-8 flex flex-row justify-between pt-8)"
         >
@@ -104,7 +111,7 @@ const { $formatDate } = useNuxtApp();
         </li>
         <li class="separator">&gt;</li>
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name">{{ data?.article.title }}</span>
+          <span itemprop="name">{{ article.title }}</span>
           <meta itemprop="position" content="3" />
         </li>
       </ol>
@@ -126,8 +133,8 @@ const { $formatDate } = useNuxtApp();
     <header class="article-header">
       <NuxtPicture
         provider="imgix"
-        :src="data?.article.img"
-        :alt="data?.article.title"
+        :src="article.img"
+        :alt="article.title"
         format="avif,webp"
         :modifiers="{
           auto: 'format,enhance',
@@ -137,19 +144,19 @@ const { $formatDate } = useNuxtApp();
             'rounded mt-4 text-center mb-8 w-full sm:max-h-200px tb:max-h-500px lg:max-h-700px',
         }"
       />
-      <h1 class="heading">{{ data?.article.title }}</h1>
-      <p class="supporting">{{ data?.article.description }}</p>
+      <h1 class="heading">{{ article.title }}</h1>
+      <p class="supporting">{{ article.description }}</p>
       <ul class="article-tags">
-        <li class="tag" v-for="(tag, n) in data?.article.tags" :key="n">
+        <li class="tag" v-for="(tag, n) in article.tags" :key="n">
           {{ replaceHyphen(tag) }}
         </li>
       </ul>
       <!-- Social Share -->
       <div class="mb-6 mt-6 flex justify-center md:mt-0">
         <NavShareIcons
-          :headline="data?.article.title"
-          :excerpt="data?.article.description"
-          :path="`${data?.article._path}/`"
+          :headline="article.title"
+          :excerpt="article.description"
+          :path="`${article._path}/`"
         />
       </div>
     </header>
@@ -157,29 +164,33 @@ const { $formatDate } = useNuxtApp();
     <section class="article-section">
       <aside class="aside h-fit">
         <!-- Toc Component -->
-        <Toc :links="data?.article?.body?.toc?.links" />
+        <Toc :links="article?.body?.toc?.links" />
         <!-- Related articles -->
         <div
           v-if="data && data?.surround?.filter((elem: any) => elem !== null)?.length > 0"
           class="related lt-lg:hidden"
         >
-          <RelatedArticles :surround="data?.surround" class="blog-post-text" />
+				<RelatedArticles :related="relatedBlogArticles" :limit="5" class="blog-post-text" />
         </div>
       </aside>
-          <article class="article prose dark:prose-invert mx-10px">
-            <!-- render rich text from document -->
-            <ContentRendererMarkdown :value="data?.article">
-              <!-- display if document content is empty -->
-              <template #empty>
-                <DocumentDrivenEmpty :value="toValue" />
-              </template>
-            </ContentRendererMarkdown>
-          </article>
+		<article class="article prose dark:prose-invert mx-10">
+			<!-- render rich text from document -->
+			<ContentRenderer :value="article">
+			<template v-if="article.url">
+			<a :href="article.url" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full text-primary hover:text-primary/80 transition-colors py-4">
+				<span>Read on external site</span>
+				<span class="ml-1">→</span>
+			</a>
+			</template>
+			<template v-else>
+			<p>No content found.</p>
+			</template>
+			</ContentRenderer>
+		</article>
     </section>
     <!-- PrevNext Component -->
     <PrevNext :prev="prev" :next="next" :section="section" class="w-90% mx-auto" />
-      </ContentRenderer>
-      <DocumentDrivenNotFound v-else />
+	</article>
     </NuxtLayout>
   </div>
 </template>

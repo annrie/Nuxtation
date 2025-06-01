@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import type { Sections, ParsedContent } from "~/types/index.ts";
+import { queryCollection, useRoute } from '#imports'
 import { Buffer } from "buffer";
+import type { ParsedContent, PrevNext, Sections } from "~~/types/index.ts";
+import { parseDate } from "~/utils/format";
 
 definePageMeta({
   layout: false,
@@ -8,23 +10,26 @@ definePageMeta({
 
 // Find the number of blogs present
 const blogCountLimit = 6;
-const { data } = await useAsyncData('content-blog', async () => {
-  const _posts = await queryContent("/blog").only("title").find();
-  return Math.ceil(_posts.length / blogCountLimit);
-});
+const { data: articles } = await useAsyncData('blog',
+	() => queryCollection('blog')
+	.order('updatedAt', 'DESC')
+	//    .limit(blogCountLimit)
+	.all()
+)
 
-// const count = (await queryContent("blog").only([]).fetch()).length;
-// console.log(count);
+const { data } = await useAsyncData('surround', () => {
+		return queryCollectionItemSurroundings('blog', path)
+		.order('updatedAt', 'DESC')
+		.all()
+})
+
+const filteredArticles = ref<BlogPost[]>([])
+
 const title: string = 'All Blog Posts';
 const description: string = "Here's a list of all my blog posts";
 const section: Sections = "blog";
-const pageNo = ref(1);
-// get tag query
-// const {
-//   query: { tags },
-// } = useRoute();
+const [prev, next] = data.value || []
 
-// const filtered = ref(tags ? (Array.isArray(tags) ? tags : tags.split(",")) : []);
 // set meta for page
 useHead({
   title,
@@ -33,7 +38,7 @@ useHead({
     { name: "description", content: description },
   ],
 });
-let encoded1 = Buffer.from(`${title}`)
+const encoded1 = Buffer.from(`${title}`)
   .toString("base64")
   .replace(/\s/g, "%20")
   .replace(/=/g, "");
@@ -75,35 +80,18 @@ useSeoMeta({
             <meta itemprop="position" content="2" />
           </li>
         </ol>
-        <BlogHero :pageNo="pageNo" />
+        <BlogHero />
         <section class="page-section">
           <Tags :section="section" />
-          <ContentQuery
-            path="/blog"
-            :only="[
-              'title',
-              'description',
-              'tags',
-              '_path',
-              'img',
-              'publishedAt',
-              'updatedAt',
-            ]"
-            :limit="blogCountLimit"
-            :sort="{ publishedAt: -1 }"
-            v-slot="{ data }"
-          >
-            <BlogList :data="data as ParsedContent[]" />
-          </ContentQuery>
-          <Pagination
-            v-if="data && data > 1"
-            class="mt-8"
-            :currentPage="1"
-            :totalPages="data"
-            :nextPage="data > 1"
-            baseUrl="/blog/"
-            pageUrl="/blog/page/"
-          />
+    			<BlogSearch
+      			:articles="articles || []"
+      			v-model:filteredArticles="filteredArticles"
+      			:showImages="false"
+    			/>
+    			<BlogItemList v-if="filteredArticles.length> 0" :list="filteredArticles" :section="section" :showImages="true" />
+    			<div v-else class="text-center py-8">
+    				<p class="text-gray-600">No articles found matching your search.</p>
+    			</div>
         </section>
       </div>
     </NuxtLayout>

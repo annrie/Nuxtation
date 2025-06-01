@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { CatResponse } from "~/types/index.ts";
+import type { CatResponse } from "~~/types/index.ts";
 
 const { pending, data, refresh } = useFetch<CatResponse[]>(
   "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"
@@ -42,7 +42,7 @@ useHead({
       <div class="container cat-wrapper">
         <h1 class="font-extrabold text-center mb-8 text-5xl dark:text-light-500">cats</h1>
         <!-- refresh関数に引数を渡す必要がないので、refresh関数を無名関数でラップして、引数を無視するようにしている。 -->
-        <button @click="() => refresh()" class="btn-blue mb-4 w-80vw">Refresh</button>
+        <button @click="() => refresh()" class="btn-jis-blue mb-4 w-80vw">Refresh</button>
         <div v-if="pending" grid place-items-center>Loading ...</div>
         <div v-else="!pending && data">
           <CatCardList :cat-list="data" />

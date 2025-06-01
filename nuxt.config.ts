@@ -1,19 +1,23 @@
 import { defineNuxtConfig } from 'nuxt/config'
-// import { SiteName, SiteDescription } from './logic/constants';
-import { RuntimeConfig } from 'nuxt/schema';
-// import { OgImage } from './.nuxt/components.d';
-import { NavigationGuard } from 'vue-router';
-import { pwaVite } from './config/pwa';
-import { appDescription } from './logic/index';
 import { bundledLanguages } from 'shiki';
-import { imagetools } from "vite-imagetools";
-import vsharp from 'vite-plugin-vsharp';
+import { imagetools } from 'vite-imagetools';
+import Vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import yaml from '@rollup/plugin-yaml'
+import { pwa } from './app/config/pwa'
+import remarkGfm from 'remark-gfm'
+import { SiteDescription, SiteName } from './app/logic/constants'
+import { rollup as unwasm } from 'unwasm/plugin'
+import wasm from "@rollup/plugin-wasm"
+import { readFileSync } from 'node:fs'
 
-// import genSitemap from './scripts/gen-sitemap';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
 
 export default defineNuxtConfig({
+  devtools: {
+   enabled: true,
+  },
   future: {
     compatibilityVersion: 4,
     // inlineStyles: false,
@@ -21,53 +25,93 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-04-03',
   // debug: true,
-  devtools: {
-   // Enable devtools (default: true)
-   enabled: true,
-
-   timeline: {
-   enabled: true,
-   // VS Code Server options
-   // vscode: {},
-   // ...other options
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://nuxtation.vercel.app',
     },
   },
 
- // Twitter埋め込みで'Hydration node mismatch'エラーが出るため
-//  ssr: process.env.NODE_ENV !== "development",
-ssr: true,
-spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
 
-  telemetry:false,
+  // robotsの設定を修正
+  robots: {
+    configPath: './robots.config.ts',  // 設定ファイルを外部化
+  },
 
-// publicRuntimeConfig: {
-//   baseURL: process.env.MICROCMS_SERVICE_DOMAIN,
-//   apiKey: process.env.MICROCMS_API_KEY,
-// },
+  ssr: true,
 
- typescript: {
+  devtools: {
+    enabled: true,
+  },
+
+  experimental: {
+    payloadExtraction: false,
+    sharedPrerenderData: false,
+    scanPageMeta:'after-resolve',
+    renderJsonPayloads: true,
+    viewTransition: true,
+//    granularCachedData: true,
+    // buildCache: true,
+    //   viewTransition: true,
+    //   inlineSSRStyles: false,
+    //   renderJsonPayloads: true,
+    //   typedPages: true,
+    //   headNext: true,
+    //   asyncContext: true,
+    //   clientFallback: false,
+    //   componentIslands: true,
+    appManifest: {
+      override: true,
+    },
+    defaults: {
+      useAsyncData: {
+        deep: true,
+      },
+      nuxtLink: {
+        // default values
+        componentName: 'NuxtLink',
+        externalRelAttribute: 'noopener noreferrer',
+//        activeClass: 'router-link-active',
+//        exactActiveClass: 'router-link-exact-active',
+//        prefetchedClass: undefined, // can be any valid string class name
+        trailingSlash: 'remove', // can be 'append' or 'remove'
+        prefetch: true,
+        prefetchOn: { visibility: true }
+      }
+    },
+  },
+
+
+//  debug: true,
+  // target: 'static',
+
+  // pages: true,
+
+  // per default disabled since Nuxt 3.7
+  spaLoadingTemplate: true,
+
+  // definePageMeta: {
+  //   keepalive: true,
+  // },
+  telemetry: false,
+
+  ogImage: { enabled: false },
+
+  typescript: {
+    // typeCheck: true,
     tsConfig: {
       compilerOptions: {
         isolatedModules: false,
-        useDefineForClassFields: false
-      }
+        useDefineForClassFields: false,
+      },
     },
    shim:true
  },
 
  devServer: {
    host: '',
-   port: 3100,
+   port: 3000,
     cors: {
-      origin: ['https://nuxtation.phantomoon.com'],
-    },
- },
- // serverMiddleware: {
- //   '/_ipx': '@/server/middleware/ipx.js'
- // },
-  runtimeConfig: {
-    public: {
-      apiBase: import.meta.env.NUXT_PUBLIC_API_BASE || '/api',
+      origin: ['https://nuxtation.vercel.app'],
     },
   },
  app: {
@@ -112,33 +156,82 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
             ],
         },
    pageTransition: { name: 'page', mode: 'out-in' },
-   layoutTransition: { name: 'fade-layout', mode: 'in-out' },
+   layoutTransition: { name: 'fade-layout', mode: 'out-in' },
  },
 
  modules: [
    '@vueuse/nuxt',
    '@unocss/nuxt',
+    'nuxt-shiki',
+    'nuxt-content-twoslash',
+    '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
    '@nuxt/content',
    '@nuxtjs/mdc',
    '@nuxt/image',
-   '@nuxtjs/mdc',
    '@nuxtjs/seo',
    '@nuxt/eslint',
-   'nuxt-og-image',
    '@nuxtjs/color-mode',
    'unplugin-icons/nuxt',
    '@nuxt/devtools',
-//   'nuxt-typed-router',
    '@vite-pwa/nuxt',
-   '@nuxtjs/sitemap',
-   '@nuxtjs/robots',
    'nuxt-link-checker',
    '@nuxthq/studio',
    'nuxt-gtag',
-   'nuxt-shiki',
    '@nuxtjs/web-vitals',
-   'nuxt-icon',
+		'@nuxt/icon',
+    'nuxt-jsonld',
   ],
+
+  components: [
+    {
+      path: '~/components/blog/',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/top/',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/nav/',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/tags/',
+      pathPrefix: false,
+    },
+    {
+      path: '~/components/icons/',
+      pathPrefix: false,
+    },
+		{
+			path: '~/components/cat/',
+			pathPrefix: false,
+		},
+    {
+      path: '~/components',
+      ignore: ['**/*.d.ts'],
+    },
+  ],
+
+  fonts: {
+    experimental: {
+      // Required for TailwindCSS v4. You can enable support for processing CSS variables for font family names. This may have a performance impact.
+      processCSSVariables: true,
+      // Defines whether to enable adding local fallbacks. Default is `false`.
+      disableLocalFallbacks: false,
+    },
+    defaults: {
+      weights: [400],
+      styles: ['normal', 'italic'],
+      subsets: [],
+    },
+    fallbacks: {
+      'serif': ['Noto Serif JP'],
+      'sans': ['Noto Sans JP'],
+      'monospace': ['Fira Code'],
+    },
+  },
 
   icon: {
     provider: 'iconify',
@@ -150,29 +243,14 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     //   collections: ['uil', 'mdi', 'logos', 'carbon'] // Specify the collections you want to include
     // }
   },
-  mdc: {
-    remarkPlugins: {},
-    rehypePlugins: {
-      // options: {
-      // // Configure rehype options to extend the parser
-      // },
-      // plugins: {
-      // // Register/Configure rehype plugin to extend the parser
-      // },
-    },
-    headings: {
-      anchorLinks: {
-      // Enable/Disable heading anchor links. { h1: true, h2: false }
-      },
-    },
-    highlight: 'shiki', // Control syntax highlighting
-    components: {
-      prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
-      map: {
-      // This map will be used in `<MDCRenderer>` to control rendered components
-      },
-    },
-  },
+  scripts: [
+    {
+      src: 'https://www.youtube.com/iframe_api',
+      async: true,
+      defer: true,
+      callback: 'onYouTubeIframeAPIReady'
+    }
+  ],
 
   shiki: {},
   eslint: {
@@ -181,7 +259,10 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
         indent: 2,
         semi: true,
       },
-      stadalone: false,
+      standalone: false,
+      nuxt: {
+        sortConfigKeys: true,
+      },
     },
    },
  gtag: {
@@ -206,10 +287,11 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     enabled: false,
   },
 
-    site: {
-      identity: {
-        type: 'person',
-      },
+
+  site: {
+    identity: {
+      type: 'person',
+    },
     name: 'Nuxtation',
     logo: '/logo.png',
     titleSeparator: '-',
@@ -217,81 +299,93 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     description: 'Nuxt, contentで構築したブログサイト',
     language: 'ja',
     twitter: '@muraie_jin',
-    trailingSlash: true,
+    trailingSlash: false,
   },
-  schemaOrg: {
-    identity: 'Person',
+
+  formkit: {
+    // autoImport: true,
+    configFile: './formkit.config.ts',
+  },
+
+  content: {
+    preview: {
+      api: 'https://api.nuxt.studio',
+      dev: true,
     },
- content: {
-   contentHead: false,
-   documentDriven: true,
-   experimental: {
-     clientDB: true,
-     search: false,
-   },
-   watch: {
-     ws: {
-       port: 4000,
-       showURL: true
-     }
-   },
-  highlight: {
-      langs: Object.keys(bundledLanguages),
-      // theme:'dark-plus',
-      theme: {
-        dark: true,
-        // Default theme (same as single string)
-        default: 'vitesse-dark',
-        // Theme used if `html.dark`
-        dark: 'vitesse-dark',
-        // Theme used if `html.sepia`
-        // sepia: 'monokai'
-       },
-       preload: [
-         'bash',
-         'javascript',
-         'vue'
-       ],
-  },
-     markdown: {
-      anchorLinks: true,
-       toc: {
-        depth: 5,
-        searchDepth: 5,
-      },
-      // // Object syntax can be used to override default options
-      remarkPlugins: {
-//        'remark-emoji': {
-//          emoticon: true,
+    build: {
+      markdown: {
+        highlight: {
+          // Theme used in all color schemes.
+          theme: {
+            default: 'github-light',
+            dark: 'github-dark',
+
+//          langs: Object.keys(bundledLanguages),
+//          langs: [
+//            // Read more about Shiki languages: https://shiki.style/guide/load-lang
+//            JSON.parse(
+//              readFileSync('./shiki/languages/gdscript.tmLanguage.json', 'utf-8'),
+//            ),
+//          ]
+        },
+        anchorLinks: true,
+//        toc: {
+//          depth: 5,
+//          searchDepth: 5,
 //        },
-       'remark-gfm': true,
-      //   'remark-oembed': {
-      //     // Options
-      //   }
+        remarkPlugins: {
+          'remark-gfm': true,
+          'remark-emoji': {
+            options: {
+              emoticon: true
+            }
+          },
+          'remark-oembed': {
+            // Options
+          }
+        },
+        rehypePlugins: [
+        ],
+      },
     },
-      //   // Override remark-emoji options
-      //   // 'remark-emoji': {
-      //   //   emoticon: true
-      // },
-      rehypePlugins: [
-        // [
-        //   'rehype-external-links',
-        //   {
-        //       target: '_blank',
-        //       rel: 'noopener'
-        //   }
-        // ],
-        // 'rehype-slug',
-        // 'rehype-autolink-headings',
-        // 'rehype-highlight',
-        // 'rehype-prism-plus',
-        // 'rehype-figure',
-      ],
-      //   // Disable remark-gfm
-      //   // Add remark-oembed
-       // },
+    experimental: {
+      search: {
+        indexed: true,
+        filterQuery: { _draft: false, _partial: false }
+      },
+    nativeSqlite: true
     },
-  externals: {
+    watch: {
+      ws: {
+        port: 4000,
+        showURL: true,
+      },
+    },
+  },
+},
+    mdc: {
+      prose: true,
+      remarkPlugins: {},
+      rehypePlugins: {
+      },
+      headings: {
+        anchorLinks: {
+//           Enable/Disable heading anchor links. { h1: true, h2: false }
+          h1: true, h2: true, h3: true, h4: true, h5: true
+        },
+      },
+      toc: {
+        depth: 5,
+        searchDepth: 5
+      },
+      highlight: 'shiki', // Control syntax highlighting
+      components: {
+        prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
+        map: {
+          // This map will be used in <MDCRenderer> to control rendered components
+        },
+      },
+      externals: {
       // 外部リソースのタイムアウト時間を30秒に設定（デフォルトは5秒）
       timeout: 30000,
       // エラーが発生してもビルド処理を続行する
@@ -299,16 +393,28 @@ spaLoadingTemplate: true, // per default disabled since Nuxt 3.7
     },
   },
 
- unocss: {
-   uno: true,
-   icons: true,
-   attributify: true,
-   components: true,
-   nuxtLayers: true,
-   rules: [],
- },
 
-linkChecker: {
+  unocss: {
+    uno: true,
+    icons: true,
+    attributify: true,
+    components: true,
+    nuxtLayers: true,
+    rules: [],
+    //    mode: 'vue-scoped',
+  },
+
+postcss: {
+  plugins: {
+//    '@unocss/postcss': {},
+    'autoprefixer': {},
+    'postcss-nested': {},
+    'postcss-custom-media': {},
+    'postcss-media-hover-any-hover': {},
+//    'postcss-calc': {},
+  }
+},
+  linkChecker: {
     failOnError: false,
     enabled: false,
     excludeLinks: [
@@ -330,46 +436,44 @@ linkChecker: {
     },
   },
 
+  css: [
+    'assets/styles/scss/global.scss',
+    '@@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
+  ],
 
- css: [
-   '@unocss/reset/tailwind.css',
-   'assets/styles/scss/global.scss',
-   '@@/node_modules/lite-youtube-embed/src/lite-yt-embed.css',
- ],
-
- image: {
-   inject: true,
-   screens: {
-     'sm': 320,
-     'md': 640,
-     'tb': 768,
-     'lg': 1024,
-     'xl': 1280,
-     'xxl': 1536,
-     '2xl': 1536
-   },
-   provider: 'imgix',
-   imgix: {
-     baseURL: 'https://nuxtation.imgix.net/',
-     modifiers: {
-      effect: 'sharpen:100',
-      quality: 'auto:best',
+  image: {
+    inject: true,
+    screens: {
+      'xxxs': 10,
+      'xxs': 240,
+      'sm': 320,
+      'md': 640,
+      'tb': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536,
     },
-   },
-   domains: [
-     'nuxtation.imgix.net',
-   ],
+    // dir: '../images',
+    provider: 'imgix',
+    imgix: {
+      baseURL: 'https://nuxtation.imgix.net/',
+      modifiers: {
+        effect: 'sharpen:100',
+        quality: 'auto:best',
+      },
+    },
+    domains: [
+      'nuxtation.imgix.net',
+    ],
     alias: {
       imgix: 'https://nuxtation.imgix.net/',
     },
-   // cloudinary: {
-   //   baseURL: 'https://res.cloudinary.com/dvdv07wjt/image/fetch/',
-   // },
 
   presets: {
      cover: {
        modifiers: {
-         format: 'avif, webp',
+         format: 'avif, webp, png',
          fit: 'cover',
          quality: '80',
        },
@@ -377,26 +481,46 @@ linkChecker: {
    },
  },
 
-colorMode: {
-   classSuffix: '',
-   preference: 'system',
-   fallback: 'dark',
- },
+  colorMode: {
+    classSuffix: '',
+  },
 
- sourcemap: {
-   "server": true,
-   "client": false,
- },
+  build: {
+    transpile: ['nuxt', '@iconify/vue', 'lite-youtube'],
+  },
+
+  sourcemap: {
+    server: true,
+    client: false,
+  },
+
+  robots: {
+    disableNuxtContentIntegration: true,
+//    UserAgent: '*',
+//    Allow: '/',
+//    Sitemap: ['https://nuxtation.phantomoon.com/sitemap.xml'],
+  },
+
+  generate: {
+    crawler: true,
+    trailingSlash: false,
+    routes: [
+        '/',
+    ],
+  },
+
+  schemaOrg: {
+    identity: 'Person',
+  },
+
   sitemap: {
-   strictNuxtContentPaths: true,
     xsl: false,
     credits: false,
-    exclude: ['/_content'],
+    exclude: [ '/_partials/**' ],
     cacheMaxAgeSeconds: 10000,
   },
 robots: {
-    blockAiBots: false,
-    blockNonSeoBots: true,
+     disableNuxtContentIntegration: true,
     cacheControl: 'max-age=14400, must-revalidate',
 },
 
@@ -404,61 +528,106 @@ robots: {
   enabled: true,
   },
 
-
-//  hooks: {
-//    'robots:config': (config) => {
-//      config.Sitemap = '/sitemap.xml';
-//    },
-//  },
-
- nitro: {
-  experimental: {
-      wasm: true,
+  nitro: {
+    rollupConfig: {
+      plugins: [Vue({
+        template: {
+          customElement: true,
+          },
+      }), vueJsx()],
     },
-  devProxy: {
-    host: 'localhost',
-  },
-  // future: {
-  //   nativeSWR: true,
-  // },
-  preset: 'vercel',
-//   static: true,
- esbuild: {
-    options: {
-      target: 'esnext',
+    // hooks: {
+    //   compiled: genSitemap,
+    // },
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+      plugins: ['@/plugins/nitro.error.ts'],
     },
-    plugins: [ '~/plugins/nitro.error.ts' ],
-  },
   prerender: {
      crawlLinks: true,
      failOnError: false,
      routes: [ '/', '/sitemap.xml', '/_vercel/speed-insights/*' ],
    },
+
+    routeRules: {
+      '/robots.txt': {
+        prerender: false,  // 動的生成に変更
+        cache: {
+          maxAge: 60 * 60 * 24 // 24時間
+        }
+      }
+    },
     experimental: {
       wasm: true,
     },
- },
-
-  routeRules: {
-       '/': { prerender: true },
-       robots: false,
+    externals: { traceInclude: ['shiki/dist/core.mjs'] },
+    //    future: {
+    //     nativeSWR: true,
+    //     },
+    devProxy: {
+      host: 'localhost',
     },
+  },
+
+  router: {
+    options: {
+      trailingSlash: false,
+      strict: true
+    },
+//    middleware: [
+//      { path: 'manifest-route-rule', override: true }
+//    ]
+  },
 
   vue: {
     defineModel: true,
-    // customElement: true,
     propsDestructure: true,
+//    customElement: true,
     compilerOptions: {
       isCustomElement: (tag: string) => ['lite-youtube'].includes(tag)
       }
   },
- vite: {
+  vite: {
+    plugins: [ // https://github.com/pi0/nuxt-shiki/issues/41
+      imagetools(),
+      yaml(),
+      wasm(),
+      import.meta.env.NODE_ENV === 'production' ? [unwasm({})] : undefined,
+      {
+        name: 'ignore-dts',
+        enforce: 'pre',
+        transform(src, id) {
+          if (id.endsWith('.d.ts')) {
+            return { code: '' };
+          }
+        },
+      },
+    ],
     define: {
       'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
     },
-  build: {
-    target: 'esnext',
-    chunkSizeWarningLimit: 1600, // Adjust as needed
+    ssr: {
+      noExternal: ['@nuxt/content'],
+    },
+    optimizeDeps: {
+      include: [ 'buffer', '@heroicons/vue/20/solid', '@unhead/schema-org/vue' ],
+      entries: [ // https://zenn.dev/comm_vue_nuxt/articles/6f4da63b50a423
+        // 実用的なスコープならこの3つくらい。もし必要なら.tsも。
+        "pages/**/*.vue",
+        "layouts/**/*.vue",
+        "components/**/*.vue",
+
+        // または、面倒なら全て
+//        "**/*.vue",
+      ]
+    },
+    build: {
+    // ssr: true,
+//      minify: false,
+      target: 'esnext',
+      chunkSizeWarningLimit: 1600, // Adjust as needed
       assetsInclude: '**/*.wasm',
       rollupOptions: {
         external: [
@@ -466,18 +635,45 @@ robots: {
         ],
       },
     },
-  css: {
-    preprocessorOptions: {
-      charset: false,
-      scss: {
-        api: 'modern-compiler',
-//        additionalData: `@use "@/assets/styles/scss/global.scss";`,
+    css: {
+      preprocessorOptions: {
+//        charset: false,
+        scss: {
+          api: 'modern-compiler',
+//          additionalData: `@use "~/assets/styles/scss/global.scss";`,
+        },
+      },
+    preprocessorMaxWorkers: true
+    },
+    $client: {
+      build: {
+        rollupOptions: {
+          output: {
+            chunkFileNames: '_nuxt/[name].js',
+            entryFileNames: '_nuxt/[name].js'
+          }
+        }
+      }
+    },
+
+   $production: {
+      routeRules: {
+        '/api/**': { isr: false },
+      },
+     scripts: {
+      registry: {
+        clarity: {
+         id: 'om4gr7h0pn'
+        }
       },
     },
-  plugins: [imagetools(), vsharp()],
-  preprocessorMaxWorkers: true,
- },
- },
+  },
+  $development: {
+    routeRules: {
+      '/api/**': { isr: false },
+    },
+  },
+    },
 
-  pwaVite,
-});
+  pwa,
+})

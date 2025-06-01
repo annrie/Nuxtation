@@ -11,7 +11,7 @@ defineProps<{
   <article
     class="container bg-white mx-auto my-5 p-5 blogCard sm:items-center lg:(-mx-6 flex items-left) dark:bg-gray-900"
   >
-    <NuxtLink :to="item._path" :aria-label="item.title">
+    <NuxtLink :to="item.path" :aria-label="item.title">
       <NuxtPicture
         provider="imgix"
         :src="item.img"
@@ -42,7 +42,7 @@ defineProps<{
       </p>
       <p>
         <NuxtLink
-          :to="item._path"
+          :to="item.path"
           class="font-semibold mt-4 text-2xl text-gray-800 block md:text-3xl dark:text-white hover:underline"
         >
           {{ item.title }}
@@ -52,7 +52,7 @@ defineProps<{
         {{ item.description }}
       </p>
       <NuxtLink
-        :to="item._path"
+        :to="item.path"
         :aria-label="`read more about ${item.title}`"
         class="text-white at-sm:text-white mt-5 linkButton hover:(text-pink-100 scale-110 duration-400)"
       >

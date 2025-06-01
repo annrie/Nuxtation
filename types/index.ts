@@ -24,11 +24,8 @@ export interface BlogPost extends MarkdownParsedContent {
   provider?: string,
   tags: string[],
   published?: boolean,
-  author?:  {
-    name?: string,
-    bio?: string,
-    photo?: string,
-  }
+  updatedAt?: string,
+  path?: string,
 }
 
 export interface CatResponse {
@@ -38,11 +35,11 @@ export interface CatResponse {
   height: number;
 }
 
-export type BlogPostPreview = Omit<BlogPost, 'body'>;
+export type BlogPostPreview = BlogPost;
 
 export interface PrevNext {
   title?: string,
-  _path?: string,
+  path?: string,
 }
 
 export interface Navigation {

@@ -42,14 +42,14 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => props.item.updatedAt))
 
       <header class="text-left lt-lg:p-20 mt-5">
       <p>
-            <Icon pr-0.5rem mr-0.25rem text-0.7rem name="streamline:chat-bubble-square-write" />{{
+            <Icon pr-0.5rem mr-0.25rem text-1rem name="streamline:chat-bubble-square-write" />{{
               parseDate(item.publishedAt)
             }}<span v-if="item.updatedAt" ml-0.5rem
               ><Icon text-0.7rem v-if="isWithinTenDays" name="eos-icons:arrow-rotate" />
               <Icon
                 pr-0.5rem
                 mr-0.25rem
-                text-0.7rem
+                text-1rem
                 name="streamline:chat-bubble-square-write-solid"
               />{{ parseDate(item.updatedAt) }}</span
             >
@@ -58,7 +58,7 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => props.item.updatedAt))
           {{ item.title }}
         </h1>
         <p
-          mt-5px
+          my-5px
           lg:text-lg
           tb:text-14px
           at-sm:lh-1.5
@@ -70,7 +70,7 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => props.item.updatedAt))
       <TagsList v-if="item.tags" :tags="item.tags" :section="section" />
         <NuxtLink
           :to="item.path"
-          class="linkButton at-sm:(mx-auto mb-4 text-white) lt-tb:translate-x-50% lt-lg:translate-x-150% hover:(scale-110 text-white duration-400)"
+          class="linkButton mt-10 at-sm:(mx-auto mb-4 text-white) lt-tb:translate-x-50% lt-lg:translate-x-150% hover:(scale-110 text-white duration-400)"
         >
           読んでみる
         </NuxtLink>

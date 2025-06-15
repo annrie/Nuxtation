@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { queryCollection, useRoute } from '#imports'
 import { Buffer } from "buffer";
 import type { ParsedContent, PrevNext, Sections } from "~~/types/index.ts";
 import { parseDate } from "~/utils/format";

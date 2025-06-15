@@ -1,14 +1,41 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { NavLinks } from "~/utils/navigation";
+import NavItem from "./NavItem.vue";
+
+const activeIndex = ref(-1);
+
+const setActiveIndex = (index: number) => {
+  activeIndex.value = index;
+};
+
+const clearActiveIndex = () => {
+  activeIndex.value = -1;
+};
+</script>
+
 <template>
   <nav>
-    <ul class="block tb:flex landscape:hidden font-header">
-      <li v-for="(nav, index) in NavLinks" :key="index" class="pr-6 pb-8 text-2xl">
-        <nuxt-link
-          :to="nav.url"
-          class="mt-8 inline-block tb:(decoration-dotted decoration-yellow-500) lg:(no-underline text-lg pb-0 hover:underline underline-dotted"
-        >
-          {{ nav.link }}
-        </nuxt-link>
-      </li>
-    </ul>
+    <div class="max-w-6xl mx-a px-16ptr py-8ptr">
+      <ul
+        class="flex flex-row at-sm:(flex-col items-center) justify-between items-start text-left"
+        role="menubar"
+      >
+        <NavItem
+          v-for="(nav, index) in NavLinks"
+          :key="index"
+          :nav="nav"
+          :is-active="activeIndex === index"
+          @mouse-enter="setActiveIndex(index)"
+          @mouse-leave="clearActiveIndex"
+        />
+      </ul>
+    </div>
   </nav>
 </template>
+
+<style scoped>
+ul {
+  list-style-type: none;
+}
+</style>

@@ -44,21 +44,11 @@ export default defineNuxtConfig({
   },
 
   experimental: {
-    payloadExtraction: false,
+    payloadExtraction: true,
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
     renderJsonPayloads: true,
     viewTransition: true,
-//    granularCachedData: true,
-    // buildCache: true,
-    //   viewTransition: true,
-    //   inlineSSRStyles: false,
-    //   renderJsonPayloads: true,
-    //   typedPages: true,
-    //   headNext: true,
-    //   asyncContext: true,
-    //   clientFallback: false,
-    //   componentIslands: true,
     appManifest: {
       override: true,
     },
@@ -109,7 +99,7 @@ export default defineNuxtConfig({
 
  devServer: {
    host: '',
-   port: 3000,
+   port: 3300,
     cors: {
       origin: ['https://nuxtation.vercel.app'],
     },
@@ -176,10 +166,12 @@ export default defineNuxtConfig({
    '@nuxt/devtools',
    '@vite-pwa/nuxt',
    'nuxt-link-checker',
-   '@nuxthq/studio',
+//   '@nuxthq/studio',
    'nuxt-gtag',
    '@nuxtjs/web-vitals',
-		'@nuxt/icon',
+    '@nuxt/fonts',
+    '@nuxt/scripts',
+    '@nuxt/icon',
     'nuxt-jsonld',
   ],
 
@@ -302,16 +294,11 @@ export default defineNuxtConfig({
     trailingSlash: false,
   },
 
-  formkit: {
-    // autoImport: true,
-    configFile: './formkit.config.ts',
-  },
-
   content: {
-    preview: {
-      api: 'https://api.nuxt.studio',
-      dev: true,
-    },
+//    preview: {
+//      api: 'https://api.nuxt.studio',
+//      dev: true,
+//    },
     build: {
       markdown: {
         highlight: {
@@ -320,7 +307,7 @@ export default defineNuxtConfig({
             default: 'github-light',
             dark: 'github-dark',
 
-//          langs: Object.keys(bundledLanguages),
+          langs: Object.keys(bundledLanguages),
 //          langs: [
 //            // Read more about Shiki languages: https://shiki.style/guide/load-lang
 //            JSON.parse(
@@ -329,10 +316,10 @@ export default defineNuxtConfig({
 //          ]
         },
         anchorLinks: true,
-//        toc: {
-//          depth: 5,
-//          searchDepth: 5,
-//        },
+        toc: {
+          depth: 5,
+          searchDepth: 5,
+        },
         remarkPlugins: {
           'remark-gfm': true,
           'remark-emoji': {
@@ -408,10 +395,11 @@ postcss: {
   plugins: {
 //    '@unocss/postcss': {},
     'autoprefixer': {},
+    'cssnano': {},
     'postcss-nested': {},
     'postcss-custom-media': {},
     'postcss-media-hover-any-hover': {},
-//    'postcss-calc': {},
+    'postcss-calc': {},
   }
 },
   linkChecker: {
@@ -420,20 +408,6 @@ postcss: {
     excludeLinks: [
       'https://twitter.com/muraie_jin',
     ],
-  },
-
-  experimental: {
-    scanPageMeta:'after-resolve',
-    sharedPrerenderData: false,
-    renderJsonPayloads: false,
-    appManifest: {
-      override: true,
-    },
-    defaults: {
-      useAsyncData: {
-        deep: true,
-      },
-    },
   },
 
   css: [
@@ -496,6 +470,7 @@ postcss: {
 
   robots: {
     disableNuxtContentIntegration: true,
+    cacheControl: 'max-age=14400, must-revalidate',
 //    UserAgent: '*',
 //    Allow: '/',
 //    Sitemap: ['https://nuxtation.phantomoon.com/sitemap.xml'],
@@ -519,14 +494,10 @@ postcss: {
     exclude: [ '/_partials/**' ],
     cacheMaxAgeSeconds: 10000,
   },
-robots: {
-     disableNuxtContentIntegration: true,
-    cacheControl: 'max-age=14400, must-revalidate',
-},
 
- studio: {
-  enabled: true,
-  },
+// studio: {
+//  enabled: false,
+//  },
 
   nitro: {
     rollupConfig: {
@@ -658,15 +629,9 @@ robots: {
 
    $production: {
       routeRules: {
+        '/': { prerender: true },
         '/api/**': { isr: false },
       },
-     scripts: {
-      registry: {
-        clarity: {
-         id: 'om4gr7h0pn'
-        }
-      },
-    },
   },
   $development: {
     routeRules: {

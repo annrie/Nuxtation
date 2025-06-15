@@ -70,11 +70,6 @@ useSeoMeta({
         </button>
         <div class="" text-5xl font-bold>{{ pageVisits?.pageVisits }}</div>
       </section>
-      <!-- <template #fallback>
-    <div op50 italic>
-      <span animate-pulse>Loading...</span>
-    </div>
-  </template> -->
     </NuxtLayout>
   </div>
 </template>

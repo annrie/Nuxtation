@@ -1,8 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Fira+Code&family=Fira+Mono:wght@400;700&family=Lobster&family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+/* layer: default */
+.font-lato {
+  font-family: "Lato", sans-serif;
+}
+.font-lobster {
+  font-family: "Lobster";
+}
+.font-dm {
+  font-family: "dm", monospace;
+}
+.font-crimson {
+  font-family: "crimson pro";
+}
+.font-inter {
+  font-family: "inter";
+}
+.font-merriweather {
+  font-family: "Merriweather-Black";
+}
+.font-raleway {
+  font-family: "Raleway";
+}
+.font-roboto {
+  font-family: "Roboto";
+}
+.font-mono {
+  font-family: "Fira Code", "Fira Mono", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.font-sans {
+  font-family: "Roboto", "Noto Sans Japanese", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, 'Open Sans', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.font-serif {
+  font-family: "Noto Serif JP", "Hiragino Sans", メイリオ, Meiryo, sans-serif;
+}
 :root {
-  font-family: 'Noto Sans Japanese', 'Segoe UI', Oxygen, Ubuntu, Cantarell,
-    'Open Sans', sans-serif;
+//  font-family: 'Noto Sans Japanese', 'Segoe UI', Oxygen, Ubuntu, Cantarell,
+//    'Open Sans', sans-serif;
   /* This will generate fallbacks for local versions of Helvetica and Arial, adjusted to match Roboto's metrics. */
-  font-family: Roboto, Helvetica, Arial;
+//  font-family: Roboto, Helvetica, Arial;
   /* If you provide a generic family (like serif or sans-serif), we will use a system font from that family. */
   // font-family: Merriweater, serif;
   --primary-50: 236 253 245;
@@ -35,6 +73,7 @@
   // --bg: #f3f5f4;
   --bg-secondary: #fff;
   --border-color: #ddd;
+  --un-default-border-color: theme('colors.black');
 }
 
 .dark {
@@ -68,14 +107,12 @@ $XS: 375;
   font-family: 'Poppins';
   src:
     local('Poppins'),
-    url('/_fonts/<hash>.woff2') format(woff2);
+    url('/fonts/<hash>.woff2') format(woff2);
   font-display: swap;
   unicode-range: U+0000-00FF, U+0131, /* ... */;
   font-weight: 400;
   font-style: normal;
 }
-$FONT_FAMILY_BASE: 'Hiragino Sans', 'メイリオ', Meiryo, sans-serif;
-$FONT_EN: 'Source Sans Pro', sans-serif;
 $FONT_WEIGHT_BASE_NORMAL: '400';
 $FONT_WEIGHT_BASE_DEMIBOLD: '600';
 $FONT_WEIGHT_BASE_BOLD: '700';
@@ -124,14 +161,4 @@ $SEC: 0.3s;
 }
 .font-lobster {
   font-family: "Lobster";
-}
-.font-mono {
-  font-family: "Fira Code", "Fira Mono", "DM Mono", ui-monospace, SFMono-Regular, Menlo,
-    Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-.font-sans {
-  font-family: "Noto Sans JP", "Roboto", ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
 }

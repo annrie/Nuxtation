@@ -20,7 +20,7 @@ const props = defineProps({
             class="hover:text-success hover:underline"
             :aria-label="other.title"
           >
-            {{ other.title }}
+            <Icon name="ic-baseline-arrow-right" />{{ other.title }}
           </NuxtLink>
           <p
             class="mt-1 text-sm leading-sm md:hidden md:text-xs md:leading-xs !no-underline"

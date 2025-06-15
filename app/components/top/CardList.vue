@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <ul
-    class="mx-auto mt-12 text-left grid gap-6 md:max-w-none md:grid-cols-2 lg:grid-cols-3"
+    class="grid mx-auto mt-3rem gap-1.0rem text-left md:grid-cols-2 lg:grid-cols-3 md:w-none"
   >
     <li v-for="item of list" :key="item.url || item.path" class="grid at-sm:mx-auto">
       <Card :item="item" :section="section" />

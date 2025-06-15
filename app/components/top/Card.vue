@@ -1,53 +1,73 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import type { BlogPostPreview, Sections } from "~~/types/index.ts";
-defineProps<{
+
+const props = defineProps<{
   item: BlogPostPreview;
   section: Sections;
 }>();
+
+// updatedAt を ref として扱う
+const isWithinTenDays = useIsWithinTenDays(computed(() => props.item.updatedAt));
 </script>
 
 <template>
   <article
-      class="container bg-white rounded-2xl grid p-15 gap-6 auto-cols-[minmax(0,_2fr)] grid-cols-3 blogCard dark:(bg-gray-900)"
-    >
-      <div class="h-full object-cover w-full">
-        <NuxtLink :to="item.url || item.path" :target="item.url ? '_blank' : '_self'">
-            <NuxtPicture
-                  provider="imgix"
-                  :src="item.img"
-                  :alt="item.title"
-                  width="300"
-                  height="300"
-                  fit="cover"
-                  format="avif,webp"
-                  loading="lazy"
-                  :modifiers="{ auto: 'format,enhance', crop: 'entropy',q:60 }"
-                  :imgAttrs="{
-                            class:
-                              'rounded transition-all scale-90 duration-400 hover:scale-100',
-                          }"
+    class="blogCard sm:item-center lg:items-left mx-auto my-1.25rem flex flex-1 flex-col gap-0.5rem rounded-2xl bg-white p-3.25rem p-5 lg:(-mx-6) dark:(bg-gray-900)"
+  >
+    <div>
+      <NuxtLink :to="item.url || item.path" :target="item.url ? '_blank' : '_self'">
+        <NuxtPicture
+          provider="imgix"
+          :src="item.img"
+          :alt="item.title"
+          fit="cover"
+          format="avif,webp,png"
+          loading="lazy"
+          :modifiers="{ auto: 'format,enhance', q: 60 }"
+          :img-attrs="{
+            class:
+              'rounded w-full transition-all duration-400 hover:scale-110',
+          }"
         />
       </NuxtLink>
     </div>
-    <div class="col-span-2">
+    <div class="sm:text-center tb:(ml-30 text-left)">
       <NuxtLink :to="item.url || item.path" :target="item.url ? '_blank' : '_self'">
-        <h3 class="font-medium text-lg mb-2 leading-tight text-gray-600 dark:text-gray-300">
+        <h3
+          class="mb-0.5rem text-lg text-gray-600 font-medium leading-tight dark:text-gray-300"
+        >
           {{ item.title }}
         </h3>
-
-        <Date :date="item.publishedAt" />
+        <p v-if="item.updatedAt">
+          <Icon
+            v-if="isWithinTenDays"
+            class="mr-10px inline-block"
+            name="eos-icons:arrow-rotate"
+          />
+          <Date :date="item.updatedAt" />
+        </p>
+        <p v-else>
+          <Date :date="item.publishedAt" />
+        </p>
       </NuxtLink>
       <TagsList
         :tags="item.tags"
         :section="section"
-        class="mt-6 text-left sm:(text-0.8rem mt-0) lg:(mx-1 mt-2) hover:text-jis-red"
+        class="lg:(mx-1 mt-2) sm:(mt-0 text-0.8rem) hover:text-red"
       />
     </div>
   </article>
 </template>
 
-<style scope lang="scss">
+<style scoped lang="scss">
 .clip {
   clip-path: circle();
+}
+:deep(ul) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
 }
 </style>

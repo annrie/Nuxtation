@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { parseDate } from "~/utils/format";
+
 defineProps<{
   date: string;
 }>();
@@ -7,9 +9,8 @@ defineProps<{
 <template>
   <time
     :datetime="date"
-    class="font-medium text-xs mb-1 tracking-widest text-gray-400 title-font"
+    class="title-font mb-1 text-xs text-gray-400 font-medium tracking-widest"
   >
-    <!-- {{ date }} -->
-    {{ $formatDate(date) }}
+    {{ parseDate(date) }}
   </time>
 </template>

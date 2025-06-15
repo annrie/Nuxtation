@@ -106,10 +106,10 @@ const languageColor = computed(() =>
 
 <style scoped lang="scss">
 .container {
-  @apply w-full my-6 rounded-md border border-jis-blue:50 pt-8 relative overflow-hidden;
+  @apply w-full my-1.5rem rounded-md border border-jis-blue:50 pt-2rem relative overflow-hidden;
 }
 :slotted(pre) {
-  @apply flex overflow-x-auto px-4 pb-4 text-sm md:text-base;
+  @apply flex overflow-x-auto px-1rem pb-1rem text-sm md:text-base;
   counter-reset: lines;
 }
 // @screen md {
@@ -127,7 +127,7 @@ const languageColor = computed(() =>
   @apply break-words;
 }
 .bottom-container {
-  @apply absolute right-0 bottom-4 pr-2 pb-2 md:top-10;
+  @apply absolute right-0 bottom-1rem pr-0.5rem pb-0.5rem md:top-2.5rem;
 }
 // @screen md {
 //   .bottom-container {
@@ -141,7 +141,7 @@ const languageColor = computed(() =>
   @apply text-white;
 }
 .filename-text {
-  @apply absolute top-0 left-4 py-1 text-xs text-dark:75 dark:text-white:75 lt-md:text-base;
+  @apply absolute top-0 left-1rem py-0.25rem text-xs text-dark:75 dark:text-white:75 lt-md:text-base;
 }
 // @screen lt-md {
 //   .filename-text {
@@ -149,7 +149,7 @@ const languageColor = computed(() =>
 //   }
 // }
 .language-text {
-  @apply absolute right-0 top-0 text-dark px-2 py-1 rounded-bl-md at-sm:text-xs dark:text-white;
+  @apply absolute right-0 top-0 text-dark px-0.5rem py-0.25rem rounded-bl-md at-sm:text-xs dark:text-white;
 }
 // :slotted(pre) {
 //   @apply prose;
@@ -159,13 +159,13 @@ const languageColor = computed(() =>
   min-height: 1rem;
 }
 :slotted(pre code .line::before) {
-  @apply w-4 mr-6 inline-block text-left;
+  @apply w-1rem mr-1.5rem inline-block text-left;
   line-height: 1.825;
   counter-increment: lines;
   content: counter(lines);
-  color: rgba(115, 138, 148, 0.4);
+  color: rgb(115 138 148 /0.4);
 }
 :slotted(pre code .highlight) {
-  @apply block -mx-4 pr-4 pl-3 border-l-4 border-jis-blue bg-neutral-100:10 content-empty;
+  @apply block -mx-1rem pr-1rem pl-0.75rem border-l-1rem border-jis-blue bg-neutral-100:10 content-empty;
 }
 </style>

@@ -4,13 +4,13 @@ defineProps(['type'])
 
 <template>
   <div :class="[type]" class="custom-block">
-	<slot :use="$slots.default" unwrap="p" />
+	<slot unwrap="p" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .info {
-  @apply @apply bg-light-blue-100 text-light-blue-800 border-light-blue-500 mb-10px;
+  @apply bg-light-blue-100 text-light-blue-800 dark:(bg-dark-100 text-light-blue-500) border-light-blue-500 mb-10px;
 }
 .warning {
   @apply bg-lime-600/50 text-white-800 p-4 border-red-900 pl-2px mb-10px;

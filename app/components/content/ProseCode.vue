@@ -93,7 +93,7 @@ const languageColor = computed(() =>
       <div class="copy-container">
         <span v-if="copied" class="copied-text">Copied code!</span>
         <button
-          class="border border-white rounded-md text-white p-1 hover:border-jis-blue hover:bg-jis-blue hover:text-white"
+          class="border border-white rounded-md text-white p-1 hover:border-blue hover:bg-blue hover:text-white"
           @click="copy(code)"
         >
           <IconsCheck v-if="copied" class="h-5 w-5" width="20" height="20" />
@@ -106,7 +106,7 @@ const languageColor = computed(() =>
 
 <style scoped lang="scss">
 .container {
-  @apply w-full my-1.5rem rounded-md border border-jis-blue:50 pt-2rem relative overflow-hidden;
+  @apply w-full my-1.5rem rounded-md border border-blue:50 pt-2rem relative overflow-hidden;
 }
 :slotted(pre) {
   @apply flex overflow-x-auto px-1rem pb-1rem text-sm md:text-base;
@@ -166,6 +166,6 @@ const languageColor = computed(() =>
   color: rgb(115 138 148 /0.4);
 }
 :slotted(pre code .highlight) {
-  @apply block -mx-1rem pr-1rem pl-0.75rem border-l-1rem border-jis-blue bg-neutral-100:10 content-empty;
+  @apply block -mx-1rem pr-1rem pl-0.75rem border-l-1rem border-blue bg-neutral-100:10 content-empty;
 }
 </style>

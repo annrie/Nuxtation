@@ -90,25 +90,25 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => article?.value?.update
       <ol
         itemscope
         itemtype="https://schema.org/BreadcrumbList"
-        class="blog-breadcrumb at-sm:(border-r-none)"
+        class="blog-breadcrumb at-sm:border-r-none lt-lg:text-left"
       >
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/">
+          <NuxtLink itemprop="item" to="/">
             <span itemprop="name"
-              ><Icon align-top mb-5px name="line-md:home-md-twotone" /></span
-          ></a>
+              ><Icon mb-5px align-top name="line-md:home-md-twotone" /></span
+          ></NuxtLink>
           <meta itemprop="position" content="1" />
         </li>
         <li class="separator">&gt;</li>
         <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a
+          <NuxtLink
             itemscope
             itemtype="https://schema.org/WebPage"
             itemprop="item"
             itemid="/blog/"
-            href="/blog"
+            to="/blog"
           >
-            <span itemprop="name">Blog</span></a
+            <span itemprop="name">Blog</span></NuxtLink
           >
           <meta itemprop="position" content="2" />
         </li>
@@ -123,14 +123,16 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => article?.value?.update
             class="mt-0.5rem font-light at-sm:mt--0.5rem md:mt-0 lt-lg:text-right dark:text-white/75"
           >
             <Icon pr-0.5rem mr-0.25rem name="streamline:chat-bubble-square-write" />
-              {{ parseDate(article.publishedAt) }}
+            <Date :date="article.publishedAt" />
             <span v-if="article.updatedAt" ml-0.5rem
               ><Icon v-if="isWithinTenDays" name="eos-icons:arrow-rotate" />
               <Icon
                 pr-0.5rem
                 mr-0.25rem
                 name="streamline:chat-bubble-square-write-solid"
-              />{{ parseDate(article.updatedAt) }}</span
+              />
+              <Date :date="article.updatedAt" />
+              </span
             >
           </div>
     </div>

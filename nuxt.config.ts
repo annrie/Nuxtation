@@ -393,7 +393,6 @@ export default defineNuxtConfig({
 
 postcss: {
   plugins: {
-//    '@unocss/postcss': {},
     'autoprefixer': {},
     'cssnano': {},
     'postcss-nested': {},

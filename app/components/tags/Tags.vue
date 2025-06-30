@@ -28,8 +28,8 @@ const flatten = (tags: Array<any>, key = "tags") => {
   return _tags;
 };
 
-const { data } = await useAsyncData('blog', () =>
-  queryContent('blog')
+const { data } = await useAsyncData(`tags-${props.section}`, () =>
+  queryCollection(props.section)
   .select('tags')
   .all());
 

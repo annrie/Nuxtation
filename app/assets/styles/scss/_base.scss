@@ -42,7 +42,7 @@ a {
   //color: #333; /* 通常時の色 (例) */
   @apply ml-0.5em; /* UnoCSSのユーティリティを一部使用 */
   /* ダークモードの色の指定 (UnoCSSのユーティリティを使用) */
-  @apply text-jis-blue dark:text-jis-orange dark:hover:text-jis-yellow;
+  @apply text-jisblueex dark:text-jisorangeex dark:hover:text-jisyellowex;
   /* @apply i-carbon-launch ... は削除 */
 }
 

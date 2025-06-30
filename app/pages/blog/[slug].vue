@@ -39,7 +39,7 @@ let prev: any, next: any;
 if (surroundData.value) [prev, next] = surroundData.value || [];
 
 definePageMeta({
-  layout: false,
+  layout: 'blog',
 });
 
 // replaceHyphenを自分で定義する
@@ -80,8 +80,6 @@ const { $formatDate } = useNuxtApp();
 const isWithinTenDays = useIsWithinTenDays(computed(() => article?.value?.updatedAt));
 </script>
 <template>
-    <div>
-      <NuxtLayout name="blog">
       <article v-if="article !== null">
         <div
           class="mb-1.5rem sm:(pt-3rem) tb:(mb-0.5rem flex-none text-left pt-2.5rem pl-10) lg:(w-full mb-2rem flex flex-row justify-between pt-2rem)"
@@ -188,7 +186,7 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => article?.value?.update
           <article class="article prose dark:prose-invert mx-10">
             <!-- render rich text from document -->
             <ContentRenderer :value="article">
-              <template v-if="article.url">
+              <!--template v-if="article.url">
                 <a :href="article.url" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center w-full text-primary hover:text-primary/80 transition-colors py-4">
                   <span>Read on external site</span>
                   <span class="ml-1">→</span>
@@ -196,15 +194,13 @@ const isWithinTenDays = useIsWithinTenDays(computed(() => article?.value?.update
               </template>
               <template v-else>
                 <p>No content found.</p>
-              </template>
+              </template-->
             </ContentRenderer>
           </article>
     </section>
     <!-- PrevNext Component -->
     <PrevNext :prev="prev" :next="next" :section="section" class="w-90% mx-auto" />
 	</article>
-    </NuxtLayout>
-  </div>
 </template>
 
 <style scoped lang="scss">

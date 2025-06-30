@@ -3,10 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 </script>
 
 <template>
-  <div>
-    <main id="main" class="mx-auto mt-2 text-center mb-6 home md:px-4 lg:container">
+    <main id="main" class="mx-auto text-center home tb:max-w-2xl lg:max-w-5xl">
       <slot />
     </main>
-    <AppFooter />
-  </div>
 </template>

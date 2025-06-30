@@ -36,7 +36,7 @@ const description: string = `Here\'s a list of all my blog posts with the ${slug
 const section: Sections = "blog";
 
 definePageMeta({
-		layout: false,
+		layout: 'blog',
 });
 
 const encoded1 = Buffer.from(`${title}`)
@@ -60,8 +60,6 @@ const encoded1 = Buffer.from(`${title}`)
 	});
 </script>
 <template>
-      <div>
-        <NuxtLayout name="blog">
       <div class="mb-6 pt-8 md:mb-8">
         <!-- <Breadcrumbs /> -->
         <ol
@@ -114,8 +112,6 @@ const encoded1 = Buffer.from(`${title}`)
 			<NotFound v-else />
         </section>
       </div>
-    </NuxtLayout>
-  </div>
 </template>
 
 <style scope lang="scss">

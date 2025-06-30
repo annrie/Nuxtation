@@ -3,7 +3,7 @@ import { Buffer } from "buffer";
 import type { ParsedContent, Sections } from "~~/types";
 
 definePageMeta({
-  layout: false,
+  layout: 'blog',
 });
 
 const route = useRoute();
@@ -85,8 +85,6 @@ useSeoMeta({
 </script>
 
 <template>
-  <div>
-    <NuxtLayout name="blog">
       <div class="article-list mt-0 pt-2.5rem text-left">
         <ol
           itemscope
@@ -130,8 +128,6 @@ useSeoMeta({
           />
         </section>
       </div>
-    </NuxtLayout>
-  </div>
 </template>
 
 <style scoped lang="scss">

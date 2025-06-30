@@ -93,15 +93,16 @@ const { $pwa } = useNuxtApp();
 </script>
 
 <template>
-<div>
-	<NuxtPwaManifest />
-	<NuxtLoadingIndicator />
-	<TheTopBar />
-	<NuxtPage :transition="{
-	  name: 'fade',
-	  mode: 'out-in'
-	}" />
-</div>
+  <NuxtLayout>
+    <NuxtPwaManifest />
+    <NuxtLoadingIndicator />
+    <TheTopBar />
+    <NuxtPage :transition="{
+      name: 'fade',
+      mode: 'out-in'
+    }" />
+    <AppFooter />
+  </NuxtLayout>
 </template>
 <style>
 .pwa-toast {

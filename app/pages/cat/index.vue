@@ -6,7 +6,7 @@ const { pending, data, refresh } = useFetch<CatResponse[]>(
 );
 
 definePageMeta({
-  layout: false,
+  layout: 'blog',
 });
 
 useHead({
@@ -15,8 +15,6 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <NuxtLayout name="blog">
       <div
         class="md:(flex flex-row justify-between mb-4 pt-8) mb-6 at-sm:(flex-none text-center pt-12 mb-8)"
       >
@@ -48,8 +46,6 @@ useHead({
           <CatCardList :cat-list="data" />
         </div>
       </div>
-    </NuxtLayout>
-  </div>
 </template>
 
 <style scoped lang="scss">

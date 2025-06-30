@@ -39,7 +39,6 @@ useSeoMeta({
 </script>
 <template>
   <div>
-    <NuxtLayout>
       <AppLogo class="mb-6 sm:ml-100px tb:ml-70px lg:ml-80px" />
       <AppSubtitle id="featured-posts">注目記事</AppSubtitle>
       <FeaturedSection
@@ -70,6 +69,5 @@ useSeoMeta({
         </button>
         <div class="" text-5xl font-bold>{{ pageVisits?.pageVisits }}</div>
       </section>
-    </NuxtLayout>
   </div>
 </template>

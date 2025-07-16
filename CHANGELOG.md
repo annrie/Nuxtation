@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/annrie/Nuxtation/compare/v2.8.4...v3.0.0) (2025-07-16)
+
 ### [2.8.4](https://github.com/annrie/Nuxtation/compare/v2.8.3...v2.8.4) (2025-07-16)
 
 

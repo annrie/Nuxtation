@@ -1,4 +1,4 @@
-import { SameAs, SiteDescription, SiteImage, SiteLanguage, SiteLogo, MySite, SiteName, ogTitle, twitterDescription, twitterCard, twitterImage, twitterSite, appleMobileWebAppStatusBarStyle } from '~/logic'
+import { SameAs, SiteDescription, SiteImage, SiteLanguage, SiteLogo, MySite, SiteName, ogTitle, twitterDescription, twitterCard, twitterImage, twitterSite, appleMobileWebAppStatusBarStyle } from '~~/logic'
 
 export function useSiteMeta() {
   return {

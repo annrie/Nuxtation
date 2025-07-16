@@ -42,7 +42,7 @@ function toggleToc() {
   <nav class="toc">
     <header
       class="toc-header flex flex-row cursor-pointer items-center justify-between" :class="[
-        isVisible ? 'mb-2' : '',
+        isVisible ? 'mb-0.5rem' : '',
       ]"
       aria-label="Expand the table of contents."
       @click="toggleToc"
@@ -50,18 +50,17 @@ function toggleToc() {
       <h3 class="text-xl font-bold">
         Table of contents
       </h3>
-      <icons-chevron-down
-        class="h-6 w-6 transform" :class="[isVisible ? '' : 'rotate-180']"
-        width="24"
-        height="24"
-      />
+      <!--ChevronDown
+        class="h-2.5rem w-2.5rem transform" :class="[isVisible ? '' : 'rotate-180']"
+      /-->
+      <ToggleIcon />
     </header>
     <ul v-if="links" :class="[isVisible ? 'block' : '!hidden']" class="toc-links">
       <!-- render each link with depth class -->
       <li
         v-for="link of flattenLinks(links)"
         :key="link.id"
-        :class="`toc-link_${link.depth} first:mt-0 mt-2 md:mt-1`"
+        :class="`toc-link_${link.depth} first:mt-0 mt-0.5rem md:mt-0.175rem`"
       >
         <NuxtLink :href="`#${link.id}`" class="hover:text-success hover:underline">
           {{ link.text }}
@@ -73,15 +72,18 @@ function toggleToc() {
 
 <style scoped lang="scss">
 .toc {
-  @apply max-h-[calc(100vh-6rem)] overflow-auto border rounded-lg bg-slate-50 border-slate-200 text-dark-700 mt-8 mx-[10px] px-4 pt-8 pb-4 dark:(bg-slate-600 border-slate-600 text-sky-300);
+  @apply max-h-[calc(100vh-6rem)] overflow-auto border rounded-lg bg-slate-50 border-slate-200 text-dark-700 mt-2rem mx-10 px-1rem pt-2rem pb-1rem dark:(bg-dark border-slate-600 text-sky-300);
+  h3 {
+    @apply text-slate-400;
+  }
 }
 
 .toc-header {
-  @apply border-b border-slate-200 -mt-4 mb-2 pb-2 lt-lg:text-center;
+  @apply border-b border-slate-200 -mt-1rem mb-0.5rem pb-0.5rem lt-lg:text-center;
 }
 
 .toc-links {
-  @apply flex flex-col px-2 gap-2 text-left first:mt--2rem;
+  @apply flex flex-col px-0.5rem gap-2 text-left first:mt--2rem;
 }
 
 .toc-link {
@@ -89,31 +91,31 @@ function toggleToc() {
 }
 
 .toc-link_2 {
-  @apply pl-3 dark:text-sky-400;
+  @apply pl-1.25rem dark:text-sky-400;
 }
 
 .toc-link_3 {
-  @apply pl-6 dark:text-neutral-400;
+  @apply pl-1.5rem dark:text-neutral-400;
   &::before {
     content: '- ';
   }
 }
 
 .toc-link_4 {
-  @apply pl-8 dark:text-yellow-600;
+  @apply pl-2rem dark:text-yellow-600;
   &::before {
     content: '* ';
   }
 }
 
 .toc-link_5 {
-  @apply pl-10 dark:text-green-600;
+  @apply pl-2.5rem dark:text-green-600;
   &::before {
     content: '・ ';
   }
 }
 
 .toc-link_undefined {
-  @apply pl-10 dark: text-light-50;
+  @apply pl-2.5rem dark: text-light-50;
 }
 </style>

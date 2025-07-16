@@ -1,6 +1,7 @@
-const numberFormat = new Intl.NumberFormat('ja-JP', {
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
-
-export const formatNumber = (num: number) => numberFormat.format(num)
+export const parseDate = (date: string) => {
+  const parsed = new Date(date);
+  const year = parsed.getFullYear();
+  const month = parsed.getMonth() + 1;
+  const day = parsed.getDate();
+  return `${year}年${month}月${day}日`;
+};

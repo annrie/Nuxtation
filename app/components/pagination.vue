@@ -1,117 +1,79 @@
 <script setup lang="ts">
 const props = defineProps({
-  currentPage: {
-    type: Number,
-    required: true,
-  },
-  totalPages: {
-    type: Number,
-    required: true,
-  },
-  nextPage: {
-    type: Boolean,
-    required: true,
-  },
-  baseUrl: {
-    type: String,
-    required: true,
-  },
-  pageUrl: {
-    type: String,
-    required: true,
-  },
-});
+  currentPage: { type: Number, required: true },
+  totalPages: { type: Number, required: true },
+  baseUrl: { type: String, required: true },
+})
 
-const getPageUrl = (pageNo: any) => {
-  return `${props.pageUrl}${pageNo}`;
-};
-// Calculate the page range to show
-const pageRange = [
-  Math.max(1, props.currentPage - 1),
-  props.currentPage,
-  Math.min(props.totalPages, props.currentPage + 1),
-];
+const pageRange = computed(() => {
+  const range = []
+  for (let i = 1; i <= props.totalPages; i++) {
+    range.push(i)
+  }
+  return range
+})
 
-const prevLink = computed(() => {
-  return props.currentPage === 2
-    ? props.baseUrl
-    : `${props.pageUrl}${props.currentPage - 1}/`;
-});
+/**
+ * ページ番号に応じたリンク先オブジェクトを生成します。
+ * 1ページ目はクエリなし、2ページ目以降は ?page=n のクエリを付けます。
+ * @param {number} page - ページ番号
+ */
+function getPageUrl(page: number) {
+  if (page === 1) {
+    // 1ページ目の場合は、クエリパラメータを付けずにベースURLに遷移
+    return { path: props.baseUrl }
+  }
+  // 2ページ目以降は、クエリパラメータを付けて遷移
+  return { path: props.baseUrl, query: { page: page } }
+}
 </script>
 
 <template>
-  <div class="pagination-list dark:text-white">
-    <!-- Chevron -->
+  <nav class="pagination-list" v-if="totalPages > 1">
     <NuxtLink
-      v-show="currentPage > 1"
-      class="pagination-item pagination-icon"
-      :to="prevLink"
-      ><IconsChevronDown class="transform rotate-90 h-6 w-6" width="24" height="24"
-    /></NuxtLink>
-    <!-- First Page -->
-    <NuxtLink
-      :class="['pagination-item', currentPage === 1 ? 'active' : '']"
-      :to="baseUrl"
-      >1</NuxtLink
-    >
-    <!-- ... -->
-    <span v-show="currentPage > 2" class="pagination-extra"> ... </span>
-    <template v-for="page in pageRange" :key="page">
-      <NuxtLink
-        v-show="page !== 1 && page !== totalPages"
-        :class="['pagination-item', currentPage === page ? 'active' : '']"
-        :to="getPageUrl(page)"
-        >{{ page }}</NuxtLink
-      >
-    </template>
-    <!-- ... -->
-    <span v-show="currentPage < totalPages - 1" class="pagination-extra"> ... </span>
+      v-if="currentPage > 1"
+      :to="getPageUrl(currentPage - 1)"
+      class="pagination-item"
+    >&lt;</NuxtLink>
 
-    <!-- Last Page -->
     <NuxtLink
-      v-show="totalPages > 1"
-      :class="['pagination-item', currentPage === totalPages ? 'active' : '']"
-      :to="getPageUrl(totalPages)"
-      >{{ totalPages }}</NuxtLink
-    >
-    <!-- Chevron -->
+      v-for="page in pageRange"
+      :key="page"
+      :to="getPageUrl(page)"
+      :class="['pagination-item', { active: currentPage === page }]"
+    >{{ page }}</NuxtLink>
+
     <NuxtLink
-      v-show="currentPage < totalPages"
-      class="pagination-item pagination-icon"
+      v-if="currentPage < totalPages"
       :to="getPageUrl(currentPage + 1)"
-      ><IconsChevronDown class="transform -rotate-90 h-6 w-6" width="24" height="24"
-    /></NuxtLink>
-  </div>
+      class="pagination-item"
+    >&gt;</NuxtLink>
+  </nav>
 </template>
 
-<style scoped lang="scss">
-.pagination {
-  @apply font-body font-light mx-0 mt-4rem text-base text-center mb-0 w-full;
-}
-
-a {
-  @apply bg-transparent border-solid border-dark-50 border-1 rounded-1/2 h-3rem my-0 mx-0.5rem text-center px-0 pt-6px pb-1px text-2xl w-3rem inline-block dark:border-white hover:bg-sky-500;
-}
-
-a[aria-current="page"] {
-  @apply bg-sky-500 text-dark-300 hover:(text-sky-900 bg-sky-100);
-}
-.pagination-item.active {
-  @apply bg-jis-blue:50 text-white;
-}
+<style scoped>
 .pagination-list {
-  @apply flex flex-row w-full items-center justify-center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
 }
 .pagination-item {
-  @apply rounded-md border border-black px-2 py-1 mx-1 w-8 text-center h-full;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  text-decoration: none;
+  transition: background-color 0.3s ease; /* ホバー効果を滑らかにするためのトランジション */
 }
-.pagination-item:not(.active):hover {
-  @apply text-sky-900 bg-sky-100;
+.pagination-item:hover {
+ background-color: #f0f0f0; /* ホバー時の背景色 */
+ color: black;
+ cursor: pointer; /* ホバー時にカーソルを指マークにする */
 }
-.pagination-extra {
-  @apply w-8 text-lg leading-lg text-center;
+.pagination-item.active {
+ background: #2b6cb0;
+ color: #fff;
 }
-.pagination-icon {
-  @apply w-10 text-center hover:bg-alert:25;
-}
-</style>
+.pagination-item.active:hover {
+ background: #2b6cb0; /* アクティブなアイテムにホバーしても背景色は変わらないように */
+ cursor: default; /* アクティブなアイテムはカーソルをデフォルトに戻す */
+}</style>

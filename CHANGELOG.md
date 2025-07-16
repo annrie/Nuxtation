@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.8.4](https://github.com/annrie/Nuxtation/compare/v2.8.3...v2.8.4) (2025-07-16)
+
+
+### 機能の追加、変更、削除
+
+* 🎸 content v3 設定準備 ([b6fe64f](https://github.com/annrie/Nuxtation/commit/b6fe64f89a87972cf5621a71d91f3f0f74db33cc))
+
 ### [2.8.3](https://github.com/annrie/Nuxtation/compare/v2.8.2...v2.8.3) (2025-02-24)
 
 ### [2.8.2](https://github.com/annrie/Nuxtation/compare/v2.8.1...v2.8.2) (2025-01-27)

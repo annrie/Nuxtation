@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type Theme = 'light' | 'dark'
-const setColorTheme = (newTheme: Theme) => {
+function setColorTheme(newTheme: Theme) {
   useColorMode().preference = newTheme
 }
 </script>
@@ -15,7 +15,7 @@ const setColorTheme = (newTheme: Theme) => {
     <svg
       v-if="$colorMode.value === 'dark'"
       xmlns="http://www.w3.org/2000/svg"
-      class="w-8 h-8 lg:h-5 lg:w-5 text-gray-50"
+      class="h-2rem w-2rem text-gray-50 lg:h-1.25rem lg:w-1.25rem"
       viewBox="0 0 20 20"
       fill="currentColor"
     >
@@ -26,7 +26,7 @@ const setColorTheme = (newTheme: Theme) => {
     <svg
       v-else
       xmlns="http://www.w3.org/2000/svg"
-      class="w-8 h-8 lg:h-5 lg:w-5"
+      class="h-2rem w-2rem lg:h-1.25rem lg:w-1.25rem"
       viewBox="0 0 20 20"
       fill="white"
     >

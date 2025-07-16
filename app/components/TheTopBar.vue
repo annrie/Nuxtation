@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { ref } from "vue";
 const isOpen = ref(false);
+
 
 const toggle = () => {
   isOpen.value = !isOpen.value;
@@ -36,30 +38,32 @@ const toggle = () => {
         <div class="text-white lt-md:hidden">
           <TheNavigation class="text-white" />
         </div>
-        <div class="inline-flex justify-between lt-md:hidden tb:block">
+        <div class="inline-flex justify-between lt-md:hidden">
           <TopBarSocial />
         </div>
         <button
           class="block tb:hidden"
           aria-label="open menu"
           type="button"
+          unstyled
           @click="toggle"
         >
-          <ul v-if="!isOpen" class="text-white hamburger">
+          <ul v-if="!isOpen" class="hamburger text-white">
             <li class="bg-white" />
             <li class="bg-white" />
             <li class="bg-white" />
           </ul>
-          <span v-if="isOpen" class="text-white text-2xl" aria-label="close menu">
-            X
+          <span v-if="isOpen" class="text-2xl text-white" aria-label="close menu">
+            <i class="pi pi-times"></i>
           </span>
         </button>
       </div>
     </nav>
+
     <!-- Dropdown -->
     <div
       v-show="isOpen"
-      class="bg-dark h-full mt-6 text-white text-center mb-6 w-full px-10"
+      class="mb-2.5rem mt-2.5rem h-full w-full bg-var(--bg) px-2.25rem text-center text-white"
       @click="isOpen = false"
     >
       <TheNavigation />
@@ -72,18 +76,14 @@ const toggle = () => {
 <style lang="scss" scoped>
 /* Header */
 .AppHeader {
-  @apply bg-hex-0B0A0A border-dark-50 border-b-2 w-full py-4 mb-0 top-0 right-0 left-0 z-100 fixed dark:(border-white border-opacity-10);
+  @apply bg-hex-0B0A0A border-dark-50 border-b-2 w-full py-1rem mb-0 top-0 right-0 left-0 z-100 fixed dark:(border-white border-opacity-10);
 }
 .AppHeader__nav {
-  @apply container mx-auto tb:(py-0 pr-83px pl-24px) lg:(py-0 pr-140px pl-38px) at-sm:(flex justify-between my--10px);
+  @apply container mx-auto sm:(flex justify-between my--10px) tb:(py-10 pr-83 pl-24) lg:(py-10 pr-50 pl-38);
 }
 
 .AppHeader__list {
-  @apply flex h-auto w-full px-3 items-center justify-between tb:h-70px;
-
-  // @screen tb {
-  //   @apply h-70px;
-  // }
+  @apply flex h-auto w-full px-0.75rem items-center justify-between tb:h-70;
 }
 .AppHeader__home {
   @apply text-white w-auto;
@@ -91,7 +91,6 @@ const toggle = () => {
     &:focus {
       outline: 2px solid #42b883;
       outline-offset: 6px;
-      // @include focus-base;
     }
   }
 }
@@ -100,32 +99,7 @@ const toggle = () => {
   @apply flex flex-col items-center no-underline;
 }
 .AppHeader__homeLogo {
-  @apply text-white inline-block mt-0 sm:py-1 tb:(ml-0.43em text-0.8em) w-5rem;
-
-  // @screem sm {
-  //   @apply py-1;
-  //   // font-size: em(20, 20);
-  // }
-
-  // @screen tb {
-  //   margin-left: em(6, 14);
-  //   font-size: em(14, 16);
-  // }
-
-  // @screen lg {
-  //   font-size: em(30, 30);
-  // }
-
-  > span {
-    @apply block text-white inline-block sm:(w-18 h-18 py-3) lg:(w-40 h-40);
-    // @screen sm {
-    //   @apply block w-18 h-18 py-3;
-    // }
-
-    // @screen lg {
-    //   @apply block w-40 h-40;
-    // }
-  }
+  @apply text-white inline-block mt-0 sm:py-0.25rem tb:(ml-0.43em text-0.8em) w-5rem;
 }
 
 .hamburger li {

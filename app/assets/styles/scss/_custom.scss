@@ -1,17 +1,15 @@
 .flex-center-x {
- @apply flex flex-wrap justify-center;
+  @apply flex flex-wrap justify-center;
 }
 
 .flex-center-y {
-  @apply
-    flex
+  @apply flex
     flex-wrap
     items-center;
 }
 
 .flex-center-xy {
-  @apply
-    flex
+  @apply flex
     flex-wrap
     items-center
     justify-center;

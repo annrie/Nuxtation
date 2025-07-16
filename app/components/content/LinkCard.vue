@@ -38,19 +38,26 @@ if (isDev) {
     ogpData.value = data.value;
   }
 }
+
+const maxLength = 20
+
+const limitedTitle = computed(() => {
+  const base = ogpData.value.ogTitle || props.title || ''
+  return base.length > maxLength ? base.substr(0, maxLength) + '...' : base
+})
 </script>
 
 <template>
   <div v-if="ogpData" class="link-card">
     <a :href="propsUrl" target="_blank" rel="noopener">
       <div class="link-card-content">
-        <div class="sm:basis-1/4 tb:basis-5/7 self-center">
-          <img :src="ogpData.ogImage?.[0]?.url || '/img/ogp.png'" alt="OG Image">
+        <div self-stretch>
+          <img :src="ogpData.ogImage?.[0]?.url || '/img/ogp.png'" alt="OG Image" tb:mt-10 />
         </div>
-        <div class="sm:(flex-grow-2 pt-2) tb:pl-2">
-          <h3 class="text-24px m-0 p-0">{{ ogpData.ogTitle || props.title }}</h3>
-          <p class="mt-1 mb-2 p-0 underline text-sm">{{ ogpData.ogUrl || props.siteUrl }}</p>
-          <p class="m-0 p-0">{{ ogpData.ogDescription || props.description }}</p>
+        <div class="at-sm:(flex-grow-2) tb:pl-2">
+          <h3 class="m-0 p-0">{{ limitedTitle }}</h3>
+          <!-- p class="mt-1 mb-2 p-0 underline text-sm">{{ ogpData.ogUrl || props.siteUrl }}</p -->
+          <p class="m-0 p-0 txt-limit">{{ ogpData.ogDescription || props.description }}</p>
         </div>
       </div>
     </a>
@@ -79,41 +86,34 @@ if (isDev) {
   height: auto;
 }
 .link-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 3px 4px 8px rgb(0 0 0 /0.6);
 }
 .link-card-content {
-  text-align: left;
-  display: flex;
-  /* display: grid; */
-}
-.link-card-content {
-  @screen at-sm {
-    flex-direction: column;
-    align-self: start;
-    & h3 {
+  display: grid;
+ @screen sm {
+    grid-template-rows: 50% 50%;
+    gap: 0;
+    h3 {
       @apply text-h5_sm line-height-h5;
     }
   }
   @screen tb {
-    /* display: flex; */
-    flex-direction: row;
-    align-self: center;
-    & h3 {
+    grid-template-columns: 40% 60%;
+    gap: 10px;
+    h3 {
       @apply text-h4_sm line-height-h3;
     }
   }
-  /*   .first {
-         grid-row: 1 / 2;
-         grid-column: 1/ 2;
-      }
-      .second {
-        grid-row: 2 / 3;
-        grid-column: 1 / 2;
-      } */
+  @screen lg {
+    h3 {
+      @apply text-1.5rem leading-lg;
+    }
+  }
+  .txt-limit {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* 任意の行数を指定 */
+  }
 }
-/*.link-card-content {
-      display: grid;
-      grid-template-columns: 30% 70%;
-      gap: 20px;
-    }*/
 </style>

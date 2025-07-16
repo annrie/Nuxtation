@@ -10,7 +10,8 @@
       aria-label="Scroll to Top"
       class="flex flex-col items-center py-2 text-center"
     >
-      <IconCircleUpRounded
+      <Icon
+        name="i-material-symbols-arrow-circle-up"
         text-red
         w-56px
         h-56px
@@ -21,8 +22,6 @@
 </template>
 
 <script setup>
-import IconCircleUpRounded from "~icons/material-symbols/arrowCircleUp";
-
 // Scroll handling
 import { onUnmounted, ref, nextTick } from "vue";
 const isVisible = ref(false);

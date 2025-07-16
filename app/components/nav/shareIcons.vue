@@ -1,27 +1,4 @@
-<template>
-  <div class="flex flex-row">
-    <template v-for="icon in icons" :key="icon.href">
-      <a
-        :href="icon.getHref()"
-        target="_blank"
-        rel="noopener noreferer"
-        class="hover:scale-125 mx-2 text-typography_primary hover:text-brand_primary transition-transform duration-100"
-      >
-        <component
-          :is="icon.icon"
-          :alt="icon.alt"
-          :aria-label="icon.alt"
-          class="w-6 h-6"
-          width="24"
-          height="24"
-        />
-      </a>
-    </template>
-  </div>
-</template>
-
 <script setup lang="ts">
-import Twitter from "../icons/twitter.vue";
 import X from "../icons/x.vue";
 import Pinterest from "../icons/pinterest.vue";
 import Linkedin from "../icons/linkedin.vue";
@@ -47,24 +24,6 @@ const baseUrl = "https://nuxtation.vercel.app";
 const encodedUrl = encodeURIComponent(baseUrl + props.path);
 
 const icons = [
-  {
-    icon: Linkedin,
-    alt: "LinkedIn profile.",
-    getHref: () => {
-      return `https://www.linkedin.com/sharing/share-offsite/?mini=true&url=${encodedUrl}&title=${encodeURI(
-        props.headline
-      )}&summary=${encodeURI(props.excerpt)}`;
-    },
-  },
-  {
-    icon: Twitter,
-    alt: "Share this story on Twitter.",
-    getHref: () => {
-      return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        "Check out this article about " + props.headline
-      )}&url=${encodedUrl}`;
-    },
-  },
    {
     icon: X,
     alt: "Share this story on X.",
@@ -79,6 +38,15 @@ const icons = [
     alt: "Share this story on Facebook.",
     getHref: () => {
       return `https://facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+    },
+  },
+  {
+    icon: Linkedin,
+    alt: "LinkedIn profile.",
+    getHref: () => {
+      return `https://www.linkedin.com/sharing/share-offsite/?mini=true&url=${encodedUrl}&title=${encodeURI(
+        props.headline
+      )}&summary=${encodeURI(props.excerpt)}`;
     },
   },
   {
@@ -101,3 +69,23 @@ const icons = [
   },
 ];
 </script>
+
+<template>
+  <div class="flex flex-row">
+    <template v-for="icon in icons" :key="icon.href">
+      <a
+        :href="icon.getHref()"
+        target="_blank"
+        rel="noopener"
+        class="shared mr-5 mx-0.5rem hover:(scale-125 transition-transform duration-100)"
+      >
+        <component
+          :is="icon.icon"
+          :alt="icon.alt"
+          :aria-label="icon.alt"
+          class="h-2rem w-2rem"
+        />
+      </a>
+    </template>
+  </div>
+</template>

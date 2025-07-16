@@ -1,67 +1,75 @@
 <script setup lang="ts">
 import type { BlogPostPreview, Sections } from "~~/types/index.ts";
+import { computed } from "vue";
 
-defineProps<{
+const props = defineProps<{
   item: BlogPostPreview;
   section: Sections;
 }>();
+
+// updatedAt を利用して、記事の更新日時が直近かどうかを判定する
+const isWithinTenDays = useIsWithinTenDays(computed(() => props.item.updatedAt));
 </script>
 
 <template>
   <article
-    class="container bg-white mx-auto my-5 p-5 blogCard sm:items-center lg:(-mx-6 flex items-left) dark:bg-gray-900"
-  >
-    <NuxtLink :to="item._path" :aria-label="item.title">
+    class="blogCard mx-auto mt-10 lg:(grid grid-cols-[1.5fr_1fr] text-left) sm:items-center dark:bg-gray-900">
+    <NuxtLink :to="item.path" :aria-label="item.title">
       <NuxtPicture
         provider="imgix"
         :src="item.img"
         :alt="item.title"
-        width="600"
-        height="300"
         fit="cover"
-        format="avif,webp"
+        format="avif,webp,png"
         :modifiers="{ auto: 'format,compress', q: 60 }"
-        :imgAttrs="{
+        :img-attrs="{
           class:
-            'rounded transition-all duration-400 mx-auto tb:(w-100vw mt-0 mx-0)  lg:(hover:scale-110)',
+            'rounded inline-block sm:w-90% tb:w-full transition-all duration-400 mx-auto lg:(hover:scale-110)',
         }"
       />
     </NuxtLink>
-    <div class="mt-6 lg:(mx-6 mt-0 w-1/2 text-left)">
+    <div class="mt-1.5rem lg:(mx-1.5rem text-left mt-0)">
       <TagsList
         :tags="item.tags"
-        section="blog"
-        class="sm:justify-center lg:justify-start hover:text-jis-red"
+        :section="section"
+        class="lg:(justify-start pt-10) sm:justify-center hover:text-red"
       />
-      <p v-if="item.updatedAt" pt-4>
-        <Icon class="mr-10px" name="eos-icons:arrow-rotate" />
-        <Date :date="item.updatedAt" />
-      </p>
-      <p pt-4 v-else>
-        <Date :date="item.publishedAt" />
-      </p>
+      <div v-if="item.updatedAt" pt-4>
+        <Icon v-if="isWithinTenDays" class="mr-10" name="eos-icons:arrow-rotate" />
+                <Date :date="item.updatedAt" />
+
+        <!--span>{{ parseDate(item.updatedAt) }}</span-->
+        <!--NuxtTime :datetime="`${item.updatedAt}`" locale="ja-JP" weekday="short" /-->
+      </div>
+      <div v-else pt-1rem>
+        <div> {{ parseDate(item.publishedAt) }}</div>
+        <!--NuxtTime :datetime="`${item.publishedAt}`" locale="ja-JP" weekday="short" /-->
+      </div>
       <p>
         <NuxtLink
-          :to="item._path"
-          class="font-semibold mt-4 text-2xl text-gray-800 block md:text-3xl dark:text-white hover:underline"
+          :to="item.path"
+          class="text-gray-800 font-semibold mt-4 sm:(text-1.1rem mx-10) tb:text-2xl dark:text-white hover:underline"
         >
           {{ item.title }}
         </NuxtLink>
       </p>
-      <p class="mt-3 text-sm text-gray-500 md:text-sm dark:text-gray-300">
+      <p
+        class="text-sm text-gray-500 mt-10 dark:text-gray-300 lg:leading-base md:leading-base sm:leading-snug lt-lg:mx-20"
+      >
         {{ item.description }}
       </p>
       <NuxtLink
-        :to="item._path"
+        :to="item.path"
         :aria-label="`read more about ${item.title}`"
-        class="text-white at-sm:text-white mt-5 linkButton hover:(text-pink-100 scale-110 duration-400)"
+        class="linkButton text-white mt-10 hover:(scale-110 text-pink-100 duration-400) at-sm:text-white"
       >
         読んでみる
       </NuxtLink>
     </div>
   </article>
 </template>
-<style scope lang="scss">
+
+<style scoped lang="scss">
 ul {
   @apply sm:(w-full text-center) lg:text-left;
 }

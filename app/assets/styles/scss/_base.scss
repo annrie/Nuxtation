@@ -19,15 +19,11 @@ body {
   font-weight: 400;
 
   #main.home {
-    @apply mt-200px lt-tb:mt-150px;
-
-    // @screen lt-tb {
-    //   margin-top: 150px;
-    // }
+    @apply mt-100 lt-tb:mt-150;
   }
 
   #main:not(.home) {
-    @apply mt-100px;
+    @apply mt-70 lg:mt-100;
   }
 }
 
@@ -39,14 +35,28 @@ a {
   display: inline-block;
   width: 1em;
   height: 1em;
-  vertical-align: -0.125em;
-  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5'/%3E%3C/svg%3E");
-  // fill:yellow;
-  @apply i-tabler:external-link w-1.25em h-1.25em ml-0.5em mt--0.35em inline-block dark:(fill-yellow-500 hover:fill-white);
+ // vertical-align: -0.125em;
+  /* 変更後のSVGデータURI (pathに fill='currentColor' を追加) */
+  content: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 32 32' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='currentColor' d='M26 28H6a2.003 2.003 0 0 1-2-2V6a2.003 2.003 0 0 1 2-2h10v2H6v20h20V16h2v10a2.003 2.003 0 0 1-2 2'/%3E%3Cpath fill='currentColor' d='M20 2v2h6.586L18 12.586L19.414 14L28 5.414V12h2V2z'/%3E%3C/svg%3E");
+  /* color プロパティでSVGの色を制御 */
+  //color: #333; /* 通常時の色 (例) */
+  @apply ml-0.5em; /* UnoCSSのユーティリティを一部使用 */
+  /* ダークモードの色の指定 (UnoCSSのユーティリティを使用) */
+  @apply text-jisblueex dark:text-jisorangeex dark:hover:text-jisyellowex;
+  /* @apply i-carbon-launch ... は削除 */
+}
+
+.article a[target='_blank']::after {
+  @apply i-carbon-launch;
+  @apply w-1em h-1em; /* サイズや位置、色は適宜調整 */
+  @apply ml-0.5em;
+  @apply inline-block;
+  @apply text-jis-blue text-bold dark:text-jis-orange dark:hover:text-jis-yellow; /* 例: text-* で色を指定 */
+ // vertical-align: -0.125em; /* 必要に応じて */
 }
 
 .icon {
-  @apply h-6 w-6 inline-flex align-top;
+  @apply h-1.5rem w-1.5rem inline-flex align-top;
   // @apply inline-flex;
   // height: 1cap;
 }

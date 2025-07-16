@@ -5,16 +5,15 @@ const thisYear = new Date().getFullYear();
 <template>
   <div class="footer">
     <footer class="AppFooter">
-      Copyright &copy; 2020 - {{ thisYear }} nuxtation project. All Rights Reserved.
+      Copyright &copy; 2015 - {{ thisYear }} phantomoon project.
     </footer>
-    <NavScrollTopIcon />
+    <ScrollTopIcon />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .AppFooter {
-  @apply bg-hex-0B0A0A text-0.8rem border-slate-50 border-t-2 border-opacity-10 h-[70px] mt-20px text-center text-white py-21px px-0 tb:(mt-60px text-base);
-  font-size: rem(16, 16);
+  @apply bg-hex-0B0A0A  text-0.8rem border-slate-50 border-t-2 border-opacity-10 h-70px mt-20px text-center text-white py-21px px-0 tb:(mt-60px text-base);
   line-height: 1.5;
 }
 </style>

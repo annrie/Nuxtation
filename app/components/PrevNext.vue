@@ -4,7 +4,7 @@ import type { Ref } from "vue";
 
 // prev / next に渡される型のサンプル (プロジェクトに合わせて修正してください)
 interface ArticleData {
-  _path: string;
+  path: string;
   title: string;
 }
 
@@ -21,21 +21,13 @@ const props = defineProps<{
 <template>
   <ul class="prev-next-cont">
     <li class="prev link-item">
-      <NuxtLink v-if="prev && section === 'biblio'" :to="prev._path">
-        <div class="i-tabler:arrow-big-left-line w-2em h-2em"></div>
-        <span mt-2> {{ prev.title }} </span>
-      </NuxtLink>
-      <NuxtLink v-else-if="prev && section === 'blog'" :to="prev._path">
+      <NuxtLink v-if="props.prev" :to="prev.path">
         <div class="i-tabler:arrow-big-left-line w-2em h-2em"></div>
         <span mt-2> {{ prev.title }} </span>
       </NuxtLink>
     </li>
     <li class="link-item next">
-      <NuxtLink v-if="next && section === 'biblio'" :to="next._path">
-        <span mt-2> {{ next.title }} </span>
-        <div class="i-tabler:arrow-big-right-line w-2em h-2em"></div>
-      </NuxtLink>
-      <NuxtLink v-else-if="next && section === 'blog'" :to="next._path">
+      <NuxtLink v-if="props.next" :to="next.path">
         <span mt-2> {{ next.title }} </span>
         <div class="i-tabler:arrow-big-right-line w-2em h-2em"></div>
       </NuxtLink>

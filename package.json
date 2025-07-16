@@ -3,7 +3,7 @@
   "type": "module",
   "main": "./nuxt.config.ts",
   "private": true,
-  "version": "2.8.3",
+  "version": "2.8.4",
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "scripts": {

@@ -582,7 +582,7 @@ postcss: {
       noExternal: ['@nuxt/content'],
     },
     optimizeDeps: {
-      include: [ 'buffer', '@heroicons/vue/20/solid', '@unhead/schema-org/vue' ],
+      include: [ 'buffer', '@heroicons/vue/20/solid' ],
       entries: [ // https://zenn.dev/comm_vue_nuxt/articles/6f4da63b50a423
         // 実用的なスコープならこの3つくらい。もし必要なら.tsも。
         "pages/**/*.vue",

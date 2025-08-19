@@ -38,12 +38,9 @@ a {
  // vertical-align: -0.125em;
   /* 変更後のSVGデータURI (pathに fill='currentColor' を追加) */
   content: url("data:image/svg+xml;utf8,%3Csvg viewBox='0 0 32 32' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='currentColor' d='M26 28H6a2.003 2.003 0 0 1-2-2V6a2.003 2.003 0 0 1 2-2h10v2H6v20h20V16h2v10a2.003 2.003 0 0 1-2 2'/%3E%3Cpath fill='currentColor' d='M20 2v2h6.586L18 12.586L19.414 14L28 5.414V12h2V2z'/%3E%3C/svg%3E");
-  /* color プロパティでSVGの色を制御 */
-  //color: #333; /* 通常時の色 (例) */
+   //color: #333; /* 通常時の色 (例) */
   @apply ml-0.5em; /* UnoCSSのユーティリティを一部使用 */
-  /* ダークモードの色の指定 (UnoCSSのユーティリティを使用) */
-  @apply text-jisblueex dark:text-jisorangeex dark:hover:text-jisyellowex;
-  /* @apply i-carbon-launch ... は削除 */
+//  @apply text-jisblueex dark:text-jisorangeex dark:hover:text-jisyellowex;
 }
 
 .article a[target='_blank']::after {

@@ -25,23 +25,42 @@ import transformerAlias from 'unocss-transformer-alias'
 
 // const FormKitVariants = require('@formkit/themes/unocss')
 
-function convert(color: string) {
-  return `color-mix(in srgb, ${color} oklch(100% * %alpha), transparent)`
-}
-//
-function makeColorPalette(color) {
+// ヘルパー：defineConfig の前あたりに1回だけ
+const __resolveColor = (theme: any, key: any) => {
+  const colors = theme?.colors;
+  if (!colors || key == null) return String(key ?? '');
+  const v = colors[key];
+  if (!v) return String(key);
+  if (typeof v === 'string') return v;
+  if (typeof v === 'object') return v.DEFAULT ?? v[500] ?? v[600] ?? v[400] ?? Object.values(v)[0] ?? String(key);
+  return String(key);
+};
+
+function convert(c: string) { return c; }
+
+function makeColorPalette(color: string) {
   return {
-    50: `color-mix(in srgb, ${color} 5%, white)`,
-    100: `color-mix(in srgb, ${color} 10%, white)`,
-    200: `color-mix(in srgb, ${color} 30%, white)`,
-    300: `color-mix(in srgb, ${color} 50%, white)`,
-    400: `color-mix(in srgb, ${color} 70%, white)`,
-    500: color,
-    600: `color-mix(in srgb, ${color} 70%, black)`,
-    700: `color-mix(in srgb, ${color} 50%, black)`,
-    800: `color-mix(in srgb, ${color} 30%, black)`,
-    900: `color-mix(in srgb, ${color} 10%, black)`,
-  }
+      DEFAULT: color,
+      50:  `color-mix(in srgb, ${color} 5%,  white)`,
+      100: `color-mix(in srgb, ${color} 10%, white)`,
+      200: `color-mix(in srgb, ${color} 30%, white)`,
+      300: `color-mix(in srgb, ${color} 50%, white)`,
+      400: `color-mix(in srgb, ${color} 70%, white)`,
+      500: color,
+      600: `color-mix(in srgb, ${color} 70%, black)`,
+      700: `color-mix(in srgb, ${color} 50%, black)`,
+      800: `color-mix(in srgb, ${color} 30%, black)`,
+      900: `color-mix(in srgb, ${color} 15%, black)`,
+      950: `color-mix(in srgb, ${color} 8%,  black)`,
+  };
+}
+
+function aliasScale(prefix: string, base: string) {
+  return Object.fromEntries(
+    [50,100,200,300,400,500,600,700,800,900,950].map(
+      s => [`${prefix}-${s}`, `var(--colors-${base}-${s})`],
+    ),
+  );
 }
 
 //ブレイクポイント（min-width）の設定
@@ -220,41 +239,23 @@ export default mergeConfigs([config, {
       '2xl': BREAKPOINT_MIN_WIDTH_2XL + 'px',
     },
     colors: {
-      black: {
-        DEFAULT: '#0a0a0a'
-      },
-      white: {
-        DEFAULT: '#fefefe'
-      },
-
-      'whiteex':
-      makeColorPalette('#fefefe'),
-      'blackex':
-      makeColorPalette('#0a0a0a'),
-      'primaryex':
-      makeColorPalette('#1779ba'),
-      'secondaryex':
-      makeColorPalette('#767676'),
-      'successex':
-      makeColorPalette('#3adb76'),
-      'warningex':
-      makeColorPalette('#ffae00'),
-      'alertex':
-      makeColorPalette('#cc4b37'),
-      'jisredex':
-      makeColorPalette('#ff4b00'),
-      'jisorangeex':
-      makeColorPalette('#f6aa00'),
-      'jisyellowex':
-      makeColorPalette('#f2e700'),
-      'jisgreenex':
-      makeColorPalette('#00b06b'),
-      'jisblueex':
-      makeColorPalette('#1971ff'),
-      'jismagentaex':
-      makeColorPalette('#990'),
+      'black': { DEFAULT: '#0a0a0a' },
+      'white': { DEFAULT: '#fefefe' },
+      'whiteex': makeColorPalette('#fefefe'),
+      'blackex': makeColorPalette('#0a0a0a'),
+      'primaryex': makeColorPalette('#1779ba'),
+      'secondaryex': makeColorPalette('#767676'),
+      'successex': makeColorPalette('#3adb76'),
+      'warningex': makeColorPalette('#ffae00'),
+      'alertex': makeColorPalette('#cc4b37'),
+      'jisredex': makeColorPalette('#ff4b00'),
+      'jisorangeex': makeColorPalette('#f6aa00'),
+      'jisyellowex': makeColorPalette('#f2e700'),
+      'jisgreenex': makeColorPalette('#00b06b'),
+      'jisblueex': makeColorPalette('#1971ff'),
+      'jismagentaex': makeColorPalette('#999900'),
       'sf': makeColorPalette('#2563eb'),
-      'adv': makeColorPalette('#690'),
+      'adv': makeColorPalette('#669900'),
       'mys': makeColorPalette('#ed181e'),
       'horror': makeColorPalette('#0a0a0a'),
       'jedi': makeColorPalette('#4b5563'),
@@ -269,34 +270,17 @@ export default mergeConfigs([config, {
       'jis-yellow': convert('#f2e700'),
       'jis-green': convert('#00b06b'),
       'jis-blue': convert('#1971ff'),
-      'jis-magenta': convert('#990'),
-      'primary': convert('var(--p-primary-color)'),
-      'primary-emphasis': convert('var(--p-primary-hover-color)'),
-      'primary-emphasis-alt': convert('var(--p-primary-active-color)'),
-      'primary-contrast': convert('var(--p-primary-contrast-color)'),
-      'primary-50': convert('var(--p-primary-50)'),
-      'primary-100': convert('var(--p-primary-100)'),
-      'primary-200': convert('var(--p-primary-200)'),
-      'primary-300': convert('var(--p-primary-300)'),
-      'primary-400': convert('var(--p-primary-400)'),
-      'primary-500': convert('var(--p-primary-500)'),
-      'primary-600': convert('var(--p-primary-600)'),
-      'primary-700': convert('var(--p-primary-700)'),
-      'primary-800': convert('var(--p-primary-800)'),
-      'primary-900': convert('var(--p-primary-900)'),
-      'primary-950': convert('var(--p-primary-950)'),
-      'surface-0': convert('var(--p-surface-0)'),
-      'surface-50': convert('var(--p-surface-50)'),
-      'surface-100': convert('var(--p-surface-100)'),
-      'surface-200': convert('var(--p-surface-200)'),
-      'surface-300': convert('var(--p-surface-300)'),
-      'surface-400': convert('var(--p-surface-400)'),
-      'surface-500': convert('var(--p-surface-500)'),
-      'surface-600': convert('var(--p-surface-600)'),
-      'surface-700': convert('var(--p-surface-700)'),
-      'surface-800': convert('var(--p-surface-800)'),
-      'surface-900': convert('var(--p-surface-900)'),
-      'surface-950': convert('var(--p-surface-950)'),
+      'jis-magenta': convert('#999900'),
+      // ---- primary 系は Uno の sky に寄せる（お好みで 'blue' や 'indigo' に変更可）
+      ...aliasScale('primary', 'sky'),
+      primary:               'var(--colors-sky-500)',
+      'primary-emphasis':    'var(--colors-sky-600)',
+      'primary-emphasis-alt':'var(--colors-sky-700)',
+      'primary-contrast':    'var(--colors-white-DEFAULT)',
+
+      // ---- surface 系は Uno の slate に寄せる
+      'surface-0': 'var(--colors-white-DEFAULT)', // 0 は独自に白へ
+      ...aliasScale('surface', 'slate'),
     },
     font: {
       xxs: '0.5rem',
@@ -421,15 +405,12 @@ export default mergeConfigs([config, {
   presets: [
     presetWind4({
       preflights:  {
-        reset: true,
+        theme: {
+          process: createRemToPxProcessor(),
+        },
+          reset: true,
       },
-      theme: {
-        mode: 'on-demand', // Default by 'on-demand'
-        process: createRemToPxProcessor(),
-      },
-//      dark: 'class',
     }),
-    //presetRemToPx(),
     presetAttributify(),
     presetTagify({
       prefix: 'un-',

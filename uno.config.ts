@@ -397,6 +397,7 @@ export default mergeConfigs([config, {
   }],
   ],
   layers: {
+    'preflights': -2,
     "components": -1,
     "default": 1,
     "utilities": 2,

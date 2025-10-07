@@ -168,7 +168,6 @@ export default defineNuxtConfig({
    'nuxt-link-checker',
 //   '@nuxthq/studio',
    'nuxt-gtag',
-   '@nuxtjs/web-vitals',
     '@nuxt/fonts',
     '@nuxt/scripts',
     '@nuxt/icon',

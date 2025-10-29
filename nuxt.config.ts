@@ -306,7 +306,6 @@ export default defineNuxtConfig({
             default: 'github-light',
             dark: 'github-dark',
 
-          langs: Object.keys(bundledLanguages),
 //          langs: [
 //            // Read more about Shiki languages: https://shiki.style/guide/load-lang
 //            JSON.parse(

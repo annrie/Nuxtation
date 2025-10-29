@@ -689,7 +689,9 @@ export default mergeConfigs([config, {
     extractorMdc(),
   ],
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
-  // blocklist: ['container'],
+  blocklist: [
+    /pascalCase\(.+\)/, // ignore tokens accidentally scraped from tooling (e.g. m[pascalCase(component)])
+  ],
   content: {
     pipeline: {
       include: [

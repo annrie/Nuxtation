@@ -639,8 +639,7 @@ nuxtIcon: {
         '/blog',
         '/cat',
         '/sitemap.xml',
-				'/_vercel/speed-insights/*'
-				],
+      ],
     },
     experimental: {
       wasm: true,

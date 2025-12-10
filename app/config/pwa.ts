@@ -1,6 +1,6 @@
 import type { ModuleOptions } from '@vite-pwa/nuxt'
 import process from 'node:process'
-import { SiteDescription, SiteName } from '../../logic/constants'
+import { SiteDescription, SiteName } from '../logic/constants'
 
 const scope = '/'
 
@@ -16,7 +16,7 @@ export const pwa: ModuleOptions = {
     description: SiteDescription,
     theme_color: '#ffffff',
     form_factor: 'wide',
-    start_url: 'https://nuxtation.vercel.app/?source=NuxtVitePWA',
+    start_url: 'https://nuxtation.phantomoon.com/?source=NuxtVitePWA',
     icons: [
       {
         src: 'apple-touch-icon.png',
@@ -44,7 +44,7 @@ export const pwa: ModuleOptions = {
   },
   workbox: {
     globPatterns: ['**/*.{js,css,html,txt,png,webp,ico,svg}'],
-    globIgnores: ['node_modules/**/*'],
+    globIgnores: ['node_modules/**/*','sw.js','workbox-*.js'],
     navigateFallbackDenylist: [/^\/api\//],
     navigateFallback: '/',
     cleanupOutdatedCaches: true,

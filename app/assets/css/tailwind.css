@@ -1,0 +1,70 @@
+/* Tailwind CSS v4 ベース */
+
+/* Tailwind CSS カスタムデザイントークン */
+@theme static {
+  /* WCAG AA準拠アクセシビリティカラー */
+  --color-link-light: #047857;
+  --color-link-hover-light: #065f46;
+  --color-button-light: #15803d;
+  --color-button-hover-light: #166534;
+  --color-link-dark: #34d399;
+  --color-tag-bg-dark: #2563eb;
+
+  /*
+   * 以下の定義はnuxt.config.tsに移行済み:
+   * - fontSize: xxs, xs, sm, base, lg, h1-h6, highlight
+   * - lineHeight: xxs, xs, sm, base, lg, h1-h6, highlight
+   * - boxShadow: card-light, card-dark, card-hover-light, card-hover-dark, link, blue-sm, blue-md, green-sm, green-md
+   * - aspectRatio: video, square, portrait, landscape
+   *
+   * Tailwindユーティリティとして使用可能:
+   * - text-h1, text-h2, ..., text-xxs
+   * - leading-h1, leading-h2, ..., leading-xxs
+   * - shadow-card-light, shadow-card-dark, shadow-blue-sm, shadow-green-md, etc.
+   * - aspect-video, aspect-square, aspect-portrait, aspect-landscape
+   */
+}
+
+/* カスタムユーティリティクラス */
+@layer utilities {
+  /* テキストスケール用ユーティリティ */
+  .text-xxs {
+    font-size: var(--font-size-xxs);
+    line-height: var(--line-height-xxs);
+  }
+
+  .text-h6 {
+    font-size: var(--font-size-h6);
+    line-height: var(--line-height-h6);
+  }
+
+  .text-h5 {
+    font-size: var(--font-size-h5);
+    line-height: var(--line-height-h5);
+  }
+
+  .text-h4 {
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
+  }
+
+  .text-h3 {
+    font-size: var(--font-size-h3);
+    line-height: var(--line-height-h3);
+  }
+
+  .text-h2 {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+
+  .text-h1 {
+    font-size: var(--font-size-h1);
+    line-height: var(--line-height-h1);
+  }
+
+  .text-highlight {
+    font-size: var(--font-size-highlight);
+    line-height: var(--line-height-highlight);
+  }
+}

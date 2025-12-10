@@ -1,40 +1,64 @@
 # Nuxtation
 
-> ポートフォリオ用リポジトリ　THX [debs-obrien](https://github.com/debs-obrien) and [miracleonyenma](https://github.com/miracleonyenma/content-v2-blog)
+> Docus 5.3.1ベースのブログサイト - THX [Docus](https://docus.com/))
 
 ![nuxtation](https://user-images.githubusercontent.com/5172584/219685899-f21d7608-2cd0-4fe1-872f-f25822ae2551.png)
 
-旧オリジナル"[Nuxtation](https://github.com/annrie/Nuxtation-nuxt2-)"から**Nuxt3**仕様に全面的に作り直してポートフォリオ用に再公開しました。
+旧オリジナル"[Nuxtation](https://github.com/annrie/Nuxtation-nuxt2-)"から**Nuxt 4 + Docus 5.3.1**仕様に全面的に作り直したブログサイトです。
 
-諸々最新環境で動くようにはしています。※ Nuxt 4 Ready
+## 技術スタック
+
+- **Framework**: Nuxt 4.2.1
+- **SSG**: Docus 5.3.1
+- **Content**: @nuxt/content 3.3.1
+- **CSS**: Tailwind CSS v4
+- **Deployment**: Vercel
+- **Analytics**: Vercel Speed Insights
+
+## 主な機能
+
+- ✨ Docus標準構成によるブログ機能
+- 🎨 Tailwind CSS v4完全対応
+- 📱 レスポンシブデザイン + ダークモード
+- 🐱 Cat API統合（Masonryレイアウト）
+- 🔍 SEO最適化（schema.org対応）
+- ⚡ Vercel Speed Insights統合
 
 ## セットアップ
 
 テンプレートを手動でセットアップするには、まず Git でダウンロードします。
 
 ```bash
- git clone git@github.com:annrie/Nuxtation.git projectname
- cd projectname
+git clone git@github.com:annrie/Nuxtation.git projectname
+cd projectname
 ```
 
 ## インストール
 
-その後、コマンドラインでフォルダを開き、必要な依存関係をインストールします。 yarn2 を使用する場合は。
+依存関係をインストールします（pnpm推奨）。
 
 ```bash
-yarn set version berry #  Setup of yarn2
-echo "nodeLinker: node-modules" > .yarnrc.yml
-yarn install
- OR
-npm install
- OR
 pnpm install
 ```
 
-最後に、 `pnpm dev`,`npm dev`,`yarn dev` いずれかを実行して サーバーを立ち上げます。
+開発サーバーを起動します。
 
 ```bash
-http://localhost:3100
+pnpm dev
+```
+
+ブラウザで以下にアクセス:
+
+```bash
+http://localhost:3000
+```
+
+## ビルド
+
+静的サイトを生成します。
+
+```bash
+pnpm generate
 ```
 
 ## ライセンス

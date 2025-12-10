@@ -397,6 +397,7 @@ export default mergeConfigs([config, {
   }],
   ],
   layers: {
+    'preflights': -2,
     "components": -1,
     "default": 1,
     "utilities": 2,
@@ -688,7 +689,9 @@ export default mergeConfigs([config, {
     extractorMdc(),
   ],
   safelist: 'prose prose-sm m-auto text-left'.split(' '),
-  // blocklist: ['container'],
+  blocklist: [
+    /pascalCase\(.+\)/, // ignore tokens accidentally scraped from tooling (e.g. m[pascalCase(component)])
+  ],
   content: {
     pipeline: {
       include: [

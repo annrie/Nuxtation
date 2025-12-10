@@ -19,7 +19,6 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    console.log(`[OGP API] Fetching OGP for: ${url} with timeout: ${OGS_REQUEST_TIMEOUT}ms`);
     const { result, error: ogsInternalError } = await ogs({
       url,
       timeout: OGS_REQUEST_TIMEOUT, // タイムアウト値をミリ秒で指定

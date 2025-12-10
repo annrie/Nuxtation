@@ -1,11 +1,13 @@
-import type { Ref } from 'vue'
-import { computed } from 'vue'
+import { computed, type Ref } from 'vue'
 
-export function useIsWithinTenDays(updatedAt: Ref<string>) {
+export function useIsWithinTenDays(dateRef: Ref<string | undefined>) {
   return computed(() => {
-    const now = new Date()
-    const updatedAtDate = new Date(updatedAt.value)
-    const diffInDays = (now.getTime() - updatedAtDate.getTime()) / (1000 * 60 * 60 * 24)
+    const raw = dateRef.value
+    if (!raw) return false
+    const parsed = new Date(raw)
+    if (Number.isNaN(parsed.getTime())) return false
+    const diff = Date.now() - parsed.getTime()
+    const diffInDays = diff / (1000 * 60 * 60 * 24)
     return diffInDays <= 10
   })
 }

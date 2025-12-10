@@ -1,0 +1,380 @@
+/* ヘッダー専用スタイル - Pure CSS */
+
+/* ヘッダーベーススタイル */
+header.custom-header {
+  background-color: #111827;
+}
+
+/* アイコンとテキストを白く表示 */
+header.custom-header button,
+header.custom-header button *,
+header.custom-header a,
+header.custom-header a * {
+  color: white;
+  fill: white;
+}
+
+/* SVG要素のstrokeも白く */
+header.custom-header svg,
+header.custom-header path {
+  stroke: white;
+}
+
+/* ホバー時のスタイル */
+header.custom-header button:hover,
+header.custom-header a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+header.custom-header button:hover,
+header.custom-header button:hover *,
+header.custom-header a:hover,
+header.custom-header a:hover * {
+  color: rgba(255, 255, 255, 0.8);
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+/* Nuxt UI ボタンのボーダー・枠線を消す */
+header.custom-header button,
+header.custom-header a[role="button"] {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+header.custom-header button:focus,
+header.custom-header button:active,
+header.custom-header a[role="button"]:focus,
+header.custom-header a[role="button"]:active {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+/* ナビゲーション項目の枠線を消す */
+header.custom-header nav button,
+header.custom-header nav a,
+header.custom-header nav [role="button"],
+header.custom-header nav div[class*="button"],
+header.custom-header nav *,
+header.custom-header * {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+header.custom-header nav button:focus,
+header.custom-header nav button:hover,
+header.custom-header nav a:focus,
+header.custom-header nav a:hover,
+header.custom-header nav [role="button"]:focus,
+header.custom-header nav [role="button"]:hover,
+header.custom-header nav div[class*="button"]:focus,
+header.custom-header nav div[class*="button"]:hover,
+header.custom-header nav *:focus,
+header.custom-header nav *:hover,
+header.custom-header *:focus,
+header.custom-header *:hover {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+/* ロゴ画像の表示を確保 */
+header.custom-header img[alt="Nuxtation"],
+header.custom-header img[src="/logo.svg"] {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  max-height: 1.5rem;
+  width: auto;
+}
+
+/* グローバルヘッダー要素のリセット */
+header button,
+header a,
+header div,
+header span,
+nav button,
+nav a,
+nav div,
+nav span {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+header button:focus,
+header button:hover,
+header a:focus,
+header a:hover,
+header div:focus,
+header div:hover,
+header span:focus,
+header span:hover,
+nav button:focus,
+nav button:hover,
+nav a:focus,
+nav a:hover,
+nav div:focus,
+nav div:hover,
+nav span:focus,
+nav span:hover {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+/* ヘッダー内のborder関連のユーティリティクラスを上書き */
+header [class*="border"],
+header [class*="ring"] {
+  border: none;
+  box-shadow: none;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  border-width: 0;
+}
+
+/* ドロップダウンメニューの枠線を特定して削除 */
+nav .absolute.z-50,
+nav div[class*="ring"],
+header nav .absolute,
+header nav div.shadow-lg {
+  border: none;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-shadow: none;
+  ring: 0;
+}
+
+/* モバイルヘッダーメニュー */
+@media (max-width: 1024px) {
+  /* モバイルメニュー展開時のヘッダーボタンの枠線を完全に削除 */
+  header.custom-header button,
+  header.custom-header button *,
+  header.custom-header button svg {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    ring: 0;
+    --tw-ring-width: 0px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: transparent;
+    --tw-ring-offset-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+  }
+
+  header.custom-header button:focus,
+  header.custom-header button:active,
+  header.custom-header button:hover {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    ring: 0;
+    --tw-ring-width: 0px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: transparent;
+    --tw-ring-offset-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    --tw-ring-shadow: 0 0 transparent;
+  }
+
+  /* モバイルメニューのパネルを常にダークモードに */
+  body > div[role="dialog"],
+  body > div[role="dialog"] > div,
+  body > div[role="dialog"] [role="document"],
+  body > div[role="dialog"] nav {
+    background-color: #111827;
+  }
+
+  /* クローズボタンを白く濃く表示 */
+  div[role="dialog"] button[aria-label="Close"],
+  div[role="dialog"] button[aria-label="Close menu"],
+  body > div[role="dialog"] button[aria-label="Close"],
+  body > div[role="dialog"] button[aria-label="Close menu"] {
+    opacity: 1;
+    color: white;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    ring: 0;
+    --tw-ring-width: 0px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: transparent;
+    --tw-ring-offset-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    --tw-ring-shadow: 0 0 transparent;
+  }
+
+  div[role="dialog"] button[aria-label="Close"]:focus,
+  div[role="dialog"] button[aria-label="Close"]:active,
+  div[role="dialog"] button[aria-label="Close"]:focus-visible,
+  div[role="dialog"] button[aria-label="Close menu"]:focus,
+  div[role="dialog"] button[aria-label="Close menu"]:active,
+  div[role="dialog"] button[aria-label="Close menu"]:focus-visible,
+  body > div[role="dialog"] button[aria-label="Close"]:focus,
+  body > div[role="dialog"] button[aria-label="Close"]:active,
+  body > div[role="dialog"] button[aria-label="Close"]:focus-visible,
+  body > div[role="dialog"] button[aria-label="Close menu"]:focus,
+  body > div[role="dialog"] button[aria-label="Close menu"]:active,
+  body > div[role="dialog"] button[aria-label="Close menu"]:focus-visible {
+    opacity: 1;
+    color: white;
+    border: none;
+    box-shadow: none;
+    outline: none;
+    ring: 0;
+    --tw-ring-width: 0px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: transparent;
+    --tw-ring-offset-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    --tw-ring-shadow: 0 0 transparent;
+  }
+
+  div[role="dialog"] button[aria-label="Close"]:hover,
+  div[role="dialog"] button[aria-label="Close menu"]:hover,
+  body > div[role="dialog"] button[aria-label="Close"]:hover,
+  body > div[role="dialog"] button[aria-label="Close menu"]:hover {
+    opacity: 1;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    box-shadow: none;
+    outline: none;
+    ring: 0;
+    --tw-ring-width: 0px;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-color: transparent;
+    --tw-ring-offset-color: transparent;
+    border-width: 0;
+    border-color: transparent;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+  }
+
+  /* クローズボタン内の要素も白く */
+  div[role="dialog"] button[aria-label="Close"] *,
+  div[role="dialog"] button[aria-label="Close"]:hover *,
+  div[role="dialog"] button[aria-label="Close"] svg,
+  div[role="dialog"] button[aria-label="Close"] svg *,
+  div[role="dialog"] button[aria-label="Close"] path,
+  div[role="dialog"] button[aria-label="Close"] .iconify,
+  div[role="dialog"] button[aria-label="Close"] span[class*="iconify"],
+  div[role="dialog"] button[aria-label="Close menu"] *,
+  div[role="dialog"] button[aria-label="Close menu"]:hover *,
+  div[role="dialog"] button[aria-label="Close menu"] svg,
+  div[role="dialog"] button[aria-label="Close menu"] svg *,
+  div[role="dialog"] button[aria-label="Close menu"] path,
+  div[role="dialog"] button[aria-label="Close menu"] .iconify,
+  div[role="dialog"] button[aria-label="Close menu"] span[class*="iconify"],
+  body > div[role="dialog"] button[aria-label="Close"] *,
+  body > div[role="dialog"] button[aria-label="Close"]:hover *,
+  body > div[role="dialog"] button[aria-label="Close"] svg,
+  body > div[role="dialog"] button[aria-label="Close"] svg *,
+  body > div[role="dialog"] button[aria-label="Close"] path,
+  body > div[role="dialog"] button[aria-label="Close"] .iconify,
+  body > div[role="dialog"] button[aria-label="Close"] span[class*="iconify"],
+  body > div[role="dialog"] button[aria-label="Close menu"] *,
+  body > div[role="dialog"] button[aria-label="Close menu"]:hover *,
+  body > div[role="dialog"] button[aria-label="Close menu"] svg,
+  body > div[role="dialog"] button[aria-label="Close menu"] svg *,
+  body > div[role="dialog"] button[aria-label="Close menu"] path,
+  body > div[role="dialog"] button[aria-label="Close menu"] .iconify,
+  body > div[role="dialog"] button[aria-label="Close menu"] span[class*="iconify"] {
+    opacity: 1;
+    color: white;
+    fill: white;
+    stroke: white;
+  }
+}

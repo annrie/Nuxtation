@@ -1,0 +1,30 @@
+/*
+ * Docus + Nuxt UI v4 統合スタイル
+ *
+ * Tailwind CSS v4 を PostCSS プラグインとして使用
+ */
+ 
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* Tailwind カスタムプロパティ（ジャンル別カラーパレット等） */
+@import "./tailwind.css";
+
+/* カスタムデザイントークン */
+@import "./theme.css";
+
+/* グローバルユーティリティ */
+@import "./utilities.css";
+
+/* Proseスタイル（記事本文） */
+@import "./prose.css";
+
+/* コンポーネント別スタイル */
+@import "./components/header.css";
+@import "./components/footer.css";
+@import "./components/breadcrumb.css";
+@import "./components/modal.css";
+@import "./components/chrono.css";
+
+/* トランジション設定 */
+@import "./transitions.css";

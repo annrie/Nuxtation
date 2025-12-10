@@ -1,0 +1,238 @@
+/* グローバルユーティリティクラス - Pure CSS */
+
+:root {
+  /* カード系変数 */
+  --card-radius-base: 1.25rem;
+  --card-radius-light: 1rem;
+  --transition-card: 0.35s ease;
+  --transition-fast: 0.2s ease;
+  --transition-instant: 0.1s ease;
+}
+
+/* スクリーンリーダー専用クラス（視覚的には非表示だがアクセシビリティツールには表示） */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* 日本語サイトのための設定 */
+:where(p:lang(ja)),
+:where(p) {
+  text-wrap: pretty;
+}
+
+/* 英語の段落のtext-wrapを上書き（念のため） */
+:where(p:lang(en)) {
+  text-wrap: pretty;
+}
+
+/* ========================================
+   カード系共通クラス
+   ======================================== */
+
+/* カードベーススタイル */
+.card-base {
+  border-radius: var(--card-radius-base);
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+  border: 2px solid rgba(203, 213, 225, 1);
+  transition: transform var(--transition-card), box-shadow var(--transition-card);
+}
+
+.dark .card-base {
+  background-color: rgba(30, 41, 59, 1);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(51, 65, 85, 1);
+}
+
+/* カードホバーエフェクト */
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 55px rgba(15, 23, 42, 0.35);
+}
+
+/* モバイル最適化: タッチ操作 */
+@media (max-width: 768px) {
+  .card-mobile {
+    -webkit-tap-highlight-color: rgba(16, 185, 129, 0.1);
+    cursor: pointer;
+  }
+
+  .card-mobile:active {
+    transform: scale(0.98);
+    transition: transform var(--transition-instant);
+  }
+
+  /* モバイルではホバーエフェクトを無効化 */
+  .card-mobile.card-hover:hover {
+    transform: none;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+  }
+}
+
+/* 軽量カードスタイル（BiblioCard用） */
+.card-light {
+  border-radius: var(--card-radius-light);
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.card-light.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.dark .card-light {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: rgba(71, 85, 105, 0.6);
+}
+
+.dark .card-light.card-hover:hover {
+  box-shadow: 0 12px 24px rgba(96, 165, 250, 0.25);
+  border-color: rgba(96, 165, 250, 0.5);
+}
+
+/* ========================================
+   画像系共通クラス
+   ======================================== */
+
+/* カード画像トランジション */
+.card-image-transition {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform var(--transition-card);
+}
+
+.card-hover:hover .card-image-transition {
+  transform: scale(1.03);
+}
+
+/* ========================================
+   リンク系共通クラス
+   ======================================== */
+
+/* 画像リンクベース */
+.image-link-base {
+  display: block;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  outline: none;
+}
+
+.image-link-base:focus {
+  outline: 3px solid var(--color-link-light);
+  outline-offset: 2px;
+}
+
+.dark .image-link-base:focus {
+  outline-color: var(--color-link-dark);
+}
+
+/* カードタイトルリンク */
+.card-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  font-weight: 700;
+  line-height: 1.35;
+  outline: none;
+}
+
+.card-title-link:hover {
+  color: var(--color-link-light);
+}
+
+.card-title-link:focus {
+  outline: 2px solid var(--color-link-light);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark .card-title-link:hover {
+  color: var(--color-link-dark);
+}
+
+.dark .card-title-link:focus {
+  outline-color: var(--color-link-dark);
+}
+
+/* ========================================
+   ボタン系共通クラス
+   ======================================== */
+
+/* CTAボタンベース */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  min-width: 44px;
+  min-height: 44px;
+  background: linear-gradient(to bottom right, var(--color-button-light), var(--color-button-hover-light));
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  touch-action: manipulation;
+  outline: none;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.3), 0 4px 6px -2px rgba(34, 197, 94, 0.2);
+  background: linear-gradient(to bottom right, var(--color-button-hover-light), #15803d);
+}
+
+.cta-button:focus {
+  outline: 3px solid var(--color-link-light);
+  outline-offset: 2px;
+  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.3), 0 10px 10px -5px rgba(34, 197, 94, 0.2);
+}
+
+@media (max-width: 768px) {
+  .cta-button {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+.dark .cta-button {
+  background: linear-gradient(to bottom right, var(--color-button-light), var(--color-button-hover-light));
+}
+
+.dark .cta-button:focus {
+  outline-color: var(--color-link-dark);
+}
+
+/* グリーン系CTAボタン（featured用） */
+.cta-button-green {
+  background: linear-gradient(to bottom right, var(--color-button-light), var(--color-button-hover-light));
+}
+
+.cta-button-green:hover {
+  background: linear-gradient(to bottom right, var(--color-button-hover-light), #15803d);
+}
+
+.dark .cta-button-green {
+  background: linear-gradient(to bottom right, var(--color-button-light), var(--color-button-hover-light));
+}

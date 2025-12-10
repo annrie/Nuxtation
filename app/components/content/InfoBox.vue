@@ -37,23 +37,25 @@ const props = defineProps(["type"]);
   </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
+@reference "tailwindcss";
+
 .info-box {
-  @apply border rounded-lg flex bg-hex-1f2937 border-slate-200 my-8 p-4 pt-20px text-slate-500 gap-2 items-start;
+  @apply border rounded-lg flex bg-gray-800 border-slate-200 my-8 p-4 pt-5 text-slate-500 gap-2 items-start;
 }
 details summary {
-  @apply cursor-pointer flex font-semibold leading-tight lt-md:w-280px;
+  @apply cursor-pointer flex font-semibold leading-tight max-md:w-[280px];
 }
 
 details {
-  @apply -ml-20px;
+  @apply -ml-5;
 }
 details .details {
   @apply text-sm;
 }
 
 .info-box .icon {
-  @apply flex-shrink-0 z-2;
+  @apply flex-shrink-0 z-[2];
 }
 
 .info-box.warning {

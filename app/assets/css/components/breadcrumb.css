@@ -1,0 +1,15 @@
+/* パンくずリスト専用スタイル - Tailwind @apply */
+
+@layer components {
+  /* パンくずリストベーススタイル */
+  .breadcrumb-list {
+    @apply text-base;
+  }
+
+  /* パンくずリストのアイコンサイズ（モバイル優先 + レスポンシブ） */
+  .breadcrumb-icon,
+  .breadcrumb-icon svg,
+  .breadcrumb-link svg {
+    @apply text-[1.65rem] w-[1.65rem] h-[1.65rem] md:text-[1.5rem] md:w-[1.5rem] md:h-[1.5rem];
+  }
+}

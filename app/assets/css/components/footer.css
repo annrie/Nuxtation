@@ -1,0 +1,77 @@
+/* フッター専用スタイル - Pure CSS */
+
+/* フッターベーススタイル */
+footer.custom-footer {
+  background-color: #111827;
+  margin-top: 4rem;
+}
+
+/* アイコンとテキストを白く表示 */
+footer.custom-footer,
+footer.custom-footer *,
+footer.custom-footer button,
+footer.custom-footer button *,
+footer.custom-footer a,
+footer.custom-footer a * {
+  color: white;
+  fill: white;
+}
+
+/* SVG要素のstrokeも白く */
+footer.custom-footer svg,
+footer.custom-footer path {
+  stroke: white;
+}
+
+/* ホバー時のスタイル */
+footer.custom-footer button:hover,
+footer.custom-footer a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+footer.custom-footer button:hover,
+footer.custom-footer button:hover *,
+footer.custom-footer a:hover,
+footer.custom-footer a:hover * {
+  color: rgba(255, 255, 255, 0.8);
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+/* Nuxt UI ボタンのボーダー・枠線を消す */
+footer.custom-footer button,
+footer.custom-footer a[role="button"] {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+footer.custom-footer button:focus,
+footer.custom-footer button:active,
+footer.custom-footer a[role="button"]:focus,
+footer.custom-footer a[role="button"]:active {
+  border: none;
+  box-shadow: none;
+  outline: none;
+  ring: 0;
+  --tw-ring-width: 0px;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-color: transparent;
+  --tw-ring-offset-color: transparent;
+  border-width: 0;
+  border-color: transparent;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}

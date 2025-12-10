@@ -1,0 +1,194 @@
+/* Page Transitions - Pure CSS */
+
+/* Page Transitions */
+.page-enter-active,
+.page-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 300ms;
+  transition-timing-function: ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(0.5rem);
+}
+
+/* Fade Layout Transitions */
+.fade-layout-enter-active,
+.fade-layout-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 500ms;
+  transition-timing-function: ease;
+}
+
+.fade-layout-enter-from,
+.fade-layout-leave-to {
+  opacity: 0;
+  filter: blur(0.5rem);
+}
+
+/* Fade Transitions */
+.fade-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.fade-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+/* Fade Up Transitions */
+.fade-up-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.fade-up-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-up-leave-to {
+  opacity: 0;
+  filter: blur(0);
+  transform: translateY(-10px);
+}
+
+.fade-up-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: translateY(10px);
+}
+
+/* Fade Down Transitions */
+.fade-down-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.fade-down-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-down-leave-to {
+  opacity: 0;
+  filter: blur(0);
+  transform: translateY(10px);
+}
+
+.fade-down-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: translateY(-10px);
+}
+
+/* Fade Right Transitions */
+.fade-right-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.fade-right-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-right-leave-to {
+  opacity: 0;
+  filter: blur(0);
+  transform: translateX(-10px);
+}
+
+.fade-right-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: translateX(10px);
+}
+
+/* Fade Left Transitions */
+.fade-left-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.fade-left-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-left-leave-to {
+  opacity: 0;
+  filter: blur(0);
+  transform: translateX(10px);
+}
+
+.fade-left-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: translateX(-10px);
+}
+
+/* Zoom In Transitions */
+.zoom-in-enter-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.zoom-in-leave-active {
+  transition-property: opacity, filter, transform;
+  transition-duration: 800ms;
+  transition-timing-function: cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.zoom-in-leave-to {
+  opacity: 0;
+  filter: blur(0);
+  transform: scale(0.9);
+}
+
+.zoom-in-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+  transform: scale(0.9);
+}
+
+/* Bounce Transitions */
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config'
-import { bundledLanguages } from 'shiki';
 import { imagetools } from 'vite-imagetools';
 import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -13,6 +12,10 @@ import { readFileSync } from 'node:fs'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { BASE_URL, API_KEY } from process.env;
+
+// 共通で使う Shiki 言語リスト（重複を避けるため定数化）
+const SHIKI_PRELOAD = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown']
+const SHIKI_LANGS = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss']
 
 export default defineNuxtConfig({
   devtools: {
@@ -168,7 +171,6 @@ export default defineNuxtConfig({
    'nuxt-link-checker',
 //   '@nuxthq/studio',
    'nuxt-gtag',
-   '@nuxtjs/web-vitals',
     '@nuxt/fonts',
     '@nuxt/scripts',
     '@nuxt/icon',
@@ -244,7 +246,16 @@ export default defineNuxtConfig({
     }
   ],
 
-  shiki: {},
+  shiki: {
+    defaultTheme: {
+      light: 'github-light',
+      dark: 'github-dark',
+    },
+    defaultLang: 'typescript',
+    highlightOptions: {
+      lineNumbers: true,
+    },
+  },
   eslint: {
     config: {
       stylistic: {
@@ -295,26 +306,19 @@ export default defineNuxtConfig({
   },
 
   content: {
-//    preview: {
-//      api: 'https://api.nuxt.studio',
-//      dev: true,
-//    },
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
+      preload: SHIKI_PRELOAD,
+      langs: SHIKI_LANGS,
+      options: {
+        lineNumbers: true,
+      },
+    },
     build: {
       markdown: {
-        highlight: {
-          // Theme used in all color schemes.
-          theme: {
-            default: 'github-light',
-            dark: 'github-dark',
-
-          langs: Object.keys(bundledLanguages),
-//          langs: [
-//            // Read more about Shiki languages: https://shiki.style/guide/load-lang
-//            JSON.parse(
-//              readFileSync('./shiki/languages/gdscript.tmLanguage.json', 'utf-8'),
-//            ),
-//          ]
-        },
         anchorLinks: true,
         toc: {
           depth: 5,
@@ -322,17 +326,7 @@ export default defineNuxtConfig({
         },
         remarkPlugins: {
           'remark-gfm': true,
-          'remark-emoji': {
-            options: {
-              emoticon: true
-            }
-          },
-          'remark-oembed': {
-            // Options
-          }
         },
-        rehypePlugins: [
-        ],
       },
     },
     experimental: {
@@ -340,16 +334,9 @@ export default defineNuxtConfig({
         indexed: true,
         filterQuery: { _draft: false, _partial: false }
       },
-    nativeSqlite: true
-    },
-    watch: {
-      ws: {
-        port: 4000,
-        showURL: true,
-      },
+      nativeSqlite: true
     },
   },
-},
     mdc: {
       prose: true,
       remarkPlugins: {},
@@ -365,7 +352,15 @@ export default defineNuxtConfig({
         depth: 5,
         searchDepth: 5
       },
-      highlight: 'shiki', // Control syntax highlighting
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
+      langs:SHIKI_LANGS,
+      preload: SHIKI_PRELOAD,
+      lineNumbers: true,
+    },
       components: {
         prose: true, // Add predefined map to render Prose Components instead of HTML tags, like p, ul, code
         map: {

@@ -1,5 +1,6 @@
 import { defineNuxtConfig } from 'nuxt/config'
 import { imagetools } from 'vite-imagetools'
+import tailwindcss from "@tailwindcss/vite";
 import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import yaml from '@rollup/plugin-yaml'
@@ -666,6 +667,7 @@ nuxtIcon: {
     plugins: [
       imagetools(),
       yaml(),
+	  tailwindcss(),
       import.meta.env.NODE_ENV === 'production' ? [unwasm({})] : undefined,
       {
         name: 'ignore-dts',

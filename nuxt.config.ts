@@ -6,7 +6,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import yaml from '@rollup/plugin-yaml'
 import { pwa } from './app/config/pwa'
 import { SiteDescription, SiteName } from './app/logic/constants'
-import { rollup as unwasm } from 'unwasm/plugin'
+// import { rollup as unwasm } from 'unwasm/plugin'  // Nitro の experimental.wasm で代替
 import { readFileSync } from 'node:fs'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -293,6 +293,7 @@ export default defineNuxtConfig({
     highlightOptions: {
       lineNumbers: true,
     },
+    bundledLangs: ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss'],
   },
 
   eslint: {
@@ -619,6 +620,7 @@ nuxtIcon: {
   },
 
   nitro: {
+    preset: 'vercel',  // Edge Functions ではなく Node.js ランタイムを使用
     rollupConfig: {
       plugins: [Vue({
         template: {
@@ -643,9 +645,8 @@ nuxtIcon: {
       ],
     },
     experimental: {
-      wasm: true,
+      wasm: false,  // unwasm 警告を回避
     },
-    externals: { traceInclude: ['shiki/dist/core.mjs'] },
     devProxy: {
       host: 'localhost',
     },
@@ -668,7 +669,7 @@ nuxtIcon: {
       imagetools(),
       yaml(),
 	  tailwindcss(),
-      import.meta.env.NODE_ENV === 'production' ? [unwasm({})] : undefined,
+      // unwasm は Nitro の experimental.wasm: true で代替
       {
         name: 'ignore-dts',
         enforce: 'pre',
@@ -684,9 +685,11 @@ nuxtIcon: {
     },
     ssr: {
       noExternal: ['@nuxt/content', '@nuxtjs/mdc'],
+      external: ['shiki/onig.wasm'],
     },
     optimizeDeps: {
       include: [ '@heroicons/vue/20/solid' ],
+      exclude: ['shiki', 'shiki/onig.wasm'],
       entries: [
         "app/pages/**/*.vue",
         "app/layouts/**/*.vue",
@@ -706,6 +709,13 @@ nuxtIcon: {
           '@sqlite.org/sqlite-wasm',
           /sqlite3.*\.wasm$/,
         ],
+        onwarn(warning, warn) {
+          // unwasm の shiki WASM 警告を抑制
+          if (warning.plugin === 'unwasm' && warning.message?.includes('onig.wasm')) {
+            return;
+          }
+          warn(warning);
+        },
       },
     },
     css: {

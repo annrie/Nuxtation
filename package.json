@@ -1,7 +1,7 @@
 {
   "name": "nuxtation",
   "type": "module",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "private": true,
   "packageManager": "pnpm@10.28.0",
   "description": "Nuxtation project",

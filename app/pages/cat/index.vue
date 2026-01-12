@@ -47,7 +47,7 @@ useHead({
     <div class="flex justify-center mb-8">
       <button
         @click="() => refresh()"
-        class="px-6 py-3 font-bold text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+        class="px-6 py-3 font-bold !text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-blue-500 dark:to-blue-600 dark:hover:from-blue-600 dark:hover:to-blue-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
       >
         Refresh Cats
       </button>

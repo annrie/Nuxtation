@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/annrie/Nuxtation/compare/v3.0.2...v4.0.1) (2026-01-12)
+
+
+### 機能の追加、変更、削除
+
+* 🎉 Docus 5.3.1完全移行 - v4.0.0 ([0d63f3b](https://github.com/annrie/Nuxtation/commit/0d63f3b304cd8d5457d229c63176840f8111ea41))
+
+
+### バグ修正
+
+* /_vercel/speed-insights/*をprerender routesから削除 ([151a7e4](https://github.com/annrie/Nuxtation/commit/151a7e42909698673c5c6e9e672cb22f9cc45adc))
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* 📊 ページ訪問数の更新 ([2f0788c](https://github.com/annrie/Nuxtation/commit/2f0788c00e3a6a2e1f1c2a079c7c0a6facffe31d))
+
 ### [3.0.2](https://github.com/annrie/Nuxtation/compare/v3.0.1...v3.0.2) (2025-12-10)
 
 ### [3.0.1](https://github.com/annrie/Nuxtation/compare/v3.0.0...v3.0.1) (2025-08-19)

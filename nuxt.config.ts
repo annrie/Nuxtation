@@ -578,6 +578,7 @@ nuxtIcon: {
   },
 
   sitemap: {
+    zeroRuntime: true,  // サーバーバンドルサイズを削減
     defaults: {
       priority: 0.5,
       changefreq: 'monthly'  // デフォルトは月次更新

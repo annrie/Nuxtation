@@ -9,7 +9,7 @@ const attrs = useAttrs()
 const isTwitterEmbed = computed(() => {
   const classes = attrs.class || ''
   return typeof classes === 'string' && classes.includes('twitter-tweet')
-})
+});
 
 // Twitterスクリプトをロード（クライアント側のみ）
 onMounted(() => {
@@ -27,7 +27,8 @@ onMounted(() => {
           window.twttr.widgets.load()
         }
       }
-    } else if (window.twttr?.widgets) {
+    }
+    else if (window.twttr?.widgets) {
       // スクリプトがすでにロード済みの場合
       window.twttr.widgets.load()
     }
@@ -36,20 +37,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <ClientOnly v-if="isTwitterEmbed">
-    <blockquote v-bind="$attrs">
-      <slot />
-    </blockquote>
-    <template #fallback>
+  <div class="blockquote-wrapper">
+    <ClientOnly v-if="isTwitterEmbed">
       <blockquote v-bind="$attrs">
         <slot />
       </blockquote>
-    </template>
-  </ClientOnly>
-  <blockquote v-else v-bind="$attrs">
-    <slot />
-  </blockquote>
+      <template #fallback>
+        <blockquote v-bind="$attrs">
+          <slot />
+        </blockquote>
+      </template>
+    </ClientOnly>
+    <blockquote v-else v-bind="$attrs">
+      <slot />
+    </blockquote>
+  </div>
 </template>
+
+<style scoped>
+.blockquote-wrapper {
+  width: 100%;
+}
+</style>
 
 <style scoped>
 @reference "tailwindcss";

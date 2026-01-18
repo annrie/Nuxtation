@@ -54,49 +54,54 @@ const limitedDescription = computed(() => {
 </script>
 
 <template>
-  <UCard
-    v-if="ogpData"
-    :ui="{
-      root: 'overflow-hidden rounded-md ring-1 ring-gray-200 dark:ring-gray-800 hover:ring-gray-300 dark:hover:ring-gray-700 transition-colors duration-200 bg-white dark:bg-gray-900',
-      body: 'p-0 sm:p-0',
-      header: 'p-0 sm:p-0',
-    }"
-    class="my-3 not-prose"
-  >
-    <NuxtLink
-      :to="propsUrl"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="block text-inherit m-0 p-0 link-card-link"
+  <div class="link-card-root">
+    <UCard
+      v-if="ogpData"
+      :ui="{
+        root: 'overflow-hidden rounded-md ring-1 ring-gray-200 dark:ring-gray-800 hover:ring-gray-300 dark:hover:ring-gray-700 transition-colors duration-200 bg-white dark:bg-gray-900',
+        body: 'p-0 sm:p-0',
+        header: 'p-0 sm:p-0',
+      }"
+      class="my-3 not-prose"
     >
-      <div class="link-card-content">
-        <div class="link-card-image">
-          <img
-            :src="ogpData.ogImage?.[0]?.url || '/img/ogp.png'"
-            :alt="limitedTitle || 'リンク先のサムネイル画像'"
-          >
+      <NuxtLink
+        :to="propsUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block text-inherit m-0 p-0 link-card-link"
+      >
+        <div class="link-card-content">
+          <div class="link-card-image">
+            <img
+              :src="ogpData.ogImage?.[0]?.url || '/img/ogp.png'"
+              :alt="limitedTitle || 'リンク先のサムネイル画像'"
+            >
+          </div>
+          <div class="link-card-text">
+            <h3 class="link-card-title">
+              {{ limitedTitle }}
+            </h3>
+            <p class="link-card-description">
+              {{ limitedDescription }}
+            </p>
+            <p class="link-card-url">
+              {{ ogpData.ogUrl || props.siteUrl || propsUrl }}
+            </p>
+          </div>
         </div>
-        <div class="link-card-text">
-          <h3 class="link-card-title">
-            {{ limitedTitle }}
-          </h3>
-          <p class="link-card-description">
-            {{ limitedDescription }}
-          </p>
-          <p class="link-card-url">
-            {{ ogpData.ogUrl || props.siteUrl || propsUrl }}
-          </p>
-        </div>
-      </div>
-    </NuxtLink>
-  </UCard>
-  <div v-else class="flex items-center gap-2 p-4 text-gray-500/70 dark:text-slate-400/70 text-sm">
-    <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
-    <span>Loading link card...</span>
+      </NuxtLink>
+    </UCard>
+    <div v-else class="flex items-center gap-2 p-4 text-gray-500/70 dark:text-slate-400/70 text-sm">
+      <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
+      <span>Loading link card...</span>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.link-card-root {
+  width: 100%;
+}
 @reference "tailwindcss";
 
 .link-card-content {

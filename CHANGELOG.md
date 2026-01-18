@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/annrie/Nuxtation/compare/v4.0.1...v4.0.2) (2026-01-18)
+
+
+### バグ修正
+
+* ensure single root for content components ([bdb07c7](https://github.com/annrie/Nuxtation/commit/bdb07c70efd132ec0f931047daacf19459768e6a))
+
 ### [4.0.1](https://github.com/annrie/Nuxtation/compare/v3.0.2...v4.0.1) (2026-01-12)
 
 

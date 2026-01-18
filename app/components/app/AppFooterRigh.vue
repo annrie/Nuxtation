@@ -24,41 +24,51 @@ const colorModeIcon = computed(() => {
   return colorMode.value === 'dark'
     ? 'i-lucide-moon'
     : 'i-lucide-sun'
-})
+});
 
 const colorModeLabel = computed(() => {
   const labels = {
     light: 'ライトモード',
     dark: 'ダークモード',
-    system: 'システム設定に追従'
-  }
+    system: 'システム設定に追従',
+  };
   return labels[colorMode.preference as keyof typeof labels] || 'カラーモード'
-})
+});
 
-const cycleColorMode = () => {
-  const modes = ['light', 'dark', 'system'] as const
-  const currentIndex = modes.indexOf(colorMode.preference as any)
-  const nextIndex = (currentIndex + 1) % modes.length
-  colorMode.preference = modes[nextIndex]
+function cycleColorMode() {
+  const modes = ['light', 'dark', 'system'] as const;
+  const currentIndex = modes.indexOf(colorMode.preference as any);
+  const nextIndex = (currentIndex + 1) % modes.length;
+  colorMode.preference = modes[nextIndex];
 }
 </script>
 
 <template>
-  <template v-if="links.length">
+  <div class="footer-actions">
+    <template v-if="links.length">
+      <UButton
+        v-for="(link, index) of links"
+        :key="index"
+        size="sm"
+        v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
+      />
+    </template>
     <UButton
-      v-for="(link, index) of links"
-      :key="index"
+      :icon="colorModeIcon"
       size="sm"
-      v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
+      color="neutral"
+      variant="ghost"
+      :aria-label="colorModeLabel"
+      :title="colorModeLabel"
+      @click="cycleColorMode"
     />
-  </template>
-  <UButton
-    :icon="colorModeIcon"
-    size="sm"
-    color="neutral"
-    variant="ghost"
-    :aria-label="colorModeLabel"
-    :title="colorModeLabel"
-    @click="cycleColorMode"
-  />
+  </div>
 </template>
+
+<style scoped>
+.footer-actions {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+</style>

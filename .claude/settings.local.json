@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:developer.apple.com)",
+      "Bash(cd:*)",
+      "WebFetch(domain:ui.nuxt.com)",
+      "Bash(cat:*)",
+      "Bash(done)",
+      "Bash(npx lighthouse:*)",
+      "Bash(curl:*)",
+      "Bash(node -e:*)"
+    ],
+    "deny": []
+  },
+  "outputStyle": "default",
+  "spinnerTipsEnabled": true
+}

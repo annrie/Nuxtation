@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.2.0",
-    "@iconify/json": "^2.2.431",
+    "@iconify/json": "^2.2.432",
     "@imgix/js-core": "^3.8.0",
     "@imgix/vue": "^3.1.1",
     "@nuxt/image": "2.0.0",
@@ -59,13 +59,13 @@
   "devDependencies": {
     "@antfu/eslint-config": "^7.2.0",
     "@axe-core/playwright": "^4.11.0",
-    "@csstools/postcss-color-mix-function": "^4.0.0",
+    "@csstools/postcss-color-mix-function": "^4.0.1",
     "@eslint/js": "^9.39.2",
     "@formkit/nuxt": "^1.7.2",
     "@iconify-json/carbon": "^1.2.18",
     "@iconify-json/eos-icons": "^1.2.4",
     "@iconify-json/ic": "^1.2.4",
-    "@iconify-json/line-md": "^1.2.13",
+    "@iconify-json/line-md": "^1.2.14",
     "@iconify-json/logos": "^1.2.10",
     "@iconify-json/material-symbols": "^1.2.53",
     "@iconify-json/mdi": "^1.2.3",
@@ -136,7 +136,7 @@
     "vite-imagetools": "^9.0.2",
     "vite-plugin-eslint2": "^5.0.4",
     "vitest": "^4.0.18",
-    "vue-tsc": "^3.2.3",
+    "vue-tsc": "^3.2.4",
     "vue3-carousel-nuxt": "1.1.6"
   },
   "pnpm": {

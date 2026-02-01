@@ -59,8 +59,9 @@ export default defineNuxtConfig({
     scanPageMeta:'after-resolve',
     renderJsonPayloads: true,
     viewTransition: true,
-    componentIslands: true,  // Phase 22: コンポーネントアイランドで遅延hydration
-    treeshakeClientOnly: true,  // Phase 22: クライアント専用コードのツリーシェイク
+    componentIslands: true,
+    treeshakeClientOnly: true,
+	typedPages: true,
     appManifest: {
       override: true,
     },

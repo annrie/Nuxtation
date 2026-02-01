@@ -7,7 +7,7 @@ node_modules
 .env
 .env.*
 .vercel
-.data/kv/
+/data/kv/
 tmp
 *-tmp
 dist

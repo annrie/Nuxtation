@@ -195,6 +195,7 @@ useArticleSeo({
               v-for="item in navigationItems"
               :key="item.path"
               :to="item.path"
+              :prefetch="false"
               class="sidebar-link"
               :class="{ 'sidebar-link--active': item.path === route.path }"
             >

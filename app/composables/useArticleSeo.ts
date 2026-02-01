@@ -119,10 +119,9 @@ export function useArticleSeo(options: ArticleSeoOptions) {
 
   // 構造化データ
   useJsonld(() => {
-    const schemas = [
+    const graph: Record<string, unknown>[] = [
       // BreadcrumbList
       {
-        '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         'itemListElement': [
           {
@@ -149,8 +148,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
 
     // Article/BlogPosting/Book schema
     if (schemaType === 'BlogPosting') {
-      schemas.push({
-        '@context': 'https://schema.org',
+      graph.push({
         '@type': 'BlogPosting',
         'mainEntityOfPage': {
           '@type': 'WebPage',
@@ -176,8 +174,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
         'dateModified': article.value?.updatedAt || '',
       })
     } else if (schemaType === 'Article') {
-      schemas.push({
-        '@context': 'https://schema.org',
+      graph.push({
         '@type': 'Article',
         'mainEntityOfPage': {
           '@type': 'WebPage',
@@ -203,8 +200,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
         'dateModified': article.value?.updatedAt || '',
       })
     } else if (schemaType === 'Book') {
-      schemas.push({
-        '@context': 'https://schema.org',
+      graph.push({
         '@type': ['Book', 'Article'],
         'name': article.value?.title || '',
         'author': {
@@ -220,6 +216,9 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       })
     }
 
-    return schemas
+    return {
+      '@context': 'https://schema.org',
+      '@graph': graph,
+    }
   })
 }

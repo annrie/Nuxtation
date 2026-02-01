@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/annrie/Nuxtation/compare/v4.1.0...v4.1.1) (2026-02-01)
+
+
+### バグ修正
+
+* **pages:** 🐛 明示的なuseRoute/useRouterインポートを削除、サーバーミドルウェア修正 ([56322d3](https://github.com/annrie/Nuxtation/commit/56322d3ce3787c85255bfbdd835cfacfde7d8bc0))
+* **perf,seo:** ⚡🐛 パフォーマンス改善、JSON-LD修正、header CSS最適化 ([bba58d6](https://github.com/annrie/Nuxtation/commit/bba58d6f1f8d84d550e031db9fc456ad5fce4e28))
+
 ## [4.1.0](https://github.com/annrie/Nuxtation/compare/v4.0.2...v4.1.0) (2026-01-24)
 
 ### [4.0.2](https://github.com/annrie/Nuxtation/compare/v4.0.1...v4.0.2) (2026-01-18)

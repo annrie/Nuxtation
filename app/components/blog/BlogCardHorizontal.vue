@@ -49,10 +49,10 @@ const safeAlt = computed(() => props.item.title || '記事の画像')
               v-if="item.img"
               :src="item.img"
               :alt="safeAlt"
-              aspect-ratio="16/9"
+              class="h-full"
               format="avif,webp,png"
               loading="lazy"
-              :modifiers="{ fit: 'crop', w: 800, h: 450, q: 80, auto: 'format,compress' }"
+              :modifiers="{ fit: 'cover', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
               img-class="card-image"
               :is-dark="isDark"
             />

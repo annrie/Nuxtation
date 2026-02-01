@@ -65,7 +65,7 @@ const jenreClass = computed(() => {
               format="avif,webp,png"
               :loading="index === 0 ? 'eager' : 'lazy'"
               :fetchpriority="index === 0 ? 'high' : undefined"
-              :modifiers="{ fit: 'crop', w: 640, h: 360, q: index === 0 ? 85 : 80, auto: 'format,compress' }"
+              :modifiers="{ fit: 'contain', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
               img-class="card-image"
               :is-dark="isDark"
             />
@@ -165,15 +165,15 @@ const jenreClass = computed(() => {
   @apply m-0 p-0 block align-bottom;
 }
 
-.card-image {
-  @apply block w-full h-auto aspect-video object-cover transition-transform duration-[350ms] rounded-t-[20px];
+:deep(.card-image) {
+  @apply absolute top-0 left-0 w-full h-full aspect-video object-contain transition-transform duration-[350ms] rounded-t-[20px];
 }
 
 .biblio-variant .card-image {
   @apply !rounded-none;
 }
 
-.card:hover .card-image {
+.card:hover :deep(.card-image) {
   @apply scale-105;
 }
 

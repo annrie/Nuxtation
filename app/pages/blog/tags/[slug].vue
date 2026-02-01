@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute, useAsyncData } from '#imports'
 import { sortArticlesByLatestDate } from '~/composables/useBlogDate'
 
 const route = useRoute()

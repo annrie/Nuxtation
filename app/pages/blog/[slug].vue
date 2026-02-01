@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, provide } from 'vue'
-import { useRoute } from 'vue-router'
 
 // ダークモード状態を1回だけ取得してprovide
 const isDark = useDark()

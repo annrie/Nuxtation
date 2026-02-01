@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { clearError, useError } from "#app";
-import { useRouter } from "vue-router";
 
 // エラーページを表示する原因になったエラーオブジェクトを取得
 const error = useError();

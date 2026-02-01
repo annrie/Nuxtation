@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute, useAsyncData } from '#imports'
 import { sortArticlesByLatestDate } from '~/composables/useBlogDate'
 
 const route = useRoute()
@@ -67,39 +66,40 @@ useSeoMeta({
     `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
 })
 
-useJsonld(() => [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'ホーム',
-        'item': 'https://nuxtation.phantomoon.com/'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'ブログ',
-        'item': 'https://nuxtation.phantomoon.com/blog/'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 3,
-        'name': slug.value || '',
-        'item': `https://nuxtation.phantomoon.com${route.path}`
-      }
-    ]
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': title.value || '',
-    'description': description.value || '',
-    'url': `https://nuxtation.phantomoon.com${route.path}`
-  }
-])
+useJsonld(() => ({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'ホーム',
+          'item': 'https://nuxtation.phantomoon.com/'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'ブログ',
+          'item': 'https://nuxtation.phantomoon.com/blog/'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': slug.value || '',
+          'item': `https://nuxtation.phantomoon.com${route.path}`
+        }
+      ]
+    },
+    {
+      '@type': 'CollectionPage',
+      'name': title.value || '',
+      'description': description.value || '',
+      'url': `https://nuxtation.phantomoon.com${route.path}`
+    }
+  ]
+}))
 </script>
 
 <template>

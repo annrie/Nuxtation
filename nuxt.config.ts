@@ -59,8 +59,9 @@ export default defineNuxtConfig({
     scanPageMeta:'after-resolve',
     renderJsonPayloads: true,
     viewTransition: true,
-    componentIslands: true,  // Phase 22: コンポーネントアイランドで遅延hydration
-    treeshakeClientOnly: true,  // Phase 22: クライアント専用コードのツリーシェイク
+    componentIslands: true,
+    treeshakeClientOnly: true,
+	typedPages: true,
     appManifest: {
       override: true,
     },
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
         externalRelAttribute: 'noopener noreferrer',
         trailingSlash: 'remove',
         prefetch: true,
-        prefetchOn: { visibility: true }
+        prefetchOn: { interaction: true }
       }
     },
   },
@@ -635,6 +636,7 @@ nuxtIcon: {
       },
       plugins: ['@/plugins/nitro.error.ts'],
     },
+	compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
       failOnError: false,
@@ -681,6 +683,11 @@ nuxtIcon: {
         },
       },
     ],
+			vue: {
+				features: {
+					optionsAPI: false,
+				},
+			},			
     define: {
       'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
     },
@@ -718,8 +725,14 @@ nuxtIcon: {
           warn(warning);
         },
       },
-    },
-    css: {
+	terserOptions: {
+		compress: {
+			drop_console: process.env.NODE_ENV === "production",
+			drop_debugger: process.env.NODE_ENV === "production",
+		},
+	},
+},
+css: {
       preprocessorMaxWorkers: true
     },
     $client: {

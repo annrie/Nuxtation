@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute, useRouter, useAsyncData, queryCollection } from '#imports'
 
 const props = withDefaults(defineProps<{ pageSize?: number }>(), {
   pageSize: 6,
@@ -134,33 +133,34 @@ useSeoMeta({
     `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
 })
 
-useJsonld(() => [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      {
-        '@type': 'ListItem',
-        'position': 1,
-        'name': 'ホーム',
-        'item': 'https://nuxtation.phantomoon.com/'
-      },
-      {
-        '@type': 'ListItem',
-        'position': 2,
-        'name': 'ブログ',
-        'item': 'https://nuxtation.phantomoon.com/blog/'
-      }
-    ]
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    'name': 'Blog Posts',
-    'description': "Here's a list of all my blog posts",
-    'url': 'https://nuxtation.phantomoon.com/blog/'
-  }
-])
+useJsonld(() => ({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'ホーム',
+          'item': 'https://nuxtation.phantomoon.com/'
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': 'ブログ',
+          'item': 'https://nuxtation.phantomoon.com/blog/'
+        }
+      ]
+    },
+    {
+      '@type': 'CollectionPage',
+      'name': 'Blog Posts',
+      'description': "Here's a list of all my blog posts",
+      'url': 'https://nuxtation.phantomoon.com/blog/'
+    }
+  ]
+}))
 </script>
 
 <template>
@@ -168,7 +168,7 @@ useJsonld(() => [
     <aside class="sidebar sidebar--left ml-5">
       <h2 class="sidebar-title">記事ナビゲーション</h2>
       <nav v-if="navigationItems.length" class="sidebar-nav">
-        <NuxtLink v-for="item in navigationItems" :key="item.path" :to="item.path" class="sidebar-link">
+        <NuxtLink v-for="item in navigationItems" :key="item.path" :to="item.path" :prefetch="false" class="sidebar-link">
           <Icon name="carbon:document" class="inline-block mr-2" />{{ item.title }}
         </NuxtLink>
       </nav>

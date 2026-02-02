@@ -868,7 +868,7 @@ useArticleSeo({
   font-weight: 700;
   color: #0f172a;
   text-align: center;
-  border: 2px solid #b92a2c;
+  border: 2px solid #b92a2c !important;
   border-radius: 10px;
   text-decoration: none;
   line-height: 1.4;

@@ -43,13 +43,56 @@ export const pwa: ModuleOptions = {
     ]
   },
   workbox: {
-    globPatterns: ['**/*.{js,css,html,txt,png,webp,ico,svg}'],
-    globIgnores: ['node_modules/**/*','sw.js','workbox-*.js'],
+    // パフォーマンス改善: 静的アセットのみプリキャッシュ（HTMLはネットワーク優先）
+    globPatterns: [
+      '_nuxt/*.js',
+      '_nuxt/*.css',
+      'favicon.ico',
+      'manifest.webmanifest',
+    ],
+    globIgnores: [
+      'node_modules/**/*',
+      'sw.js',
+      'workbox-*.js',
+      '**/*.map',           // ソースマップ除外
+      'api/**',             // API除外
+      '**/*.html',          // HTMLはruntimeCachingで処理
+    ],
     navigateFallbackDenylist: [/^\/api\//],
     navigateFallback: '/',
     cleanupOutdatedCaches: true,
     maximumFileSizeToCacheInBytes: 60000000,
     runtimeCaching: [
+      // HTMLページ: ネットワーク優先（オフライン時はキャッシュ使用）
+      {
+        urlPattern: /\.html$|\/[^.]*$/i,
+        handler: 'NetworkFirst',
+        options: {
+          cacheName: 'pages-cache',
+          expiration: {
+            maxEntries: 100,
+            maxAgeSeconds: 60 * 60 * 24 * 7, // 7日間
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      // 画像: キャッシュ優先
+      {
+        urlPattern: /\.(?:png|webp|jpg|jpeg|svg|gif|ico)$/i,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'images-cache',
+          expiration: {
+            maxEntries: 200,
+            maxAgeSeconds: 60 * 60 * 24 * 30, // 30日間
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
       {
         urlPattern: /^https:\/\/fonts.googleapis.com\/.*/i,
         handler: 'CacheFirst',
@@ -57,7 +100,7 @@ export const pwa: ModuleOptions = {
           cacheName: 'google-fonts-cache',
           expiration: {
             maxEntries: 10,
-            maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+            maxAgeSeconds: 60 * 60 * 24 * 365, // 365日間
           },
           cacheableResponse: {
             statuses: [0, 200],
@@ -71,7 +114,7 @@ export const pwa: ModuleOptions = {
           cacheName: 'gstatic-fonts-cache',
           expiration: {
             maxEntries: 10,
-            maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+            maxAgeSeconds: 60 * 60 * 24 * 365, // 365日間
           },
           cacheableResponse: {
             statuses: [0, 200],

@@ -7,7 +7,7 @@ node_modules
 .env
 .env.*
 .vercel
-/data/kv/*
+.data/kv/pageVisits
 tmp
 *-tmp
 dist
@@ -15,3 +15,4 @@ AGENTS*.md
 /test-results/
 /playwright-report/
 /playwright/.cache/
+docs/

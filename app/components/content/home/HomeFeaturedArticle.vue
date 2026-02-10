@@ -49,11 +49,11 @@ const limitedDescription = computed(() => {
           v-if="item.img"
           :src="item.img"
           :alt="item.title"
-          aspect-ratio="21/9"
+          class="h-full"
           format="avif,webp,png"
           loading="eager"
           fetchpriority="high"
-          :modifiers="{ fit: 'crop', w: 1200, h: 514, q: 85, auto: 'format,compress' }"
+          :modifiers="{ fit: 'cover', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
           img-class="featured-image"
           :is-dark="isDark"
         />
@@ -136,11 +136,11 @@ const limitedDescription = computed(() => {
   }
 }
 
-.featured-image {
-  @apply block w-full h-auto aspect-video object-cover transition-transform duration-[450ms] ease-in-out;
+:deep(.featured-image) {
+  @apply block w-full h-full object-cover transition-transform duration-[450ms] ease-in-out;
 }
 
-.featured:hover .featured-image {
+.featured:hover :deep(.featured-image) {
   @apply scale-105;
 }
 

@@ -171,7 +171,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-shiki',
     // '@nuxt/ui',  // 削除: Docusのextendsで自動的に含まれるかテスト
-//    'nuxt-content-twoslash',
+    'nuxt-content-twoslash', // twoslash: @nuxt/content より前に配置必須
     '@nuxtjs/robots',
     '@nuxtjs/sitemap',
     '@nuxt/content',
@@ -295,6 +295,11 @@ export default defineNuxtConfig({
       lineNumbers: true,
     },
     bundledLangs: ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss'],
+  },
+
+  twoslash: {
+    // Nuxt の自動生成型を注入（デフォルト: true）
+    injectNuxtTypes: true,
   },
 
   eslint: {
@@ -429,6 +434,7 @@ nuxtIcon: {
     '@@/node_modules/kiso.css/kiso.css',
     '~/assets/css/main.css',
     'v-network-graph/lib/style.css',
+    '@shikijs/twoslash/style-rich.css', // twoslash のホバーツールチップ用スタイル
   ],
 
   ui: {
@@ -569,7 +575,7 @@ nuxtIcon: {
   },
 
   sourcemap: {
-    server: true,
+    server: false,
     client: true,
   },
 
@@ -636,7 +642,8 @@ nuxtIcon: {
       },
       plugins: ['@/plugins/nitro.error.ts'],
     },
-	compressPublicAssets: true,
+	// compressPublicAssets: ホスティング先がオンザフライ圧縮するため無効化
+	// compressPublicAssets: true,
     prerender: {
       crawlLinks: true,
       failOnError: false,

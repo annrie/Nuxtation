@@ -305,8 +305,9 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       stylistic: {
-        indent: 2,
-        semi: true,
+		indent: 2,
+		quotes: 'single', 
+		semi: false,
       },
       standalone: false,
       nuxt: {

@@ -81,4 +81,38 @@
       "Read(./.entire/metadata/**)"
     ]
   }
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": false,
+    "context7@claude-plugins-official": false,
+    "github@claude-plugins-official": false,
+    "code-review@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "commit-commands@claude-plugins-official": false,
+    "playwright@claude-plugins-official": false,
+    "security-guidance@claude-plugins-official": false,
+    "code-simplifier@claude-plugins-official": false,
+    "pr-review-toolkit@claude-plugins-official": false,
+    "figma@claude-plugins-official": false,
+    "example-skills@anthropic-agent-skills": false,
+    "document-skills@anthropic-agent-skills": false,
+    "vueuse-functions@vueuse-skills": false,
+    "ralph-loop@claude-plugins-official": false,
+    "sentry@claude-plugins-official": false,
+    "nuxt@nuxt-skills": false,
+    "document-writer@nuxt-skills": false,
+    "motion@nuxt-skills": false,
+    "nuxt-better-auth@nuxt-skills": false,
+    "nuxt-modules@nuxt-skills": false,
+    "nuxt-seo@nuxt-skills": false,
+    "nuxt-ui@nuxt-skills": false,
+    "nuxthub@nuxt-skills": false,
+    "pnpm@nuxt-skills": false,
+    "vite@nuxt-skills": false,
+    "vitest@nuxt-skills": false,
+    "vue@nuxt-skills": false,
+    "vueuse@nuxt-skills": false,
+    "claude-mem@thedotmack": false,
+    "superpowers@claude-plugins-official": false,
+    "swift-lsp@claude-plugins-official": false
+  },
 }

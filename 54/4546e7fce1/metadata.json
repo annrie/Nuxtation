@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "544546e7fce1",
+  "strategy": "manual-commit",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/assets/css/transitions.css",
+    "app/components/SearchModal.vue",
+    "app/components/blog/BlogIndexPage.vue",
+    "app/components/content/LinkCard.vue",
+    "app/components/content/home/HomeLanding.vue",
+    "app/composables/useArticleSeo.ts",
+    "app/pages/blog/tags/[slug].vue",
+    "app/pages/blog/tags/[slug].vue.bak",
+    "nuxt.config.ts",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/54/4546e7fce1/0/metadata.json",
+      "transcript": "/54/4546e7fce1/0/full.jsonl",
+      "context": "/54/4546e7fce1/0/context.md",
+      "content_hash": "/54/4546e7fce1/0/content_hash.txt",
+      "prompt": "/54/4546e7fce1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11019,
+    "cache_creation_tokens": 1394682,
+    "cache_read_tokens": 45719365,
+    "output_tokens": 144839,
+    "api_call_count": 388
+  }
+}

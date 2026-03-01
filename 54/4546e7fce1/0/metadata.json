@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "544546e7fce1",
+  "session_id": "37fdbb4b-905a-4e19-97f6-f11a5166268d",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T12:17:49.760677Z",
+  "branch": "develop",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "app/assets/css/transitions.css",
+    "app/components/SearchModal.vue",
+    "app/components/blog/BlogIndexPage.vue",
+    "app/components/content/LinkCard.vue",
+    "app/components/content/home/HomeLanding.vue",
+    "app/composables/useArticleSeo.ts",
+    "app/pages/blog/tags/[slug].vue",
+    "app/pages/blog/tags/[slug].vue.bak",
+    "nuxt.config.ts",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "e62f879e3800",
+  "token_usage": {
+    "input_tokens": 11019,
+    "cache_creation_tokens": 1394682,
+    "cache_read_tokens": 45719365,
+    "output_tokens": 144839,
+    "api_call_count": 388
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T12:17:28.801428Z",
+    "agent_lines": 329,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 329,
+    "agent_percentage": 100
+  }
+}

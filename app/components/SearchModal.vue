@@ -23,14 +23,25 @@ const modalContentRef = ref<HTMLElement | null>(null)
 // フォーカストラップの適用
 useFocusTrap(modalContentRef, isSearchModalOpen)
 
-// Search data from all collections
-const { data: files } = useLazyAsyncData('search', async () => {
+// セクション検索データ（@nuxt/content組み込み）
+const { data: searchSections } = useLazyAsyncData('search-sections', async () => {
+  const blogSections = await queryCollectionSearchSections('blog' as keyof PageCollections)
+  return blogSections || []
+})
+
+// ドキュメント全体データ（タグ・description等のメタ情報検索用）
+const { data: files } = useLazyAsyncData('search-files', async () => {
   const blogFiles = await queryCollection('blog' as keyof PageCollections).all()
   return blogFiles || []
 })
 
+// 総検索件数（セクション + ドキュメント）
+const totalDocCount = computed(() => {
+  return (searchSections.value?.length || 0) + (files.value?.length || 0)
+})
+
 // Extract text from body object
-const extractTextFromBody = (body: any): string => {
+function extractTextFromBody(body: any): string {
   if (!body) return ''
   if (typeof body === 'string') return body
 
@@ -39,7 +50,7 @@ const extractTextFromBody = (body: any): string => {
     if (!node) return
 
     if (node.type === 'text' && node.value) {
-      text += node.value + ' '
+      text += `${node.value} `
     }
 
     if (node.children && Array.isArray(node.children)) {
@@ -55,7 +66,7 @@ const extractTextFromBody = (body: any): string => {
 }
 
 // Get snippet around search query
-const getSnippet = (text: string, query: string, maxLength: number = 150): string => {
+function getSnippet(text: string, query: string, maxLength: number = 150): string {
   const lowerText = text.toLowerCase()
   const lowerQuery = query.toLowerCase()
   const index = lowerText.indexOf(lowerQuery)
@@ -67,22 +78,22 @@ const getSnippet = (text: string, query: string, maxLength: number = 150): strin
 
   let snippet = text.substring(start, end)
 
-  if (start > 0) snippet = '...' + snippet
-  if (end < text.length) snippet = snippet + '...'
+  if (start > 0) snippet = `...${snippet}`
+  if (end < text.length) snippet = `${snippet}...`
 
   return snippet
 }
 
 // Highlight search query in text
-const highlightQuery = (text: string, query: string): string => {
+function highlightQuery(text: string, query: string): string {
   if (!query || !text) return text
 
-  const regex = new RegExp(`(${query})`, 'gi')
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
   return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-700 text-gray-900 dark:text-white px-0.5 rounded">$1</mark>')
 }
 
 // Clear search
-const clearSearch = () => {
+function clearSearch() {
   searchQuery.value = ''
   searchResults.value = []
   selectedIndex.value = -1
@@ -92,7 +103,7 @@ const clearSearch = () => {
 }
 
 // Keyboard navigation
-const handleKeyDown = (event: KeyboardEvent) => {
+function handleKeyDown(event: KeyboardEvent) {
   if (!searchResults.value.length) return
 
   switch (event.key) {
@@ -124,7 +135,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
 }
 
 // Scroll to selected item
-const scrollToSelected = () => {
+function scrollToSelected() {
   nextTick(() => {
     const selectedElement = document.querySelector(`[data-search-index="${selectedIndex.value}"]`)
     if (selectedElement) {
@@ -133,57 +144,101 @@ const scrollToSelected = () => {
   })
 }
 
-// Search function
-const performSearch = () => {
-  if (!searchQuery.value || !files.value) {
+// Search function: セクション検索 → ドキュメント検索（includes）
+function performSearch() {
+  if (!searchQuery.value) {
     searchResults.value = []
     return
   }
 
-  const query = searchQuery.value.toLowerCase()
-  searchResults.value = files.value
-    .map((file: any) => {
+  const keyword = searchQuery.value.trim().toLowerCase()
+  const results: any[] = []
+  const seenPaths = new Set<string>()
+
+  // 1. セクション検索（queryCollectionSearchSections のデータ）
+  //    セクション単位で個別表示（同一ドキュメント内の複数セクションもすべて表示）
+  if (searchSections.value?.length) {
+    for (const section of searchSections.value) {
+      const sTitle = (section.title || '').toLowerCase()
+      const sContent = (section.content || '').toLowerCase()
+
+      if (sTitle.includes(keyword) || sContent.includes(keyword)) {
+        const path = section.id?.split('#')[0] || ''
+        if (!path) continue
+        seenPaths.add(path) // ドキュメント検索側での重複を防止
+
+        const snippet = sContent.includes(keyword)
+          ? getSnippet(section.content || '', searchQuery.value)
+          : ''
+
+        results.push({
+          path,
+          title: section.title || path.split('/').pop() || '',
+          snippet,
+          matchType: 'section',
+        })
+      }
+    }
+  }
+
+  // 2. ドキュメント検索（title, description, subtitle, tags, body）
+  if (files.value?.length) {
+    for (const file of files.value) {
+      const filePath = file.path || ''
+      if (seenPaths.has(filePath)) continue
+
       const title = (file.title || '').toLowerCase()
       const description = (file.description || '').toLowerCase()
       const subtitle = (file.subtitle || '').toLowerCase()
+      const tags = (file.tags || []).map((t: string) => t.toLowerCase())
       const bodyText = extractTextFromBody(file.body)
       const bodyLower = bodyText.toLowerCase()
 
-      const matchInTitle = title.includes(query)
-      const matchInDescription = description.includes(query)
-      const matchInSubtitle = subtitle.includes(query)
-      const matchInBody = bodyLower.includes(query)
+      const matchInTitle = title.includes(keyword)
+      const matchInDescription = description.includes(keyword)
+      const matchInSubtitle = subtitle.includes(keyword)
+      const matchInTags = tags.some((t: string) => t.includes(keyword))
+      const matchInBody = bodyLower.includes(keyword)
 
-      if (!matchInTitle && !matchInDescription && !matchInSubtitle && !matchInBody) {
-        return null
+      if (!matchInTitle && !matchInDescription && !matchInSubtitle && !matchInTags && !matchInBody) {
+        continue
       }
 
-      // Generate snippet
+      seenPaths.add(filePath)
+
       let snippet = ''
       let matchType = ''
 
       if (matchInDescription) {
         snippet = file.description
         matchType = 'description'
-      } else if (matchInSubtitle) {
+      }
+      else if (matchInSubtitle) {
         snippet = file.subtitle
         matchType = 'subtitle'
-      } else if (matchInBody) {
-        snippet = getSnippet(bodyText, query)
+      }
+      else if (matchInTags) {
+        snippet = file.description || ''
+        matchType = 'tag'
+      }
+      else if (matchInBody) {
+        snippet = getSnippet(bodyText, searchQuery.value)
         matchType = 'body'
-      } else if (matchInTitle) {
-        // Fallback snippet for title match
-        snippet = file.description || file.subtitle || getSnippet(bodyText, query)
+      }
+      else if (matchInTitle) {
+        snippet = file.description || file.subtitle || getSnippet(bodyText, searchQuery.value)
         matchType = 'title'
       }
 
-      return {
+      results.push({
         ...file,
         snippet,
-        matchType
-      }
-    })
-    .filter(Boolean)
+        matchType,
+      })
+    }
+  }
+
+  searchResults.value = results
 }
 
 // Watch search query
@@ -232,8 +287,10 @@ watch(isSearchModalOpen, async (newValue) => {
           </button>
 
           <!-- Search UI -->
-          <div v-if="files">
-            <h2 id="search-modal-title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white max-sm:text-white">検索</h2>
+          <div v-if="files || searchSections">
+            <h2 id="search-modal-title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white max-sm:text-white">
+              検索
+            </h2>
 
             <!-- Search input -->
             <div class="relative">
@@ -247,7 +304,7 @@ watch(isSearchModalOpen, async (newValue) => {
                 aria-describedby="search-help"
                 class="w-full px-4 py-3 pr-10 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 max-sm:bg-gray-800 max-sm:text-gray-100 max-sm:border-gray-700"
                 @keydown="handleKeyDown"
-              />
+              >
               <span id="search-help" class="sr-only">↑↓キーで選択、Enterキーで移動、Escapeキーで閉じる</span>
               <button
                 v-if="searchQuery"
@@ -265,7 +322,7 @@ watch(isSearchModalOpen, async (newValue) => {
             <!-- Search results -->
             <div class="mt-6 max-h-96 overflow-y-auto">
               <p v-if="!searchQuery" class="text-sm text-gray-600 dark:text-gray-400 max-sm:text-gray-400">
-                {{ files.length }} 件のドキュメントから検索できます
+                {{ totalDocCount }} 件のドキュメントから検索できます
               </p>
 
               <p v-else-if="searchResults.length === 0" class="text-sm text-gray-600 dark:text-gray-400 max-sm:text-gray-400">
@@ -284,11 +341,10 @@ watch(isSearchModalOpen, async (newValue) => {
                     :to="result.path || result._path"
                     :data-search-index="index"
                     tabindex="0"
-                    :class="[
-                      'block p-4 rounded-lg border transition-colors focus:outline-none',
+                    class="block p-4 rounded-lg border transition-colors focus:outline-none" :class="[
                       index === selectedIndex
                         ? 'border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-emerald-500 dark:hover:border-emerald-500',
                     ]"
                     @click="isSearchModalOpen = false"
                     @mouseenter="selectedIndex = index"
@@ -305,6 +361,12 @@ watch(isSearchModalOpen, async (newValue) => {
                     />
                     <div class="flex items-center gap-2">
                       <span
+                        v-if="result.matchType === 'section'"
+                        class="text-xs px-2 py-0.5 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded"
+                      >
+                        セクション
+                      </span>
+                      <span
                         v-if="result.matchType === 'subtitle'"
                         class="text-xs px-2 py-0.5 bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300 rounded"
                       >
@@ -315,6 +377,12 @@ watch(isSearchModalOpen, async (newValue) => {
                         class="text-xs px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 rounded"
                       >
                         本文
+                      </span>
+                      <span
+                        v-if="result.matchType === 'tag'"
+                        class="text-xs px-2 py-0.5 bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 rounded"
+                      >
+                        タグ
                       </span>
                       <div v-if="result.tags && result.tags.length" class="flex flex-wrap gap-2">
                         <span
@@ -332,7 +400,9 @@ watch(isSearchModalOpen, async (newValue) => {
             </div>
           </div>
           <div v-else class="p-8 text-center">
-            <p class="text-gray-600 dark:text-gray-400">検索データを読み込み中...</p>
+            <p class="text-gray-600 dark:text-gray-400">
+              検索データを読み込み中...
+            </p>
           </div>
         </div>
       </div>

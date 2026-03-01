@@ -58,7 +58,7 @@ export default defineNuxtConfig({
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
     renderJsonPayloads: true,
-    viewTransition: true,
+    viewTransition: false,
     componentIslands: true,
     treeshakeClientOnly: true,
 	typedPages: true,
@@ -163,8 +163,8 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: { name: 'fade-layout', mode: 'out-in' },
-    layoutTransition: { name: 'fade-layout', mode: 'out-in' },
+    pageTransition: { name: 'fade', mode: 'out-in' },
+    layoutTransition: false,
   },
 
   modules: [
@@ -188,7 +188,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
     '@nuxt/icon',
     // '@formkit/nuxt', // 未使用のため削除（251KiB節約）
-    'nuxt-jsonld',
+    // 'nuxt-jsonld', // 削除: useSchemaOrg（@nuxtjs/seo）で代替
     'vue3-carousel-nuxt',
   ],
 
@@ -434,7 +434,7 @@ nuxtIcon: {
   css: [
     '@@/node_modules/kiso.css/kiso.css',
     '~/assets/css/main.css',
-    'v-network-graph/lib/style.css',
+    // 'v-network-graph/lib/style.css', // 削除: 未使用
     '@shikijs/twoslash/style-rich.css', // twoslash のホバーツールチップ用スタイル
   ],
 
@@ -572,7 +572,7 @@ nuxtIcon: {
   },
 
   build: {
-    transpile: [ 'nuxt', '@imgix/vue', 'v-network-graph' ],
+    transpile: [ 'nuxt', '@imgix/vue' ],
   },
 
   sourcemap: {

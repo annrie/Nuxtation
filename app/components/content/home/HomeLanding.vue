@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import type { BlogPostPreview } from '~~/types'
 
-const { data: pageVisits } = await useFetch(() => `/api/kv`);
+const { data: pageVisits } = useLazyFetch(() => `/api/kv`)
 const refreshPage = () => {
 	window.location.reload();
 };
@@ -99,19 +99,20 @@ useSeoMeta({
   twitterImage: () => `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
 })
 
-useJsonld({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  'url': 'https://nuxtation.phantomoon.com/',
-  'potentialAction': {
-    '@type': 'SearchAction',
-    'target': {
-      '@type': 'EntryPoint',
-      'urlTemplate': 'https://nuxtation.phantomoon.com/search?q={search_term_string}'
+useSchemaOrg([
+  {
+    '@type': 'WebSite',
+    'url': 'https://nuxtation.phantomoon.com/',
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': {
+        '@type': 'EntryPoint',
+        'urlTemplate': 'https://nuxtation.phantomoon.com/search?q={search_term_string}',
+      },
+      'query-input': 'required name=search_term_string',
     },
-    'query-input': 'required name=search_term_string'
-  }
-})
+  },
+])
 </script>
 
 <template>

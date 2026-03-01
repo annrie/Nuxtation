@@ -25,16 +25,21 @@ if (isDevRun) {
   })
 }
 else {
-  const { data, error } = await useFetch(
+  const { data, error } = useLazyFetch(
     `/api/ogp?url=${encodeURIComponent(props.propsUrl)}`,
   )
 
-  if (error.value) {
-    console.error('Fetch error:', error.value)
-  }
-  else {
-    ogpData.value = data.value
-  }
+  watch(data, (newData) => {
+    if (newData) {
+      ogpData.value = newData
+    }
+  }, { immediate: true })
+
+  watch(error, (newError) => {
+    if (newError) {
+      console.error('Fetch error:', newError)
+    }
+  })
 }
 
 const maxLength = 40

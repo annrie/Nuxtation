@@ -118,107 +118,104 @@ export function useArticleSeo(options: ArticleSeoOptions) {
   })
 
   // 構造化データ
-  useJsonld(() => {
-    const graph: Record<string, unknown>[] = [
-      // BreadcrumbList
-      {
-        '@type': 'BreadcrumbList',
-        'itemListElement': [
-          {
-            '@type': 'ListItem',
-            'position': 1,
-            'name': 'ホーム',
-            'item': baseUrl,
-          },
-          {
-            '@type': 'ListItem',
-            'position': 2,
-            'name': breadcrumbSection.name,
-            'item': `${baseUrl}${breadcrumbSection.path}`,
-          },
-          {
-            '@type': 'ListItem',
-            'position': 3,
-            'name': article.value?.title || '',
-            'item': `${baseUrl}${route.path}`,
-          },
-        ],
+  const schemaGraph: Record<string, unknown>[] = [
+    // BreadcrumbList
+    {
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'ホーム',
+          'item': baseUrl,
+        },
+        {
+          '@type': 'ListItem',
+          'position': 2,
+          'name': breadcrumbSection.name,
+          'item': `${baseUrl}${breadcrumbSection.path}`,
+        },
+        {
+          '@type': 'ListItem',
+          'position': 3,
+          'name': article.value?.title || '',
+          'item': `${baseUrl}${route.path}`,
+        },
+      ],
+    },
+  ]
+
+  // Article/BlogPosting/Book schema
+  if (schemaType === 'BlogPosting') {
+    schemaGraph.push({
+      '@type': 'BlogPosting',
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': `${baseUrl}${route.path}`,
       },
-    ]
+      'headline': article.value?.title || '',
+      'description': article.value?.description || '',
+      'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
+      'author': {
+        '@type': 'Person',
+        'name': 'annrie',
+        'url': 'https://nuxtation.phantomoon.com',
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Nuxtation',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://nuxtation.phantomoon.com/logo.png',
+        },
+      },
+      'datePublished': article.value?.publishedAt || '',
+      'dateModified': article.value?.updatedAt || '',
+    })
+  }
+  else if (schemaType === 'Article') {
+    schemaGraph.push({
+      '@type': 'Article',
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': `${baseUrl}${route.path}`,
+      },
+      'headline': article.value?.title || '',
+      'description': article.value?.description || '',
+      'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
+      'author': {
+        '@type': 'Person',
+        'name': 'annrie',
+        'url': baseUrl,
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'Nuxtation',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': `${baseUrl}/logo.png`,
+        },
+      },
+      'datePublished': article.value?.publishedAt || '',
+      'dateModified': article.value?.updatedAt || '',
+    })
+  }
+  else if (schemaType === 'Book') {
+    schemaGraph.push({
+      '@type': ['Book', 'Article'],
+      'name': article.value?.title || '',
+      'author': {
+        '@type': 'Person',
+        'name': '山田正紀',
+        'sameAs': 'https://ja.wikipedia.org/wiki/山田正紀',
+      },
+      'description': article.value?.description || '',
+      'url': `https://nuxtation.phantomoon.com${route.path}`,
+      'datePublished': article.value?.publishedAt || '',
+      'articleBody': article.value?.body || '',
+      'genre': article.value?.tags?.map((tag: string) => formatTagName(tag)) || [],
+    })
+  }
 
-    // Article/BlogPosting/Book schema
-    if (schemaType === 'BlogPosting') {
-      graph.push({
-        '@type': 'BlogPosting',
-        'mainEntityOfPage': {
-          '@type': 'WebPage',
-          '@id': `${baseUrl}${route.path}`,
-        },
-        'headline': article.value?.title || '',
-        'description': article.value?.description || '',
-        'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
-        'author': {
-          '@type': 'Person',
-          'name': 'annrie',
-          'url': 'https://nuxtation.phantomoon.com',
-        },
-        'publisher': {
-          '@type': 'Organization',
-          'name': 'Nuxtation',
-          'logo': {
-            '@type': 'ImageObject',
-            'url': 'https://nuxtation.phantomoon.com/logo.png',
-          },
-        },
-        'datePublished': article.value?.publishedAt || '',
-        'dateModified': article.value?.updatedAt || '',
-      })
-    } else if (schemaType === 'Article') {
-      graph.push({
-        '@type': 'Article',
-        'mainEntityOfPage': {
-          '@type': 'WebPage',
-          '@id': `${baseUrl}${route.path}`,
-        },
-        'headline': article.value?.title || '',
-        'description': article.value?.description || '',
-        'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
-        'author': {
-          '@type': 'Person',
-          'name': 'annrie',
-          'url': baseUrl,
-        },
-        'publisher': {
-          '@type': 'Organization',
-          'name': 'Nuxtation',
-          'logo': {
-            '@type': 'ImageObject',
-            'url': `${baseUrl}/logo.png`,
-          },
-        },
-        'datePublished': article.value?.publishedAt || '',
-        'dateModified': article.value?.updatedAt || '',
-      })
-    } else if (schemaType === 'Book') {
-      graph.push({
-        '@type': ['Book', 'Article'],
-        'name': article.value?.title || '',
-        'author': {
-          '@type': 'Person',
-          'name': '山田正紀',
-          'sameAs': 'https://ja.wikipedia.org/wiki/山田正紀',
-        },
-        'description': article.value?.description || '',
-        'url': `https://nuxtation.phantomoon.com${route.path}`,
-        'datePublished': article.value?.publishedAt || '',
-        'articleBody': article.value?.body || '',
-        'genre': article.value?.tags?.map((tag: string) => formatTagName(tag)) || [],
-      })
-    }
-
-    return {
-      '@context': 'https://schema.org',
-      '@graph': graph,
-    }
-  })
+  useSchemaOrg(schemaGraph)
 }

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/annrie/Nuxtation/compare/v4.1.1...v4.2.0) (2026-03-01)
+
+
+### バグ修正
+
+* adjust card image positioning in HomeCard ([2a544eb](https://github.com/annrie/Nuxtation/commit/2a544eb48d7d45ecd0f4ed24302d69d7e03a24d6))
+* adjust image aspect ratios and layout for cards in nuxtation ([868ab65](https://github.com/annrie/Nuxtation/commit/868ab6545a8bf15053954d33b7061bf22b733b42))
+
+
+### パフォーマンスの改善
+
+* **build:** ⚡ ビルド高速化とtwoslash統合 ([a720c30](https://github.com/annrie/Nuxtation/commit/a720c3082e16ae57a9126dd2c16d155bc452c34c))
+
+
+### 機能の追加、変更、削除
+
+* **deps:** ⬆️ docus 5.5.0・@nuxt/content 3.11.2へアップデート、create-docsスキル追加 ([5f3319d](https://github.com/annrie/Nuxtation/commit/5f3319d73cf4166dc120ac96e6a95e62f2ab8e04))
+
 ### [4.1.1](https://github.com/annrie/Nuxtation/compare/v4.1.0...v4.1.1) (2026-02-01)
 
 

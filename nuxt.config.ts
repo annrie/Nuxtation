@@ -169,7 +169,6 @@ export default defineNuxtConfig({
 
   modules: [
     '@vueuse/nuxt',
-    'nuxt-shiki',
     // '@nuxt/ui',  // 削除: Docusのextendsで自動的に含まれるかテスト
     'nuxt-content-twoslash', // twoslash: @nuxt/content より前に配置必須
     '@nuxtjs/robots',
@@ -306,7 +305,7 @@ export default defineNuxtConfig({
     config: {
       stylistic: {
 		indent: 2,
-		quotes: 'single', 
+		quotes: 'single',
 		semi: false,
       },
       standalone: false,
@@ -695,7 +694,7 @@ nuxtIcon: {
 				features: {
 					optionsAPI: false,
 				},
-			},			
+			},
     define: {
       'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
     },

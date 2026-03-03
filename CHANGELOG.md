@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.1](https://github.com/annrie/Nuxtation/compare/v4.2.0...v4.2.1) (2026-03-03)
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* upgrade shiki & twoslash to v4, cleanup package resolutions and vite config ([81685c2](https://github.com/annrie/Nuxtation/commit/81685c21efe4ce312b2e373ebfedc5a50a7da946))
+
 ## [4.2.0](https://github.com/annrie/Nuxtation/compare/v4.1.1...v4.2.0) (2026-03-01)
 
 

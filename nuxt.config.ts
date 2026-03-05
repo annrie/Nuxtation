@@ -775,20 +775,21 @@ css: {
 
   postcss: {
     plugins: {
-      'autoprefixer': {},
+      'postcss-preset-env': {
+        stage: 2,
+        features: {
+          'color-mix': { preserve: true },
+          'custom-media-queries': true,
+          'nesting-rules': true,
+        },
+      },
+      'postcss-media-hover-any-hover': {},
       'cssnano': {
         preset: ['default', {
           discardComments: { removeAll: true },
-        }]
+        }],
       },
-      'postcss-nested': {},
-      'postcss-custom-media': {},
-      'postcss-media-hover-any-hover': {},
-      'postcss-calc': {},
-      '@csstools/postcss-color-mix-function': {
-        preserve: true,
-      },
-    }
+    },
   },
 
   llms: {

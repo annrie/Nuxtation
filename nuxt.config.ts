@@ -281,7 +281,7 @@ export default defineNuxtConfig({
         'line-md:home-md-twotone',
       ],
     },
-    serverBundle: false,
+    serverBundle: 'local',
   },
 
   shiki: {

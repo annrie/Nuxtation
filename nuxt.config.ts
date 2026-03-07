@@ -675,6 +675,13 @@ nuxtIcon: {
   },
 
   vite: {
+    // 外部ディレクトリにおいたので追加
+    server: {
+      watch: {
+        usePolling: true,
+        interval: 1000,
+      },
+    },
     plugins: [
       imagetools(),
       yaml(),
@@ -775,14 +782,6 @@ css: {
 
   postcss: {
     plugins: {
-      'postcss-preset-env': {
-        stage: 2,
-        features: {
-          'color-mix': { preserve: true },
-          'custom-media-queries': true,
-          'nesting-rules': true,
-        },
-      },
       'postcss-media-hover-any-hover': {},
       'cssnano': {
         preset: ['default', {

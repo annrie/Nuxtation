@@ -32,6 +32,7 @@
     "@imgix/js-core": "^3.8.0",
     "@imgix/vue": "^3.1.1",
     "@nuxt/image": "2.0.0",
+    "@liftkit-vue/theme-css": "^0.1.0",
     "@nuxt/ui": "^4.5.1",
     "@nuxtjs/robots": "^5.7.1",
     "@nuxtjs/seo": "^3.4.0",

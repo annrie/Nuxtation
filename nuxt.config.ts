@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 
   experimental: {
     inlineSSRStyles: true,
-    payloadExtraction: true,
+	payloadExtraction: true,
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
     renderJsonPayloads: true,
@@ -710,7 +710,12 @@ nuxtIcon: {
       external: ['shiki/onig.wasm'],
     },
     optimizeDeps: {
-      include: [ '@heroicons/vue/20/solid' ],
+		include: [
+			'buffer', // CJS
+			'@heroicons/vue/20/solid',
+			'@vue/devtools-core',
+			'@vue/devtools-kit',
+				],
       exclude: ['shiki', 'shiki/onig.wasm'],
       entries: [
         "app/pages/**/*.vue",

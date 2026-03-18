@@ -14,6 +14,7 @@ import { readFileSync } from 'node:fs'
 // 共通で使う Shiki 言語リスト（重複を避けるため定数化）
 const SHIKI_PRELOAD = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown']
 const SHIKI_LANGS = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss']
+const isDev = process.env.NODE_ENV === 'development'
 
 export default defineNuxtConfig({
   extends: ['docus'],
@@ -54,10 +55,11 @@ export default defineNuxtConfig({
 
   experimental: {
     inlineSSRStyles: true,
+	payloadExtraction:  isDev ? false : 'client',
 	payloadExtraction: true,
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
-    renderJsonPayloads: true,
+	renderJsonPayloads: isDev ? false : true,
     viewTransition: false,
     componentIslands: true,
     treeshakeClientOnly: true,
@@ -629,6 +631,11 @@ nuxtIcon: {
 
   nitro: {
     preset: 'vercel',  // Edge Functions ではなく Node.js ランタイムを使用
+	storage: {
+		'cache:nuxt:payload': isDev
+		? { driver: 'memory' }
+		: undefined
+	},
     rollupConfig: {
       plugins: [Vue({
         template: {
@@ -675,12 +682,12 @@ nuxtIcon: {
   },
 
   vite: {
-    // 外部ディレクトリにおいたので追加
-    server: {
-      watch: {
-        usePolling: true,
-        interval: 1000,
-      },
+	// 外部ディレクトリにおいた場合は追加。HMRが効かなくなるため
+//    server: {
+//      watch: {
+//        usePolling: true,
+//        interval: 1000,
+//      },
     },
     plugins: [
       imagetools(),

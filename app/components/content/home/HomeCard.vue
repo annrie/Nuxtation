@@ -166,7 +166,7 @@ const jenreClass = computed(() => {
 }
 
 :deep(.card-image) {
-  @apply absolute top-0 left-0 w-full h-full aspect-video object-contain object-top transition-transform duration-[350ms] rounded-t-[20px];
+  @apply absolute top-0 left-0 w-full h-full aspect-video object-cover object-top transition-transform duration-[350ms] rounded-t-[20px];
 }
 
 .biblio-variant .card-image {

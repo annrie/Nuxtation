@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 // ColorModeを初期化して、SSR時のハイドレーションミスマッチを防ぐ
 const colorMode = useColorMode()
 </script>
@@ -14,7 +13,6 @@ const colorMode = useColorMode()
       <slot />
     </main>
     <AppFooter />
-    <SpeedInsights />
   </div>
 </template>
 

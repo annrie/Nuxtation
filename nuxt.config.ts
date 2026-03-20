@@ -14,6 +14,7 @@ import { readFileSync } from 'node:fs'
 // 共通で使う Shiki 言語リスト（重複を避けるため定数化）
 const SHIKI_PRELOAD = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown']
 const SHIKI_LANGS = ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss']
+const isDev = process.env.NODE_ENV === 'development'
 
 export default defineNuxtConfig({
   extends: ['docus'],
@@ -54,10 +55,10 @@ export default defineNuxtConfig({
 
   experimental: {
     inlineSSRStyles: true,
-    payloadExtraction: true,
+	payloadExtraction: isDev ? false : 'client',
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
-    renderJsonPayloads: true,
+	renderJsonPayloads: isDev ? false : true,
     viewTransition: false,
     componentIslands: true,
     treeshakeClientOnly: true,
@@ -189,6 +190,8 @@ export default defineNuxtConfig({
     // '@formkit/nuxt', // 未使用のため削除（251KiB節約）
     // 'nuxt-jsonld', // 削除: useSchemaOrg（@nuxtjs/seo）で代替
     'vue3-carousel-nuxt',
+    '@vercel/speed-insights/nuxt',
+    '@vercel/analytics/nuxt',
   ],
 
   components: {
@@ -629,6 +632,11 @@ nuxtIcon: {
 
   nitro: {
     preset: 'vercel',  // Edge Functions ではなく Node.js ランタイムを使用
+	storage: {
+		'cache:nuxt:payload': isDev
+		? { driver: 'memory' }
+		: undefined
+	},
     rollupConfig: {
       plugins: [Vue({
         template: {
@@ -675,13 +683,13 @@ nuxtIcon: {
   },
 
   vite: {
-    // 外部ディレクトリにおいたので追加
-    server: {
-      watch: {
-        usePolling: true,
-        interval: 1000,
-      },
-    },
+	// 外部ディレクトリにおいた場合は追加。HMRが効かなくなるため
+//    server: {
+//      watch: {
+//        usePolling: true,
+//        interval: 1000,
+//      },
+//    },
     plugins: [
       imagetools(),
       yaml(),
@@ -710,7 +718,12 @@ nuxtIcon: {
       external: ['shiki/onig.wasm'],
     },
     optimizeDeps: {
-      include: [ '@heroicons/vue/20/solid' ],
+		include: [
+			'buffer', // CJS
+			'@heroicons/vue/20/solid',
+			'@vue/devtools-core',
+			'@vue/devtools-kit',
+				],
       exclude: ['shiki', 'shiki/onig.wasm'],
       entries: [
         "app/pages/**/*.vue",
@@ -759,8 +772,9 @@ css: {
         }
       }
     },
+  },
 
-   $production: {
+  $production: {
       routeRules: {
         '/api/**': { isr: false },
       },
@@ -769,7 +783,6 @@ css: {
     routeRules: {
       '/api/**': { isr: false },
     },
-  },
   },
 
   linkChecker: {
@@ -786,6 +799,7 @@ css: {
       'cssnano': {
         preset: ['default', {
           discardComments: { removeAll: true },
+          calc: false, // LiftKit の round()/pow() CSS関数との互換性
         }],
       },
     },

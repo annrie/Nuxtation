@@ -33,12 +33,23 @@ onUnmounted(() => {
     aria-label="ページトップへスクロール"
     class="scroll-to-top-btn"
     :ui="{
-      base: 'fixed bottom-8 right-8 z-50 !bg-blue-500 hover:!bg-blue-600 !text-white !rounded-full !p-4 !shadow-md hover:!shadow-[0_6px_16px_rgba(37,99,235,0.5)] transition-all duration-200 hover:-translate-y-1 hover:scale-110'
+      base: 'fixed bottom-8 right-8 z-50 !bg-blue-500 hover:!bg-blue-600 !text-white !rounded-full !p-4 !shadow-md hover:!shadow-[0_6px_16px_rgba(37,99,235,0.5)] transition-all duration-200 hover:-translate-y-1 hover:scale-110',
     }"
     @click="scrollToTop"
   />
 </template>
 
-<style scoped>
-/* ポジショニングはui propで管理 */
+<style>
+/* スクロールトップボタンのサイズ・形状を固定 */
+button.scroll-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 12px;
+  border-radius: 9999px;
+}
 </style>

@@ -107,6 +107,53 @@ header.custom-header nav div.shadow-lg {
   --tw-ring-shadow: none;
 }
 
+/* 右側アイコンボタンのサイズ・配置 */
+header.custom-header [data-slot="right"] {
+  gap: 16px;
+}
+
+header.custom-header [data-slot="right"] button,
+header.custom-header [data-slot="right"] a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+/* UContainer の mx-auto / padding が LiftKit @theme ブリッジで壊れるのを修正 */
+header.custom-header > div {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (width >= 640px) {
+  header.custom-header > div {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (width >= 1024px) {
+  header.custom-header > div {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  /* ハンバーガーメニュートグル確実な非表示 */
+  header.custom-header [data-slot="toggle"],
+  header.custom-header button[aria-expanded],
+  header.custom-header button[aria-label="Open menu"] {
+    display: none !important;
+  }
+}
+
 /* モバイルヘッダーメニュー */
 @media (max-width: 1024px) {
   /* モバイルメニューのパネルを常にダークモードに */

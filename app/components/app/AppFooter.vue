@@ -60,7 +60,9 @@ const links = computed(() =>
   <UFooter
     :ui="{
       root: 'bg-gray-900 dark:bg-gray-900 border-gray-800 dark:border-gray-800',
-      container: 'bg-gray-900 dark:bg-gray-900'
+      container: 'bg-gray-900 dark:bg-gray-900 flex items-center justify-between',
+      left: 'flex items-center justify-start order-1',
+      right: 'flex-1 flex items-center justify-end gap-4 order-3'
     }"
     class="custom-footer"
   >

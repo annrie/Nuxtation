@@ -16,3 +16,4 @@ AGENTS*.md
 /playwright-report/
 /playwright/.cache/
 docs/
+.claude/settings.local.json

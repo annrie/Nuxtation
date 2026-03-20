@@ -75,3 +75,51 @@ footer.custom-footer a[role="button"]:active {
   border-bottom-width: 0;
   border-left-width: 0;
 }
+
+/* UContainer の mx-auto / padding が LiftKit @theme ブリッジで壊れるのを修正 */
+footer.custom-footer > div {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+@media (width >= 640px) {
+  footer.custom-footer > div {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (width >= 1024px) {
+  footer.custom-footer > div {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* 右側アイコングループの配置 */
+footer.custom-footer [data-slot="right"] {
+  display: flex;
+  align-items: center;
+  gap: 16px !important;
+  margin-left: auto;
+}
+
+/* アイコンボタンのサイズ・配置 */
+footer.custom-footer button,
+footer.custom-footer a:not([href]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 8px;
+}

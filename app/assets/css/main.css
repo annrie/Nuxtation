@@ -8,6 +8,9 @@
 @import "@nuxt/ui";
 @import "@liftkit-vue/theme-css";
 
+/* LiftKit → Tailwind v4 ブリッジ（MD3トークンマッピング） */
+@import "./liftkit-bridge.css";
+
 /* Tailwind カスタムプロパティ（ジャンル別カラーパレット等） */
 @import "./tailwind.css";
 

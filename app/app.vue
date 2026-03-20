@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Analytics } from '@vercel/analytics/nuxt';
 import { withoutTrailingSlash } from "ufo";
 
 // 検索モーダルを遅延読み込み
@@ -124,5 +123,4 @@ useSeoMeta({
     <!-- Search Modal (遅延読み込み) -->
     <SearchModal v-model:is-open="isSearchModalOpen" />
   </NuxtLayout>
-  <Analytics />
 </template>

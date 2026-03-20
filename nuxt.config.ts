@@ -55,8 +55,7 @@ export default defineNuxtConfig({
 
   experimental: {
     inlineSSRStyles: true,
-	payloadExtraction:  isDev ? false : 'client',
-	payloadExtraction: true,
+	payloadExtraction: isDev ? false : 'client',
     sharedPrerenderData: false,
     scanPageMeta:'after-resolve',
 	renderJsonPayloads: isDev ? false : true,
@@ -191,6 +190,8 @@ export default defineNuxtConfig({
     // '@formkit/nuxt', // 未使用のため削除（251KiB節約）
     // 'nuxt-jsonld', // 削除: useSchemaOrg（@nuxtjs/seo）で代替
     'vue3-carousel-nuxt',
+    '@vercel/speed-insights/nuxt',
+    '@vercel/analytics/nuxt',
   ],
 
   components: {
@@ -688,7 +689,7 @@ nuxtIcon: {
 //        usePolling: true,
 //        interval: 1000,
 //      },
-    },
+//    },
     plugins: [
       imagetools(),
       yaml(),
@@ -771,8 +772,9 @@ css: {
         }
       }
     },
+  },
 
-   $production: {
+  $production: {
       routeRules: {
         '/api/**': { isr: false },
       },
@@ -781,7 +783,6 @@ css: {
     routeRules: {
       '/api/**': { isr: false },
     },
-  },
   },
 
   linkChecker: {
@@ -798,6 +799,7 @@ css: {
       'cssnano': {
         preset: ['default', {
           discardComments: { removeAll: true },
+          calc: false, // LiftKit の round()/pow() CSS関数との互換性
         }],
       },
     },

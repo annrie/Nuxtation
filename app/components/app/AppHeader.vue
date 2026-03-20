@@ -68,8 +68,8 @@ const openSearchModal = () => {
     :ui="{
       root: 'bg-gray-900 dark:bg-gray-900 border-gray-800 dark:border-gray-800',
       container: 'bg-gray-900 dark:bg-gray-900',
-      center: 'hidden lg:flex flex-1',
-      right: 'flex items-center gap-3',
+      center: 'hidden lg:flex flex-1 justify-center items-center',
+      right: 'flex items-center justify-end gap-3',
       content: 'bg-gray-900',
       body: 'bg-transparent',
       overlay: 'bg-gray-900/80 backdrop-blur'
@@ -81,7 +81,7 @@ const openSearchModal = () => {
     <AppHeaderCenter />
 
     <template #title>
-      <AppHeaderLogo class="h-6 w-auto shrink-0" />
+      <AppHeaderLogo class="h-8 w-auto shrink-0" />
     </template>
 
     <template #right>

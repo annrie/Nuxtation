@@ -111,13 +111,13 @@ const handleSubmenuKeydown = (event: KeyboardEvent, childIndex: number, totalChi
 </script>
 
 <template>
-  <nav v-if="navigationItems.length" class="flex items-center gap-3">
+  <nav v-if="navigationItems.length" class="flex items-center gap-8">
     <template v-for="(item, index) in navigationItems" :key="item.to">
       <!-- 子要素がない場合: 通常のリンク -->
       <NuxtLink
         v-if="!item.children.length"
         :to="item.to"
-        class="px-4 py-2 text-sm font-semibold tracking-wide transition-all duration-200 rounded-lg outline-none"
+        class="px-4 py-2 text-base font-semibold tracking-wide transition-all duration-200 rounded-lg outline-none"
         :class="item.active
           ? 'bg-emerald-900/30 !text-emerald-300'
           : '!text-gray-300 hover:!bg-gray-800 hover:!text-emerald-400'"
@@ -136,7 +136,7 @@ const handleSubmenuKeydown = (event: KeyboardEvent, childIndex: number, totalChi
       >
         <button
           type="button"
-          class="flex items-center gap-1 px-4 py-2 text-sm font-semibold tracking-wide transition-all duration-200 rounded-lg outline-none"
+          class="flex items-center gap-1 px-4 py-2 text-base font-semibold tracking-wide transition-all duration-200 rounded-lg outline-none"
           :class="item.active
             ? 'bg-primary-900/30 !text-primary-300'
             : '!text-gray-300 hover:!bg-gray-800 hover:!text-primary-400'"

@@ -19,9 +19,9 @@ const isDev = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
   extends: ['docus'],
 
-  future: {
-    compatibilityVersion: 4,
-  },
+//  future: {
+//    compatibilityVersion: 4,
+//  },
   compatibilityDate: '2025-07-15',
 
   runtimeConfig: {
@@ -105,13 +105,12 @@ export default defineNuxtConfig({
   },
 
   app: {
-    trailingSlash: false,
     head: {
       htmlAttrs: {
         lang: 'ja',
-        class: 'scroll-smooth'
+        class: 'scroll-smooth',
+        prefix: 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#',
       },
-      prefix: 'og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#',
       meta: [
         { property: 'fb:app_id', content: '207844090171446' },
         { name: 'twitter:card', content: 'summary_large_image' },
@@ -152,7 +151,6 @@ export default defineNuxtConfig({
         },
         {
           rel: 'mask-icon',
-          type: 'image/svg+xml',
           href: '/safari-pinned-tab.svg',
           color: '#5bbad5',
         },
@@ -638,11 +636,14 @@ nuxtIcon: {
 		: undefined
 	},
     rollupConfig: {
-      plugins: [Vue({
-        template: {
-          customElement: true,
+      plugins: [
+        Vue({
+          template: {
+            customElement: true,
           },
-      }), vueJsx()],
+        }) as any,
+        vueJsx() as any,
+      ],
     },
     esbuild: {
       options: {
@@ -672,8 +673,7 @@ nuxtIcon: {
 
   router: {
     options: {
-      trailingSlash: false,
-      strict: true
+      strict: true,
     },
   },
 

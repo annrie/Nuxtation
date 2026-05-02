@@ -1,7 +1,18 @@
-import { defineCollection, defineContentConfig, z } from '@nuxt/content'
+import { defineCollection, defineContentConfig } from '@nuxt/content'
+import { z } from 'zod'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
+import { defineRobotsSchema } from '@nuxtjs/robots/content'
 
 export default defineContentConfig({
   collections: {
+	content: defineCollection({
+		type: 'page',
+		source: '**/*.md',
+		schema: z.object({
+				robots: defineRobotsSchema(),
+				sitemap: defineSitemapSchema(),
+		}),
+	}),
     docs: defineCollection({
       source: "**/*.md",
       type: "page",

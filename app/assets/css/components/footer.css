@@ -76,7 +76,7 @@ footer.custom-footer a[role="button"]:active {
   border-left-width: 0;
 }
 
-/* UContainer の mx-auto / padding が LiftKit @theme ブリッジで壊れるのを修正 */
+/* UContainer の余白をフッター用に固定 */
 footer.custom-footer > div {
   margin-left: auto;
   margin-right: auto;

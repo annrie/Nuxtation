@@ -799,7 +799,7 @@ css: {
       'cssnano': {
         preset: ['default', {
           discardComments: { removeAll: true },
-          calc: false, // LiftKit の round()/pow() CSS関数との互換性
+          calc: false,
         }],
       },
     },

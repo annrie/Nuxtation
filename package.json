@@ -1,7 +1,7 @@
 {
   "name": "nuxtation",
   "type": "module",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "private": true,
   "packageManager": "pnpm@10.33.0",
   "description": "Nuxtation project",
@@ -32,7 +32,6 @@
     "@imgix/js-core": "^3.8.0",
     "@imgix/vue": "^3.1.1",
     "@nuxt/image": "2.0.0",
-    "@liftkit-vue/theme-css": "^0.2.1",
     "@nuxt/ui": "^4.6.1",
     "@nuxtjs/robots": "^6.0.7",
     "@nuxtjs/seo": "^5.1.3",

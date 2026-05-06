@@ -125,7 +125,7 @@ header.custom-header [data-slot="right"] a {
   border-radius: 8px;
 }
 
-/* UContainer の mx-auto / padding が LiftKit @theme ブリッジで壊れるのを修正 */
+/* UContainer の余白をヘッダー用に固定 */
 header.custom-header > div {
   margin-left: auto;
   margin-right: auto;

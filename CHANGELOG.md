@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.2](https://github.com/annrie/Nuxtation/compare/v4.3.0...v4.3.2) (2026-05-23)
+
+
+### バグ修正
+
+* support updated Nuxt dependencies ([68d990e](https://github.com/annrie/Nuxtation/commit/68d990e443bb9d8bdf429318449dff4f2a36a933))
+
+
+### 機能の追加、変更、削除
+
+* 🎉 upgrade dependencies, simplify header with AppHeaderLeft and enable styles auto-import ([8d9b38a](https://github.com/annrie/Nuxtation/commit/8d9b38ab9cc16b4f357243ec8ca476ea65b29ebc))
+* 🎸 add SKILLS files ([d3b112f](https://github.com/annrie/Nuxtation/commit/d3b112f3cd50ae2ff25512a9dbea5ba43f715eee))
+
+
+### ビルドプロセスまたは補助ツールの変更
+
+* merge develop into main ([8029a59](https://github.com/annrie/Nuxtation/commit/8029a59169f47f0f302ef0e892d99050af38228e))
+* merge develop into main ([19f8ff8](https://github.com/annrie/Nuxtation/commit/19f8ff81ea401a4863f4f149c41925d77e114232))
+* sync develop with main ([7b99763](https://github.com/annrie/Nuxtation/commit/7b99763bebf93d7e5ed02ac7a5922efa562c6ca9))
+
 ## [4.3.0](https://github.com/annrie/Nuxtation/compare/v4.2.2...v4.3.0) (2026-03-20)
 
 ### [4.2.2](https://github.com/annrie/Nuxtation/compare/v4.2.1...v4.2.2) (2026-03-07)

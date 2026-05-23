@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const appConfig = useAppConfig();
-const hasLogo = computed(() => !!(appConfig.header?.logo?.light || appConfig.header?.logo?.dark));
+const appConfig = useAppConfig()
+const hasLogo = computed(() => !!(appConfig.header?.logo?.light || appConfig.header?.logo?.dark))
 </script>
 
 <template>

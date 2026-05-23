@@ -3,23 +3,23 @@
  * Nuxt ContentのMarkdown画像コンポーネント
  * すべてのMarkdown画像に自動的にloading="lazy"を適用
  */
-const props = defineProps({
+defineProps({
   src: {
     type: String,
-    required: true
+    required: true,
   },
   alt: {
     type: String,
-    default: ''
+    default: '',
   },
   width: {
     type: [String, Number],
-    default: undefined
+    default: undefined,
   },
   height: {
     type: [String, Number],
-    default: undefined
-  }
+    default: undefined,
+  },
 })
 
 </script>

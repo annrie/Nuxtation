@@ -1,27 +1,27 @@
 <script setup lang="ts">
-const isVisible = ref(false);
+const isVisible = ref(false)
 
 function handleScroll(): void {
-  const st = window.scrollY || document.documentElement.scrollTop;
-  isVisible.value = st > window.innerHeight / 2;
+  const st = window.scrollY || document.documentElement.scrollTop
+  isVisible.value = st > window.innerHeight / 2
 }
 
 function scrollToTop(): void {
   window.scrollTo({
     top: 0,
     behavior: 'smooth',
-  });
+  })
 }
 
 // クライアント側でのみイベントリスナーを設定
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // 初期状態をチェック
-});
+  window.addEventListener('scroll', handleScroll)
+  handleScroll() // 初期状態をチェック
+})
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>

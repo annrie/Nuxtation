@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const props = defineProps<{
-  videoId: string;
-  playLabel?: string;
-}>();
+defineProps<{
+  videoId: string
+  playLabel?: string
+}>()
 </script>
 
 <template>

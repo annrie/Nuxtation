@@ -9,7 +9,7 @@ const attrs = useAttrs()
 const isTwitterEmbed = computed(() => {
   const classes = attrs.class || ''
   return typeof classes === 'string' && classes.includes('twitter-tweet')
-});
+})
 
 // Twitterスクリプトをロード（クライアント側のみ）
 onMounted(() => {

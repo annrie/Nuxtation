@@ -1,26 +1,26 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": false,
     "ignoreDeprecations": "6.0",
-    "allowSyntheticDefaultImports": true,
     "target": "ESNext",
-    "module": "preserve",
+    "jsx": "preserve",
+    "lib": ["ESNext", "DOM", "WebWorker"],
     "moduleDetection": "force",
+    "module": "preserve",
     "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "types": [
+      "nuxt",
+      "node"
+    ],
+    "allowJs": true,
     "strict": true,
     "noImplicitAny": true,
-    "allowJs": true,
-    "noEmit": true,
     "noUnusedLocals": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "jsx": "preserve",
-    "lib":["ESNext", "DOM", "WebWorker"],
-     "types":[
-      "nuxt",
-      "node",
-    ]
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   }
 }

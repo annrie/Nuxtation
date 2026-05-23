@@ -1,9 +1,8 @@
-import { ContentDoc } from '~/.nuxt/components.d';
-import type { ParsedContent as DefaultParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types';
+import type { ParsedContent as DefaultParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
+import type { MicroCMSImage, MicroCMSListContent } from 'microcms-js-sdk'
+import type { StorageMeta } from 'unstorage'
 import type { VitePWAOptions } from 'vite-plugin-pwa'
 import type { Ref, UnwrapNestedRefs } from 'vue'
-import type { StorageMeta } from 'unstorage'
-
 
 export interface ParsedContent extends DefaultParsedContent {
   storageMeta: StorageMeta
@@ -14,44 +13,45 @@ export interface ParsedContent extends DefaultParsedContent {
 export type Sections = 'blog' | 'catResponse'
 
 export interface BlogPost extends MarkdownParsedContent {
-  title: string,
-  publishedAt: string,
-  description: string,
-  url?: string,
-  img: string,
-  alt: string,
-  ogImage?: string,
-  provider?: string,
-  tags: string[],
-  published?: boolean,
-  updatedAt?: string,
-  path?: string,
+  title: string
+  publishedAt: string
+  description: string
+  url?: string
+  img: string
+  alt: string
+  ogImage?: string
+  provider?: string
+  tags: string[]
+  published?: boolean
+  updatedAt?: string
+  path?: string
 }
 
 export interface CatResponse {
-  id: string;
-  url: string;
-  width: number;
-  height: number;
+  id: string
+  url: string
+  width: number
+  height: number
 }
 
-export type BlogPostPreview = BlogPost;
+export type BlogPostPreview = BlogPost
 
 export interface PrevNext {
-  title?: string,
-  path?: string,
+  title?: string
+  path?: string
 }
 
 export interface Navigation {
-  url: string,
+  url: string
   link: string
 }
 
-export interface TwitterWindow extends Window {
-  twttr: any
-  widgets: any
+declare global {
+  interface Window {
+    twttr?: any
+    widgets?: any
+  }
 }
-declare const window: TwitterWindow
 
 export interface PwaInjection {
   isInstalled: boolean
@@ -106,15 +106,13 @@ export interface ModuleOptions extends Partial<VitePWAOptions> {
    */
   client?: ClientOptions
 }
-import type { MicroCMSImage, MicroCMSListContent } from "microcms-js-sdk";
-import { Category } from "../types";
 
-export type Blog = {
-  title?: string;
-  content?: string;
-  eyecatch?: MicroCMSImage;
-  category: (MicroCMSListContent & Category) | null;
-};
-export type Category = {
-  name?: string;
-};
+export interface Blog {
+  title?: string
+  content?: string
+  eyecatch?: MicroCMSImage
+  category: (MicroCMSListContent & Category) | null
+}
+export interface Category {
+  name?: string
+}

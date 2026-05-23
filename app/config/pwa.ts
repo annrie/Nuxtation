@@ -40,7 +40,7 @@ export const pwa: ModuleOptions = {
         type: 'image/svg+xml',
         purpose: 'maskable',
       },
-    ]
+    ],
   },
   workbox: {
     // パフォーマンス改善: 静的アセットのみプリキャッシュ（HTMLはネットワーク優先）
@@ -54,9 +54,9 @@ export const pwa: ModuleOptions = {
       'node_modules/**/*',
       'sw.js',
       'workbox-*.js',
-      '**/*.map',           // ソースマップ除外
-      'api/**',             // API除外
-      '**/*.html',          // HTMLはruntimeCachingで処理
+      '**/*.map', // ソースマップ除外
+      'api/**', // API除外
+      '**/*.html', // HTMLはruntimeCachingで処理
     ],
     navigateFallbackDenylist: [/^\/api\//],
     navigateFallback: '/',

@@ -21,11 +21,11 @@ const genreClass = computed(() => {
     return `genre-${props.genre}`
   }
   return ''
-});
+})
 
 const computedAriaLabel = computed(() => {
   return props.ariaLabel || undefined
-});
+})
 </script>
 
 <template>

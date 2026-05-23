@@ -118,8 +118,8 @@
 .prose [data-filename] + pre,
 .prose .filename + pre,
 .prose [filename] + pre,
-.prose div[class*="filename"] + pre,
-.prose div[class*="code-header"] + pre,
+.prose div[class*='filename'] + pre,
+.prose div[class*='code-header'] + pre,
 .prose .shiki-wrapper pre,
 .prose figure pre {
   margin-top: 0 !important;
@@ -209,7 +209,7 @@
 }
 
 /* 外部リンク用のアイコン */
-.prose a[target="_blank"] {
+.prose a[target='_blank'] {
   position: relative;
   font-weight: 600;
   display: inline-flex;
@@ -217,7 +217,7 @@
   gap: 0.25em;
 }
 
-.prose a[target="_blank"]::after {
+.prose a[target='_blank']::after {
   content: '';
   width: 0.95em;
   height: 0.95em;
@@ -228,7 +228,7 @@
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M14.75 3a1 1 0 0 0 0 2h3.19l-7.97 7.97a1 1 0 0 0 1.41 1.42l7.97-7.97V9.9a1 1 0 1 0 2 0V3.75A.75.75 0 0 0 21.56 3H14.75Zm-7.5 4a2.25 2.25 0 0 0-2.25 2.25v9.5A2.25 2.25 0 0 0 7.25 21h9.5A2.25 2.25 0 0 0 19 18.75V13.5a1 1 0 1 0-2 0v5.25a.25.25 0 0 1-.25.25h-9.5a.25.25 0 0 1-.25-.25v-9.5a.25.25 0 0 1 .25-.25h5.25a1 1 0 1 0 0-2H7.25Z'/%3E%3C/svg%3E");
 }
 
-.dark .prose a[target="_blank"]::after {
+.dark .prose a[target='_blank']::after {
   background-color: var(--external-link-dark);
 }
 
@@ -464,10 +464,10 @@
 
 /* コードグループとコピーボタンの枠線を削除 */
 .prose button,
-.prose [role="tablist"] button,
-.prose [role="tab"],
-.prose div[class*="code"] button,
-.prose div[class*="group"] button,
+.prose [role='tablist'] button,
+.prose [role='tab'],
+.prose div[class*='code'] button,
+.prose div[class*='group'] button,
 .prose figure button,
 .prose pre + div button,
 .prose div > button {
@@ -483,8 +483,8 @@
 /* フォーカス時も枠線を削除 */
 .prose button:focus,
 .prose button:focus-visible,
-.prose [role="tablist"] button:focus,
-.prose [role="tab"]:focus {
+.prose [role='tablist'] button:focus,
+.prose [role='tab']:focus {
   border: none !important;
   border-width: 0 !important;
   outline: none !important;
@@ -495,9 +495,9 @@
 }
 
 /* code-collapse ボタンのスタイル（開閉両方） */
-.prose div[class*="bg-gradient-to-t from-muted"] button,
-.prose button[data-state="closed"],
-.prose button[data-state="open"] {
+.prose div[class*='bg-gradient-to-t from-muted'] button,
+.prose button[data-state='closed'],
+.prose button[data-state='open'] {
   background-color: #d1d5db !important;
   padding: 0.5rem 1rem !important;
   border-radius: 0.375rem !important;
@@ -507,24 +507,24 @@
   opacity: 0.5;
 }
 
-.prose div[class*="bg-gradient-to-t from-muted"] button:hover,
-.prose button[data-state="closed"]:hover,
-.prose button[data-state="open"]:hover {
+.prose div[class*='bg-gradient-to-t from-muted'] button:hover,
+.prose button[data-state='closed']:hover,
+.prose button[data-state='open']:hover {
   background-color: #9ca3af !important;
   opacity: 1;
 }
 
-.dark .prose div[class*="bg-gradient-to-t from-muted"] button,
-.dark .prose button[data-state="closed"],
-.dark .prose button[data-state="open"] {
+.dark .prose div[class*='bg-gradient-to-t from-muted'] button,
+.dark .prose button[data-state='closed'],
+.dark .prose button[data-state='open'] {
   background-color: #374151 !important;
   color: #d1d5db !important;
   opacity: 0.5;
 }
 
-.dark .prose div[class*="bg-gradient-to-t from-muted"] button:hover,
-.dark .prose button[data-state="closed"]:hover,
-.dark .prose button[data-state="open"]:hover {
+.dark .prose div[class*='bg-gradient-to-t from-muted'] button:hover,
+.dark .prose button[data-state='closed']:hover,
+.dark .prose button[data-state='open']:hover {
   background-color: #4b5563 !important;
   opacity: 1;
 }

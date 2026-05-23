@@ -10,9 +10,9 @@ export default defineEventHandler((error) => {
       {
         headers: {
           'content-type': 'text/plain',
-          'cache-control': 'public, max-age=86400'
-        }
-      }
+          'cache-control': 'public, max-age=86400',
+        },
+      },
     )
   }
 

@@ -1,7 +1,7 @@
 {
   "disableEmoji": false,
   "format": "{type}{scope}: {emoji}{subject}",
-  "list": ["test", "feat", "fix", "chore", "docs", "refactor", "style", "ci", "perf","hotfix","typo","build","config","i18n","ux","WIP"],
+  "list": ["test", "feat", "fix", "chore", "docs", "refactor", "style", "ci", "perf", "hotfix", "typo", "build", "config", "i18n", "ux", "WIP"],
   "maxMessageLength": 64,
   "minMessageLength": 3,
   "questions": ["type", "scope", "subject", "body", "breaking", "issues", "lerna"],
@@ -17,32 +17,32 @@
       "emoji": "🐛",
       "value": "fix"
     },
-    "hotfix":  {
-      "description":   "致命的で緊急なバグ修正",
+    "hotfix": {
+      "description": "致命的で緊急なバグ修正",
       "emoji": "🔥",
-     "value": "Critical hotfix"
+      "value": "Critical hotfix"
     },
-   "chore": {
+    "chore": {
       "description": "ビルド関連や補助ツールの変更\n           （補助ツール、ドキュメント生成などのソースやテストの変更を含まない変更）",
       "emoji": "🤖",
       "value": "chore"
     },
-   "typo": {
+    "typo": {
       "description": "タイプミスの修正",
       "emoji": "✍️",
       "value": "typo"
     },
-   "build": {
+    "build": {
       "description": "ビルドシステムや外部依存に関する変更\n           （スコープ例: gulp, broccoli, npm）",
       "emoji": "🔨",
       "value": "build"
     },
-   "config": {
+    "config": {
       "description": "設定の追加や変更",
       "emoji": "🛠️",
       "value": "Configuration"
     },
-   "i18n": {
+    "i18n": {
       "description": "国際化",
       "emoji": "🏁",
       "value": "Internationalization"
@@ -78,9 +78,9 @@
       "value": "style"
     },
     "ux": {
-        "description": "ユーザーエクスペリエンス/ユーザビリティの改善",
-        "emoji": "💁",
-        "value": "ux"
+      "description": "ユーザーエクスペリエンス/ユーザビリティの改善",
+      "emoji": "💁",
+      "value": "ux"
     },
     "package": {
       "description": "packageの変更",

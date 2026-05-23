@@ -4,10 +4,10 @@
 header.custom-header,
 header.custom-header button,
 header.custom-header a,
-header.custom-header a[role="button"],
+header.custom-header a[role='button'],
 header.custom-header nav button,
 header.custom-header nav a,
-header.custom-header nav [role="button"] {
+header.custom-header nav [role='button'] {
   border: none;
   box-shadow: none;
   outline: none;
@@ -27,15 +27,15 @@ header.custom-header button:active,
 header.custom-header a:focus,
 header.custom-header a:hover,
 header.custom-header a:active,
-header.custom-header a[role="button"]:focus,
-header.custom-header a[role="button"]:hover,
-header.custom-header a[role="button"]:active,
+header.custom-header a[role='button']:focus,
+header.custom-header a[role='button']:hover,
+header.custom-header a[role='button']:active,
 header.custom-header nav button:focus,
 header.custom-header nav button:hover,
 header.custom-header nav a:focus,
 header.custom-header nav a:hover,
-header.custom-header nav [role="button"]:focus,
-header.custom-header nav [role="button"]:hover {
+header.custom-header nav [role='button']:focus,
+header.custom-header nav [role='button']:hover {
   border: none;
   box-shadow: none;
   outline: none;
@@ -75,8 +75,8 @@ header.custom-header a:hover {
 }
 
 /* ロゴ画像の表示を確保 */
-header.custom-header img[alt="Nuxtation"],
-header.custom-header img[src="/logo.svg"] {
+header.custom-header img[alt='Nuxtation'],
+header.custom-header img[src='/logo.svg'] {
   display: block;
   visibility: visible;
   opacity: 1;
@@ -85,8 +85,8 @@ header.custom-header img[src="/logo.svg"] {
 }
 
 /* ヘッダー内のborder関連のユーティリティクラスを上書き */
-header.custom-header [class*="border"],
-header.custom-header [class*="ring"] {
+header.custom-header [class*='border'],
+header.custom-header [class*='ring'] {
   border: none;
   box-shadow: none;
   --tw-ring-width: 0px;
@@ -96,11 +96,13 @@ header.custom-header [class*="ring"] {
 
 /* ドロップダウンメニューの枠線を特定して削除 */
 header.custom-header nav .absolute.z-50,
-header.custom-header nav div[class*="ring"],
+header.custom-header nav div[class*='ring'],
 header.custom-header nav .absolute,
 header.custom-header nav div.shadow-lg {
   border: none;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --tw-ring-width: 0px;
   --tw-ring-offset-width: 0px;
   --tw-ring-color: transparent;
@@ -108,12 +110,12 @@ header.custom-header nav div.shadow-lg {
 }
 
 /* 右側アイコンボタンのサイズ・配置 */
-header.custom-header [data-slot="right"] {
+header.custom-header [data-slot='right'] {
   gap: 16px;
 }
 
-header.custom-header [data-slot="right"] button,
-header.custom-header [data-slot="right"] a {
+header.custom-header [data-slot='right'] button,
+header.custom-header [data-slot='right'] a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -147,9 +149,9 @@ header.custom-header > div {
   }
 
   /* ハンバーガーメニュートグル確実な非表示 */
-  header.custom-header [data-slot="toggle"],
+  header.custom-header [data-slot='toggle'],
   header.custom-header button[aria-expanded],
-  header.custom-header button[aria-label="Open menu"] {
+  header.custom-header button[aria-label='Open menu'] {
     display: none !important;
   }
 }
@@ -157,18 +159,18 @@ header.custom-header > div {
 /* モバイルヘッダーメニュー */
 @media (max-width: 1024px) {
   /* モバイルメニューのパネルを常にダークモードに */
-  body > div[role="dialog"],
-  body > div[role="dialog"] > div,
-  body > div[role="dialog"] [role="document"],
-  body > div[role="dialog"] nav {
+  body > div[role='dialog'],
+  body > div[role='dialog'] > div,
+  body > div[role='dialog'] [role='document'],
+  body > div[role='dialog'] nav {
     background-color: #111827;
   }
 
   /* クローズボタンを白く濃く表示 */
-  div[role="dialog"] button[aria-label="Close"],
-  div[role="dialog"] button[aria-label="Close menu"],
-  body > div[role="dialog"] button[aria-label="Close"],
-  body > div[role="dialog"] button[aria-label="Close menu"] {
+  div[role='dialog'] button[aria-label='Close'],
+  div[role='dialog'] button[aria-label='Close menu'],
+  body > div[role='dialog'] button[aria-label='Close'],
+  body > div[role='dialog'] button[aria-label='Close menu'] {
     opacity: 1;
     color: white;
     border: none;
@@ -183,18 +185,18 @@ header.custom-header > div {
     border-color: transparent;
   }
 
-  div[role="dialog"] button[aria-label="Close"]:focus,
-  div[role="dialog"] button[aria-label="Close"]:active,
-  div[role="dialog"] button[aria-label="Close"]:focus-visible,
-  div[role="dialog"] button[aria-label="Close menu"]:focus,
-  div[role="dialog"] button[aria-label="Close menu"]:active,
-  div[role="dialog"] button[aria-label="Close menu"]:focus-visible,
-  body > div[role="dialog"] button[aria-label="Close"]:focus,
-  body > div[role="dialog"] button[aria-label="Close"]:active,
-  body > div[role="dialog"] button[aria-label="Close"]:focus-visible,
-  body > div[role="dialog"] button[aria-label="Close menu"]:focus,
-  body > div[role="dialog"] button[aria-label="Close menu"]:active,
-  body > div[role="dialog"] button[aria-label="Close menu"]:focus-visible {
+  div[role='dialog'] button[aria-label='Close']:focus,
+  div[role='dialog'] button[aria-label='Close']:active,
+  div[role='dialog'] button[aria-label='Close']:focus-visible,
+  div[role='dialog'] button[aria-label='Close menu']:focus,
+  div[role='dialog'] button[aria-label='Close menu']:active,
+  div[role='dialog'] button[aria-label='Close menu']:focus-visible,
+  body > div[role='dialog'] button[aria-label='Close']:focus,
+  body > div[role='dialog'] button[aria-label='Close']:active,
+  body > div[role='dialog'] button[aria-label='Close']:focus-visible,
+  body > div[role='dialog'] button[aria-label='Close menu']:focus,
+  body > div[role='dialog'] button[aria-label='Close menu']:active,
+  body > div[role='dialog'] button[aria-label='Close menu']:focus-visible {
     opacity: 1;
     color: white;
     border: none;
@@ -209,10 +211,10 @@ header.custom-header > div {
     border-color: transparent;
   }
 
-  div[role="dialog"] button[aria-label="Close"]:hover,
-  div[role="dialog"] button[aria-label="Close menu"]:hover,
-  body > div[role="dialog"] button[aria-label="Close"]:hover,
-  body > div[role="dialog"] button[aria-label="Close menu"]:hover {
+  div[role='dialog'] button[aria-label='Close']:hover,
+  div[role='dialog'] button[aria-label='Close menu']:hover,
+  body > div[role='dialog'] button[aria-label='Close']:hover,
+  body > div[role='dialog'] button[aria-label='Close menu']:hover {
     opacity: 1;
     color: white;
     background-color: rgba(255, 255, 255, 0.1);
@@ -228,18 +230,18 @@ header.custom-header > div {
   }
 
   /* クローズボタン内の要素も白く */
-  div[role="dialog"] button[aria-label="Close"] svg,
-  div[role="dialog"] button[aria-label="Close"] path,
-  div[role="dialog"] button[aria-label="Close"] .iconify,
-  div[role="dialog"] button[aria-label="Close menu"] svg,
-  div[role="dialog"] button[aria-label="Close menu"] path,
-  div[role="dialog"] button[aria-label="Close menu"] .iconify,
-  body > div[role="dialog"] button[aria-label="Close"] svg,
-  body > div[role="dialog"] button[aria-label="Close"] path,
-  body > div[role="dialog"] button[aria-label="Close"] .iconify,
-  body > div[role="dialog"] button[aria-label="Close menu"] svg,
-  body > div[role="dialog"] button[aria-label="Close menu"] path,
-  body > div[role="dialog"] button[aria-label="Close menu"] .iconify {
+  div[role='dialog'] button[aria-label='Close'] svg,
+  div[role='dialog'] button[aria-label='Close'] path,
+  div[role='dialog'] button[aria-label='Close'] .iconify,
+  div[role='dialog'] button[aria-label='Close menu'] svg,
+  div[role='dialog'] button[aria-label='Close menu'] path,
+  div[role='dialog'] button[aria-label='Close menu'] .iconify,
+  body > div[role='dialog'] button[aria-label='Close'] svg,
+  body > div[role='dialog'] button[aria-label='Close'] path,
+  body > div[role='dialog'] button[aria-label='Close'] .iconify,
+  body > div[role='dialog'] button[aria-label='Close menu'] svg,
+  body > div[role='dialog'] button[aria-label='Close menu'] path,
+  body > div[role='dialog'] button[aria-label='Close menu'] .iconify {
     opacity: 1;
     color: white;
     fill: white;

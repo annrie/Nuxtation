@@ -39,7 +39,7 @@ footer.custom-footer a:hover * {
 
 /* Nuxt UI ボタンのボーダー・枠線を消す */
 footer.custom-footer button,
-footer.custom-footer a[role="button"] {
+footer.custom-footer a[role='button'] {
   border: none;
   box-shadow: none;
   outline: none;
@@ -58,8 +58,8 @@ footer.custom-footer a[role="button"] {
 
 footer.custom-footer button:focus,
 footer.custom-footer button:active,
-footer.custom-footer a[role="button"]:focus,
-footer.custom-footer a[role="button"]:active {
+footer.custom-footer a[role='button']:focus,
+footer.custom-footer a[role='button']:active {
   border: none;
   box-shadow: none;
   outline: none;
@@ -103,7 +103,7 @@ footer.custom-footer > div {
 }
 
 /* 右側アイコングループの配置 */
-footer.custom-footer [data-slot="right"] {
+footer.custom-footer [data-slot='right'] {
   display: flex;
   align-items: center;
   gap: 16px !important;

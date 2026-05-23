@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-import type { ContentPreview, Sections } from '~~/types';
-import { computed, inject } from 'vue';
+import type { Ref } from 'vue'
+import type { ContentPreview, Sections } from '~~/types'
+import { computed, inject } from 'vue'
 import { useIsWithinTenDays } from '~/composables/useIsWithinTenDays'
 import { getLatestDate } from '~/utils/format'
 
 const props = defineProps<{
-  item?: ContentPreview | null;
-  section: Sections;
-}>();
+  item?: ContentPreview | null
+  section: Sections
+}>()
 
 // 親からダークモード状態をinject
-const isDark = inject<Ref<boolean>>('isDark', ref(false));
+const isDark = inject<Ref<boolean>>('isDark', ref(false))
 
 const target = computed(() => props.item?.url ? '_blank' : '_self')
 const destination = computed(
   () => props.item?.url || props.item?.path || '#',
-);
+)
 
 // publishedAtとupdatedAtの新しい方を表示
 const latestDate = computed(() => getLatestDate(props.item?.publishedAt, props.item?.updatedAt))
@@ -31,14 +31,14 @@ const limitedTitle = computed(() => {
     return 'Untitled'
   const title = props.item.title
   return title.length > maxTitleLength ? `${title.substring(0, maxTitleLength)}...` : title
-});
+})
 
 const limitedDescription = computed(() => {
   if (!props.item?.description)
     return ''
   const desc = props.item.description
   return desc.length > maxDescLength ? `${desc.substring(0, maxDescLength)}...` : desc
-});
+})
 </script>
 
 <template>

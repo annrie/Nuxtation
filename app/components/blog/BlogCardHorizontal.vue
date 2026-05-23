@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-import type { ContentPreview } from '~/types';
-import { computed, inject } from 'vue';
+import type { Ref } from 'vue'
+import type { ContentPreview } from '~/types'
+import { computed, inject } from 'vue'
 import { useIsWithinTenDays } from '~/composables/useIsWithinTenDays'
 import { getLatestDate } from '~/utils/format'
 
 const props = defineProps<{
-  item: ContentPreview;
-}>();
+  item: ContentPreview
+}>()
 
 // 親からダークモード状態をinject
-const isDark = inject<Ref<boolean>>('isDark', ref(false));
+const isDark = inject<Ref<boolean>>('isDark', ref(false))
 
 const target = computed(() => props.item.url ? '_blank' : '_self')
 const destination = computed(() => props.item.url || props.item.path || '#')
@@ -26,14 +26,14 @@ const maxDescLength = 120
 const limitedTitle = computed(() => {
   const title = props.item.title || 'Untitled'
   return title.length > maxTitleLength ? `${title.substring(0, maxTitleLength)}...` : title
-});
+})
 
 const limitedDescription = computed(() => {
   if (!props.item.description)
     return ''
   const desc = props.item.description
   return desc.length > maxDescLength ? `${desc.substring(0, maxDescLength)}...` : desc
-});
+})
 
 const safeAlt = computed(() => props.item.title || '記事の画像')
 

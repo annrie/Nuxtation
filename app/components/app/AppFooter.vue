@@ -1,59 +1,61 @@
 <script setup lang="ts">
-const appConfig = useAppConfig();
-const colorMode = useColorMode();
+const appConfig = useAppConfig()
+const colorMode = useColorMode()
 
-const isMounted = ref(false);
+const isMounted = ref(false)
 
 onMounted(async () => {
   // ハイドレーション完了後に遅延実行
-  await nextTick();
-  isMounted.value = true;
-});
+  await nextTick()
+  isMounted.value = true
+})
 
 const colorModeIcon = computed(() => {
   // SSRとハイドレーション中は固定値を返す
   if (import.meta.server || !isMounted.value) {
-    return 'i-lucide-monitor';  // デフォルトはシステム設定
+    return 'i-lucide-monitor' // デフォルトはシステム設定
   }
   // ハイドレーション完了後にのみ実際のカラーモードを反映
-  if (colorMode.preference === "system") {
-    return "i-lucide-monitor";
+  if (colorMode.preference === 'system') {
+    return 'i-lucide-monitor'
   }
-  return colorMode.value === "dark"
-    ? "i-lucide-moon"
-    : "i-lucide-sun";
-});
+  return colorMode.value === 'dark'
+    ? 'i-lucide-moon'
+    : 'i-lucide-sun'
+})
 
 const colorModeLabel = computed(() => {
-  if (colorMode.preference === "system") {
-    return "システム設定";
+  if (colorMode.preference === 'system') {
+    return 'システム設定'
   }
-  return colorMode.value === "dark" ? "ダークモード" : "ライトモード";
-});
+  return colorMode.value === 'dark' ? 'ダークモード' : 'ライトモード'
+})
 
-const cycleColorMode = () => {
+function cycleColorMode() {
   // system → light → dark → system のサイクル
-  if (colorMode.preference === "system") {
-    colorMode.preference = "light";
-  } else if (colorMode.preference === "light") {
-    colorMode.preference = "dark";
-  } else {
-    colorMode.preference = "system";
+  if (colorMode.preference === 'system') {
+    colorMode.preference = 'light'
   }
-};
+  else if (colorMode.preference === 'light') {
+    colorMode.preference = 'dark'
+  }
+  else {
+    colorMode.preference = 'system'
+  }
+}
 
 const links = computed(() =>
   appConfig.github && appConfig.github.url
     ? [
         {
-          icon: "i-simple-icons-github",
-          to: appConfig.github.url,
-          target: "_blank",
-          "aria-label": "GitHub",
+          'icon': 'i-simple-icons-github',
+          'to': appConfig.github.url,
+          'target': '_blank',
+          'aria-label': 'GitHub',
         },
       ]
-    : []
-);
+    : [],
+)
 </script>
 
 <template>

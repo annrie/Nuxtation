@@ -29,12 +29,17 @@ function calculateTextSize(title: string): number {
   const length = title?.length || 0
 
   // タイトル長に応じて動的に調整
-  if (length <= 8) return 180      // 非常に短い（例: "タイトル"）
-  if (length <= 15) return 140     // 短い（例: "これは短いタイトルです"）
-  if (length <= 25) return 100     // 中程度（例: "これは普通の長さのタイトルです"）
-  if (length <= 35) return 80      // やや長い
-  if (length <= 45) return 65      // 長い
-  return 50                         // 非常に長い
+  if (length <= 8)
+    return 180 // 非常に短い（例: "タイトル"）
+  if (length <= 15)
+    return 140 // 短い（例: "これは短いタイトルです"）
+  if (length <= 25)
+    return 100 // 中程度（例: "これは普通の長さのタイトルです"）
+  if (length <= 35)
+    return 80 // やや長い
+  if (length <= 45)
+    return 65 // 長い
+  return 50 // 非常に長い
 }
 
 /**
@@ -43,7 +48,7 @@ function calculateTextSize(title: string): number {
 function generateOgImageUrl(
   img: string,
   title: string,
-  options: ArticleSeoOptions['ogImageOptions'] = {}
+  options: ArticleSeoOptions['ogImageOptions'] = {},
 ): string {
   const { useBase64 = false, encodedTitle = '', blur = 0 } = options
   const txtSize = calculateTextSize(title)
@@ -52,7 +57,8 @@ function generateOgImageUrl(
   if (useBase64 && encodedTitle) {
     const blurParam = blur > 0 ? `&blur=${blur}` : ''
     return `https://nuxtation.imgix.net/${img}?txt64=${encodedTitle}&txt-size=${txtSize}&${baseParams}${blurParam}`
-  } else {
+  }
+  else {
     const blurParam = blur > 0 ? `&blur=${blur}` : ''
     return `https://nuxtation.imgix.net/${img}?txt=${encodeURIComponent(title)}&txt-size=${txtSize}&${baseParams}${blurParam}`
   }
@@ -75,7 +81,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
         property: 'og:image',
         content: article?.value?.img
           ? `https://nuxtation.imgix.net/${article.value.img}?auto=format,compress&fit=crop&w=1200&h=630`
-          : ''
+          : '',
       },
       { property: 'og:type', content: 'article' },
     ],
@@ -83,19 +89,20 @@ export function useArticleSeo(options: ArticleSeoOptions) {
 
   // SEOメタデータ設定（computed経由でリアクティブ性を確保）
   const ogImageUrl = computed(() => {
-    if (!article.value?.img || !article.value?.title) return ''
+    if (!article.value?.img || !article.value?.title)
+      return ''
 
     // encodedTitleがComputedRefの場合は.valueでアクセス
     const encodedTitleValue = ogImageOptions?.encodedTitle
       ? (typeof ogImageOptions.encodedTitle === 'object' && 'value' in ogImageOptions.encodedTitle)
-        ? ogImageOptions.encodedTitle.value
-        : ogImageOptions.encodedTitle
+          ? ogImageOptions.encodedTitle.value
+          : ogImageOptions.encodedTitle
       : undefined
 
     // encodedTitleValueをoptionsに含めて渡す
     const optionsWithEncodedTitle = {
       ...ogImageOptions,
-      encodedTitle: encodedTitleValue
+      encodedTitle: encodedTitleValue,
     }
 
     return generateOgImageUrl(article.value.img, article.value.title, optionsWithEncodedTitle)

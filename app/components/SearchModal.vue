@@ -11,7 +11,7 @@ const emit = defineEmits<{
 
 const isSearchModalOpen = computed({
   get: () => props.isOpen,
-  set: (value) => emit('update:isOpen', value)
+  set: value => emit('update:isOpen', value),
 })
 
 const searchQuery = ref('')
@@ -42,12 +42,15 @@ const totalDocCount = computed(() => {
 
 // Extract text from body object
 function extractTextFromBody(body: any): string {
-  if (!body) return ''
-  if (typeof body === 'string') return body
+  if (!body)
+    return ''
+  if (typeof body === 'string')
+    return body
 
   let text = ''
   const traverse = (node: any) => {
-    if (!node) return
+    if (!node)
+      return
 
     if (node.type === 'text' && node.value) {
       text += `${node.value} `
@@ -71,22 +74,26 @@ function getSnippet(text: string, query: string, maxLength: number = 150): strin
   const lowerQuery = query.toLowerCase()
   const index = lowerText.indexOf(lowerQuery)
 
-  if (index === -1) return ''
+  if (index === -1)
+    return ''
 
   const start = Math.max(0, index - maxLength / 2)
   const end = Math.min(text.length, index + query.length + maxLength / 2)
 
   let snippet = text.substring(start, end)
 
-  if (start > 0) snippet = `...${snippet}`
-  if (end < text.length) snippet = `${snippet}...`
+  if (start > 0)
+    snippet = `...${snippet}`
+  if (end < text.length)
+    snippet = `${snippet}...`
 
   return snippet
 }
 
 // Highlight search query in text
 function highlightQuery(text: string, query: string): string {
-  if (!query || !text) return text
+  if (!query || !text)
+    return text
 
   const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
   return text.replace(regex, '<mark class="bg-yellow-200 dark:bg-yellow-700 text-gray-900 dark:text-white px-0.5 rounded">$1</mark>')
@@ -104,7 +111,8 @@ function clearSearch() {
 
 // Keyboard navigation
 function handleKeyDown(event: KeyboardEvent) {
-  if (!searchResults.value.length) return
+  if (!searchResults.value.length)
+    return
 
   switch (event.key) {
     case 'ArrowDown':
@@ -164,7 +172,8 @@ function performSearch() {
 
       if (sTitle.includes(keyword) || sContent.includes(keyword)) {
         const path = section.id?.split('#')[0] || ''
-        if (!path) continue
+        if (!path)
+          continue
         seenPaths.add(path) // ドキュメント検索側での重複を防止
 
         const snippet = sContent.includes(keyword)
@@ -185,7 +194,8 @@ function performSearch() {
   if (files.value?.length) {
     for (const file of files.value) {
       const filePath = file.path || ''
-      if (seenPaths.has(filePath)) continue
+      if (seenPaths.has(filePath))
+        continue
 
       const title = (file.title || '').toLowerCase()
       const description = (file.description || '').toLowerCase()

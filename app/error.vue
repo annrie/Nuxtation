@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { clearError, useError } from "#app";
+import { clearError, useError } from '#app'
 
 // エラーページを表示する原因になったエラーオブジェクトを取得
-const error = useError();
+const error = useError()
 
 // Vue Routerのインスタンスを取得
-const router = useRouter();
+const router = useRouter()
 
 // エラーをクリアして元のページにリダイレクトする関数
-const clear = () => {
-  clearError();
-  router.push({ path: router.currentRoute.value.path });
-};
+function clear() {
+  clearError()
+  router.push({ path: router.currentRoute.value.path })
+}
 </script>
 <template>
   <div text-4xl mx-auto mt-50 w-lg text-center>

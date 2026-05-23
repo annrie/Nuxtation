@@ -16,12 +16,12 @@ export const SameAs = [
   'https://www.instagram.com/muraie_jin/',
   'https://www.linkedin.com/in/muraie-jin/',
   'https://nuxtation.vercel.app/',
-  'https://phantomoon.com/'
+  'https://phantomoon.com/',
 ]
 
 export const categories = [
   { categoryName: 'Nuxt', categorySlug: 'nuxt' },
   { categoryName: 'Twitter', categorySlug: 'twitter' },
   { categoryName: 'Web Development', categorySlug: 'web development' },
-  { categoryName: 'Youtube', categorySlug: 'youtube' }
+  { categoryName: 'Youtube', categorySlug: 'youtube' },
 ]

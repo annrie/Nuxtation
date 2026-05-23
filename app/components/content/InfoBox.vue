@@ -2,7 +2,7 @@
 
 <script setup>
 // define props in <script>
-const props = defineProps(["type"]);
+defineProps(['type'])
 </script>
 
 <template>

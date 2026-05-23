@@ -13,19 +13,15 @@ const navigationItems = computed(() => {
     label: link.label,
     to: link.to,
     children: link.children || [],
-    active: route.path === link.to || (link.to !== '/' && route.path.startsWith(link.to))
+    active: route.path === link.to || (link.to !== '/' && route.path.startsWith(link.to)),
   }))
 })
 
-const toggleDropdown = (label: string) => {
+function toggleDropdown(label: string) {
   openDropdown.value = openDropdown.value === label ? null : label
 }
 
-const closeDropdown = () => {
-  openDropdown.value = null
-}
-
-const closeAllMenus = () => {
+function closeAllMenus() {
   openDropdown.value = null
   // UHeaderのモバイルメニューも閉じる
   headerMenuOpen.value = false
@@ -33,12 +29,13 @@ const closeAllMenus = () => {
 
 const isOpen = (label: string) => openDropdown.value === label
 
-const handleParentClick = (item: any) => {
+function handleParentClick(item: any) {
   // すでに開いている場合は親ページに遷移
   if (isOpen(item.label)) {
     navigateTo(item.to)
     closeAllMenus()
-  } else {
+  }
+  else {
     // 閉じている場合は開く
     toggleDropdown(item.label)
   }

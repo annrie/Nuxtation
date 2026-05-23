@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, watch } from 'vue'
 
 const props = withDefaults(defineProps<{ pageSize?: number }>(), {
   pageSize: 6,
@@ -31,16 +31,17 @@ const { data: articlesData } = useLazyAsyncData('docs-blog-articles', async () =
     description: article.description,
     img: article.img,
     draft: article.draft,
-    featured: article.featured
+    featured: article.featured,
     // bodyフィールドを除外してpayloadサイズを削減
   }))
 })
 
 const articles = computed(() => {
   const isDev = import.meta.dev
-  const filtered = (articlesData.value || []).filter(article => {
-    if (!article.path || article.path === '/blog') return false
-    return isDev || !article.draft  // 開発環境: すべて表示、本番環境: draft除外
+  const filtered = (articlesData.value || []).filter((article) => {
+    if (!article.path || article.path === '/blog')
+      return false
+    return isDev || !article.draft // 開発環境: すべて表示、本番環境: draft除外
   })
   return sortArticlesByLatestDate(filtered)
 })
@@ -58,7 +59,8 @@ const tagOptions = computed(() => {
 })
 
 const filteredArticles = computed(() => {
-  if (!activeTag.value) return articles.value
+  if (!activeTag.value)
+    return articles.value
   return articles.value.filter(article => (article.tags || []).includes(activeTag.value))
 })
 
@@ -79,7 +81,7 @@ const paginatedCards = computed(() =>
   paginatedArticles.value.map(article => ({
     ...article,
     path: article.path as string,
-  }))
+  })),
 )
 
 watch(paginatedArticles, (list) => {
@@ -95,24 +97,20 @@ const navigationItems = computed(() => {
   }))
 })
 
-const selectTag = (tag: string) => {
-  router.push({ path: route.path, query: { ...route.query, tag, page: '1' } })
-}
-
-const clearTag = () => {
+function clearTag() {
   const query = { ...route.query }
   delete query.tag
   query.page = '1'
   router.push({ path: route.path, query })
 }
 
-const goToPage = (page: number) => {
+function goToPage(page: number) {
   router.push({ path: route.path, query: { ...route.query, page: String(page) } })
 }
 
 // SEO設定
 const title = 'All Blog Posts'
-const description = "Here's a list of all my blog posts"
+const description = 'Here\'s a list of all my blog posts'
 
 const encoded1 = computed(() => {
   return encodeBase64WithPercent(title)
@@ -154,7 +152,7 @@ useSchemaOrg([
   {
     '@type': 'CollectionPage',
     'name': 'Blog Posts',
-    'description': "Here's a list of all my blog posts",
+    'description': 'Here\'s a list of all my blog posts',
     'url': 'https://nuxtation.phantomoon.com/blog/',
   },
 ])
@@ -289,7 +287,9 @@ useSchemaOrg([
   border-radius: 0.5rem;
   color: rgba(15, 23, 42, 0.78);
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .sidebar-link:hover {
@@ -440,7 +440,10 @@ useSchemaOrg([
   border-radius: 999px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .tag:hover {
@@ -486,7 +489,9 @@ useSchemaOrg([
   font-weight: 600;
   color: #1f2937;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .pagination-button:hover:not(:disabled) {

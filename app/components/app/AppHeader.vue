@@ -1,66 +1,67 @@
 <script setup lang="ts">
-const appConfig = useAppConfig();
-const site = useSiteConfig();
-const colorMode = useColorMode();
+const appConfig = useAppConfig()
+const colorMode = useColorMode()
 
-const isSearchModalOpen = useState('search-modal-open', () => false);
+const isSearchModalOpen = useState('search-modal-open', () => false)
 
 const links = computed(() =>
   appConfig.github && appConfig.github.url
     ? [
         {
-          icon: "i-simple-icons-github",
-          to: appConfig.github.url,
-          target: "_blank",
-          "aria-label": "GitHub",
+          'icon': 'i-simple-icons-github',
+          'to': appConfig.github.url,
+          'target': '_blank',
+          'aria-label': 'GitHub',
         },
       ]
-    : []
-);
+    : [],
+)
 
-const isMounted = ref(false);
+const isMounted = ref(false)
 
 onMounted(async () => {
   // ハイドレーション完了後に遅延実行
-  await nextTick();
-  isMounted.value = true;
-});
+  await nextTick()
+  isMounted.value = true
+})
 
 const colorModeIcon = computed(() => {
   // SSRとハイドレーション中は固定値を返す
   if (import.meta.server || !isMounted.value) {
-    return 'i-lucide-monitor';  // デフォルトはシステム設定
+    return 'i-lucide-monitor' // デフォルトはシステム設定
   }
   // ハイドレーション完了後にのみ実際のカラーモードを反映
-  if (colorMode.preference === "system") {
-    return "i-lucide-monitor";
+  if (colorMode.preference === 'system') {
+    return 'i-lucide-monitor'
   }
-  return colorMode.value === "dark"
-    ? "i-lucide-moon"
-    : "i-lucide-sun";
-});
+  return colorMode.value === 'dark'
+    ? 'i-lucide-moon'
+    : 'i-lucide-sun'
+})
 
 const colorModeLabel = computed(() => {
-  if (colorMode.preference === "system") {
-    return "システム設定";
+  if (colorMode.preference === 'system') {
+    return 'システム設定'
   }
-  return colorMode.value === "dark" ? "ダークモード" : "ライトモード";
-});
+  return colorMode.value === 'dark' ? 'ダークモード' : 'ライトモード'
+})
 
-const cycleColorMode = () => {
+function cycleColorMode() {
   // system → light → dark → system のサイクル
-  if (colorMode.preference === "system") {
-    colorMode.preference = "light";
-  } else if (colorMode.preference === "light") {
-    colorMode.preference = "dark";
-  } else {
-    colorMode.preference = "system";
+  if (colorMode.preference === 'system') {
+    colorMode.preference = 'light'
   }
-};
+  else if (colorMode.preference === 'light') {
+    colorMode.preference = 'dark'
+  }
+  else {
+    colorMode.preference = 'system'
+  }
+}
 
-const openSearchModal = () => {
-  isSearchModalOpen.value = true;
-};
+function openSearchModal() {
+  isSearchModalOpen.value = true
+}
 </script>
 
 <template>
@@ -75,13 +76,11 @@ const openSearchModal = () => {
       overlay: 'bg-gray-900/80 backdrop-blur'
     }"
     class="custom-header"
-    to="/"
-    :title="appConfig.header?.title || site.name"
   >
     <AppHeaderCenter />
 
-    <template #title>
-      <AppHeaderLogo class="h-8 w-auto shrink-0" />
+    <template #left>
+      <AppHeaderLeft />
     </template>
 
     <template #right>
@@ -131,7 +130,7 @@ const openSearchModal = () => {
 
       <template v-if="links?.length">
         <UButton
-          v-for="(link, index) of links"
+          v-for="link of links"
           :key="link.to"
           v-bind="{ color: 'white', variant: 'ghost', ...link }"
           :ui="{
@@ -144,7 +143,7 @@ const openSearchModal = () => {
     </template>
 
     <template #body>
-      <AppHeaderBody />
+      <LazyAppHeaderBody />
     </template>
   </UHeader>
 </template>
@@ -153,15 +152,6 @@ const openSearchModal = () => {
 @reference "tailwindcss";
 
 /* ui プロップで制御するため、最小限のスタイルのみ */
-
-/* ロゴリンクのフォーカススタイル */
-:deep(a[href="/"]) {
-  @apply outline-none rounded transition-all;
-}
-
-:deep(a[href="/"]:focus) {
-  @apply outline outline-2 outline-white/50 outline-offset-2;
-}
 
 /* モバイルメニュー開閉ボタンのアイコン色 */
 :deep(button[aria-expanded] *) {

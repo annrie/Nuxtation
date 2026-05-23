@@ -24,22 +24,22 @@ const colorModeIcon = computed(() => {
   return colorMode.value === 'dark'
     ? 'i-lucide-moon'
     : 'i-lucide-sun'
-});
+})
 
 const colorModeLabel = computed(() => {
   const labels = {
     light: 'ライトモード',
     dark: 'ダークモード',
     system: 'システム設定に追従',
-  };
+  }
   return labels[colorMode.preference as keyof typeof labels] || 'カラーモード'
-});
+})
 
 function cycleColorMode() {
-  const modes = ['light', 'dark', 'system'] as const;
-  const currentIndex = modes.indexOf(colorMode.preference as any);
-  const nextIndex = (currentIndex + 1) % modes.length;
-  colorMode.preference = modes[nextIndex];
+  const modes = ['light', 'dark', 'system'] as const
+  const currentIndex = modes.indexOf(colorMode.preference as any)
+  const nextIndex = (currentIndex + 1) % modes.length
+  colorMode.preference = modes[nextIndex]
 }
 </script>
 

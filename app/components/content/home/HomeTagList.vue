@@ -11,7 +11,7 @@ const props = withDefaults(
     tags: () => [],
     variant: 'blog',
   },
-);
+)
 
 // ジャンル判定: tags の最初の要素が有効なジャンルかチェック
 const validGenres = ['sf', 'adv', 'mys', 'horror', 'jedi', 'short']
@@ -21,7 +21,7 @@ const genreTag = computed(() => {
     return validGenres.includes(firstTag) ? firstTag : 'sf'
   }
   return 'sf'
-});
+})
 </script>
 
 <template>

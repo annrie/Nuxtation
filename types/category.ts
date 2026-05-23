@@ -1,3 +1,3 @@
-export type Category = {
-  name?: string;
-};
+export interface Category {
+  name?: string
+}

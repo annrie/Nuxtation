@@ -9,7 +9,7 @@ const route = useRoute()
 const slug = computed(() => route.params.slug as string)
 
 // ベースURL定義
-const baseUrl = 'https://nuxtation.phantomoon.com';
+const baseUrl = 'https://nuxtation.phantomoon.com'
 
 // 記事データを取得
 const { data: article } = await useArticle('blog', slug.value)
@@ -20,7 +20,7 @@ const headings = computed(() => {
     return []
   // Nuxt Contentの記事本文から見出しを抽出
   return article.value.body.toc?.links || []
-});
+})
 
 // モバイル版TOCの開閉状態
 const isMobileTocOpen = ref(false)
@@ -31,22 +31,22 @@ const mobileTocRef = ref<HTMLElement | null>(null)
 // スクロール時のオフセット計算（モバイル版TOCの高さを考慮）
 function calculateScrollOffset() {
   if (import.meta.server)
-    return 80;
+    return 80
 
   const header = document.querySelector('header.custom-header')
-  const headerHeight = header ? header.getBoundingClientRect().height : 64;
+  const headerHeight = header ? header.getBoundingClientRect().height : 64
 
   // モバイル版の場合、TOCの高さも考慮
   if (window.innerWidth <= 768 && mobileTocRef.value) {
-    const tocHeight = mobileTocRef.value.getBoundingClientRect().height;
-    return headerHeight + tocHeight + 16; // 16pxは余白
+    const tocHeight = mobileTocRef.value.getBoundingClientRect().height
+    return headerHeight + tocHeight + 16 // 16pxは余白
   }
 
-  return headerHeight + 16;
+  return headerHeight + 16
 }
 
 // 全記事リスト（左サイドバー用）
-const { data: allArticles } = await useAllArticles('blog');
+const { data: allArticles } = await useAllArticles('blog')
 
 const filteredArticles = computed(() => {
   const isDev = import.meta.dev
@@ -95,7 +95,7 @@ const relatedArticles = computed(() => {
     if (!item.path || item.path === '/blog' || item.path === currentPath)
       return false
     return isDev || !item.draft // 開発環境: すべて表示、本番環境: draft除外
-  });
+  })
 
   // 関連性スコアを計算
   const scoredArticles = otherArticles.map((item) => {
@@ -124,7 +124,7 @@ const relatedArticles = computed(() => {
       score,
       matchedTagCount: matchedTags.length,
     }
-  });
+  })
 
   // スコア順にソートして上位5件を取得
   return scoredArticles
@@ -142,25 +142,25 @@ const relatedArticles = computed(() => {
       path: item.path as string,
       matchedTagCount: item.matchedTagCount,
     }))
-});
+})
 
 // スムーズスクロール（モバイル版TOCの高さを考慮）
 function scrollToHeadingWithOffset(id: string) {
   if (import.meta.server)
-    return;
+    return
 
-  const element = document.getElementById(id);
+  const element = document.getElementById(id)
   if (!element)
-    return;
+    return
 
-  const offset = calculateScrollOffset();
-  const elementPosition = element.getBoundingClientRect().top;
-  const offsetPosition = elementPosition + window.pageYOffset - offset;
+  const offset = calculateScrollOffset()
+  const elementPosition = element.getBoundingClientRect().top
+  const offsetPosition = elementPosition + window.pageYOffset - offset
 
   window.scrollTo({
     top: Math.max(offsetPosition, 0),
     behavior: 'smooth',
-  });
+  })
 }
 
 // デスクトップ版TOC用（従来のオフセット）

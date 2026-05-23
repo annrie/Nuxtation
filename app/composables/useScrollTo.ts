@@ -7,7 +7,8 @@
  * @returns ヘッダー高さ + 追加オフセット
  */
 function calculateScrollOffset(): number {
-  if (process.server) return 80 // SSR時のデフォルト
+  if (import.meta.server)
+    return 80 // SSR時のデフォルト
 
   const header = document.querySelector('header.custom-header')
   const headerHeight = header ? header.getBoundingClientRect().height : 0
@@ -21,7 +22,8 @@ function calculateScrollOffset(): number {
  * @param customOffset - カスタムオフセット（省略時は自動計算）
  */
 export function scrollToElement(element: HTMLElement | null, customOffset?: number) {
-  if (!element || process.server) return
+  if (!element || import.meta.server)
+    return
 
   const offset = customOffset ?? calculateScrollOffset()
   const elementPosition = element.getBoundingClientRect().top
@@ -39,7 +41,8 @@ export function scrollToElement(element: HTMLElement | null, customOffset?: numb
  * @param customOffset - カスタムオフセット（省略時は自動計算）
  */
 export function scrollToHeading(id: string, customOffset?: number) {
-  if (process.server) return
+  if (import.meta.server)
+    return
 
   const element = document.getElementById(id)
   if (element) {
@@ -58,7 +61,8 @@ export function useScrollTo(options: { offset?: number } = {}) {
   const scrollTo = (target: string | HTMLElement) => {
     if (typeof target === 'string') {
       scrollToHeading(target, offset)
-    } else {
+    }
+    else {
       scrollToElement(target, offset)
     }
   }

@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { BlogPostPreview } from '~~/types'
+import { computed } from 'vue'
 
 const { data: pageVisits } = useLazyFetch(() => `/api/kv`)
-const refreshPage = () => {
-	window.location.reload();
-};
+function refreshPage() {
+  window.location.reload()
+}
 
-const normalizeEntry = <T extends BlogPostPreview>(entry?: Partial<T> | null): T | null => {
-  if (!entry) return null
+function normalizeEntry<T extends BlogPostPreview>(entry?: Partial<T> | null): T | null {
+  if (!entry)
+    return null
   const {
     title = 'Untitled',
     description = '',
@@ -35,15 +36,17 @@ const normalizeEntry = <T extends BlogPostPreview>(entry?: Partial<T> | null): T
   } as T
 }
 
-const normalizeCollection = <T extends BlogPostPreview>(items: Array<Partial<T>> = [], prefix?: string) =>
-  items
+function normalizeCollection<T extends BlogPostPreview>(items: Array<Partial<T>> = [], prefix?: string) {
+  return items
     .map(item => normalizeEntry<T>(item))
     .filter((item): item is T => Boolean(item && (item.path || item.url)))
-    .filter(item => {
-      if (!prefix) return true
+    .filter((item) => {
+      if (!prefix)
+        return true
       const route = item.path || item.url || ''
       return route.startsWith(prefix)
     })
+}
 
 const { data: blogEntries } = useLazyAsyncData('docs-home-blog', async () => {
   const blog = await queryCollection<BlogPostPreview>('blog').all()
@@ -59,7 +62,7 @@ const { data: blogEntries } = useLazyAsyncData('docs-home-blog', async () => {
     img: item.img,
     alt: item.alt,
     draft: item.draft,
-    featured: item.featured
+    featured: item.featured,
     // bodyフィールドを除外してpayloadサイズを削減
   }))
 })
@@ -67,8 +70,8 @@ const { data: blogEntries } = useLazyAsyncData('docs-home-blog', async () => {
 const blogCollection = computed(() => {
   const normalized = normalizeCollection<BlogPostPreview>(blogEntries.value || [], '/blog/')
   const filtered = import.meta.env.PROD
-    ? normalized.filter(article => !article.draft)  // 本番環境: draft記事を除外
-    : normalized  // 開発環境: すべて表示
+    ? normalized.filter(article => !article.draft) // 本番環境: draft記事を除外
+    : normalized // 開発環境: すべて表示
   return sortArticlesByLatestDate(filtered).slice(0, 7)
 })
 
@@ -77,7 +80,7 @@ const recentArticles = computed(() => blogCollection.value.slice(1))
 
 // SEO設定
 const title = 'Nuxtation'
-const description = "annrie's Blog Site"
+const description = 'annrie\'s Blog Site'
 
 const encoded1 = computed(() => {
   return encodeBase64WithPercent(title)

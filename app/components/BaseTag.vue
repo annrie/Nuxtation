@@ -9,31 +9,29 @@ const props = defineProps<Props>()
 const computedAriaLabel = computed(() => `${props.label}タグの記事一覧へ移動`)
 
 const isLink = computed(() => Boolean(props.href))
-
-const componentTag = computed(() => (isLink.value ? 'NuxtLink' : 'span'))
-
-const componentAttrs = computed(() => {
-  if (isLink.value) {
-    return {
-      to: props.href,
-      rel: 'noopener noreferrer',
-    }
-  }
-  return {}
-})
 </script>
 
 <template>
-  <component
-    :is="componentTag"
-    v-bind="componentAttrs"
+  <NuxtLink
+    v-if="isLink"
+    :to="href!"
+    class="tag-link"
+    :aria-label="computedAriaLabel"
+    rel="noopener noreferrer"
+  >
+    <span class="tag-pill">
+      {{ label }}
+    </span>
+  </NuxtLink>
+  <span
+    v-else
     class="tag-link"
     :aria-label="computedAriaLabel"
   >
     <span class="tag-pill">
       {{ label }}
     </span>
-  </component>
+  </span>
 </template>
 
 <style scoped>

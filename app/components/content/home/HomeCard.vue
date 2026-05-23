@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { Ref } from 'vue';
-import type { ContentPreview, Sections } from '~~/types';
-import { computed, inject } from 'vue';
+import type { Ref } from 'vue'
+import type { ContentPreview, Sections } from '~~/types'
+import { computed, inject } from 'vue'
 import { useIsWithinTenDays } from '~/composables/useIsWithinTenDays'
 import { getLatestDate } from '~/utils/format'
 
 const props = withDefaults(defineProps<{
-  item: ContentPreview;
-  section: Sections;
-  variant?: 'blog' | 'biblio';
-  index?: number;
+  item: ContentPreview
+  section: Sections
+  variant?: 'blog' | 'biblio'
+  index?: number
 }>(), {
   index: 0,
-});
+})
 
 // 親からダークモード状態をinject
-const isDark = inject<Ref<boolean>>('isDark', ref(false));
+const isDark = inject<Ref<boolean>>('isDark', ref(false))
 
 const target = computed(() => props.item.url ? '_blank' : '_self')
 const destination = computed(() => props.item.url || props.item.path || '#')
@@ -30,7 +30,7 @@ const maxTitleLength = 30
 const limitedTitle = computed(() => {
   const title = props.item.title || 'Untitled'
   return title.length > maxTitleLength ? `${title.substring(0, maxTitleLength)}...` : title
-});
+})
 
 // ジャンル別のクラス名を生成（モバイル版のみ）
 const jenreClass = computed(() => {
@@ -40,7 +40,7 @@ const jenreClass = computed(() => {
     }
   }
   return ''
-});
+})
 </script>
 
 <template>

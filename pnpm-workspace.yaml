@@ -1,0 +1,36 @@
+allowBuilds:
+  '@parcel/watcher': true
+  better-sqlite3: true
+  esbuild: true
+  sharp: true
+  simple-git-hooks: true
+  unrs-resolver: false
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - '@nuxt/ui@4.8.0'
+  - '@nuxtjs/i18n@10.4.0'
+shellEmulator: true
+
+supportedArchitectures:
+  cpu:
+    - x64
+  os:
+    - darwin
+    - current
+
+trustPolicy: no-downgrade
+
+overrides:
+  '@nuxt/content': 3.14.0
+  unconfig: 0.4.1
+  zod: ^4.4.3
+  zod-to-json-schema: ^3.25.2
+packageExtensions:
+  '@nuxt/content':
+    dependencies:
+      zod: '*'
+      zod-to-json-schema: '*'
+  docus:
+    dependencies:
+      zod: '*'
+      zod-to-json-schema: '*'

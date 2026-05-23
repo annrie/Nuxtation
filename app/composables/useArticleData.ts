@@ -16,8 +16,7 @@ interface ArticleDataOptions {
  */
 export function useArticle(collection: string, slug: string) {
   return useAsyncData(`${collection}-${slug}`, () =>
-    queryCollection(collection).path(`/${collection}/${slug}`).first()
-  )
+    queryCollection(collection).path(`/${collection}/${slug}`).first())
 }
 
 /**
@@ -31,7 +30,8 @@ export function useSurroundingArticles(collection: string, path: string) {
     // まず前後の記事を取得
     const surroundings = await queryCollectionItemSurroundings(collection, path)
 
-    if (!surroundings) return null
+    if (!surroundings)
+      return null
 
     const [prev, next] = surroundings
 
@@ -42,7 +42,7 @@ export function useSurroundingArticles(collection: string, path: string) {
 
     return [
       prev && !prev.draft ? prev : null,
-      next && !next.draft ? next : null
+      next && !next.draft ? next : null,
     ]
   })
 }
@@ -57,7 +57,7 @@ export function useSurroundingArticles(collection: string, path: string) {
 export function useAllArticles(
   collection: string,
   orderBy?: string,
-  orderDirection: 'ASC' | 'DESC' = 'DESC'
+  orderDirection: 'ASC' | 'DESC' = 'DESC',
 ) {
   const key = orderBy
     ? `${collection}-all-articles-${orderBy}-${orderDirection}`

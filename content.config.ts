@@ -1,21 +1,21 @@
 import { defineCollection, defineContentConfig } from '@nuxt/content'
-import { z } from 'zod'
-import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 import { defineRobotsSchema } from '@nuxtjs/robots/content'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
+import { z } from 'zod'
 
 export default defineContentConfig({
   collections: {
-	content: defineCollection({
-		type: 'page',
-		source: '**/*.md',
-		schema: z.object({
-				robots: defineRobotsSchema(),
-				sitemap: defineSitemapSchema(),
-		}),
-	}),
+    content: defineCollection({
+      type: 'page',
+      source: '**/*.md',
+      schema: z.object({
+        robots: defineRobotsSchema(),
+        sitemap: defineSitemapSchema(),
+      }),
+    }),
     docs: defineCollection({
-      source: "**/*.md",
-      type: "page",
+      source: '**/*.md',
+      type: 'page',
     }),
     blog: defineCollection({
       source: 'blog/*.md',
@@ -36,8 +36,8 @@ export default defineContentConfig({
         provider: z.string(),
         tags: z.array(z.string()),
         path: z.string(),
-        featured: z.boolean()
+        featured: z.boolean(),
       }),
     }),
   },
-});
+})

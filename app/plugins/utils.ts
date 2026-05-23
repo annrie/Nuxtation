@@ -32,7 +32,7 @@ export default defineNuxtPlugin(() => {
         array.pop()
         const path = array.join('/')
         return `${apiBaseUrl}/${path}/${file}`
-      }
-    }
+      },
+    },
   }
 })

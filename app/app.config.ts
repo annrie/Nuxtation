@@ -1,54 +1,54 @@
 export default defineAppConfig({
   seo: {
     title: 'Nuxtation',
-    description: 'Nuxt 4で構築したブログサイトです。'
+    description: 'Nuxt 4で構築したブログサイトです。',
   },
   header: {
     title: 'Nuxtation',
     logo: {
       light: '/logo.svg',
       dark: '/logo.svg',
-      alt: 'Nuxtation'
+      alt: 'Nuxtation',
     },
     links: [
       {
         label: 'トップ',
-        to: '/'
+        to: '/',
       },
       {
         label: 'ブログ',
-        to: '/blog'
+        to: '/blog',
       },
       {
         label: 'Cats',
-        to: '/cat'
-      }
-    ]
+        to: '/cat',
+      },
+    ],
   },
   ui: {
     colors: {
       primary: 'emerald',
       secondary: 'purple',
       neutral: 'slate',
-      tertiary: 'indigo'
+      tertiary: 'indigo',
     },
     button: {
       color: {
         blogBlue: {
-          solid: 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-green-600 dark:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none transition-all duration-200'
+          solid: 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-green-600 dark:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none transition-all duration-200',
         },
         blogGreen: {
-          solid: 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white dark:text-slate-900 shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200'
+          solid: 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white dark:text-slate-900 shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200',
         },
         featuredCta: {
-          solid: 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200 rounded-full'
+          solid: 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200 rounded-full',
         },
         tag: {
-          solid: 'bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 dark:from-blue-900/40 dark:to-blue-800/40 dark:hover:from-blue-800/50 dark:hover:to-blue-700/50 text-blue-900 dark:text-blue-100 border border-blue-300/50 dark:border-blue-700/50 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-200 text-sm font-medium shadow-sm hover:shadow-md'
-        }
+          solid: 'bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 dark:from-blue-900/40 dark:to-blue-800/40 dark:hover:from-blue-800/50 dark:hover:to-blue-700/50 text-blue-900 dark:text-blue-100 border border-blue-300/50 dark:border-blue-700/50 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-200 text-sm font-medium shadow-sm hover:shadow-md',
+        },
       },
       variant: {
-      }
+      },
     },
     icons: {
       arrowDown: 'i-lucide-arrow-down',
@@ -91,8 +91,8 @@ export default defineAppConfig({
       system: 'i-lucide-monitor',
       tip: 'i-lucide-lightbulb',
       upload: 'i-lucide-upload',
-      warning: 'i-lucide-triangle-alert'
-    }
+      warning: 'i-lucide-triangle-alert',
+    },
   },
   search: {
     placeholder: '検索...',
@@ -100,10 +100,10 @@ export default defineAppConfig({
       label: '検索',
       icon: 'i-heroicons-magnifying-glass',
       color: 'neutral',
-      variant: 'ghost'
-    }
+      variant: 'ghost',
+    },
   },
   github: {
-    url: 'https://github.com/annrie/nuxtation'
-  }
+    url: 'https://github.com/annrie/nuxtation',
+  },
 })

@@ -9,7 +9,8 @@
  * @returns Base64エンコード文字列
  */
 function encodeBase64(text: string): string {
-  if (!text) return ''
+  if (!text)
+    return ''
   // UTF-8対応: encodeURIComponent → unescape → btoa
   return btoa(unescape(encodeURIComponent(text)))
 }
@@ -21,7 +22,8 @@ function encodeBase64(text: string): string {
  * @returns URL-safe Base64エンコード文字列
  */
 export function encodeBase64ForImgix(text: string): string {
-  if (!text) return ''
+  if (!text)
+    return ''
   return encodeBase64(text)
     .replace(/\+/g, '-')
     .replace(/=/g, '')
@@ -33,7 +35,8 @@ export function encodeBase64ForImgix(text: string): string {
  * @returns スペース→+形式のBase64エンコード文字列
  */
 export function encodeBase64WithPlus(text: string): string {
-  if (!text) return ''
+  if (!text)
+    return ''
   return encodeBase64(text)
     .replace(/\s/g, '+')
     .replace(/=/g, '')
@@ -45,7 +48,8 @@ export function encodeBase64WithPlus(text: string): string {
  * @returns スペース→%20形式のBase64エンコード文字列
  */
 export function encodeBase64WithPercent(text: string): string {
-  if (!text) return ''
+  if (!text)
+    return ''
   return encodeBase64(text)
     .replace(/\s/g, '%20')
 }

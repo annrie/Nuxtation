@@ -1,13 +1,13 @@
-import { defineNuxtConfig } from 'nuxt/config'
-import { imagetools } from 'vite-imagetools'
-import tailwindcss from "@tailwindcss/vite";
+import type { ResolvedVitePWAOptions } from 'vite-plugin-pwa'
+// import { rollup as unwasm } from 'unwasm/plugin'  // Nitro の experimental.wasm で代替
+import yaml from '@rollup/plugin-yaml'
+import tailwindcss from '@tailwindcss/vite'
 import Vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import yaml from '@rollup/plugin-yaml'
+import { defineNuxtConfig } from 'nuxt/config'
+import { imagetools } from 'vite-imagetools'
 import { pwa } from './app/config/pwa'
-import { SiteDescription, SiteName } from './app/logic/constants'
-// import { rollup as unwasm } from 'unwasm/plugin'  // Nitro の experimental.wasm で代替
-import { readFileSync } from 'node:fs'
+import { SiteDescription } from './app/logic/constants'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
@@ -19,89 +19,57 @@ const isDev = process.env.NODE_ENV === 'development'
 export default defineNuxtConfig({
   extends: ['docus'],
 
-//  future: {
-//    compatibilityVersion: 4,
-//  },
-  compatibilityDate: '2025-07-15',
-
-  runtimeConfig: {
-    public: {
-				APP_ROOT: 'https://nuxtation.vercel.app',
-      API_URL: '/api'
+  modules: [
+    '@vueuse/nuxt',
+    // '@nuxt/ui',  // 削除: Docusのextendsで自動的に含まれるかテスト
+    'nuxt-content-twoslash', // twoslash: @nuxt/content より前に配置必須
+    '@nuxtjs/robots',
+    '@nuxtjs/sitemap',
+    '@nuxt/content',
+    // '@nuxtjs/mdc',  // 削除: Docusに含まれているため不要
+    '@nuxtjs/seo',
+    '@nuxt/eslint',
+    // '@nuxtjs/color-mode',
+    'unplugin-icons/nuxt',
+    '@nuxt/devtools',
+    '@vite-pwa/nuxt',
+    'nuxt-link-checker',
+    '@nuxt/image',
+    '@nuxt/fonts',
+    '@nuxt/scripts',
+    '@nuxt/icon',
+    // '@formkit/nuxt', // 未使用のため削除（251KiB節約）
+    // 'nuxt-jsonld', // 削除: useSchemaOrg（@nuxtjs/seo）で代替
+    'vue3-carousel-nuxt',
+    '@vercel/speed-insights/nuxt',
+    '@vercel/analytics/nuxt',
+  ],
+  $development: {
+    routeRules: {
+      '/api/**': { isr: false },
     },
   },
 
-  robots: {
-    groups: [
-      {
-        userAgent: ['*'],
-        disallow: [
-          '/_content/',  // Nuxt Contentの内部APIをブロック
-          '/*?query=',   // 検索結果ページをブロック
-          '/*?sort=',    // ソート結果ページをブロック
-          '/*?filter=',  // フィルター結果ページをブロック
-        ],
-        allow: ['/'],
-      }
-    ],
-    sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml',
+  $production: {
+    routeRules: {
+      '/api/**': { isr: false },
+    },
   },
 
   ssr: true,
 
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        global: true,
+        priority: 10,
+      },
+    ],
+  },
+
   devtools: {
     enabled: true,
-  },
-
-  experimental: {
-    inlineSSRStyles: true,
-	payloadExtraction: isDev ? false : 'client',
-    sharedPrerenderData: false,
-    scanPageMeta:'after-resolve',
-	renderJsonPayloads: isDev ? false : true,
-    viewTransition: false,
-    componentIslands: true,
-    treeshakeClientOnly: true,
-	typedPages: true,
-    appManifest: {
-      override: true,
-    },
-    defaults: {
-      useAsyncData: {
-        deep: true,
-      },
-      nuxtLink: {
-        componentName: 'NuxtLink',
-        externalRelAttribute: 'noopener noreferrer',
-        trailingSlash: 'remove',
-        prefetch: true,
-        prefetchOn: { interaction: true }
-      }
-    },
-  },
-
-  spaLoadingTemplate: true,
-
-  telemetry: false,
-
-  ogImage: { enabled: false },
-
-  typescript: {
-    tsConfig: {
-      compilerOptions: {
-        isolatedModules: false,
-        useDefineForClassFields: false,
-      },
-    },
-    shim: true,
-  },
-
-  devServer: {
-    host: '',
-    port: 3100,
-    cors: {
-				origin: ['https://nuxtation.vercel.app'],
-    },
   },
 
   app: {
@@ -166,40 +134,479 @@ export default defineNuxtConfig({
     layoutTransition: false,
   },
 
-  modules: [
-    '@vueuse/nuxt',
-    // '@nuxt/ui',  // 削除: Docusのextendsで自動的に含まれるかテスト
-    'nuxt-content-twoslash', // twoslash: @nuxt/content より前に配置必須
-    '@nuxtjs/robots',
-    '@nuxtjs/sitemap',
-    '@nuxt/content',
-    // '@nuxtjs/mdc',  // 削除: Docusに含まれているため不要
-    '@nuxtjs/seo',
-    '@nuxt/eslint',
-    // '@nuxtjs/color-mode',
-    'unplugin-icons/nuxt',
-    '@nuxt/devtools',
-    '@vite-pwa/nuxt',
-    'nuxt-link-checker',
-    '@nuxt/image',
-    '@nuxt/fonts',
-    '@nuxt/scripts',
-    '@nuxt/icon',
-    // '@formkit/nuxt', // 未使用のため削除（251KiB節約）
-    // 'nuxt-jsonld', // 削除: useSchemaOrg（@nuxtjs/seo）で代替
-    'vue3-carousel-nuxt',
-    '@vercel/speed-insights/nuxt',
-    '@vercel/analytics/nuxt',
+  css: [
+    '@@/node_modules/kiso.css/kiso.css',
+    // 'v-network-graph/lib/style.css', // 削除: 未使用
+    '@shikijs/twoslash/style-rich.css', // twoslash のホバーツールチップ用スタイル
   ],
 
-  components: {
-    dirs: [
+  vue: {
+    defineModel: true,
+    propsDestructure: true,
+  },
+
+  router: {
+    options: {
+      strict: true,
+    },
+  },
+
+  site: {
+    identity: {
+      type: 'person',
+    },
+    name: 'Nuxtation',
+    logo: '/logo.png',
+    titleSeparator: '-',
+    url: 'https://nuxtation.vercel.app',
+    description: 'Nuxt 4で構築したブログサイト',
+    language: 'ja',
+    twitter: '@muraie_jin',
+    trailingSlash: false,
+  },
+
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    dataValue: 'theme',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode',
+  },
+
+  content: {
+    markdown: {
+      remarkPlugins: {
+        'remark-gfm': {},
+      },
+      rehypePlugins: {
+        'rehype-raw': {},
+        'rehype-external-links': {
+          options: {
+            target: '_blank',
+            rel: ['noopener', 'noreferrer'],
+          },
+        },
+      },
+    },
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
+      preload: SHIKI_PRELOAD,
+      langs: SHIKI_LANGS,
+      options: {
+        lineNumbers: true,
+      },
+    },
+    build: {
+      markdown: {
+        anchorLinks: true,
+        toc: {
+          depth: 5,
+          searchDepth: 5,
+        },
+        remarkPlugins: {
+          'remark-gfm': {},
+        },
+        rehypePlugins: {
+          'rehype-raw': {},
+          'rehype-external-links': {
+            options: {
+              target: '_blank',
+              rel: ['noopener', 'noreferrer'],
+            },
+          },
+        },
+      },
+    },
+  },
+
+  mdc: {
+    prose: true,
+    remarkPlugins: {
+      'remark-gfm': {},
+    },
+    rehypePlugins: {
+      'rehype-raw': {},
+      'rehype-external-links': {
+        options: {
+          target: '_blank',
+          rel: ['noopener', 'noreferrer'],
+        },
+      },
+    },
+    headings: {
+      anchorLinks: {
+        h1: true,
+        h2: true,
+        h3: true,
+        h4: true,
+        h5: true,
+      },
+    },
+    toc: {
+      depth: 5,
+      searchDepth: 5,
+    },
+    highlight: {
+      theme: {
+        default: 'github-light',
+        dark: 'github-dark',
+      },
+      langs: SHIKI_LANGS,
+      preload: SHIKI_PRELOAD,
+      lineNumbers: true,
+    },
+    components: {
+      prose: true,
+      map: {
+        // This map will be used in <MDCRenderer> to control rendered components
+      },
+    },
+    externals: {
+      // 外部リソースのタイムアウト時間を30秒に設定（デフォルトは5秒）
+      timeout: 30000,
+      // エラーが発生してもビルド処理を続行する
+      skipBroken: true,
+    },
+  },
+
+  ui: {
+    theme: {
+      colors: [
+        'primary',
+        'secondary',
+        'tertiary',
+        // セマンティックカラー
+        'info',
+        'success',
+        'warning',
+        'alert',
+        'error',
+        // カスタムボタンカラー
+        'blogBlue',
+        'blogGreen',
+        'featuredCta',
+        'tag',
+      ],
+      extend: {
+        // レスポンシブフォントサイズ（clamp使用、320px〜1600px）
+        fontSize: {
+          xxs: 'clamp(0.438rem, 0.063rem + 1.172vw, 0.563rem)',
+          h6: 'clamp(0.938rem, 0.313rem + 1.953vw, 1.25rem)',
+          h5: 'clamp(1.125rem, 0.656rem + 1.469vw, 1.5rem)',
+          h4: 'clamp(1.375rem, 0.906rem + 1.469vw, 1.75rem)',
+          h3: 'clamp(1.75rem, 1.125rem + 1.953vw, 2.25rem)',
+          h2: 'clamp(2.125rem, 1.344rem + 2.441vw, 2.75rem)',
+          h1: 'clamp(2.625rem, 1.656rem + 3.027vw, 3.5rem)',
+          highlight: 'clamp(4rem, 2.5rem + 4.688vw, 5rem)',
+        },
+        // 行間
+        lineHeight: {
+          xxs: '1.55',
+          h6: '1.45',
+          h5: '1.4',
+          h4: '1.35',
+          h3: '1.3',
+          h2: '1.25',
+          h1: '1.15',
+          highlight: '1.1',
+        },
+        // カスタムボックスシャドウ
+        boxShadow: {
+          'card-light': '0 18px 40px rgba(15, 23, 42, 0.2)',
+          'card-dark': '0 18px 40px rgba(0, 0, 0, 0.5)',
+          'card-hover-light': '0 24px 55px rgba(15, 23, 42, 0.35)',
+          'card-hover-dark': '0 24px 55px rgba(0, 0, 0, 0.6)',
+          'link': '0 8px 16px rgba(0, 0, 0, 0.1)',
+          'blue-sm': '0 4px 12px rgba(37, 99, 235, 0.4)',
+          'blue-md': '0 6px 16px rgba(37, 99, 235, 0.5)',
+          'green-sm': '0 4px 12px rgba(34, 197, 94, 0.4)',
+          'green-md': '0 6px 16px rgba(34, 197, 94, 0.5)',
+        },
+        // アスペクト比
+        aspectRatio: {
+          video: '16 / 9',
+          square: '1 / 1',
+          portrait: '3 / 4',
+          landscape: '4 / 3',
+        },
+        // Border Radius（よく使う値）
+        borderRadius: {
+          'card': '1.25rem', // 20px - utilities.cssのカードベース
+          'card-lg': '1.75rem', // 28px
+          'card-xl': '2rem', // 32px
+          'button': '0.5rem', // 8px
+          'pill': '9999px', // 完全な丸
+        },
+        // Transition Duration（アニメーション用）
+        transitionDuration: {
+          card: '350ms', // utilities.cssのカードトランジション
+          fast: '200ms', // 高速アニメーション
+          normal: '300ms', // 通常アニメーション
+        },
+        // Spacing（カスタム間隔）
+        spacing: {
+          18: '4.5rem', // 72px
+          88: '22rem', // 352px
+        },
+      },
+    },
+  },
+
+  spaLoadingTemplate: true,
+
+  runtimeConfig: {
+    public: {
+      APP_ROOT: 'https://nuxtation.vercel.app',
+      API_URL: '/api',
+    },
+  },
+
+  build: {
+    transpile: ['nuxt', '@imgix/vue'],
+  },
+
+  routeRules: {
+    '/': { prerender: true },
+    '/blog/**': { prerender: true },
+    '/cat': { prerender: true },
+    '/robots.txt': {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400, must-revalidate', // 24時間
+      },
+    },
+  },
+
+  sourcemap: {
+    server: false,
+    client: true,
+  },
+
+  devServer: {
+    host: '',
+    port: 3100,
+    cors: {
+      origin: ['https://nuxtation.vercel.app'],
+    },
+  },
+
+  experimental: {
+    inlineSSRStyles: true,
+    payloadExtraction: isDev ? false : 'client',
+    sharedPrerenderData: false,
+    scanPageMeta: 'after-resolve',
+    renderJsonPayloads: !isDev,
+    viewTransition: false,
+    componentIslands: true,
+    treeshakeClientOnly: true,
+    typedPages: true,
+    appManifest: {
+      override: true,
+    },
+    defaults: {
+      useAsyncData: {
+        deep: true,
+      },
+      nuxtLink: {
+        componentName: 'NuxtLink',
+        externalRelAttribute: 'noopener noreferrer',
+        trailingSlash: 'remove',
+        prefetch: true,
+        prefetchOn: { interaction: true },
+      },
+    },
+  },
+
+  //  future: {
+  //    compatibilityVersion: 4,
+  //  },
+  compatibilityDate: '2025-07-15',
+
+  nitro: {
+    preset: 'vercel', // Edge Functions ではなく Node.js ランタイムを使用
+    storage: {
+      'cache:nuxt:payload': isDev
+        ? { driver: 'memory' }
+        : undefined,
+    },
+    rollupConfig: {
+      plugins: [
+        Vue({
+          template: {
+            customElement: true,
+          },
+        }) as any,
+        vueJsx() as any,
+      ],
+    },
+    esbuild: {
+      options: {
+        target: 'esnext',
+      },
+      plugins: ['@/plugins/nitro.error.ts'],
+    },
+    // compressPublicAssets: ホスティング先がオンザフライ圧縮するため無効化
+    // compressPublicAssets: true,
+    prerender: {
+      crawlLinks: true,
+      failOnError: false,
+      routes: [
+        '/',
+        '/blog',
+        '/cat',
+        '/sitemap.xml',
+      ],
+    },
+    experimental: {
+      wasm: false, // unwasm 警告を回避
+    },
+    devProxy: {
+      host: 'localhost',
+    },
+  },
+
+  vite: {
+    // 外部ディレクトリにおいた場合は追加。HMRが効かなくなるため
+    //    server: {
+    //      watch: {
+    //        usePolling: true,
+    //        interval: 1000,
+    //      },
+    //    },
+    plugins: [
+      imagetools(),
+      yaml(),
+      tailwindcss(),
+      // unwasm は Nitro の experimental.wasm: true で代替
       {
-        path: "~/components",
-        global: true,
-        priority: 10
+        name: 'ignore-dts',
+        enforce: 'pre',
+        transform(src, id) {
+          if (id.endsWith('.d.ts')) {
+            return { code: '' }
+          }
+        },
+      },
+    ],
+    vue: {
+      features: {
+        optionsAPI: false,
+      },
+    },
+    define: {
+      'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
+    },
+    ssr: {
+      noExternal: ['@nuxt/content', '@nuxtjs/mdc'],
+      external: ['shiki/onig.wasm'],
+    },
+    optimizeDeps: {
+      include: [
+        'buffer', // CJS
+        '@heroicons/vue/20/solid',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ],
+      exclude: ['shiki', 'shiki/onig.wasm'],
+      entries: [
+        'app/pages/**/*.vue',
+        'app/layouts/**/*.vue',
+        'app/components/**/*.vue',
+      ],
+    },
+    build: {
+      target: 'es2020',
+      chunkSizeWarningLimit: 1600,
+      assetsInclude: '**/*.wasm',
+      cssCodeSplit: true,
+      cssMinify: 'esbuild',
+      minify: 'esbuild',
+      rollupOptions: {
+        external: [
+          'shiki/onig.wasm',
+          '@sqlite.org/sqlite-wasm',
+          /sqlite3.*\.wasm$/,
+        ],
+        onwarn(warning, warn) {
+          // unwasm の shiki WASM 警告を抑制
+          if (warning.plugin === 'unwasm' && warning.message?.includes('onig.wasm')) {
+            return
+          }
+          warn(warning)
+        },
+      },
+      terserOptions: {
+        compress: {
+          drop_console: process.env.NODE_ENV === 'production',
+          drop_debugger: process.env.NODE_ENV === 'production',
+        },
+      },
+    },
+    css: {
+      preprocessorMaxWorkers: true,
+    },
+    $client: {
+      build: {
+        rollupOptions: {
+          output: {
+            chunkFileNames: '_nuxt/[name].js',
+            entryFileNames: '_nuxt/[name].js',
+          },
+        },
+      },
+    },
+  },
+
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        isolatedModules: false,
+        useDefineForClassFields: false,
+      },
+    },
+    shim: true,
+  },
+
+  postcss: {
+    plugins: {
+      'postcss-media-hover-any-hover': {},
+      'cssnano': {
+        preset: ['default', {
+          discardComments: { removeAll: true },
+          calc: false,
+        }],
+      },
+    },
+  },
+
+  telemetry: false,
+
+  hooks: {
+    'pwa:beforeBuildServiceWorker': function (options: ResolvedVitePWAOptions) {
+      const globPatterns = options.workbox.globPatterns
+      const payloadPatternIndex = globPatterns?.indexOf('**/_payload.json') ?? -1
+
+      if (payloadPatternIndex !== -1) {
+        globPatterns[payloadPatternIndex] = '**/_payload.js'
       }
-    ]
+    },
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+      },
+      standalone: false,
+      nuxt: {
+        sortConfigKeys: true,
+      },
+    },
   },
   fonts: {
     experimental: {
@@ -212,9 +619,9 @@ export default defineNuxtConfig({
       subsets: [],
     },
     fallbacks: {
-      'serif': ['Noto Serif JP'],
-      'sans': ['Noto Sans JP'],
-      'monospace': ['Fira Code'],
+      serif: ['Noto Serif JP'],
+      sans: ['Noto Sans JP'],
+      monospace: ['Fira Code'],
     },
   },
 
@@ -284,242 +691,6 @@ export default defineNuxtConfig({
     },
     serverBundle: 'local',
   },
-
-  shiki: {
-    defaultTheme: {
-      light: 'github-light',
-      dark: 'github-dark',
-    },
-    defaultLang: 'typescript',
-    highlightOptions: {
-      lineNumbers: true,
-    },
-    bundledLangs: ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss'],
-  },
-
-  twoslash: {
-    // Nuxt の自動生成型を注入（デフォルト: true）
-    injectNuxtTypes: true,
-  },
-
-  eslint: {
-    config: {
-      stylistic: {
-		indent: 2,
-		quotes: 'single',
-		semi: false,
-      },
-      standalone: false,
-      nuxt: {
-        sortConfigKeys: true,
-      },
-    },
-  },
-
-nuxtIcon: {
-    size: '24px',
-    class: 'icon',
-    color: '#000000',
-  },
-
-  site: {
-    identity: {
-      type: 'person',
-    },
-    name: 'Nuxtation',
-    logo: '/logo.png',
-    titleSeparator: '-',
-    url: 'https://nuxtation.vercel.app',
-    description: 'Nuxt 4で構築したブログサイト',
-    language: 'ja',
-    twitter: '@muraie_jin',
-    trailingSlash: false,
-  },
-
-  content: {
-    markdown: {
-      remarkPlugins: {
-        'remark-gfm': {},
-      },
-      rehypePlugins: {
-        'rehype-raw': {},
-        'rehype-external-links': {
-          options: {
-            target: '_blank',
-            rel: ['noopener', 'noreferrer'],
-          },
-        },
-      },
-    },
-    highlight: {
-      theme: {
-        default: 'github-light',
-        dark: 'github-dark',
-      },
-      preload: SHIKI_PRELOAD,
-      langs: SHIKI_LANGS,
-      options: {
-        lineNumbers: true,
-      },
-    },
-    build: {
-      markdown: {
-        anchorLinks: true,
-        toc: {
-          depth: 5,
-          searchDepth: 5,
-        },
-        remarkPlugins: {
-          'remark-gfm': {},
-        },
-        rehypePlugins: {
-          'rehype-raw': {},
-          'rehype-external-links': {
-            options: {
-              target: '_blank',
-              rel: ['noopener', 'noreferrer'],
-            },
-          },
-        },
-      },
-    },
-  },
-
-  mdc: {
-    prose: true,
-    remarkPlugins: {
-      'remark-gfm': {},
-    },
-    rehypePlugins: {
-      'rehype-raw': {},
-      'rehype-external-links': {
-        options: {
-          target: '_blank',
-          rel: ['noopener', 'noreferrer'],
-        },
-      },
-    },
-    headings: {
-      anchorLinks: {
-        h1: true, h2: true, h3: true, h4: true, h5: true
-      },
-    },
-    toc: {
-      depth: 5,
-      searchDepth: 5
-    },
-    highlight: {
-      theme: {
-        default: 'github-light',
-        dark: 'github-dark',
-      },
-      langs:SHIKI_LANGS,
-      preload: SHIKI_PRELOAD,
-      lineNumbers: true,
-    },
-    components: {
-      prose: true,
-      map: {
-        // This map will be used in <MDCRenderer> to control rendered components
-      },
-    },
-    externals: {
-      // 外部リソースのタイムアウト時間を30秒に設定（デフォルトは5秒）
-      timeout: 30000,
-      // エラーが発生してもビルド処理を続行する
-      skipBroken: true,
-    },
-  },
-
-  css: [
-    '@@/node_modules/kiso.css/kiso.css',
-    '~/assets/css/main.css',
-    // 'v-network-graph/lib/style.css', // 削除: 未使用
-    '@shikijs/twoslash/style-rich.css', // twoslash のホバーツールチップ用スタイル
-  ],
-
-  ui: {
-    theme: {
-      colors: [
-        'primary',
-        'secondary',
-        'tertiary',
-        // セマンティックカラー
-        'info',
-        'success',
-        'warning',
-        'alert',
-        'error',
-        // カスタムボタンカラー
-        'blogBlue',
-        'blogGreen',
-        'featuredCta',
-        'tag'
-      ],
-      extend: {
-        // レスポンシブフォントサイズ（clamp使用、320px〜1600px）
-        fontSize: {
-          'xxs': 'clamp(0.438rem, 0.063rem + 1.172vw, 0.563rem)',
-          'h6': 'clamp(0.938rem, 0.313rem + 1.953vw, 1.25rem)',
-          'h5': 'clamp(1.125rem, 0.656rem + 1.469vw, 1.5rem)',
-          'h4': 'clamp(1.375rem, 0.906rem + 1.469vw, 1.75rem)',
-          'h3': 'clamp(1.75rem, 1.125rem + 1.953vw, 2.25rem)',
-          'h2': 'clamp(2.125rem, 1.344rem + 2.441vw, 2.75rem)',
-          'h1': 'clamp(2.625rem, 1.656rem + 3.027vw, 3.5rem)',
-          'highlight': 'clamp(4rem, 2.5rem + 4.688vw, 5rem)',
-        },
-        // 行間
-        lineHeight: {
-          'xxs': '1.55',
-          'h6': '1.45',
-          'h5': '1.4',
-          'h4': '1.35',
-          'h3': '1.3',
-          'h2': '1.25',
-          'h1': '1.15',
-          'highlight': '1.1',
-        },
-        // カスタムボックスシャドウ
-        boxShadow: {
-          'card-light': '0 18px 40px rgba(15, 23, 42, 0.2)',
-          'card-dark': '0 18px 40px rgba(0, 0, 0, 0.5)',
-          'card-hover-light': '0 24px 55px rgba(15, 23, 42, 0.35)',
-          'card-hover-dark': '0 24px 55px rgba(0, 0, 0, 0.6)',
-          'link': '0 8px 16px rgba(0, 0, 0, 0.1)',
-          'blue-sm': '0 4px 12px rgba(37, 99, 235, 0.4)',
-          'blue-md': '0 6px 16px rgba(37, 99, 235, 0.5)',
-          'green-sm': '0 4px 12px rgba(34, 197, 94, 0.4)',
-          'green-md': '0 6px 16px rgba(34, 197, 94, 0.5)',
-        },
-        // アスペクト比
-        aspectRatio: {
-          'video': '16 / 9',
-          'square': '1 / 1',
-          'portrait': '3 / 4',
-          'landscape': '4 / 3',
-        },
-        // Border Radius（よく使う値）
-        borderRadius: {
-          'card': '1.25rem',      // 20px - utilities.cssのカードベース
-          'card-lg': '1.75rem',   // 28px
-          'card-xl': '2rem',      // 32px
-          'button': '0.5rem',     // 8px
-          'pill': '9999px',       // 完全な丸
-        },
-        // Transition Duration（アニメーション用）
-        transitionDuration: {
-          'card': '350ms',        // utilities.cssのカードトランジション
-          'fast': '200ms',        // 高速アニメーション
-          'normal': '300ms',      // 通常アニメーション
-        },
-        // Spacing（カスタム間隔）
-        spacing: {
-          '18': '4.5rem',         // 72px
-          '88': '22rem',          // 352px
-        },
-      }
-    }
-  },
   image: {
     inject: true,
     screens: {
@@ -534,15 +705,15 @@ nuxtIcon: {
       '2xl': 1536,
     },
     provider: 'imgix',
-    format: ["avif", "webp"],
+    format: ['avif', 'webp'],
     densities: [1, 2],
     quality: 80,
     imgix: {
       baseURL: 'https://nuxtation.imgix.net/',
       modifiers: {
-        auto: 'format,compress',  // Phase 24: 自動最適化（format + compress）
-        q: 80,                     // Phase 24: 明示的な品質指定
-        fit: 'crop',               // Phase 24: トリミング最適化
+        auto: 'format,compress', // Phase 24: 自動最適化（format + compress）
+        q: 80, // Phase 24: 明示的な品質指定
+        fit: 'crop', // Phase 24: トリミング最適化
       },
     },
     domains: [
@@ -563,228 +734,6 @@ nuxtIcon: {
     },
   },
 
-  colorMode: {
-    preference: 'system',
-    fallback: 'light',
-    dataValue: 'theme',
-    classSuffix: '',
-    storageKey: 'nuxt-color-mode',
-  },
-
-  build: {
-    transpile: [ 'nuxt', '@imgix/vue' ],
-  },
-
-  sourcemap: {
-    server: false,
-    client: true,
-  },
-
-
-  schemaOrg: {
-    identity: 'Person',
-  },
-
-  sitemap: {
-    zeroRuntime: true,  // サーバーバンドルサイズを削減
-    defaults: {
-      priority: 0.5,
-      changefreq: 'monthly'  // デフォルトは月次更新
-    },
-    urls: [
-      // トップページ - 最高優先度、週次更新
-      {
-        loc: '/',
-        priority: 1.0,
-        changefreq: 'weekly'
-      },
-      // 主要インデックスページ - 高優先度、週次更新
-      {
-        loc: '/blog',
-        priority: 0.9,
-        changefreq: 'weekly'
-      },
-      {
-        loc: '/cat',
-        priority: 0.7,
-        changefreq: 'monthly'
-      }
-    ],
-    xsl: false,
-    credits: false,
-    exclude: [ '/_partials/**' ],
-    cacheMaxAgeSeconds: 10000,
-  },
-
-  routeRules: {
-      '/': { prerender: true },
-      '/blog/**': { prerender: true },
-      '/cat': { prerender: true },
-      '/robots.txt': {
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'Cache-Control': 'public, max-age=86400, must-revalidate' // 24時間
-        }
-      },
-  },
-
-  nitro: {
-    preset: 'vercel',  // Edge Functions ではなく Node.js ランタイムを使用
-	storage: {
-		'cache:nuxt:payload': isDev
-		? { driver: 'memory' }
-		: undefined
-	},
-    rollupConfig: {
-      plugins: [
-        Vue({
-          template: {
-            customElement: true,
-          },
-        }) as any,
-        vueJsx() as any,
-      ],
-    },
-    esbuild: {
-      options: {
-        target: 'esnext',
-      },
-      plugins: ['@/plugins/nitro.error.ts'],
-    },
-	// compressPublicAssets: ホスティング先がオンザフライ圧縮するため無効化
-	// compressPublicAssets: true,
-    prerender: {
-      crawlLinks: true,
-      failOnError: false,
-      routes: [
-        '/',
-        '/blog',
-        '/cat',
-        '/sitemap.xml',
-      ],
-    },
-    experimental: {
-      wasm: false,  // unwasm 警告を回避
-    },
-    devProxy: {
-      host: 'localhost',
-    },
-  },
-
-  router: {
-    options: {
-      strict: true,
-    },
-  },
-
-  vue: {
-    defineModel: true,
-    propsDestructure: true,
-  },
-
-  vite: {
-	// 外部ディレクトリにおいた場合は追加。HMRが効かなくなるため
-//    server: {
-//      watch: {
-//        usePolling: true,
-//        interval: 1000,
-//      },
-//    },
-    plugins: [
-      imagetools(),
-      yaml(),
-	  tailwindcss(),
-      // unwasm は Nitro の experimental.wasm: true で代替
-      {
-        name: 'ignore-dts',
-        enforce: 'pre',
-        transform(src, id) {
-          if (id.endsWith('.d.ts')) {
-            return { code: '' };
-          }
-        },
-      },
-    ],
-			vue: {
-				features: {
-					optionsAPI: false,
-				},
-			},
-    define: {
-      'import.meta.env.VITE_APP_ENV': JSON.stringify(import.meta.env.VITE_APP_ENV),
-    },
-    ssr: {
-      noExternal: ['@nuxt/content', '@nuxtjs/mdc'],
-      external: ['shiki/onig.wasm'],
-    },
-    optimizeDeps: {
-		include: [
-			'buffer', // CJS
-			'@heroicons/vue/20/solid',
-			'@vue/devtools-core',
-			'@vue/devtools-kit',
-				],
-      exclude: ['shiki', 'shiki/onig.wasm'],
-      entries: [
-        "app/pages/**/*.vue",
-        "app/layouts/**/*.vue",
-        "app/components/**/*.vue",
-      ]
-    },
-    build: {
-      target: 'es2020',
-      chunkSizeWarningLimit: 1600,
-      assetsInclude: '**/*.wasm',
-      cssCodeSplit: true,
-      cssMinify: 'esbuild',
-      minify: 'esbuild',
-      rollupOptions: {
-        external: [
-          'shiki/onig.wasm',
-          '@sqlite.org/sqlite-wasm',
-          /sqlite3.*\.wasm$/,
-        ],
-        onwarn(warning, warn) {
-          // unwasm の shiki WASM 警告を抑制
-          if (warning.plugin === 'unwasm' && warning.message?.includes('onig.wasm')) {
-            return;
-          }
-          warn(warning);
-        },
-      },
-	terserOptions: {
-		compress: {
-			drop_console: process.env.NODE_ENV === "production",
-			drop_debugger: process.env.NODE_ENV === "production",
-		},
-	},
-},
-css: {
-      preprocessorMaxWorkers: true
-    },
-    $client: {
-      build: {
-        rollupOptions: {
-          output: {
-            chunkFileNames: '_nuxt/[name].js',
-            entryFileNames: '_nuxt/[name].js'
-          }
-        }
-      }
-    },
-  },
-
-  $production: {
-      routeRules: {
-        '/api/**': { isr: false },
-      },
-  },
-  $development: {
-    routeRules: {
-      '/api/**': { isr: false },
-    },
-  },
-
   linkChecker: {
     failOnError: false,
     enabled: false,
@@ -793,21 +742,85 @@ css: {
     ],
   },
 
-  postcss: {
-    plugins: {
-      'postcss-media-hover-any-hover': {},
-      'cssnano': {
-        preset: ['default', {
-          discardComments: { removeAll: true },
-          calc: false,
-        }],
-      },
-    },
+  llms: {
+    domain: 'https://nuxtation.vercel.app',
   },
 
-  llms: {
-    domain: "https://nuxtation.vercel.app"
+  nuxtIcon: {
+    size: '24px',
+    class: 'icon',
+    color: '#000000',
   },
+
+  ogImage: { enabled: false },
 
   pwa,
+
+  robots: {
+    groups: [
+      {
+        userAgent: ['*'],
+        disallow: [
+          '/_content/', // Nuxt Contentの内部APIをブロック
+          '/*?query=', // 検索結果ページをブロック
+          '/*?sort=', // ソート結果ページをブロック
+          '/*?filter=', // フィルター結果ページをブロック
+        ],
+        allow: ['/'],
+      },
+    ],
+    sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml',
+  },
+
+  schemaOrg: {
+    identity: 'Person',
+  },
+
+  shiki: {
+    defaultTheme: {
+      light: 'github-light',
+      dark: 'github-dark',
+    },
+    defaultLang: 'typescript',
+    highlightOptions: {
+      lineNumbers: true,
+    },
+    bundledLangs: ['typescript', 'javascript', 'vue', 'bash', 'json', 'yaml', 'markdown', 'html', 'css', 'scss'],
+  },
+
+  sitemap: {
+    zeroRuntime: true, // サーバーバンドルサイズを削減
+    defaults: {
+      priority: 0.5,
+      changefreq: 'monthly', // デフォルトは月次更新
+    },
+    urls: [
+      // トップページ - 最高優先度、週次更新
+      {
+        loc: '/',
+        priority: 1.0,
+        changefreq: 'weekly',
+      },
+      // 主要インデックスページ - 高優先度、週次更新
+      {
+        loc: '/blog',
+        priority: 0.9,
+        changefreq: 'weekly',
+      },
+      {
+        loc: '/cat',
+        priority: 0.7,
+        changefreq: 'monthly',
+      },
+    ],
+    xsl: false,
+    credits: false,
+    exclude: ['/_partials/**'],
+    cacheMaxAgeSeconds: 10000,
+  },
+
+  twoslash: {
+    // Nuxt の自動生成型を注入（デフォルト: true）
+    injectNuxtTypes: true,
+  },
 })

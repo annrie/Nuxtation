@@ -9,16 +9,17 @@ const props = withDefaults(defineProps<{
   imgClass?: string
   overlayClass?: string
   absolute?: boolean
-  aspectRatio?: string | number  // '16/9', '4/3', '1/1', 2.35, etc.
-  noOverlay?: boolean   // オーバーレイを無効化
-  isDark?: boolean      // ダークモード状態（親から渡される）
+  aspectRatio?: string | number // '16/9', '4/3', '1/1', 2.35, etc.
+  noOverlay?: boolean // オーバーレイを無効化
+  isDark?: boolean // ダークモード状態（親から渡される）
 }>(), {
   isDark: false,
 })
 
 // アスペクト比をCSSで使用可能な形式に変換
 const aspectRatioStyle = computed(() => {
-  if (!props.aspectRatio) return undefined
+  if (!props.aspectRatio)
+    return undefined
 
   // 数値の場合はそのまま使用
   if (typeof props.aspectRatio === 'number') {
@@ -45,11 +46,11 @@ const aspectRatioStyle = computed(() => {
       :fetchpriority="fetchpriority || 'high'"
       :modifiers="modifiers"
       :img-attrs="{ class: imgClass || 'article-hero-image' }"
-    />
+    ></NuxtPicture>
     <div
       v-if="!noOverlay"
       :class="overlayClass || 'article-hero-overlay'"
-    />
+    ></div>
   </div>
 </template>
 

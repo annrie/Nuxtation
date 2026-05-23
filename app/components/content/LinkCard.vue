@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
   propsUrl: String,
@@ -45,13 +45,15 @@ else {
 const maxLength = 40
 
 const limitedTitle = computed(() => {
-  if (!ogpData.value) return ''
+  if (!ogpData.value)
+    return ''
   const base = ogpData.value.ogTitle || props.title || ''
   return base.length > maxLength ? `${base.substring(0, maxLength)}...` : base
 })
 
 const limitedDescription = computed(() => {
-  if (!ogpData.value) return ''
+  if (!ogpData.value)
+    return ''
   const base = ogpData.value.ogDescription || props.description || ''
   const maxDescLength = 120
   return base.length > maxDescLength ? `${base.substring(0, maxDescLength)}...` : base
@@ -184,12 +186,12 @@ const limitedDescription = computed(() => {
 
 /* 外部リンクアイコンを非表示 */
 .link-card-link :deep(.icon-external),
-.link-card-link :deep([class*="external"]),
+.link-card-link :deep([class*='external']),
 .link-card-link::after,
 .link-card-link :deep(svg),
 .link-card-link :deep(.icon),
-.link-card-link :deep(a[target="_blank"]::after),
-.link-card-link :deep(a[rel*="noopener"]::after) {
+.link-card-link :deep(a[target='_blank']::after),
+.link-card-link :deep(a[rel*='noopener']::after) {
   display: none !important;
 }
 </style>

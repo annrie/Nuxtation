@@ -1,113 +1,115 @@
 <script setup lang="ts">
-const appConfig = useAppConfig();
-const route = useRoute();
+const appConfig = useAppConfig()
+const route = useRoute()
 
-const openDropdown = ref<string | null>(null);
+const openDropdown = ref<string | null>(null)
 
 const navigationItems = computed(() => {
-  const links = appConfig.header?.links || [];
+  const links = appConfig.header?.links || []
   return links.map((link: any) => ({
     label: link.label,
     to: link.to,
     children: link.children || [],
-    active: route.path === link.to || (link.to !== "/" && route.path.startsWith(link.to)),
-  }));
-});
+    active: route.path === link.to || (link.to !== '/' && route.path.startsWith(link.to)),
+  }))
+})
 
-const toggleDropdown = (label: string) => {
-  openDropdown.value = openDropdown.value === label ? null : label;
-};
+function toggleDropdown(label: string) {
+  openDropdown.value = openDropdown.value === label ? null : label
+}
 
-const closeDropdown = () => {
-  openDropdown.value = null;
-};
+function closeDropdown() {
+  openDropdown.value = null
+}
 
-const isOpen = (label: string) => openDropdown.value === label;
+const isOpen = (label: string) => openDropdown.value === label
 
-const handleParentClick = (item: any) => {
+function handleParentClick(item: any) {
   // 親要素をクリックしたときにそのページに遷移
-  navigateTo(item.to);
-};
+  navigateTo(item.to)
+}
 
 // キーボードナビゲーション対応
-const handleKeydown = (event: KeyboardEvent, item: any, index: number) => {
-  const key = event.key;
+function handleKeydown(event: KeyboardEvent, item: any, index: number) {
+  const key = event.key
 
   // Escapeでドロップダウンを閉じる
   if (key === 'Escape') {
-    event.preventDefault();
-    closeDropdown();
+    event.preventDefault()
+    closeDropdown()
   }
   // Enter/Spaceでドロップダウンをトグルまたは遷移
   else if (key === 'Enter' || key === ' ') {
-    event.preventDefault();
+    event.preventDefault()
     if (item.children.length) {
       if (isOpen(item.label)) {
         // 既に開いている場合は親ページに遷移
-        handleParentClick(item);
-      } else {
-        // 閉じている場合は開く
-        toggleDropdown(item.label);
+        handleParentClick(item)
       }
-    } else {
-      navigateTo(item.to);
+      else {
+        // 閉じている場合は開く
+        toggleDropdown(item.label)
+      }
+    }
+    else {
+      navigateTo(item.to)
     }
   }
   // 矢印キーでのナビゲーション
   else if (key === 'ArrowLeft' || key === 'ArrowRight') {
-    event.preventDefault();
-    const direction = key === 'ArrowRight' ? 1 : -1;
-    const nextIndex = (index + direction + navigationItems.value.length) % navigationItems.value.length;
-    const buttons = document.querySelectorAll('nav button[type="button"], nav a');
-    const nextButton = buttons[nextIndex] as HTMLElement;
+    event.preventDefault()
+    const direction = key === 'ArrowRight' ? 1 : -1
+    const nextIndex = (index + direction + navigationItems.value.length) % navigationItems.value.length
+    const buttons = document.querySelectorAll('nav button[type="button"], nav a')
+    const nextButton = buttons[nextIndex] as HTMLElement
     if (nextButton) {
-      nextButton.focus();
-      closeDropdown();
+      nextButton.focus()
+      closeDropdown()
     }
   }
   else if (key === 'ArrowDown' && item.children.length) {
-    event.preventDefault();
+    event.preventDefault()
     if (!isOpen(item.label)) {
-      toggleDropdown(item.label);
+      toggleDropdown(item.label)
     }
     // 次のティックでサブメニューの最初のリンクにフォーカス
     nextTick(() => {
-      const dropdown = event.currentTarget as HTMLElement;
-      const firstLink = dropdown.parentElement?.querySelector('.block.px-4') as HTMLElement;
+      const dropdown = event.currentTarget as HTMLElement
+      const firstLink = dropdown.parentElement?.querySelector('.block.px-4') as HTMLElement
       if (firstLink) {
-        firstLink.focus();
+        firstLink.focus()
       }
-    });
+    })
   }
-};
+}
 
 // サブメニュー内での矢印キーナビゲーション
-const handleSubmenuKeydown = (event: KeyboardEvent, childIndex: number, totalChildren: number) => {
-  const key = event.key;
+function handleSubmenuKeydown(event: KeyboardEvent, childIndex: number, totalChildren: number) {
+  const key = event.key
 
   if (key === 'Escape') {
-    event.preventDefault();
-    closeDropdown();
+    event.preventDefault()
+    closeDropdown()
   }
   else if (key === 'ArrowDown') {
-    event.preventDefault();
-    const nextIndex = (childIndex + 1) % totalChildren;
-    const currentLink = event.currentTarget as HTMLElement;
-    const allLinks = currentLink.parentElement?.parentElement?.querySelectorAll('.block.px-4');
+    event.preventDefault()
+    const nextIndex = (childIndex + 1) % totalChildren
+    const currentLink = event.currentTarget as HTMLElement
+    const allLinks = currentLink.parentElement?.parentElement?.querySelectorAll('.block.px-4')
     if (allLinks && allLinks[nextIndex]) {
-      (allLinks[nextIndex] as HTMLElement).focus();
+      (allLinks[nextIndex] as HTMLElement).focus()
     }
   }
   else if (key === 'ArrowUp') {
-    event.preventDefault();
-    const prevIndex = (childIndex - 1 + totalChildren) % totalChildren;
-    const currentLink = event.currentTarget as HTMLElement;
-    const allLinks = currentLink.parentElement?.parentElement?.querySelectorAll('.block.px-4');
+    event.preventDefault()
+    const prevIndex = (childIndex - 1 + totalChildren) % totalChildren
+    const currentLink = event.currentTarget as HTMLElement
+    const allLinks = currentLink.parentElement?.parentElement?.querySelectorAll('.block.px-4')
     if (allLinks && allLinks[prevIndex]) {
-      (allLinks[prevIndex] as HTMLElement).focus();
+      (allLinks[prevIndex] as HTMLElement).focus()
     }
   }
-};
+}
 </script>
 
 <template>

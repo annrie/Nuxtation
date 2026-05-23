@@ -1,82 +1,84 @@
+import { presetHeroPatterns } from '@julr/unocss-preset-heropatterns'
 // @unocss-include
 // https://coding-memo.work/development/2704/
 import { mergeConfigs } from '@unocss/core'
-import config from './.nuxt/uno.config.mjs'
+import extractorMdc from '@unocss/extractor-mdc'
+import presetTagify from '@unocss/preset-tagify'
+import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
+import { createRemToPxProcessor } from '@unocss/preset-wind4/utils'
+import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
+import transformerCompileClass from '@unocss/transformer-compile-class'
+import { animatedUno } from 'animated-unocss'
 import {
-  defineConfig,
   presetAttributify,
   presetIcons,
   presetTypography,
-  presetWind4,
   presetWebFonts,
+  presetWind4,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local'
-import { createRemToPxProcessor } from '@unocss/preset-wind4/utils'
-import presetTagify from '@unocss/preset-tagify'
-import transformerCompileClass from '@unocss/transformer-compile-class'
-import transformerAttributifyJsx from '@unocss/transformer-attributify-jsx'
-import { presetHeroPatterns } from '@julr/unocss-preset-heropatterns'
 import { presetExtra } from 'unocss-preset-extra'
-import extractorMdc from '@unocss/extractor-mdc'
-import { animatedUno } from 'animated-unocss'
-import transformerAlias from 'unocss-transformer-alias'
+import config from './.nuxt/uno.config.mjs'
 
 // const FormKitVariants = require('@formkit/themes/unocss')
 
 // ヘルパー：defineConfig の前あたりに1回だけ
-const __resolveColor = (theme: any, key: any) => {
-  const colors = theme?.colors;
-  if (!colors || key == null) return String(key ?? '');
-  const v = colors[key];
-  if (!v) return String(key);
-  if (typeof v === 'string') return v;
-  if (typeof v === 'object') return v.DEFAULT ?? v[500] ?? v[600] ?? v[400] ?? Object.values(v)[0] ?? String(key);
-  return String(key);
-};
+function __resolveColor(theme: any, key: any) {
+  const colors = theme?.colors
+  if (!colors || key == null)
+    return String(key ?? '')
+  const v = colors[key]
+  if (!v)
+    return String(key)
+  if (typeof v === 'string')
+    return v
+  if (typeof v === 'object')
+    return v.DEFAULT ?? v[500] ?? v[600] ?? v[400] ?? Object.values(v)[0] ?? String(key)
+  return String(key)
+}
 
-function convert(c: string) { return c; }
+const convert = (c: string) => c
 
 function makeColorPalette(color: string) {
   return {
-      DEFAULT: color,
-      50:  `color-mix(in srgb, ${color} 5%,  white)`,
-      100: `color-mix(in srgb, ${color} 10%, white)`,
-      200: `color-mix(in srgb, ${color} 30%, white)`,
-      300: `color-mix(in srgb, ${color} 50%, white)`,
-      400: `color-mix(in srgb, ${color} 70%, white)`,
-      500: color,
-      600: `color-mix(in srgb, ${color} 70%, black)`,
-      700: `color-mix(in srgb, ${color} 50%, black)`,
-      800: `color-mix(in srgb, ${color} 30%, black)`,
-      900: `color-mix(in srgb, ${color} 15%, black)`,
-      950: `color-mix(in srgb, ${color} 8%,  black)`,
-  };
+    DEFAULT: color,
+    50: `color-mix(in srgb, ${color} 5%,  white)`,
+    100: `color-mix(in srgb, ${color} 10%, white)`,
+    200: `color-mix(in srgb, ${color} 30%, white)`,
+    300: `color-mix(in srgb, ${color} 50%, white)`,
+    400: `color-mix(in srgb, ${color} 70%, white)`,
+    500: color,
+    600: `color-mix(in srgb, ${color} 70%, black)`,
+    700: `color-mix(in srgb, ${color} 50%, black)`,
+    800: `color-mix(in srgb, ${color} 30%, black)`,
+    900: `color-mix(in srgb, ${color} 15%, black)`,
+    950: `color-mix(in srgb, ${color} 8%,  black)`,
+  }
 }
 
 function aliasScale(prefix: string, base: string) {
   return Object.fromEntries(
-    [50,100,200,300,400,500,600,700,800,900,950].map(
+    [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map(
       s => [`${prefix}-${s}`, `var(--colors-${base}-${s})`],
     ),
-  );
+  )
 }
 
-//ブレイクポイント（min-width）の設定
-const BREAKPOINT_MIN_WIDTH_SM = 375;
-const BREAKPOINT_MIN_WIDTH_MD = 640;
-const BREAKPOINT_MIN_WIDTH_TB = 768; //782pxはWordPress（ブロックエディタ）のブレイクポイント, 768pxから変更
-const BREAKPOINT_MIN_WIDTH_LG = 1024;
-const BREAKPOINT_MIN_WIDTH_XL = 1440;
-const BREAKPOINT_MIN_WIDTH_2XL = 1600;
+// ブレイクポイント（min-width）の設定
+const BREAKPOINT_MIN_WIDTH_SM = 375
+const BREAKPOINT_MIN_WIDTH_MD = 640
+const BREAKPOINT_MIN_WIDTH_TB = 768 // 782pxはWordPress（ブロックエディタ）のブレイクポイント, 768pxから変更
+const BREAKPOINT_MIN_WIDTH_LG = 1024
+const BREAKPOINT_MIN_WIDTH_XL = 1440
+const BREAKPOINT_MIN_WIDTH_2XL = 1600
 
 // 1remあたりのピクセル値（通常16pxを仮定）（clampやrem変換の計算で用いる）
-const REM_BASE = 16;
+const REM_BASE = 16
 
 // clamp計算に用いるビューポートの最小値と最大値の基準設定
-const VIEWPORT_MIN_WIDTH = BREAKPOINT_MIN_WIDTH_TB;
-const VIEWPORT_MAX_WIDTH = BREAKPOINT_MIN_WIDTH_XL;
+const VIEWPORT_MIN_WIDTH = BREAKPOINT_MIN_WIDTH_TB
+const VIEWPORT_MAX_WIDTH = BREAKPOINT_MIN_WIDTH_XL
 /*
  * clamp関数の計算を行う関数
  * @param {string} minValue - 描画する最小値
@@ -84,18 +86,18 @@ const VIEWPORT_MAX_WIDTH = BREAKPOINT_MIN_WIDTH_XL;
  * @return {string} - 計算結果
  */
 function calculateClamp(minValue: string, maxValue: string): string {
-  const minVal = Number(minValue);
-  const maxVal = Number(maxValue);
-  const minValueRem = (minVal / REM_BASE).toFixed(3); // remに変換
-  const maxValueRem = (maxVal / REM_BASE).toFixed(3); // remに変換
+  const minVal = Number(minValue)
+  const maxVal = Number(maxValue)
+  const minValueRem = (minVal / REM_BASE).toFixed(3) // remに変換
+  const maxValueRem = (maxVal / REM_BASE).toFixed(3) // remに変換
 
-  const slope = (maxVal - minVal) / (VIEWPORT_MAX_WIDTH - VIEWPORT_MIN_WIDTH);
-  const yIntercept = minVal - slope * VIEWPORT_MIN_WIDTH;
-  const slopeVw = (slope * 100).toFixed(3); // vwに変換
+  const slope = (maxVal - minVal) / (VIEWPORT_MAX_WIDTH - VIEWPORT_MIN_WIDTH)
+  const yIntercept = minVal - slope * VIEWPORT_MIN_WIDTH
+  const slopeVw = (slope * 100).toFixed(3) // vwに変換
 
-  const yInterceptRem = (yIntercept / REM_BASE).toFixed(3); // remに変換
+  const yInterceptRem = (yIntercept / REM_BASE).toFixed(3) // remに変換
 
-  return `clamp(${minValueRem}rem, ${yInterceptRem}rem + ${slopeVw}vw, ${maxValueRem}rem)`;
+  return `clamp(${minValueRem}rem, ${yInterceptRem}rem + ${slopeVw}vw, ${maxValueRem}rem)`
 }
 
 /*
@@ -105,7 +107,7 @@ function calculateClamp(minValue: string, maxValue: string): string {
  * @return {number} - 計算結果
  */
 function truncate_decimal(number: number, digit: number = 3): number {
-  return Math.floor(number * Math.pow(10, digit)) / Math.pow(10, digit);
+  return Math.floor(number * 10 ** digit) / 10 ** digit
 }
 
 /*
@@ -115,8 +117,8 @@ function truncate_decimal(number: number, digit: number = 3): number {
  * @return {string} - 計算結果vw
  */
 function calculateVw(number: string, base: number): string {
-  const result = (Number(number) / base) * 100;
-  return `${truncate_decimal(result)}vw`;
+  const result = (Number(number) / base) * 100
+  return `${truncate_decimal(result)}vw`
 }
 
 /*
@@ -129,11 +131,11 @@ function calculateVw(number: string, base: number): string {
 function getPropertyNames(propertyNames: string[], value: string, initialValue: Record<string, string>): Record<string, string> {
   return propertyNames.reduce(
     (acc, propertyName) => {
-      acc[propertyName] = value;
-      return acc;
+      acc[propertyName] = value
+      return acc
     },
-    { ...initialValue }
-  );
+    { ...initialValue },
+  )
 }
 
 /*
@@ -145,98 +147,98 @@ function getPropertyNames(propertyNames: string[], value: string, initialValue: 
  */
 function setProperty(prefix: string, propertyNames: string[], initialValue: Record<string, string> = {}): Array<[RegExp, (match: RegExpMatchArray) => Record<string, string>]> {
   return [
-    //px設定 -[設定値]　例) mt-10
-    [new RegExp(`^${prefix}-(\\d+)$`), ([, d]) => getPropertyNames(propertyNames, `${d}px`)],
+    // px設定 -[設定値] 例) mt-10
+    [new RegExp(`^${prefix}-(\\d+)$`), ([, d]) => getPropertyNames(propertyNames, `${d}px`, initialValue)],
 
-    //rem変換（px to rem） -[設定値]ptr　例) mt-20ptr
-    [new RegExp(`^${prefix}-(\\d+)ptr$`), ([, d]) => getPropertyNames(propertyNames, `${Number(d) / REM_BASE}rem`)],
+    // rem変換（px to rem） -[設定値]ptr 例) mt-20ptr
+    [new RegExp(`^${prefix}-(\\d+)ptr$`), ([, d]) => getPropertyNames(propertyNames, `${Number(d) / REM_BASE}rem`, initialValue)],
 
-    //em変換 -[設定値]em　例) mt-1.5em
-    [new RegExp(`^${prefix}-(\\d+(\\.\\d+)?)em$`), ([, d]) => getPropertyNames(propertyNames, `${d}em`)],
-    //em変換 -[設定値]/[基準値]em　例) mt-16/20em
+    // em変換 -[設定値]em 例) mt-1.5em
+    [new RegExp(`^${prefix}-(\\d+(\\.\\d+)?)em$`), ([, d]) => getPropertyNames(propertyNames, `${d}em`, initialValue)],
+    // em変換 -[設定値]/[基準値]em 例) mt-16/20em
     [
       new RegExp(`^${prefix}-(\\d+)/(\\d+)em$`),
       ([, d1, d2]) => {
-        const result = Number(d1) / Number(d2);
-        return getPropertyNames(propertyNames, `${truncate_decimal(result)}em`);
-      }
+        const result = Number(d1) / Number(d2)
+        return getPropertyNames(propertyNames, `${truncate_decimal(result)}em`, initialValue)
+      },
     ],
 
-    //%変換 -[設定値]per　例) mt-1.5per
-    [new RegExp(`^${prefix}-(\\d+(\\.\\d+)?)per$`), ([, d]) => getPropertyNames(propertyNames, `${d}%`)],
-    //%変換 -[分子]/[分母]per　例) mt-10/100per
+    // %変換 -[設定値]per 例) mt-1.5per
+    [new RegExp(`^${prefix}-(\\d+(\\.\\d+)?)per$`), ([, d]) => getPropertyNames(propertyNames, `${d}%`, initialValue)],
+    // %変換 -[分子]/[分母]per 例) mt-10/100per
     [
       new RegExp(`^${prefix}-(\\d+)/(\\d+)per$`),
       ([, d1, d2]) => {
-        const result = (Number(d1) / Number(d2)) * 100;
-        return getPropertyNames(propertyNames, `${truncate_decimal(result)}%`);
-      }
+        const result = (Number(d1) / Number(d2)) * 100
+        return getPropertyNames(propertyNames, `${truncate_decimal(result)}%`, initialValue)
+      },
     ],
 
-    //vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_XS） -[設定値]ptvw　例) mt-20ptvw
+    // vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_XS） -[設定値]ptvw 例) mt-20ptvw
     [
       new RegExp(`^${prefix}-(\\d+)ptvw$`),
       ([, d]) => {
-        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_SM));
-      }
+        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_SM), initialValue)
+      },
     ],
 
-    //vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_SM） -[設定値]ptvw-sm　例) mt-20ptvw-sm
+    // vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_SM） -[設定値]ptvw-sm 例) mt-20ptvw-sm
     [
       new RegExp(`^${prefix}-(\\d+)ptvw-sm$`),
       ([, d]) => {
-        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_MD));
-      }
+        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_MD), initialValue)
+      },
     ],
 
-    //vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_MD） -[設定値]ptvw-md　例) mt-20ptvw-md
+    // vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_MD） -[設定値]ptvw-md 例) mt-20ptvw-md
     [
       new RegExp(`^${prefix}-(\\d+)ptvw-md$`),
       ([, d]) => {
-        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_TB));
-      }
+        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_TB), initialValue)
+      },
     ],
 
-    //vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_LG） -[設定値]ptvw-lg　例) mt-20ptvw-lg
+    // vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_LG） -[設定値]ptvw-lg 例) mt-20ptvw-lg
     [
       new RegExp(`^${prefix}-(\\d+)ptvw-lg$`),
       ([, d]) => {
-        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_LG));
-      }
+        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_LG), initialValue)
+      },
     ],
 
-    //vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_XL） -[設定値]ptvw-xl　例) mt-20ptvw-xl
+    // vw変換（px to vw）（基準：BREAKPOINT_MIN_WIDTH_XL） -[設定値]ptvw-xl 例) mt-20ptvw-xl
     [
       new RegExp(`^${prefix}-(\\d+)ptvw-xl$`),
       ([, d]) => {
-        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_XL));
-      }
+        return getPropertyNames(propertyNames, calculateVw(d, BREAKPOINT_MIN_WIDTH_XL), initialValue)
+      },
     ],
 
-    //clamp変換 -clamp-[最小]-[最大]　例) mt-clamp-10-20
+    // clamp変換 -clamp-[最小]-[最大] 例) mt-clamp-10-20
     [
       new RegExp(`^${prefix}-clamp-(\\d+)-(\\d+)$`),
       ([, d1, d2]) => {
-        return getPropertyNames(propertyNames, `${calculateClamp(d1, d2)}`);
-      }
-    ]
-  ];
+        return getPropertyNames(propertyNames, `${calculateClamp(d1, d2)}`, initialValue)
+      },
+    ],
+  ]
 }
 
 export default mergeConfigs([config, {
   theme: {
-//    extend: {
-//      textShadow: {
-//        chrono_1: '1px 1px 0 #fff, 2px 2px 0 #999',
-//      },
-//    },
+    //    extend: {
+    //      textShadow: {
+    //        chrono_1: '1px 1px 0 #fff, 2px 2px 0 #999',
+    //      },
+    //    },
     breakpoint: {
-      sm: BREAKPOINT_MIN_WIDTH_SM + 'px',
-      md: BREAKPOINT_MIN_WIDTH_MD + 'px',
-      tb: BREAKPOINT_MIN_WIDTH_TB + 'px',
-      lg: BREAKPOINT_MIN_WIDTH_LG + 'px',
-      xl: BREAKPOINT_MIN_WIDTH_XL + 'px',
-      '2xl': BREAKPOINT_MIN_WIDTH_2XL + 'px',
+      'sm': `${BREAKPOINT_MIN_WIDTH_SM}px`,
+      'md': `${BREAKPOINT_MIN_WIDTH_MD}px`,
+      'tb': `${BREAKPOINT_MIN_WIDTH_TB}px`,
+      'lg': `${BREAKPOINT_MIN_WIDTH_LG}px`,
+      'xl': `${BREAKPOINT_MIN_WIDTH_XL}px`,
+      '2xl': `${BREAKPOINT_MIN_WIDTH_2XL}px`,
     },
     colors: {
       'black': { DEFAULT: '#0a0a0a' },
@@ -273,10 +275,10 @@ export default mergeConfigs([config, {
       'jis-magenta': convert('#999900'),
       // ---- primary 系は Uno の sky に寄せる（お好みで 'blue' や 'indigo' に変更可）
       ...aliasScale('primary', 'sky'),
-      primary:               'var(--colors-sky-500)',
-      'primary-emphasis':    'var(--colors-sky-600)',
-      'primary-emphasis-alt':'var(--colors-sky-700)',
-      'primary-contrast':    'var(--colors-white-DEFAULT)',
+      'primary': 'var(--colors-sky-500)',
+      'primary-emphasis': 'var(--colors-sky-600)',
+      'primary-emphasis-alt': 'var(--colors-sky-700)',
+      'primary-contrast': 'var(--colors-white-DEFAULT)',
 
       // ---- surface 系は Uno の slate に寄せる
       'surface-0': 'var(--colors-white-DEFAULT)', // 0 は独自に白へ
@@ -332,18 +334,18 @@ export default mergeConfigs([config, {
       section_x: '5rem',
     },
     font: {
-      'sans': '"Noto Serif JP", "Hiragino Sans", メイリオ, Meiryo, sans',
-      'serif': '"Roboto", "Noto Sans Japanese", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Open Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif',
-      'mono': '"Fira Code", "Fira Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-      'en': '"Source Sans Pro", Lato, Lobster, sans',
+      sans: '"Noto Serif JP", "Hiragino Sans", メイリオ, Meiryo, sans',
+      serif: '"Roboto", "Noto Sans Japanese", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Open Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif',
+      mono: '"Fira Code", "Fira Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+      en: '"Source Sans Pro", Lato, Lobster, sans',
     },
-    //transitionのイージング設定（Tailwind CSSでは transitionTimingFunction）
+    // transitionのイージング設定（Tailwind CSSでは transitionTimingFunction）
     ease: {
-      DEFAULT: 'cubic-bezier(.16,1,.3,1)'
+      DEFAULT: 'cubic-bezier(.16,1,.3,1)',
     },
-    //transitionのアニメーション時間設定（Tailwind CSSでは transitionDuration）
+    // transitionのアニメーション時間設定（Tailwind CSSでは transitionDuration）
     duration: {
-      DEFAULT: '0.8s'
+      DEFAULT: '0.8s',
     },
     animation: {
       keyframes: {
@@ -355,26 +357,26 @@ export default mergeConfigs([config, {
           100% {
             opacity: 0;
           }
-        }`
+        }`,
       },
-      //animation-duration
+      // animation-duration
       durations: {
-        'custom-anime': '0.8s'
+        'custom-anime': '0.8s',
       },
-      //animation-timing-function
+      // animation-timing-function
       timingFns: {
-        'custom-anime': 'cubic-bezier(.16,1,.3,1)'
+        'custom-anime': 'cubic-bezier(.16,1,.3,1)',
       },
-      //animation-delay
+      // animation-delay
       counts: {
-        'custom-anime': 0
+        'custom-anime': 0,
       },
-      //animation設定を自分で定義する
+      // animation設定を自分で定義する
       properties: {
         'custom-anime02': {
-          //ここに書いたanimation設定がそのまま出力される
-          animation: '3s ease-in 1s 2 reverse both paused custom-anime02'
-        }
+          // ここに書いたanimation設定がそのまま出力される
+          animation: '3s ease-in 1s 2 reverse both paused custom-anime02',
+        },
       },
     },
   },
@@ -392,24 +394,24 @@ export default mergeConfigs([config, {
       'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-teal-600 no-underline width[fit-content]',
     ],
     [/^btn-(.*)$/, ([, c], { theme }) => {
-    if (Object.keys(theme.colors).includes(c))
-      return `py-2 px-4 border-1 border-${c}-600 bg-${c}-300 hover:bg-${c}-400 rounded-lg shadow-md`
-  }],
+      if (Object.keys(theme.colors).includes(c))
+        return `py-2 px-4 border-1 border-${c}-600 bg-${c}-300 hover:bg-${c}-400 rounded-lg shadow-md`
+    }],
   ],
   layers: {
     'preflights': -2,
-    "components": -1,
-    "default": 1,
-    "utilities": 2,
-    "my-layer": 3,
+    'components': -1,
+    'default': 1,
+    'utilities': 2,
+    'my-layer': 3,
   },
   presets: [
     presetWind4({
-      preflights:  {
+      preflights: {
         theme: {
           process: createRemToPxProcessor(),
         },
-          reset: true,
+        reset: true,
       },
     }),
     presetAttributify(),
@@ -433,28 +435,28 @@ export default mergeConfigs([config, {
         mdi: async () => import('@iconify-json/mdi/icons.json').then(i => i.default),
         logos: async () => import('@iconify-json/logos/icons.json').then(i => i.default),
       },
-       customizations: {
-           customize: (defaultCustomizations, data, name) => {
-               // Make icon square
-               const width = data.width ?? 16;
-               const height = data.height ?? 16;
-               if (height > width) {
-                 // Set width to match height
-                 data.width = height;
-                 // Center icon horizontally by changing viewBox left position
-                 data.left = (data.left ?? 0) - (height - width) / 2;
-               }
+      customizations: {
+        customize: (defaultCustomizations, data, name) => {
+          // Make icon square
+          const width = data.width ?? 16
+          const height = data.height ?? 16
+          if (height > width) {
+            // Set width to match height
+            data.width = height
+            // Center icon horizontally by changing viewBox left position
+            data.left = (data.left ?? 0) - (height - width) / 2
+          }
 
-               return defaultCustomizations
+          return defaultCustomizations
 
-               if (name === 'twemoji:blue-square') {
-                   // Turn blue square into red square
-                   data.body = data.body.replaceAll('#55ACEE', '#e83933')
-               }
+          if (name === 'twemoji:blue-square') {
+            // Turn blue square into red square
+            data.body = data.body.replaceAll('#55ACEE', '#e83933')
+          }
 
-               return defaultCustomizations
-           },
-       }
+          return defaultCustomizations
+        },
+      },
     }),
     presetTypography(),
     presetHeroPatterns(),
@@ -470,7 +472,7 @@ export default mergeConfigs([config, {
           {
             name: 'DM Mono',
             weights: ['400', '700'],
-            italic: true
+            italic: true,
           },
           {
             name: 'mono',
@@ -478,7 +480,7 @@ export default mergeConfigs([config, {
           },
         ],
         mono: ['Fira Code', 'Fira Mono:400,700'],
-        lobster:[
+        lobster: [
           {
             name: 'lobster',
             weights: ['400', '700'],
@@ -496,7 +498,7 @@ export default mergeConfigs([config, {
             provider: 'none',
           },
         ],
-        crimson:[
+        crimson: [
           {
             name: 'crimson pro',
             weights: ['400', '700'],
@@ -510,7 +512,7 @@ export default mergeConfigs([config, {
             italic: true,
           },
         ],
-        merriweather:[
+        merriweather: [
           {
             name: 'Merriweather-Black',
             weights: ['400', '700'],
@@ -528,7 +530,7 @@ export default mergeConfigs([config, {
           {
             name: 'Roboto',
             weights: ['400', '700'],
-            italic: true
+            italic: true,
           },
           {
             name: 'sans-serif',
@@ -544,7 +546,7 @@ export default mergeConfigs([config, {
         fontAssetsDir: 'public/fonts',
 
         // Base URL to serve the fonts from the client
-        fontServeBaseUrl: '/fonts'
+        fontServeBaseUrl: '/fonts',
       }),
     }),
   ],
@@ -578,8 +580,8 @@ export default mergeConfigs([config, {
     ['border-com', 'dark:border-#222  border border-#e5e5e5'],
     ['bg-com', 'dark:bg-#333 bg-white'],
     ['shadow-com', 'border-t-1 border-#333 shadow-md border-op-20 dark:border-op-60 dark:shadow-#333'],
-    //各数値変換設定を一括指定
-    //margin
+    // 各数値変換設定を一括指定
+    // margin
     ...setProperty('m', ['margin']),
     ...setProperty('mt', ['margin-top']),
     ...setProperty('mr', ['margin-right']),
@@ -588,7 +590,7 @@ export default mergeConfigs([config, {
     ...setProperty('mx', ['margin-inline']),
     ...setProperty('my', ['margin-block']),
 
-    //padding
+    // padding
     ...setProperty('p', ['padding']),
     ...setProperty('pt', ['padding-top']),
     ...setProperty('pr', ['padding-right']),
@@ -597,32 +599,32 @@ export default mergeConfigs([config, {
     ...setProperty('px', ['padding-inline']),
     ...setProperty('py', ['padding-block']),
 
-    //font-size
+    // font-size
     ...setProperty('text', ['font-size']),
 
-    //gap
+    // gap
     ...setProperty('gap', ['gap']),
     ...setProperty('gap-x', ['column-gap']),
     ...setProperty('gap-y', ['row-gap']),
 
-    //height
+    // height
     ...setProperty('h', ['height']),
     ...setProperty('min-h', ['min-height']),
     ...setProperty('max-h', ['max-height']),
 
-    //width
+    // width
     ...setProperty('w', ['width']),
     ...setProperty('min-w', ['min-width']),
     ...setProperty('max-w', ['max-width']),
 
-    //border-width
+    // border-width
     ...setProperty('border', ['border-width']),
     ...setProperty('border-t', ['border-top-width']),
     ...setProperty('border-r', ['border-right-width']),
     ...setProperty('border-b', ['border-bottom-width']),
     ...setProperty('border-l', ['border-left-width']),
 
-    //border-radius
+    // border-radius
     ...setProperty('rounded', ['border-radius']),
     ...setProperty('rounded-t', ['border-top-left-radius', 'border-top-right-radius']),
     ...setProperty('rounded-r', ['border-top-right-radius', 'border-bottom-right-radius']),
@@ -633,52 +635,52 @@ export default mergeConfigs([config, {
     ...setProperty('rounded-br', ['border-bottom-right-radius']),
     ...setProperty('rounded-bl', ['border-bottom-left-radius']),
 
-    //top
+    // top
     ...setProperty('top', ['top']),
-    //right
+    // right
     ...setProperty('right', ['right']),
-    //bottom
+    // bottom
     ...setProperty('bottom', ['bottom']),
-    //left
+    // left
     ...setProperty('left', ['left']),
-    //inset
+    // inset
     ...setProperty('inset', ['inset']),
 
-    //translate Y ※固定で入れたい値がある場合は第3引数にオブジェクトを追加する
+    // translate Y ※固定で入れたい値がある場合は第3引数にオブジェクトを追加する
     ...setProperty('translate-y', ['--un-translate-y'], {
-      transform: 'translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z))'
+      transform: 'translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z))',
     }),
-    //translate X ※固定で入れたい値がある場合は第3引数にオブジェクトを追加する
+    // translate X ※固定で入れたい値がある場合は第3引数にオブジェクトを追加する
     ...setProperty('translate-x', ['--un-translate-x'], {
-      transform: 'translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z))'
+      transform: 'translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z))',
     }),
 
     [/^lh-(\d+(\.\d+)?)$/, ([, d]) => ({ 'line-height': d })],
-    //letter-spacing 例) tracking-100 => letter-spacing: 0.1em
+    // letter-spacing 例) tracking-100 => letter-spacing: 0.1em
     [/^tracking-(\d+)$/, ([, d]) => ({ 'letter-spacing': `${Number(d) / 1000}em` })],
     [
       /^hover-opacity$/,
-      function* ([], { symbols }) {
-        //1件目の設定がhover-opacityに直接設定される
+      function* (_, { symbols }) {
+        // 1件目の設定がhover-opacityに直接設定される
         yield {
-          transition: 'opacity ${config.theme.duration.DEFAULT} ${config.theme.easing.DEFAULT}',
-          //設定したいプロパティが複数ある場合は続けて書く
+          transition: `opacity ${config.theme.duration.DEFAULT} ${config.theme.easing.DEFAULT}`,
+          // 設定したいプロパティが複数ある場合は続けて書く
           display: 'block',
-        };
-        //2件目以降は増やしたい設定の数だけ yield を追加していく
+        }
+        // 2件目以降は増やしたい設定の数だけ yield を追加していく
         yield {
-          //${selector}に.hover-opacity が入るので任意のセレクタを追記する
-          [symbols.selector]: (selector) => `${selector}:hover`,
-          //設定したいプロパティ
+          // ${selector}に.hover-opacity が入るので任意のセレクタを追記する
+          [symbols.selector]: selector => `${selector}:hover`,
+          // 設定したいプロパティ
           opacity: 0.7,
-        };
+        }
         yield {
-          [symbols.selector]: (selector) => `${selector}::before`,
+          [symbols.selector]: selector => `${selector}::before`,
           content: '""',
-          //設定したいプロパティが複数ある場合は続けて書く
+          // 設定したいプロパティが複数ある場合は続けて書く
           display: 'block',
-        };
-      }
+        }
+      },
     ],
   ],
 

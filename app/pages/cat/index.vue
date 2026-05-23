@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import type { CatResponse } from "~~/types/index.ts";
+import type { CatResponse } from '~~/types/index.ts'
 
 const { pending, data: rawData, refresh } = useFetch<CatResponse[]>(
-  "https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY"
-);
+  'https://api.thecatapi.com/v1/images/search?limit=9&order=rand&api_key=CAT_API_KEY',
+)
 
 // API側が10個返すため、クライアント側で9個に制限
-const data = computed(() => rawData.value?.slice(0, 9));
+const data = computed(() => rawData.value?.slice(0, 9))
 
 useHead({
-  title: "Cats",
-});
+  title: 'Cats',
+})
 </script>
 
 <template>

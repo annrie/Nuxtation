@@ -20,8 +20,8 @@ const props = withDefaults(
   }>(),
   {
     as: 'h2',
-    variant: 'plain'
-  }
+    variant: 'plain',
+  },
 )
 
 const attrs = useAttrs()

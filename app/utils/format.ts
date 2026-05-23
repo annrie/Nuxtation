@@ -1,4 +1,4 @@
-export const parseDate = (date?: string) => {
+export function parseDate(date?: string) {
   if (!date) {
     return ''
   }
@@ -18,10 +18,13 @@ export const parseDate = (date?: string) => {
  * @param updatedAt - 更新日
  * @returns 最新の日付文字列（両方なければ空文字列）
  */
-export const getLatestDate = (publishedAt?: string, updatedAt?: string): string => {
-  if (!publishedAt && !updatedAt) return ''
-  if (!publishedAt) return updatedAt || ''
-  if (!updatedAt) return publishedAt || ''
+export function getLatestDate(publishedAt?: string, updatedAt?: string): string {
+  if (!publishedAt && !updatedAt)
+    return ''
+  if (!publishedAt)
+    return updatedAt || ''
+  if (!updatedAt)
+    return publishedAt || ''
 
   // 両方ある場合は新しい方を返す
   return new Date(updatedAt) > new Date(publishedAt) ? updatedAt : publishedAt

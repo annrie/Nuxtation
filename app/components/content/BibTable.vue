@@ -38,5 +38,4 @@
   object-fit: contain !important;
   display: block !important;
 }
-
 </style>

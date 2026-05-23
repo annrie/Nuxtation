@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { CatResponse } from "~~/types/index.ts";
+import type { CatResponse } from '~~/types/index.ts'
 
 interface Props {
-  catData: CatResponse;
+  catData: CatResponse
 }
 
-defineProps<Props>();
+defineProps<Props>()
 </script>
 
 <template>

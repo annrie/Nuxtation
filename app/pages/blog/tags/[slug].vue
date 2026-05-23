@@ -10,14 +10,15 @@ const slug = computed(() => {
 
 const { data: articlesData } = useLazyAsyncData(`articles-${slug.value}`, () =>
   queryCollection('blog')
-    .all()
-)
+    .all())
 
 const articles = computed(() => {
-  if (!articlesData.value) return []
+  if (!articlesData.value)
+    return []
   const isDev = import.meta.dev
-  const filtered = articlesData.value.filter(article => {
-    if (!isDev && article.draft) return false  // 本番環境: draft記事を除外
+  const filtered = articlesData.value.filter((article) => {
+    if (!isDev && article.draft)
+      return false // 本番環境: draft記事を除外
     return (article.tags || []).includes(slug.value)
   })
   return sortArticlesByLatestDate(filtered)
@@ -27,7 +28,8 @@ const tagOptions = computed(() => {
   const isDev = import.meta.dev
   const set = new Set<string>()
   for (const article of articlesData.value || []) {
-    if (!isDev && article.draft) continue  // 本番環境: draft記事を除外
+    if (!isDev && article.draft)
+      continue // 本番環境: draft記事を除外
     for (const tag of article.tags || []) {
       if (typeof tag === 'string') {
         set.add(tag)
@@ -41,14 +43,15 @@ const title = computed(() => `Blog Posts on ${slug.value.toUpperCase()}`)
 const description = computed(() => `Here's a list of all my blog posts with the ${slug.value.toUpperCase()} tag`)
 
 const encoded1 = computed(() => {
-  if (!title.value) return ''
+  if (!title.value)
+    return ''
   return encodeBase64WithPercent(title.value)
 })
 
 useHead({
   title: title.value,
   meta: [
-    { name: 'description', content: description.value }
+    { name: 'description', content: description.value },
   ],
 })
 
@@ -300,7 +303,10 @@ useSchemaOrg([
   padding: 0.625rem 1rem;
   background: rgba(16, 185, 129, 0.16);
   color: #047857;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
   touch-action: manipulation;
 }
 
@@ -363,14 +369,18 @@ useSchemaOrg([
   padding: 0.75rem 1.5rem;
   background: linear-gradient(to bottom right, var(--color-button-light), var(--color-button-hover-light));
   color: white;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: all 0.2s ease;
 }
 
 .back-button:focus {
   @apply outline outline-[3px] outline-offset-2;
   outline-color: var(--color-link-light);
-  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.3), 0 10px 10px -5px rgba(34, 197, 94, 0.2);
+  box-shadow:
+    0 20px 25px -5px rgba(34, 197, 94, 0.3),
+    0 10px 10px -5px rgba(34, 197, 94, 0.2);
 }
 
 .dark .back-button {
@@ -383,7 +393,9 @@ useSchemaOrg([
 
 .back-button:hover {
   @apply -translate-y-0.5;
-  box-shadow: 0 20px 25px -5px rgba(34, 197, 94, 0.3), 0 10px 10px -5px rgba(34, 197, 94, 0.2);
+  box-shadow:
+    0 20px 25px -5px rgba(34, 197, 94, 0.3),
+    0 10px 10px -5px rgba(34, 197, 94, 0.2);
   background: linear-gradient(to bottom right, var(--color-button-hover-light), #15803d);
 }
 

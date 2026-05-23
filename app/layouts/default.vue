@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// ColorModeを初期化して、SSR時のハイドレーションミスマッチを防ぐ
-const colorMode = useColorMode()
 </script>
 
 <template>

@@ -31,9 +31,10 @@ Customize title of expand via title prop.
 
 <style lang=scss>
 .np-expand summary ~ {
- p, pre {
+  p,
+  pre {
     margin-top: 8px;
     margin-bottom: 8px;
- }
+  }
 }
 </style>

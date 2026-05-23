@@ -5,15 +5,13 @@
  * @param containerRef - フォーカスをトラップするコンテナ要素のref
  * @param isActive - フォーカストラップを有効化するかどうかの制御
  */
-export const useFocusTrap = (
-  containerRef: Ref<HTMLElement | null>,
-  isActive: Ref<boolean>
-) => {
+export function useFocusTrap(containerRef: Ref<HTMLElement | null>, isActive: Ref<boolean>) {
   let previouslyFocusedElement: HTMLElement | null = null
 
   // フォーカス可能な要素を取得
   const getFocusableElements = (): HTMLElement[] => {
-    if (!containerRef.value) return []
+    if (!containerRef.value)
+      return []
 
     const focusableSelectors = [
       'a[href]',
@@ -25,16 +23,18 @@ export const useFocusTrap = (
     ].join(', ')
 
     return Array.from(
-      containerRef.value.querySelectorAll<HTMLElement>(focusableSelectors)
+      containerRef.value.querySelectorAll<HTMLElement>(focusableSelectors),
     )
   }
 
   // Tabキーでのフォーカス移動を制御
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (!isActive.value || event.key !== 'Tab') return
+    if (!isActive.value || event.key !== 'Tab')
+      return
 
     const focusableElements = getFocusableElements()
-    if (focusableElements.length === 0) return
+    if (focusableElements.length === 0)
+      return
 
     const firstElement = focusableElements[0]
     const lastElement = focusableElements[focusableElements.length - 1]
@@ -53,7 +53,8 @@ export const useFocusTrap = (
 
   // モーダルが開いたときに最初の要素にフォーカス
   const setInitialFocus = () => {
-    if (!isActive.value || !containerRef.value) return
+    if (!isActive.value || !containerRef.value)
+      return
 
     // 現在のフォーカス要素を保存（モーダルを閉じたときに戻すため）
     previouslyFocusedElement = document.activeElement as HTMLElement
@@ -64,7 +65,7 @@ export const useFocusTrap = (
       if (focusableElements.length > 0) {
         // 入力フィールドがあればそれにフォーカス、なければ最初の要素
         const inputElement = focusableElements.find(
-          el => el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'
+          el => el.tagName === 'INPUT' || el.tagName === 'TEXTAREA',
         )
         const targetElement = inputElement || focusableElements[0]
         targetElement.focus()
@@ -84,7 +85,8 @@ export const useFocusTrap = (
   watch(isActive, (newValue) => {
     if (newValue) {
       setInitialFocus()
-    } else {
+    }
+    else {
       restoreFocus()
     }
   })

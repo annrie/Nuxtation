@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.3](https://github.com/annrie/Nuxtation/compare/v4.3.2...v4.3.3) (2026-07-14)
+
+
+### ビルドシステムや外部依存に関する変更
+
+* **deps:** ⬆️ nuxt 4.4.8・@nuxt/content 3.15.0・@nuxt/ui 4.9.0・docus 5.12.3ほかminor/patch一括更新 ([005f853](https://github.com/annrie/Nuxtation/commit/005f853ffc02373d8cbf56f3fd5ebab62831b404))
+
 ### [4.3.2](https://github.com/annrie/Nuxtation/compare/v4.3.0...v4.3.2) (2026-05-23)
 
 

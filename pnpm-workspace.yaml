@@ -9,6 +9,19 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@nuxt/ui@4.8.0'
   - '@nuxtjs/i18n@10.4.0'
+  - '@nuxt/scripts@1.3.1'
+  - '@typescript-eslint/eslint-plugin@8.64.0'
+  - '@typescript-eslint/parser@8.64.0'
+  - '@typescript-eslint/project-service@8.64.0'
+  - '@typescript-eslint/scope-manager@8.64.0'
+  - '@typescript-eslint/tsconfig-utils@8.64.0'
+  - '@typescript-eslint/type-utils@8.64.0'
+  - '@typescript-eslint/types@8.64.0'
+  - '@typescript-eslint/typescript-estree@8.64.0'
+  - '@typescript-eslint/utils@8.64.0'
+  - '@typescript-eslint/visitor-keys@8.64.0'
+  - '@vitejs/plugin-vue@6.0.8'
+  - typescript-eslint@8.64.0
 shellEmulator: true
 
 supportedArchitectures:
@@ -19,9 +32,15 @@ supportedArchitectures:
     - current
 
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - chokidar
+  - rollup
+  - semver
+  - tinyexec
+  - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
-  '@nuxt/content': 3.14.0
+  '@nuxt/content': 3.15.0
   unconfig: 0.4.1
   zod: ^4.4.3
   zod-to-json-schema: ^3.25.2

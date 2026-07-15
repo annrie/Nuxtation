@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.4](https://github.com/annrie/Nuxtation/compare/v4.3.3...v4.3.4) (2026-07-15)
+
+
+### バグ修正
+
+* **deps:** 🐛 pnpm dedupeでvue二重解決(3.5.34/3.5.39)を解消 ([c6f440a](https://github.com/annrie/Nuxtation/commit/c6f440abc7834da697cc1d6a575b7d8b542aaf75))
+
 ### [4.3.3](https://github.com/annrie/Nuxtation/compare/v4.3.2...v4.3.3) (2026-07-14)
 
 

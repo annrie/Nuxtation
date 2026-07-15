@@ -1,0 +1,34 @@
+# SSG出力の健全性チェック
+# 依存更新等でSSR/prerenderが静かに壊れる事故を検知する。
+# 背景: vueの二重解決でHTMLルートのみprerender 500になり、ビルドは
+# exit 0のままページが欠落した事例あり(docustation v4.3.5で修正)。
+# exit codeだけでは検知できないため、成果物を直接検証する。
+name: SSG output check
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+concurrency:
+  group: ssg-check-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 # versionはpackage.jsonのpackageManagerを使用
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build # nitro preset 'vercel' → .vercel/output に出力
+      - name: Verify prerendered output
+        run: |
+          test -f .vercel/output/static/index.html || { echo "::error::index.html が生成されていません"; exit 1; }
+          html_count=$(find .vercel/output/static -name '*.html' | wc -l)
+          echo "HTML files: $html_count"
+          # 全ページ欠落の検知が目的なので、平常値(約34)より大幅に低い閾値にする
+          [ "$html_count" -ge 15 ] || { echo "::error::HTML出力が少なすぎます ($html_count < 15)。prerenderの失敗を確認してください"; exit 1; }

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.5](https://github.com/annrie/Nuxtation/compare/v4.3.4...v4.3.5) (2026-07-16)
+
+
+### CI関連
+
+* 🔧 GitHub Pagesデプロイを廃止し、SSG出力の健全性チェックに置き換え ([e5efe97](https://github.com/annrie/Nuxtation/commit/e5efe97d4e5d8ee24e17fa7b728a2e457c019544))
+
+
+### バグ修正
+
+* **security:** 🔒 handlebars 4.7.9・shell-quote 1.10.0をoverridesで強制 ([79dc977](https://github.com/annrie/Nuxtation/commit/79dc977d07796e155c154de804e00f8f39929811))
+
 ### [4.3.4](https://github.com/annrie/Nuxtation/compare/v4.3.3...v4.3.4) (2026-07-15)
 
 

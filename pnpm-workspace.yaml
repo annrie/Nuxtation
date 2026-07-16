@@ -40,6 +40,9 @@ trustPolicyExclude:
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
+  # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
+  handlebars: ^4.7.9
+  shell-quote: ^1.8.4
   '@nuxt/content': 3.15.0
   unconfig: 0.4.1
   zod: ^4.4.3

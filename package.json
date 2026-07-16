@@ -19,9 +19,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:md": "markdownlint-cli2 '**/*.md'",
-    "release:patch": "standard-version --release-as patch",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major",
+    "release:patch": "changelogen --release --patch",
+    "release:minor": "changelogen --release --minor",
+    "release:major": "changelogen --release --major",
     "oco": "opencommit",
     "lloco": "OCO_AI_PROVIDER='ollama' opencommit",
     "lighthouse": "./scripts/lighthouse-production.sh --accurate"
@@ -96,6 +96,7 @@
     "@vueuse/core": "^14.3.0",
     "@vueuse/nuxt": "^14.3.0",
     "browserslist": "^4.28.6",
+    "changelogen": "^0.6.2",
     "cssnano": "^8.0.2",
     "eslint": "^10.7.0",
     "eslint-plugin-format": "^2.0.1",
@@ -119,7 +120,6 @@
     "remark-rehype": "^11.1.2",
     "simple-git-hooks": "^2.13.1",
     "socket.io-client": "^4.8.3",
-    "standard-version": "^9.5.0",
     "stylelint": "^17.14.0",
     "tailwindcss": "^4.3.2",
     "ts-node": "^10.9.2",
@@ -139,5 +139,55 @@
   },
   "browserslist": [
     "defaults and fully supports es6-module"
-  ]
+  ],
+  "changelog": {
+    "types": {
+      "feat": {
+        "title": "🚀 新機能",
+        "semver": "minor"
+      },
+      "fix": {
+        "title": "🐛 バグ修正",
+        "semver": "patch"
+      },
+      "perf": {
+        "title": "⚡ パフォーマンスの向上",
+        "semver": "patch"
+      },
+      "refactor": {
+        "title": "♻️ リファクタリング",
+        "semver": "patch"
+      },
+      "docs": {
+        "title": "📖 ドキュメント"
+      },
+      "style": {
+        "title": "🎨 コードスタイル"
+      },
+      "test": {
+        "title": "✅ テストの追加・修正"
+      },
+      "ci": {
+        "title": "🤖 CI関連"
+      },
+      "build": {
+        "title": "📦 ビルド",
+        "semver": "patch"
+      },
+      "chore": {
+        "title": "🧹 ビルドプロセスまたは補助ツールの変更"
+      },
+      "config": {
+        "title": "🔧 設定ファイル"
+      },
+      "package": {
+        "title": "📦 パッケージ"
+      }
+    },
+    "templates": {
+      "commitMessage": "chore(release): 🏹v{{newVersion}}",
+      "tagMessage": "v{{newVersion}}",
+      "tagBody": "v{{newVersion}}"
+    }
+  }
 }

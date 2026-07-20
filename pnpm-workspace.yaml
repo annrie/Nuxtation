@@ -43,8 +43,10 @@ overrides:
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   handlebars: ^4.7.9
   shell-quote: ^1.8.4
-  # ws 8.21.0 のDoS対策不備 (空フラグメントが上限に未計上) 対応。lighthouse依存のws@7は対象外
+  # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、
+  # 8系は8.21.0で修正されたが対策が不完全だったため8.21.1を要求する
   ws@8: ^8.21.1
+  ws@7: ^7.5.13
   '@nuxt/content': 3.15.0
   unconfig: 0.4.1
   zod: ^4.4.3

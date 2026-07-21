@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.3.6
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.3.5...v4.3.6)
+
+### 🐛 バグ修正
+
+- **security:** 🔒 ws 8.21.1をoverridesで強制しDoS脆弱性を解消 ([01ad7d9](https://github.com/annrie/Nuxtation/commit/01ad7d9))
+- **security:** 🔒 ws 7系も7.5.13へ強制しCVE-2026-48779を完全に解消 ([daf7c7c](https://github.com/annrie/Nuxtation/commit/daf7c7c))
+
+### 📖 ドキュメント
+
+- **tasks:** 📝 脆弱性アラートの読み違いに関するlessonsを記録 ([f4c5116](https://github.com/annrie/Nuxtation/commit/f4c5116))
+
+### 📦 ビルド
+
+- **release:** 🔧 standard-versionをchangelogenに置き換え ([5147e1d](https://github.com/annrie/Nuxtation/commit/5147e1d))
+- **deps:** ⬆️ nuxt 4.5.0・@nuxt/ui 4.10.0・pnpm 11.15.1 ほかminor/patch一括更新 ([fb40b0e](https://github.com/annrie/Nuxtation/commit/fb40b0e))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **config:** 🔧 開発ループの許可ルールをsettings.jsonに集約 ([29f9d0d](https://github.com/annrie/Nuxtation/commit/29f9d0d))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ### [4.3.5](https://github.com/annrie/Nuxtation/compare/v4.3.4...v4.3.5) (2026-07-16)
 
 

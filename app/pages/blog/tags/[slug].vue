@@ -8,9 +8,23 @@ const slug = computed(() => {
   return Array.isArray(value) ? value[0] : value || ''
 })
 
-const { data: articlesData } = useLazyAsyncData(`articles-${slug.value}`, () =>
-  queryCollection('blog')
-    .all())
+const { data: articlesData } = useLazyAsyncData(`articles-${slug.value}`, async () => {
+  const articles = await queryCollection('blog').all()
+  // Payload最適化: リスト表示に不要な body フィールドを除外（blog/index と同方針）。
+  // prerender 時に各タグページへ全記事の body(Shiki ハイライト込み)が
+  // 直列化され1枚2.4MB に膨れていた問題を解消する。
+  return articles.map(article => ({
+    title: article.title,
+    path: article.path,
+    tags: article.tags,
+    publishedAt: article.publishedAt,
+    updatedAt: article.updatedAt,
+    description: article.description,
+    img: article.img,
+    draft: article.draft,
+    featured: article.featured,
+  }))
+})
 
 const articles = computed(() => {
   if (!articlesData.value)

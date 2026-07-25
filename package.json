@@ -21,6 +21,7 @@
     "lint:fix": "eslint . --fix",
     "format:md": "node scripts/format-content-md.mjs",
     "format:md:check": "node scripts/format-content-md.mjs --check",
+    "check:contrast": "npx tsx scripts/check-contrast.ts",
     "release:patch": "changelogen --release --patch",
     "release:minor": "changelogen --release --minor",
     "release:major": "changelogen --release --major",

@@ -14,6 +14,14 @@ const baseUrl = 'https://nuxtation.phantomoon.com'
 // 記事データを取得
 const { data: article } = await useArticle('blog', slug.value)
 
+// 記事が存在しなければ 404（空ページ描画を防ぐ）
+if (!article.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'ブログ記事が見つかりません',
+  })
+}
+
 // 記事の目次を取得
 const headings = computed(() => {
   if (!article.value?.body)

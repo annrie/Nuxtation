@@ -60,14 +60,27 @@ async function formatStable(raw, maxIter = 15) {
       return cur
     cur = next
   }
-  return cur
+  // maxIter で収束しなかった＝安定した整形にならないファイル。
+  // 不安定な中間状態を書き込まず、原本を保持する。
+  return raw
 }
 
 const files = targets.length ? targets : globSync('content/**/*.md')
 let changed = 0
+let skipped = 0
 for (const f of files) {
   const before = readFileSync(f, 'utf8')
-  const after = await formatStable(before)
+  let after
+  try {
+    after = await formatStable(before)
+  }
+  catch (err) {
+    // remark-mdc が特定の構文(極端に長い URL 断片リンク等)で稀にクラッシュする。
+    // その1ファイルのために全体を止めず、原本のままスキップする。
+    skipped++
+    console.warn(`⚠ スキップ(整形不可): ${f} — ${err.message.split('\n')[0]}`)
+    continue
+  }
   if (before !== after) {
     changed++
     if (CHECK)
@@ -78,6 +91,6 @@ for (const f of files) {
     }
   }
 }
-console.log(`\n${files.length} ファイル中 ${changed} 件${CHECK ? ' に差分あり' : ' を整形'}`)
+console.log(`\n${files.length} ファイル中 ${changed} 件${CHECK ? ' に差分あり' : ' を整形'}${skipped ? ` / ${skipped} 件スキップ` : ''}`)
 if (CHECK && changed > 0)
   process.exit(1)

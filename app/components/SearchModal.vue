@@ -24,16 +24,28 @@ const modalContentRef = ref<HTMLElement | null>(null)
 useFocusTrap(modalContentRef, isSearchModalOpen)
 
 // セクション検索データ（@nuxt/content組み込み）
-const { data: searchSections } = useLazyAsyncData('search-sections', async () => {
+const { data: searchSections, execute: loadSections } = useLazyAsyncData('search-sections', async () => {
   const blogSections = await queryCollectionSearchSections('blog' as keyof PageCollections)
   return blogSections || []
-})
+}, { immediate: false })
 
 // ドキュメント全体データ（タグ・description等のメタ情報検索用）
-const { data: files } = useLazyAsyncData('search-files', async () => {
+const { data: files, execute: loadFiles } = useLazyAsyncData('search-files', async () => {
   const blogFiles = await queryCollection('blog' as keyof PageCollections).all()
   return blogFiles || []
-})
+}, { immediate: false })
+
+// この SearchModal は app.vue に常時マウントされるため、即時取得すると
+// 全記事の本文取得がクライアント SQLite を占有し、ページ遷移を妨げる。
+// 検索モーダルを開いた時点で初めて一度だけ読み込む。
+let searchDataRequested = false
+function ensureSearchData() {
+  if (searchDataRequested)
+    return
+  searchDataRequested = true
+  loadSections()
+  loadFiles()
+}
 
 // 総検索件数（セクション + ドキュメント）
 const totalDocCount = computed(() => {
@@ -251,8 +263,8 @@ function performSearch() {
   searchResults.value = results
 }
 
-// Watch search query
-watch(searchQuery, () => {
+// Watch search query（データ遅延読み込み後の到着でも再検索する）
+watch([searchQuery, searchSections, files], () => {
   selectedIndex.value = -1 // Reset selection on new search
   performSearch()
 })
@@ -260,6 +272,7 @@ watch(searchQuery, () => {
 // Reset selection when modal closes and focus input when opening
 watch(isSearchModalOpen, async (newValue) => {
   if (newValue) {
+    ensureSearchData()
     await nextTick()
     searchInputRef.value?.focus()
     return

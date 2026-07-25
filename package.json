@@ -19,7 +19,6 @@
     "prepare": "simple-git-hooks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "lint:md": "markdownlint-cli2 '**/*.md'",
     "format:md": "node scripts/format-content-md.mjs",
     "format:md:check": "node scripts/format-content-md.mjs --check",
     "release:patch": "changelogen --release --patch",

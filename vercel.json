@@ -3,5 +3,6 @@
     "enabled": true
   },
   "framework": "nuxtjs",
-  "installCommand": "corepack enable && pnpm install --frozen-lockfile"
+  "installCommand": "npx --yes pnpm@11.15.1 install --frozen-lockfile",
+  "buildCommand": "npx --yes pnpm@11.15.1 run build"
 }

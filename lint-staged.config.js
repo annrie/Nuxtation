@@ -6,4 +6,7 @@ export default {
   //   2) プロジェクト非依存のグローバル prettier(1.19.1) に依存し不安定
   //   3) [slug].vue の角括弧を prettier が glob 誤認しコミット全体を落としていた
   'app/**/*.{js,jsx,ts,tsx,vue,css,scss}': 'eslint --fix --no-ignore --max-warnings=0',
+  // content の md は MDC 対応の専用整形（prettier/markdownlint は MDC を壊すため使わない）。
+  // スクリプトが「変化しなくなるまで」内部で収束させるので1回実行で安定する。
+  'content/**/*.md': 'node scripts/format-content-md.mjs',
 }

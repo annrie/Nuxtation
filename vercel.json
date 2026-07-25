@@ -2,5 +2,7 @@
   "github": {
     "enabled": true
   },
-  "framework": "nuxtjs"
+  "framework": "nuxtjs",
+  "installCommand": "npx --yes pnpm@11.15.1 install --frozen-lockfile",
+  "buildCommand": "NITRO_PRESET=vercel npx --yes pnpm@11.15.1 run build"
 }

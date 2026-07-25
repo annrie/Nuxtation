@@ -38,6 +38,7 @@ trustPolicyExclude:
   - rollup
   - semver
   - tinyexec
+  - undici-types
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:

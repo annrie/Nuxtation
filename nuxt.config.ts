@@ -31,7 +31,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     // '@nuxtjs/color-mode',
     'unplugin-icons/nuxt',
-    '@nuxt/devtools',
+    // '@nuxt/devtools' は modules に登録しない。devtools.enabled: true が
+    // あれば Nuxt が自動でロードするため、明示登録は冗長（二重登録になる）。
     '@vite-pwa/nuxt',
     'nuxt-link-checker',
     '@nuxt/image',
@@ -469,6 +470,15 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    server: {
+      // Vite の root は srcDir(app/) なので glob は ./pages, ./layouts。
+      // 起動直後に主要ルートを事前変換し、初回アクセスのオンデマンド
+      // 変換集中による遅延を軽減する。
+      warmup: {
+        clientFiles: ['./pages/**/*.vue', './layouts/**/*.vue'],
+        ssrFiles: ['./pages/**/*.vue', './layouts/**/*.vue'],
+      },
+    },
     // 外部ディレクトリにおいた場合は追加。HMRが効かなくなるため
     //    server: {
     //      watch: {

@@ -395,7 +395,7 @@ useArticleSeo({
             </div>
           </nav>
 
-          <div class="article-content prose dark:prose-invert">
+          <div class="article-content prose">
             <ContentRenderer :value="article" />
           </div>
 
@@ -849,16 +849,6 @@ useArticleSeo({
 
 /* Pタグの幅を統一 - proseクラスの制限を上書き */
 .article-content :deep(p) {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  text-align: justify !important;
-  text-justify: inter-character !important;
-}
-
-.article-content.prose :deep(p),
-.article-content.prose-invert :deep(p) {
   width: 100% !important;
   max-width: 100% !important;
   margin-left: 0 !important;

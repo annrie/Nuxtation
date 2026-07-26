@@ -275,6 +275,14 @@ export default defineNuxtConfig({
 
   ui: {
     theme: {
+      // Nuxt UI のカラーエイリアス。ここに並べた名前は app.config.ts の
+      // `ui.colors` で「Tailwind の色名」を割り当てて初めて機能する。
+      // 割り当てのないエイリアスは未解決の --ui-color-* を吐くだけになる。
+      //
+      // デザイントークン（fontSize/boxShadow/borderRadius 等）はここではなく
+      // Tailwind CSS v4 の @theme で定義する（app/assets/css/tailwind.css）。
+      // Nuxt UI の theme オプションは colors / transitions / unstyled /
+      // defaultVariants / prefix のみを受け付ける。
       colors: [
         'primary',
         'secondary',
@@ -283,76 +291,8 @@ export default defineNuxtConfig({
         'info',
         'success',
         'warning',
-        'alert',
         'error',
-        // カスタムボタンカラー
-        'blogBlue',
-        'blogGreen',
-        'featuredCta',
-        'tag',
       ],
-      extend: {
-        // レスポンシブフォントサイズ（clamp使用、320px〜1600px）
-        fontSize: {
-          xxs: 'clamp(0.438rem, 0.063rem + 1.172vw, 0.563rem)',
-          h6: 'clamp(0.938rem, 0.313rem + 1.953vw, 1.25rem)',
-          h5: 'clamp(1.125rem, 0.656rem + 1.469vw, 1.5rem)',
-          h4: 'clamp(1.375rem, 0.906rem + 1.469vw, 1.75rem)',
-          h3: 'clamp(1.75rem, 1.125rem + 1.953vw, 2.25rem)',
-          h2: 'clamp(2.125rem, 1.344rem + 2.441vw, 2.75rem)',
-          h1: 'clamp(2.625rem, 1.656rem + 3.027vw, 3.5rem)',
-          highlight: 'clamp(4rem, 2.5rem + 4.688vw, 5rem)',
-        },
-        // 行間
-        lineHeight: {
-          xxs: '1.55',
-          h6: '1.45',
-          h5: '1.4',
-          h4: '1.35',
-          h3: '1.3',
-          h2: '1.25',
-          h1: '1.15',
-          highlight: '1.1',
-        },
-        // カスタムボックスシャドウ
-        boxShadow: {
-          'card-light': '0 18px 40px rgba(15, 23, 42, 0.2)',
-          'card-dark': '0 18px 40px rgba(0, 0, 0, 0.5)',
-          'card-hover-light': '0 24px 55px rgba(15, 23, 42, 0.35)',
-          'card-hover-dark': '0 24px 55px rgba(0, 0, 0, 0.6)',
-          'link': '0 8px 16px rgba(0, 0, 0, 0.1)',
-          'blue-sm': '0 4px 12px rgba(37, 99, 235, 0.4)',
-          'blue-md': '0 6px 16px rgba(37, 99, 235, 0.5)',
-          'green-sm': '0 4px 12px rgba(34, 197, 94, 0.4)',
-          'green-md': '0 6px 16px rgba(34, 197, 94, 0.5)',
-        },
-        // アスペクト比
-        aspectRatio: {
-          video: '16 / 9',
-          square: '1 / 1',
-          portrait: '3 / 4',
-          landscape: '4 / 3',
-        },
-        // Border Radius（よく使う値）
-        borderRadius: {
-          'card': '1.25rem', // 20px - utilities.cssのカードベース
-          'card-lg': '1.75rem', // 28px
-          'card-xl': '2rem', // 32px
-          'button': '0.5rem', // 8px
-          'pill': '9999px', // 完全な丸
-        },
-        // Transition Duration（アニメーション用）
-        transitionDuration: {
-          card: '350ms', // utilities.cssのカードトランジション
-          fast: '200ms', // 高速アニメーション
-          normal: '300ms', // 通常アニメーション
-        },
-        // Spacing（カスタム間隔）
-        spacing: {
-          18: '4.5rem', // 72px
-          88: '22rem', // 352px
-        },
-      },
     },
   },
 

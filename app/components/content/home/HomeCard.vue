@@ -8,7 +8,7 @@ import { getLatestDate } from '~/utils/format'
 const props = withDefaults(defineProps<{
   item: ContentPreview
   section: Sections
-  variant?: 'blog' | 'biblio'
+  variant?: 'blog'
   index?: number
 }>(), {
   index: 0,
@@ -32,22 +32,12 @@ const limitedTitle = computed(() => {
   return title.length > maxTitleLength ? `${title.substring(0, maxTitleLength)}...` : title
 })
 
-// ジャンル別のクラス名を生成（モバイル版のみ）
-const jenreClass = computed(() => {
-  if (props.variant === 'biblio' && props.section) {
-    if (props.section === 'jenre' && props.item.tags && props.item.tags.length > 0) {
-      return `jenre-${props.item.tags[0]}`
-    }
-  }
-  return ''
-})
 </script>
 
 <template>
   <article class="card-wrapper">
     <UCard
       class="card"
-      :class="{ 'biblio-variant': variant === 'biblio' }"
       :ui="{
         root: 'rounded-[20px] overflow-hidden h-full transition-all duration-[350ms] max-md:cursor-pointer bg-white dark:bg-slate-800 shadow-card-light dark:shadow-card-dark hover:shadow-card-hover-light dark:hover:shadow-card-hover-dark hover:-translate-y-1.5 max-md:hover:translate-y-0 border-2 border-slate-300 dark:border-slate-700 active:scale-[0.98] max-md:active:scale-[0.98]',
         body: 'p-0 sm:p-0',
@@ -69,9 +59,6 @@ const jenreClass = computed(() => {
               img-class="card-image"
               :is-dark="isDark"
             />
-            <h3 v-if="variant === 'biblio'" class="card-title-overlay" :class="jenreClass">
-              {{ limitedTitle }}
-            </h3>
           </NuxtLink>
           <span v-if="isFresh" class="fresh-badge">
             NEW
@@ -81,7 +68,7 @@ const jenreClass = computed(() => {
 
       <template #default>
         <div class="card-body">
-          <NuxtLink :to="destination" :target="target" class="card-title" :class="{ 'biblio-title': variant === 'biblio' }">
+          <NuxtLink :to="destination" :target="target" class="card-title">
             {{ limitedTitle }}
           </NuxtLink>
           <div class="card-meta">
@@ -137,25 +124,11 @@ const jenreClass = computed(() => {
   .card-image-link {
     @apply static overflow-hidden h-auto max-h-fit rounded-t-[20px];
   }
-
-  .card-image-link .card-title-overlay {
-    @apply !hidden !h-0 !absolute !invisible;
-    top: -9999px !important;
-    left: -9999px !important;
-  }
-
-  .biblio-variant .card-image-link {
-    @apply !rounded-none;
-  }
 }
 
 @media (max-width: 768px) {
   .card-image-link {
     @apply relative rounded-t-[20px] overflow-hidden;
-  }
-
-  .card.biblio-variant .card-image-link {
-    @apply !rounded-none;
   }
 }
 
@@ -167,10 +140,6 @@ const jenreClass = computed(() => {
 
 :deep(.card-image) {
   @apply absolute top-0 left-0 w-full h-full aspect-video object-cover object-top transition-transform duration-[350ms] rounded-t-[20px];
-}
-
-.biblio-variant .card-image {
-  @apply !rounded-none;
 }
 
 .card:hover :deep(.card-image) {
@@ -205,53 +174,6 @@ const jenreClass = computed(() => {
 
 .dark .card-title:focus {
   outline-color: var(--color-link-dark);
-}
-
-@media (max-width: 768px) {
-  .card-title.biblio-title {
-    @apply !hidden;
-  }
-}
-
-@media (max-width: 768px) {
-  .card-title-overlay {
-    @apply absolute left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white leading-[1.3] py-4 px-6 rounded-2xl inline-block m-0 z-10 max-w-[85%] text-center whitespace-nowrap overflow-hidden text-ellipsis;
-    background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.85), rgba(5, 150, 105, 0.9));
-    top: calc(50% + 10px);
-    font-size: clamp(1.33rem, 3.33vw, 1.67rem);
-    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  }
-
-  .card-title-overlay.jenre-sf {
-    background: linear-gradient(to bottom right, rgba(37, 99, 235, 0.85), rgba(29, 78, 216, 0.9));
-  }
-
-  .card-title-overlay.jenre-adv {
-    background: linear-gradient(to bottom right, rgba(102, 153, 0, 0.85), rgba(77, 124, 15, 0.9));
-  }
-
-  .card-title-overlay.jenre-mys {
-    background: linear-gradient(to bottom right, rgba(237, 24, 30, 0.85), rgba(220, 38, 38, 0.9));
-  }
-
-  .card-title-overlay.jenre-jedi {
-    background: linear-gradient(to bottom right, rgba(75, 85, 99, 0.85), rgba(55, 65, 81, 0.9));
-  }
-
-  .card-title-overlay.jenre-horror {
-    background: linear-gradient(to bottom right, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.9));
-  }
-
-  .card-title-overlay.jenre-short {
-    background: linear-gradient(to bottom right, rgba(132, 204, 22, 0.85), rgba(101, 163, 13, 0.9));
-  }
-}
-
-@media (min-width: 769px) {
-  .card-title-overlay {
-    @apply !hidden !h-0 !p-0 !m-0 !overflow-hidden !absolute !invisible;
-  }
 }
 
 .card-meta {

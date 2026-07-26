@@ -1,7 +1,6 @@
 <script setup lang="ts">
 interface Props {
-  variant?: 'primary' | 'genre' | 'cta' | 'ghost'
-  genre?: 'sf' | 'adv' | 'mys' | 'horror' | 'jedi' | 'short'
+  variant?: 'primary' | 'cta' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   href?: string
   target?: '_self' | '_blank'
@@ -16,13 +15,6 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
 })
 
-const genreClass = computed(() => {
-  if (props.variant === 'genre' && props.genre) {
-    return `genre-${props.genre}`
-  }
-  return ''
-})
-
 const computedAriaLabel = computed(() => {
   return props.ariaLabel || undefined
 })
@@ -33,14 +25,14 @@ const computedAriaLabel = computed(() => {
     v-if="href"
     :to="href"
     :target="target"
-    class="base-button" :class="[`variant-${variant}`, `size-${size}`, genreClass, { disabled }]"
+    class="base-button" :class="[`variant-${variant}`, `size-${size}`, { disabled }]"
     :aria-label="computedAriaLabel"
   >
     <slot />
   </NuxtLink>
   <button
     v-else
-    class="base-button" :class="[`variant-${variant}`, `size-${size}`, genreClass]"
+    class="base-button" :class="[`variant-${variant}`, `size-${size}`]"
     :disabled="disabled"
     :aria-label="computedAriaLabel"
   >
@@ -100,97 +92,6 @@ const computedAriaLabel = computed(() => {
   background: linear-gradient(to bottom right, #047857, #15803d);
 }
 
-/* variant: genre（ジャンル別）- CSS変数使用 */
-.variant-genre {
-  @apply text-white shadow-md;
-  background: linear-gradient(to bottom right, var(--color-sf-600), var(--color-sf-600));
-}
-
-.variant-genre:hover {
-  background: linear-gradient(to bottom right, var(--color-sf-600), var(--color-sf-700));
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
-  transform: translateY(-2px);
-}
-
-.variant-genre:focus {
-  outline-color: var(--color-sf-active);
-}
-
-/* ジャンル別カラー */
-.variant-genre.genre-sf {
-  background: linear-gradient(to bottom right, var(--color-sf-600), var(--color-sf-600));
-}
-
-.variant-genre.genre-sf:hover {
-  background: linear-gradient(to bottom right, var(--color-sf-600), var(--color-sf-700));
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.5);
-}
-
-.variant-genre.genre-adv {
-  background: linear-gradient(to bottom right, var(--color-adv-600), var(--color-adv-600));
-}
-
-.variant-genre.genre-adv:hover {
-  background: linear-gradient(to bottom right, var(--color-adv-600), var(--color-adv-700));
-  box-shadow: 0 6px 16px rgba(102, 153, 0, 0.5);
-}
-
-.variant-genre.genre-adv:focus {
-  outline-color: var(--color-adv-active);
-}
-
-.variant-genre.genre-mys {
-  background: linear-gradient(to bottom right, var(--color-mys-600), var(--color-mys-600));
-}
-
-.variant-genre.genre-mys:hover {
-  background: linear-gradient(to bottom right, var(--color-mys-600), var(--color-mys-700));
-  box-shadow: 0 6px 16px rgba(237, 24, 30, 0.5);
-}
-
-.variant-genre.genre-mys:focus {
-  outline-color: var(--color-mys-active);
-}
-
-.variant-genre.genre-horror {
-  background: linear-gradient(to bottom right, var(--color-horror-600), var(--color-horror-600));
-}
-
-.variant-genre.genre-horror:hover {
-  background: linear-gradient(to bottom right, var(--color-horror-600), var(--color-horror-700));
-  box-shadow: 0 6px 16px rgba(82, 82, 82, 0.5);
-}
-
-.variant-genre.genre-horror:focus {
-  outline-color: var(--color-horror-active);
-}
-
-.variant-genre.genre-jedi {
-  background: linear-gradient(to bottom right, var(--color-jedi-600), var(--color-jedi-600));
-}
-
-.variant-genre.genre-jedi:hover {
-  background: linear-gradient(to bottom right, var(--color-jedi-600), var(--color-jedi-700));
-  box-shadow: 0 6px 16px rgba(75, 85, 99, 0.5);
-}
-
-.variant-genre.genre-jedi:focus {
-  outline-color: var(--color-jedi-active);
-}
-
-.variant-genre.genre-short {
-  background: linear-gradient(to bottom right, var(--color-short-600), var(--color-short-600));
-}
-
-.variant-genre.genre-short:hover {
-  background: linear-gradient(to bottom right, var(--color-short-600), var(--color-short-700));
-  box-shadow: 0 6px 16px rgba(101, 163, 13, 0.5);
-}
-
-.variant-genre.genre-short:focus {
-  outline-color: var(--color-short-active);
-}
-
 /* variant: ghost */
 .variant-ghost {
   @apply border-2 border-current bg-transparent;
@@ -217,67 +118,7 @@ const computedAriaLabel = computed(() => {
   background: linear-gradient(to bottom right, #047857, #15803d);
 }
 
-.dark .variant-genre {
-  background: linear-gradient(to bottom right, var(--color-sf-700), var(--color-sf-800));
-}
-
-.dark .variant-genre:hover {
-  background: linear-gradient(to bottom right, var(--color-sf-800), var(--color-sf-900));
-}
-
-.dark .variant-genre:focus {
-  outline-color: var(--color-link-dark);
-}
-
 /* ダークモード - ジャンル別カラー */
-.dark .variant-genre.genre-sf {
-  background: linear-gradient(to bottom right, var(--color-sf-700), var(--color-sf-800));
-}
-
-.dark .variant-genre.genre-sf:hover {
-  background: linear-gradient(to bottom right, var(--color-sf-800), var(--color-sf-900));
-}
-
-.dark .variant-genre.genre-adv {
-  background: linear-gradient(to bottom right, var(--color-adv-700), var(--color-adv-800));
-}
-
-.dark .variant-genre.genre-adv:hover {
-  background: linear-gradient(to bottom right, var(--color-adv-800), var(--color-adv-900));
-}
-
-.dark .variant-genre.genre-mys {
-  background: linear-gradient(to bottom right, var(--color-mys-700), var(--color-mys-800));
-}
-
-.dark .variant-genre.genre-mys:hover {
-  background: linear-gradient(to bottom right, var(--color-mys-800), var(--color-mys-900));
-}
-
-.dark .variant-genre.genre-horror {
-  background: linear-gradient(to bottom right, var(--color-horror-700), var(--color-horror-800));
-}
-
-.dark .variant-genre.genre-horror:hover {
-  background: linear-gradient(to bottom right, var(--color-horror-800), var(--color-horror-900));
-}
-
-.dark .variant-genre.genre-jedi {
-  background: linear-gradient(to bottom right, var(--color-jedi-700), var(--color-jedi-800));
-}
-
-.dark .variant-genre.genre-jedi:hover {
-  background: linear-gradient(to bottom right, var(--color-jedi-800), var(--color-jedi-900));
-}
-
-.dark .variant-genre.genre-short {
-  background: linear-gradient(to bottom right, var(--color-short-700), var(--color-short-800));
-}
-
-.dark .variant-genre.genre-short:hover {
-  background: linear-gradient(to bottom right, var(--color-short-800), var(--color-short-900));
-}
-
 /* disabled 状態 */
 .disabled {
   @apply opacity-50 cursor-not-allowed pointer-events-none;

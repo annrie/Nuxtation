@@ -42,9 +42,16 @@ trustPolicyExclude:
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
+  # @hono/node-server<1.19.13 の serveStatic Directory Traversal
+  # (CVE-2026-39406, GHSA-92pp-h63x-v22m) 対応。
+  '@hono/node-server': ^1.19.13
   '@nuxt/content': 3.15.0
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   handlebars: ^4.7.9
+  # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
+  # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
+  # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。
+  sharp: ^0.35.3
   shell-quote: ^1.8.4
   unconfig: 0.4.1
   ws@7: ^7.5.13
@@ -53,13 +60,6 @@ overrides:
   ws@8: ^8.21.1
   zod: ^4.4.3
   zod-to-json-schema: ^3.25.2
-  # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
-  # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
-  # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。
-  sharp: ^0.35.3
-  # @hono/node-server<1.19.13 の serveStatic Directory Traversal
-  # (CVE-2026-39406, GHSA-92pp-h63x-v22m) 対応。
-  '@hono/node-server': ^1.19.13
 packageExtensions:
   '@nuxt/content':
     dependencies:

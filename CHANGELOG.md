@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.0
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.3.6...v4.4.0)
+
+### 🚀 新機能
+
+- **tooling:** ✨ Tailwind版 WCAGコントラストチェックを追加 ([6b33aac](https://github.com/annrie/Nuxtation/commit/6b33aac))
+
+### ⚡ パフォーマンスの向上
+
+- **search:** ⚡ 検索データをモーダル起動時まで遅延読み込み ([3e6fa88](https://github.com/annrie/Nuxtation/commit/3e6fa88))
+- **blog:** ⚡ タグページのpayload肥大を解消（body除外） ([10d6bb0](https://github.com/annrie/Nuxtation/commit/10d6bb0))
+
+### 🐛 バグ修正
+
+- **content:** 🐛 blog/[slug]ページに404分岐を追加 ([e3a5848](https://github.com/annrie/Nuxtation/commit/e3a5848))
+- **tooling:** 🐛 欠落していた lighthouse-production.sh を補完 ([2d30415](https://github.com/annrie/Nuxtation/commit/2d30415))
+- **content:** 🔗 blog/10 のリンク切れを解消（実践編リンクを除去） ([1dfe63b](https://github.com/annrie/Nuxtation/commit/1dfe63b))
+- **deploy:** 🚀 Vercelビルド失敗を解消（pnpm 11をcorepackで使用） ([ade17fd](https://github.com/annrie/Nuxtation/commit/ade17fd))
+- **server:** 🐛 favicon/アイコンファイルの500(FUNCTION_INVOCATION_FAILED)を解消 ([84dbfb5](https://github.com/annrie/Nuxtation/commit/84dbfb5))
+- **deploy:** 🚀 Vercelビルドをnpxでpnpm 11実行に変更＋Node 22固定 ([1d848f9](https://github.com/annrie/Nuxtation/commit/1d848f9))
+- **deploy:** 🚀 NITRO_PRESET=vercel を強制しedgeビルド失敗を回避 ([f0a6086](https://github.com/annrie/Nuxtation/commit/f0a6086))
+- **ui:** 🎨 404/エラーページをTailwindで作り直す ([40b8d0b](https://github.com/annrie/Nuxtation/commit/40b8d0b))
+- **deps:** 🔒 sharp/@hono/node-server のCVEをpnpm overrideで解消 ([31aa42b](https://github.com/annrie/Nuxtation/commit/31aa42b))
+- **search:** 🐛 非同期モーダルが開いた状態でマウントされた際の検索データ未読込を修正 ([52c0e0d](https://github.com/annrie/Nuxtation/commit/52c0e0d))
+- **content:** 🔒 Codex指摘対応（MDC整形ツール撤去・コンテンツ復元ほか） ([b3c3c2b](https://github.com/annrie/Nuxtation/commit/b3c3c2b))
+- **tooling:** 🐛 lighthouseレポートの読取パスに .report を反映 ([0c806bc](https://github.com/annrie/Nuxtation/commit/0c806bc))
+- **search:** 🐛 Vercelで検索モーダルが「読み込み中」で固まる問題を修正 ([3cb901c](https://github.com/annrie/Nuxtation/commit/3cb901c))
+- **content:** 🐛 検索が動かない原因の@sqlite.org/sqlite-wasm external指定を除去 ([91a7d6b](https://github.com/annrie/Nuxtation/commit/91a7d6b))
+
+### ♻️ リファクタリング
+
+- **css:** ♻️ Nuxt UI v4 / Tailwind v4 の作法に合わせ biblio 残骸を削除 ([7180703](https://github.com/annrie/Nuxtation/commit/7180703))
+
+### 📦 ビルド
+
+- **tooling:** 🔧 husky撤去しsimple-git-hooksへ統一・pre-commit修正 ([024381e](https://github.com/annrie/Nuxtation/commit/024381e))
+- **tooling:** 🔧 MDC対応のcontent md整形ツールを追加 ([ca38344](https://github.com/annrie/Nuxtation/commit/ca38344))
+- **tooling:** 🔧 md整形ツールを堅牢化（docustation/private-nuxtationと統一） ([94da62f](https://github.com/annrie/Nuxtation/commit/94da62f))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **config:** 🔧 devtools二重登録の削除とvite.server.warmup追加 ([86c462f](https://github.com/annrie/Nuxtation/commit/86c462f))
+- **tooling:** 🧹 不要な lint:md スクリプトを削除 ([222ff0f](https://github.com/annrie/Nuxtation/commit/222ff0f))
+- **content:** 🧹 blog記事6本を削除（02,03,04,11,12,13） ([c4ca466](https://github.com/annrie/Nuxtation/commit/c4ca466))
+
+### 🎨 コードスタイル
+
+- **content:** 🎨 全blog記事をMDC対応ツールで整形 ([17da174](https://github.com/annrie/Nuxtation/commit/17da174))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.3.6
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.3.5...v4.3.6)

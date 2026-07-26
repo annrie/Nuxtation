@@ -15,7 +15,10 @@ export default defineEventHandler((event) => {
   if (!process.env.VERCEL)
     return
 
-  const path = event.path
+  // event.path はクエリ文字列を含むため、拡張子判定($ 終端)が
+  // /missing.png?v=1 のようなキャッシュバスト付き要求を素通りさせてしまう。
+  // pathname のみで判定する。
+  const path = event.path.split('?')[0]
   if (
     path.startsWith('/_ipx/')
     || path.startsWith('/api/')

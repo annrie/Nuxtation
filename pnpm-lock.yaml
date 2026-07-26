@@ -278,18 +278,9 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1(supports-color@10.2.2)
-      remark-mdc:
-        specifier: ^3.11.1
-        version: 3.11.1(supports-color@10.2.2)
-      remark-parse:
-        specifier: ^11.0.0
-        version: 11.0.0(supports-color@10.2.2)
       remark-rehype:
         specifier: ^11.1.2
         version: 11.1.2
-      remark-stringify:
-        specifier: ^11.0.0
-        version: 11.0.0
       simple-git-hooks:
         specifier: ^2.13.1
         version: 2.13.1
@@ -311,9 +302,6 @@ importers:
       typescript-eslint:
         specifier: ^8.65.0
         version: 8.65.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
-      unified:
-        specifier: ^11.0.5
-        version: 11.0.5
       unist-util-visit:
         specifier: ^5.1.0
         version: 5.1.0

@@ -1,6 +1,61 @@
-/* Tailwind CSS v4 ベース */
+/*
+ * Tailwind CSS v4 デザイントークン（このプロジェクトの唯一の定義元）
+ *
+ * v4 は @theme に書いた変数の「名前空間」からユーティリティを自動生成する。
+ * 名前空間を外すとユーティリティは生成されない。
+ *   --text-*    → text-*（--text-*--line-height を添えると行間も同時に当たる）
+ *   --leading-* → leading-*
+ *   --shadow-*  → shadow-*
+ *   --color-*   → text-* / bg-* / border-* ...
+ *
+ * `static` 付きの @theme は「未使用でも必ず :root に出力する」指定。
+ * scoped CSS から var(--color-xxx) で直接参照するトークンには static が必須。
+ * 逆に static なしのトークンは未使用ならビルド時に除去される。
+ *
+ * 注意: Tailwind のデフォルトと同値のトークン（--breakpoint-*、
+ * --aspect-video / --aspect-square）はここで再定義しない。
+ */
 
-/* Tailwind CSS カスタムデザイントークン */
+/* ========================================
+   ユーティリティとして使うトークン
+   （未使用分はツリーシェイクされる）
+   ======================================== */
+@theme {
+  /* レスポンシブフォントサイズ（clamp: 320px〜1600px）
+     text-xxs / text-h1〜h6 / text-highlight を生成し、行間も同時に当てる */
+  --text-xxs: clamp(0.438rem, 0.063rem + 1.172vw, 0.563rem);
+  --text-xxs--line-height: 1.55;
+  --text-h6: clamp(0.938rem, 0.313rem + 1.953vw, 1.25rem);
+  --text-h6--line-height: 1.45;
+  --text-h5: clamp(1.125rem, 0.656rem + 1.469vw, 1.5rem);
+  --text-h5--line-height: 1.4;
+  --text-h4: clamp(1.375rem, 0.906rem + 1.469vw, 1.75rem);
+  --text-h4--line-height: 1.35;
+  --text-h3: clamp(1.75rem, 1.125rem + 1.953vw, 2.25rem);
+  --text-h3--line-height: 1.3;
+  --text-h2: clamp(2.125rem, 1.344rem + 2.441vw, 2.75rem);
+  --text-h2--line-height: 1.25;
+  --text-h1: clamp(2.625rem, 1.656rem + 3.027vw, 3.5rem);
+  --text-h1--line-height: 1.15;
+  --text-highlight: clamp(4rem, 2.5rem + 4.688vw, 5rem);
+  --text-highlight--line-height: 1.1;
+
+  /* カスタムボックスシャドウ（shadow-card-light 等） */
+  --shadow-card-light: 0 18px 40px rgba(15, 23, 42, 0.2);
+  --shadow-card-dark: 0 18px 40px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover-light: 0 24px 55px rgba(15, 23, 42, 0.35);
+  --shadow-card-hover-dark: 0 24px 55px rgba(0, 0, 0, 0.6);
+  --shadow-link: 0 8px 16px rgba(0, 0, 0, 0.1);
+  --shadow-blue-sm: 0 4px 12px rgba(37, 99, 235, 0.4);
+  --shadow-blue-md: 0 6px 16px rgba(37, 99, 235, 0.5);
+  --shadow-green-sm: 0 4px 12px rgba(34, 197, 94, 0.4);
+  --shadow-green-md: 0 6px 16px rgba(34, 197, 94, 0.5);
+}
+
+/* ========================================
+   scoped CSS から var() で参照するトークン
+   （常時 :root に出力する必要があるため static）
+   ======================================== */
 @theme static {
   /* WCAG AA準拠アクセシビリティカラー */
   --color-link-light: #047857;
@@ -10,61 +65,67 @@
   --color-link-dark: #34d399;
   --color-tag-bg-dark: #2563eb;
 
-  /*
-   * 以下の定義はnuxt.config.tsに移行済み:
-   * - fontSize: xxs, xs, sm, base, lg, h1-h6, highlight
-   * - lineHeight: xxs, xs, sm, base, lg, h1-h6, highlight
-   * - boxShadow: card-light, card-dark, card-hover-light, card-hover-dark, link, blue-sm, blue-md, green-sm, green-md
-   * - aspectRatio: video, square, portrait, landscape
-   *
-   * Tailwindユーティリティとして使用可能:
-   * - text-h1, text-h2, ..., text-xxs
-   * - leading-h1, leading-h2, ..., leading-xxs
-   * - shadow-card-light, shadow-card-dark, shadow-blue-sm, shadow-green-md, etc.
-   * - aspect-video, aspect-square, aspect-portrait, aspect-landscape
-   */
+  /* 見出し・タグの装飾に使うアクセントカラー
+     （BlogIndexPage の見出しグラデーション、タグページの見出しなど） */
+  --color-sf-active: #2563eb;
+  --color-mystery-active: #c2410c;
+
+  /* 記事本文（prose）のカラートークン
+     値は下の .dark ブロックでダークテーマ用に差し替わるため、
+     text-prose-heading のように単一のユーティリティで両テーマに対応できる。
+     （Nuxt UI の --ui-* トークンと同じ仕組み）
+     実際の適用は app/app.config.ts の ui.prose.* で行う。 */
+  --color-prose-body: #374151;
+  --color-prose-heading: #111827; /* h1 */
+  --color-prose-heading-2: #1f2937;
+  --color-prose-heading-3: #374151;
+  --color-prose-heading-4: #4b5563;
+  --color-prose-heading-5: #4b5563;
+  --color-prose-heading-6: #6b7280;
+  --color-prose-rule: #e5e7eb; /* h2 下線・hr・pre 枠線 */
+  --color-prose-table-rule: #e5e7eb; /* 表の罫線・行番号の縦罫 */
+  /* 本文リンクは白背景で AA（4.5:1）を満たす値を使う。
+     emerald-500 (#10b981) は 2.54:1 しかないため --color-link-* に揃える。 */
+  --color-prose-link: #047857; /* 白背景で 5.48:1 */
+  --color-prose-link-hover: #065f46; /* 白背景で 7.68:1 */
+  --color-prose-external: #1d4ed8;
+  --color-prose-quote-border: #10b981;
+  --color-prose-quote-text: #6b7280;
+  --color-prose-code-bg: #f3f4f6; /* インラインコード */
+  --color-prose-code-text: #b91c1c; /* #f3f4f6 の上で 5.88:1 */
+  --color-prose-pre-bg: #f9fafb; /* コードブロック */
+  --color-prose-pre-text: #1f2937;
+  --color-prose-th-bg: #f3f4f6;
+  --color-prose-line-number: #6b7280; /* pre 背景の上で 4.63:1 */
+  --color-prose-collapse-bg: #d1d5db; /* code-collapse の開閉ボタン */
+  --color-prose-collapse-bg-hover: #9ca3af;
+  --color-prose-collapse-text: #1f2937;
 }
 
-/* カスタムユーティリティクラス */
-@layer utilities {
-  /* テキストスケール用ユーティリティ */
-  .text-xxs {
-    font-size: var(--font-size-xxs);
-    line-height: var(--line-height-xxs);
-  }
-
-  .text-h6 {
-    font-size: var(--font-size-h6);
-    line-height: var(--line-height-h6);
-  }
-
-  .text-h5 {
-    font-size: var(--font-size-h5);
-    line-height: var(--line-height-h5);
-  }
-
-  .text-h4 {
-    font-size: var(--font-size-h4);
-    line-height: var(--line-height-h4);
-  }
-
-  .text-h3 {
-    font-size: var(--font-size-h3);
-    line-height: var(--line-height-h3);
-  }
-
-  .text-h2 {
-    font-size: var(--font-size-h2);
-    line-height: var(--line-height-h2);
-  }
-
-  .text-h1 {
-    font-size: var(--font-size-h1);
-    line-height: var(--line-height-h1);
-  }
-
-  .text-highlight {
-    font-size: var(--font-size-highlight);
-    line-height: var(--line-height-highlight);
-  }
+/* prose トークンのダークテーマ値。
+   @theme static が :root（@layer theme）に出すので、レイヤー外のこの指定が勝つ。 */
+.dark {
+  --color-prose-body: #d1d5db;
+  --color-prose-heading: #f9fafb;
+  --color-prose-heading-2: #f3f4f6;
+  --color-prose-heading-3: #e5e7eb;
+  --color-prose-heading-4: #d1d5db;
+  --color-prose-heading-5: #d1d5db;
+  --color-prose-heading-6: #9ca3af;
+  --color-prose-rule: #374151;
+  --color-prose-table-rule: #4b5563;
+  --color-prose-link: #34d399;
+  --color-prose-link-hover: #10b981;
+  --color-prose-external: #93c5fd;
+  --color-prose-quote-border: #34d399;
+  --color-prose-quote-text: #9ca3af;
+  --color-prose-code-bg: #374151;
+  --color-prose-code-text: #fca5a5;
+  --color-prose-pre-bg: #1f2937;
+  --color-prose-pre-text: #e5e7eb;
+  --color-prose-th-bg: #374151;
+  --color-prose-line-number: #9ca3af;
+  --color-prose-collapse-bg: #374151;
+  --color-prose-collapse-bg-hover: #4b5563;
+  --color-prose-collapse-text: #d1d5db;
 }

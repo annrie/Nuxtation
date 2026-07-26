@@ -4,7 +4,7 @@ import type { ContentPreview, Sections } from '~~/types'
 defineProps<{
   items?: ContentPreview[]
   section: Sections
-  variant?: 'blog' | 'biblio'
+  variant?: 'blog'
 }>()
 </script>
 

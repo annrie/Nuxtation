@@ -326,7 +326,7 @@ watch([files, searchSections], () => {
         <div class="fixed inset-0 bg-gray-900/50 dark:bg-gray-900/80" @click="isSearchModalOpen = false" />
 
         <!-- Modal Content -->
-        <div ref="modalContentRef" class="relative w-full max-w-3xl bg-white dark:bg-gray-900 rounded-lg shadow-xl p-6 max-sm:bg-gray-900 max-sm:text-white">
+        <div ref="modalContentRef" class="relative w-full max-w-3xl bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 rounded-lg shadow-xl p-6">
           <!-- Close button -->
           <button
             aria-label="検索を閉じる"
@@ -340,7 +340,7 @@ watch([files, searchSections], () => {
 
           <!-- Search UI -->
           <div v-if="files || searchSections">
-            <h2 id="search-modal-title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white max-sm:text-white">
+            <h2 id="search-modal-title" class="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
               検索
             </h2>
 
@@ -354,7 +354,7 @@ watch([files, searchSections], () => {
                 type="text"
                 placeholder="検索キーワードを入力... (↑↓で選択、Enterで移動)"
                 aria-describedby="search-help"
-                class="w-full px-4 py-3 pr-10 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 max-sm:bg-gray-800 max-sm:text-gray-100 max-sm:border-gray-700"
+                class="w-full px-4 py-3 pr-10 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 @keydown="handleKeyDown"
               >
               <span id="search-help" class="sr-only">↑↓キーで選択、Enterキーで移動、Escapeキーで閉じる</span>
@@ -373,16 +373,16 @@ watch([files, searchSections], () => {
 
             <!-- Search results -->
             <div class="mt-6 max-h-96 overflow-y-auto">
-              <p v-if="!searchQuery" class="text-sm text-gray-600 dark:text-gray-400 max-sm:text-gray-400">
+              <p v-if="!searchQuery" class="text-sm text-gray-600 dark:text-gray-400">
                 {{ totalDocCount }} 件のドキュメントから検索できます
               </p>
 
-              <p v-else-if="searchResults.length === 0" class="text-sm text-gray-600 dark:text-gray-400 max-sm:text-gray-400">
+              <p v-else-if="searchResults.length === 0" class="text-sm text-gray-600 dark:text-gray-400">
                 「{{ searchQuery }}」の検索結果: 0件
               </p>
 
               <div v-else>
-                <p class="text-sm text-gray-600 dark:text-gray-400 max-sm:text-gray-400 mb-4">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                   「{{ searchQuery }}」の検索結果: {{ searchResults.length }}件
                 </p>
 

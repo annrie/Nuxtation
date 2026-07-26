@@ -1,16 +1,15 @@
 /*
  * Docus + Nuxt UI v4 統合スタイル
  *
- * Tailwind CSS v4 を PostCSS プラグインとして使用
+ * このファイルは app/app.css から読み込まれ、最終的に Docus の css モジュール
+ * (docus/modules/css.ts) が生成する .nuxt/docus.css の末尾に取り込まれる。
+ *
+ * `@import 'tailwindcss'` と `@import '@nuxt/ui'` はその docus.css が
+ * 先頭で済ませているため、ここでは書かない（重複 import になる）。
  */
 
-@import 'tailwindcss';
-@import '@nuxt/ui';
-/* Tailwind カスタムプロパティ（ジャンル別カラーパレット等） */
+/* デザイントークン（@theme / Tailwind v4） */
 @import './tailwind.css';
-
-/* カスタムデザイントークン */
-@import './theme.css';
 
 /* グローバルユーティリティ */
 @import './utilities.css';
@@ -23,7 +22,6 @@
 @import './components/footer.css';
 @import './components/breadcrumb.css';
 @import './components/modal.css';
-@import './components/chrono.css';
 
 /* トランジション設定 */
 @import './transitions.css';

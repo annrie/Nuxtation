@@ -537,8 +537,10 @@ export default defineNuxtConfig({
       rollupOptions: {
         external: [
           'shiki/onig.wasm',
-          '@sqlite.org/sqlite-wasm',
-          /sqlite3.*\.wasm$/,
+          // 注意: @sqlite.org/sqlite-wasm と sqlite3.wasm を external にすると、
+          // @nuxt/content のクライアント側クエリ（検索モーダル等）で
+          // 「Failed to resolve module specifier '@sqlite.org/sqlite-wasm'」に
+          // なるため external にしない。wasm は assetsInclude でアセット化される。
         ],
         onwarn(warning, warn) {
           // unwasm の shiki WASM 警告を抑制

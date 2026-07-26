@@ -269,16 +269,30 @@ watch([searchQuery, searchSections, files], () => {
   performSearch()
 })
 
-// Reset selection when modal closes and focus input when opening
-watch(isSearchModalOpen, async (newValue) => {
+async function focusSearchInput() {
+  await nextTick()
+  searchInputRef.value?.focus()
+}
+
+// モーダルが開いたら検索データを読み込みフォーカスする。
+// immediate: true は、defineAsyncComponent のチャンク読込前に Search を押した結果
+// 「既に開いた状態」でこのコンポーネントがマウントされるケースを拾うため
+// （非immediateだと初期trueを取りこぼし ensureSearchData が走らない）。
+watch(isSearchModalOpen, (newValue) => {
   if (newValue) {
     ensureSearchData()
-    await nextTick()
-    searchInputRef.value?.focus()
+    focusSearchInput()
     return
   }
-
   selectedIndex.value = -1
+}, { immediate: true })
+
+// 初回オープン時は検索データ未到着で input(v-if="files || searchSections") が
+// 未描画のためフォーカスが当たらない。データ到着後・表示中に改めてフォーカスする。
+watch([files, searchSections], () => {
+  if (isSearchModalOpen.value && (files.value || searchSections.value)) {
+    focusSearchInput()
+  }
 })
 </script>
 

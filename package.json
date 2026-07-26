@@ -4,13 +4,13 @@
   "version": "4.3.6",
   "private": true,
   "packageManager": "pnpm@11.15.1",
-  "engines": {
-    "node": "22.x"
-  },
   "description": "Nuxtation project",
   "author": "annrie <annrie@users.noreply.github.com>",
   "license": "MIT",
   "main": "./nuxt.config.ts",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "build": "VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi build",
     "dev": "nuxi dev -o",

@@ -26,28 +26,60 @@ export default defineAppConfig({
     ],
   },
   ui: {
+    // Nuxt UI のカラーエイリアス。値には「Tailwind の色名」を渡す。
+    // hex を直接渡すと var(--color-#xxxxxx-500) という不正な CSS になる。
     colors: {
       primary: 'emerald',
       secondary: 'purple',
       neutral: 'slate',
       tertiary: 'indigo',
     },
-    button: {
-      color: {
-        blogBlue: {
-          solid: 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 dark:from-green-600 dark:to-green-700 dark:hover:from-green-700 dark:hover:to-green-800 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5 border-none transition-all duration-200',
-        },
-        blogGreen: {
-          solid: 'bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white dark:text-slate-900 shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200',
-        },
-        featuredCta: {
-          solid: 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 dark:from-green-500 dark:to-green-600 dark:hover:from-green-600 dark:hover:to-green-700 text-white shadow-md hover:shadow-xl hover:-translate-y-0.5 border-none transition-all duration-200 rounded-full',
-        },
-        tag: {
-          solid: 'bg-gradient-to-br from-blue-100 to-blue-200 hover:from-blue-200 hover:to-blue-300 dark:from-blue-900/40 dark:to-blue-800/40 dark:hover:from-blue-800/50 dark:hover:to-blue-700/50 text-blue-900 dark:text-blue-100 border border-blue-300/50 dark:border-blue-700/50 hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-200 text-sm font-medium shadow-sm hover:shadow-md',
+    // 記事本文（prose）のスタイル。
+    // ContentRenderer が描画する Nuxt UI v4 の Prose コンポーネントを
+    // tailwind-variants の仕組みで上書きするのが v4 の作法。
+    // 生 CSS を後から !important で被せる形にはしない。
+    // 色は app/assets/css/tailwind.css の --color-prose-* を参照
+    // （.dark で値が入れ替わるので dark: バリアントは不要）。
+    //
+    // 注意: Nuxt UI に ProseH5 / ProseH6 は存在しないため、
+    // h5 / h6 は prose.css 側で素の要素として指定している。
+    prose: {
+      h1: { slots: { base: 'mt-8 mb-4 text-4xl leading-[1.2] font-extrabold text-prose-heading' } },
+      h2: { slots: { base: 'mt-8 mb-4 pb-2 text-3xl leading-[1.3] font-bold text-prose-heading-2 border-b-2 border-prose-rule' } },
+      h3: { slots: { base: 'mt-6 mb-3 text-2xl leading-[1.4] font-semibold text-prose-heading-3' } },
+      h4: { slots: { base: 'mt-6 mb-3 text-xl leading-[1.4] font-semibold text-prose-heading-4' } },
+      p: { base: 'my-4 leading-[1.75]' },
+      a: { base: 'text-prose-link hover:text-prose-link-hover border-b-0 underline decoration-1 underline-offset-2' },
+      ul: { base: 'my-4 ps-6 list-disc' },
+      ol: { base: 'my-4 ps-6 list-decimal' },
+      li: { base: 'my-2 leading-[1.75]' },
+      blockquote: { base: 'my-6 ps-4 italic border-s-4 border-prose-quote-border text-prose-quote-text' },
+      hr: { base: 'my-8 border-t border-prose-rule' },
+      img: { slots: { base: 'my-6 h-auto max-w-full rounded-lg' } },
+      table: { slots: { root: 'my-6', base: 'w-full border-collapse' } },
+      th: { base: 'px-4 py-3 bg-prose-th-bg border border-prose-table-rule' },
+      td: { base: 'px-4 py-3 border border-prose-table-rule' },
+      // インラインコード（既定バリアントは color="neutral"）
+      code: {
+        variants: {
+          color: {
+            neutral: 'border-0 bg-prose-code-bg text-prose-code-text font-semibold',
+          },
         },
       },
-      variant: {
+      pre: {
+        slots: {
+          root: 'my-6',
+          base: 'rounded-lg leading-[1.7] bg-prose-pre-bg text-prose-pre-text border-prose-rule [tab-size:2]',
+          // コピーボタン（UButton variant="outline"）の ring を消す。
+          // focus-visible:outline-3 は残るのでフォーカス表示は失われない。
+          copy: 'ring-0',
+        },
+      },
+      codeCollapse: {
+        slots: {
+          trigger: 'px-4 py-2 rounded-md border-0 font-medium opacity-50 transition-colors bg-prose-collapse-bg text-prose-collapse-text hover:bg-prose-collapse-bg-hover hover:opacity-100',
+        },
       },
     },
     icons: {

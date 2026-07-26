@@ -5,7 +5,7 @@
 #   ./scripts/lighthouse-production.sh                  # 標準測定（主要9ページ、各1回）
 #   ./scripts/lighthouse-production.sh --quick          # 簡易測定（トップページのみ、1回）
 #   ./scripts/lighthouse-production.sh --accurate       # 正確な測定（主要9ページ、各3回）
-#   ./scripts/lighthouse-production.sh --full           # 全ページ測定（18ページ、各1回）
+#   ./scripts/lighthouse-production.sh --full           # 全ページ測定（実在blogページ、各1回）
 #   ./scripts/lighthouse-production.sh --quick --runs 3 # カスタム測定回数
 
 set -e
@@ -57,25 +57,14 @@ case $MODE in
     MODE_NAME="簡易測定（トップページのみ）"
     ;;
   full)
+    # nuxtation は blog 専用サイト（biblio/jenre のコンテンツ・ルートは存在しない）。
+    # 実在する blog タグ(docus/nuxt)と記事のみを対象にする。
     URLS=(
       "$BASE_URL/"
       "$BASE_URL/blog"
       "$BASE_URL/blog/tags/docus"
       "$BASE_URL/blog/tags/nuxt"
-      "$BASE_URL/blog/tags/vue"
-      "$BASE_URL/blog/tags/performance"
       "$BASE_URL/blog/nuxt-link-card-implementation"
-      "$BASE_URL/blog/docus-performance-optimization"
-      "$BASE_URL/blog/nuxt-content-api-migration"
-      "$BASE_URL/biblio"
-      "$BASE_URL/biblio/chrono1"
-      "$BASE_URL/biblio/kamigari"
-      "$BASE_URL/biblio/tags/sf"
-      "$BASE_URL/biblio/tags/mystery"
-      "$BASE_URL/jenre/sf"
-      "$BASE_URL/jenre/mystery"
-      "$BASE_URL/jenre/tags/sf"
-      "$BASE_URL/jenre/tags/mystery"
     )
     MODE_NAME="全ページ測定（${#URLS[@]}ページ）"
     ;;
@@ -85,11 +74,6 @@ case $MODE in
       "$BASE_URL/blog"
       "$BASE_URL/blog/tags/docus"
       "$BASE_URL/blog/nuxt-link-card-implementation"
-      "$BASE_URL/biblio"
-      "$BASE_URL/biblio/chrono1"
-      "$BASE_URL/biblio/kamigari"
-      "$BASE_URL/jenre/sf"
-      "$BASE_URL/jenre/tags/sf"
     )
     MODE_NAME="標準測定（主要${#URLS[@]}ページ）"
     ;;

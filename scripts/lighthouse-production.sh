@@ -187,16 +187,16 @@ if command -v jq &> /dev/null; then
     echo -e "${YELLOW}$DISPLAY_NAME${NC}"
 
     # モバイル
-    if [ -f "$OUTPUT_DIR/mobile-$FILENAME.json" ]; then
-      MOBILE_PERF=$(jq -r '.categories.performance.score * 100 | floor' "$OUTPUT_DIR/mobile-$FILENAME.json" 2>/dev/null || echo "N/A")
-      MOBILE_A11Y=$(jq -r '.categories.accessibility.score * 100 | floor' "$OUTPUT_DIR/mobile-$FILENAME.json" 2>/dev/null || echo "N/A")
+    if [ -f "$OUTPUT_DIR/mobile-$FILENAME.report.json" ]; then
+      MOBILE_PERF=$(jq -r '.categories.performance.score * 100 | floor' "$OUTPUT_DIR/mobile-$FILENAME.report.json" 2>/dev/null || echo "N/A")
+      MOBILE_A11Y=$(jq -r '.categories.accessibility.score * 100 | floor' "$OUTPUT_DIR/mobile-$FILENAME.report.json" 2>/dev/null || echo "N/A")
       echo "  📱 Mobile - Perf: $MOBILE_PERF% | A11y: $MOBILE_A11Y%"
     fi
 
     # デスクトップ
-    if [ -f "$OUTPUT_DIR/desktop-$FILENAME.json" ]; then
-      DESKTOP_PERF=$(jq -r '.categories.performance.score * 100 | floor' "$OUTPUT_DIR/desktop-$FILENAME.json" 2>/dev/null || echo "N/A")
-      DESKTOP_A11Y=$(jq -r '.categories.accessibility.score * 100 | floor' "$OUTPUT_DIR/desktop-$FILENAME.json" 2>/dev/null || echo "N/A")
+    if [ -f "$OUTPUT_DIR/desktop-$FILENAME.report.json" ]; then
+      DESKTOP_PERF=$(jq -r '.categories.performance.score * 100 | floor' "$OUTPUT_DIR/desktop-$FILENAME.report.json" 2>/dev/null || echo "N/A")
+      DESKTOP_A11Y=$(jq -r '.categories.accessibility.score * 100 | floor' "$OUTPUT_DIR/desktop-$FILENAME.report.json" 2>/dev/null || echo "N/A")
       echo "  💻 Desktop - Perf: $DESKTOP_PERF% | A11y: $DESKTOP_A11Y%"
     fi
 

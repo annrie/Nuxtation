@@ -23,28 +23,36 @@ const modalContentRef = ref<HTMLElement | null>(null)
 // フォーカストラップの適用
 useFocusTrap(modalContentRef, isSearchModalOpen)
 
-// セクション検索データ（@nuxt/content組み込み）
-const { data: searchSections, execute: loadSections } = useLazyAsyncData('search-sections', async () => {
-  const blogSections = await queryCollectionSearchSections('blog' as keyof PageCollections)
-  return blogSections || []
-}, { immediate: false })
-
-// ドキュメント全体データ（タグ・description等のメタ情報検索用）
-const { data: files, execute: loadFiles } = useLazyAsyncData('search-files', async () => {
-  const blogFiles = await queryCollection('blog' as keyof PageCollections).all()
-  return blogFiles || []
-}, { immediate: false })
+// 検索データ（セクション + ドキュメント全体）。
+// useLazyAsyncData(immediate:false) の execute は SSRペイロード/ハイドレーションの
+// 都合で「開いた状態でマウントされた非同期コンポーネント」から呼ぶと取りこぼす
+// ことがあるため、プレーンな ref にしてモーダルを開いた時点でクライアント側で
+// 直接読み込む（ライフサイクル依存を排除）。
+const searchSections = ref<any[] | null>(null)
+const files = ref<any[] | null>(null)
 
 // この SearchModal は app.vue に常時マウントされるため、即時取得すると
 // 全記事の本文取得がクライアント SQLite を占有し、ページ遷移を妨げる。
 // 検索モーダルを開いた時点で初めて一度だけ読み込む。
 let searchDataRequested = false
-function ensureSearchData() {
+async function ensureSearchData() {
   if (searchDataRequested)
     return
   searchDataRequested = true
-  loadSections()
-  loadFiles()
+  try {
+    const [sections, docs] = await Promise.all([
+      queryCollectionSearchSections('blog' as keyof PageCollections),
+      queryCollection('blog' as keyof PageCollections).all(),
+    ])
+    searchSections.value = sections || []
+    files.value = docs || []
+  }
+  catch (error) {
+    // 失敗しても「読み込み中」で固まらないよう空配列で確定させる。
+    console.error('[SearchModal] 検索データの読み込みに失敗', error)
+    searchSections.value = []
+    files.value = []
+  }
 }
 
 // 総検索件数（セクション + ドキュメント）
@@ -274,10 +282,7 @@ async function focusSearchInput() {
   searchInputRef.value?.focus()
 }
 
-// モーダルが開いたら検索データを読み込みフォーカスする。
-// immediate: true は、defineAsyncComponent のチャンク読込前に Search を押した結果
-// 「既に開いた状態」でこのコンポーネントがマウントされるケースを拾うため
-// （非immediateだと初期trueを取りこぼし ensureSearchData が走らない）。
+// モーダルの開閉に反応して検索データを読み込みフォーカスする（開いた後の遷移用）。
 watch(isSearchModalOpen, (newValue) => {
   if (newValue) {
     ensureSearchData()
@@ -285,7 +290,17 @@ watch(isSearchModalOpen, (newValue) => {
     return
   }
   selectedIndex.value = -1
-}, { immediate: true })
+})
+
+// defineAsyncComponent のチャンク読込前に Search を押すと、このコンポーネントは
+// 「既に開いた状態」でマウントされ、上の watch は初期 true を取りこぼす。
+// マウント後（クライアント文脈が整った時点）に開いていれば確実に読み込む。
+onMounted(() => {
+  if (isSearchModalOpen.value) {
+    ensureSearchData()
+    focusSearchInput()
+  }
+})
 
 // 初回オープン時は検索データ未到着で input(v-if="files || searchSections") が
 // 未描画のためフォーカスが当たらない。データ到着後・表示中に改めてフォーカスする。

@@ -23,6 +23,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check:contrast": "npx tsx scripts/check-contrast.ts",
+    "check:css-layers": "npx tsx scripts/check-css-layers.ts",
     "release:patch": "changelogen --release --patch",
     "release:minor": "changelogen --release --minor",
     "release:major": "changelogen --release --major",

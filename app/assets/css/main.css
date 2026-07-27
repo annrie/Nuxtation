@@ -8,6 +8,21 @@
  * 先頭で済ませているため、ここでは書かない（重複 import になる）。
  */
 
+/*
+ * 日本語向けリセット（kiso.css）
+ *
+ * 必ず `layer(base)` を付けて読み込む。nuxt.config.ts の `css: []` から
+ * 読み込むとレイヤー外になり、CSS カスケードの判定順（起点 → レイヤー →
+ * 詳細度）により *レイヤー外が全レイヤーに勝つ* ため、`:where()` で詳細度を
+ * 0 にしていても Tailwind の `@layer utilities` を打ち消してしまう。
+ * 実際に p の `my-4` や ul の `ps-6 list-disc` が無効化されていた。
+ *
+ * base に入れると Tailwind の preflight より後・utilities より前に位置し、
+ * リセットとしての役割（text-autospace / text-spacing-trim / line-break 等の
+ * 日本語組版設定を含む）はそのまま保たれる。
+ */
+@import 'kiso.css/kiso.css' layer(base);
+
 /* デザイントークン（@theme / Tailwind v4） */
 @import './tailwind.css';
 

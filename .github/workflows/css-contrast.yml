@@ -1,0 +1,33 @@
+# デザイントークンのコントラスト検査
+#
+# scripts/check-contrast.ts は app/assets/css/tailwind.css と app/ 配下を
+# 読むだけでビルド成果物を必要としないため、PR ごとに軽量に回せる。
+# (ビルドが要る check:css-layers は ssg-check.yml のビルド後に相乗りさせている)
+#
+# 検査内容:
+#   - 未定義のカラートークン参照 (var(--color-xxx) の定義漏れ)
+#   - グラデーション等で白文字を載せる背景が明るすぎないか
+#   - 前景/背景ペアの WCAG AA (通常 4.5:1 / 大きい文字・非テキスト 3:1)
+name: CSS contrast check
+on:
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: css-contrast-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  contrast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 # versionはpackage.jsonのpackageManagerを使用
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      # postinstall の nuxi prepare は2分以上かかるがこの検査には不要なため
+      # --ignore-scripts で省く。tsx の実行に必要な依存は入る。
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Check color contrast (WCAG AA)
+        run: pnpm check:contrast --strict

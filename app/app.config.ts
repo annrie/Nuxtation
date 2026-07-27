@@ -1,4 +1,20 @@
 export default defineAppConfig({
+  docus: {
+    /*
+     * <html lang> の供給元。
+     *
+     * nuxt.config.ts の app.head.htmlAttrs.lang は、Docus 自身の app.vue が
+     * 後から useHead({ htmlAttrs: { lang } }) で上書きするため効かない。
+     * その lang は docus/app/plugins/i18n.ts が `appConfig.docus.locale`
+     * （既定 'en'）から解決しているので、ここで指定する必要がある。
+     *
+     * これを 'ja' にしないと kiso.css の `:lang(ja)` ルール
+     * （日本語の em を太字にする・i/cite/dfn のイタリックを解除する等）が
+     * 一切適用されず、逆に英語向けの `:lang(en) { text-wrap: pretty }` が
+     * 日本語本文に当たってしまう。
+     */
+    locale: 'ja',
+  },
   seo: {
     title: 'Nuxtation',
     description: 'Nuxt 4で構築したブログサイトです。',

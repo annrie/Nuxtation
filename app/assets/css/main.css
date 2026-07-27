@@ -40,3 +40,28 @@
 
 /* トランジション設定 */
 @import './transitions.css';
+
+/*
+ * kiso.css のフォーム要素ボーダー既定値を Tailwind の既定に戻す。
+ * （`@import` は全て上に書き切る必要があるため、ここに置いている）
+ *
+ * kiso.css は「未装飾のフォーム要素でも判別できるように」という意図で
+ * `:where(button, input, select, textarea)` に border-width: 1px を入れる。
+ * 一方 Nuxt UI / Tailwind は preflight の `border: 0 solid` を前提に、
+ * 枠が必要な箇所だけ `border-*` ユーティリティで足す設計になっている。
+ * この2つの前提が衝突し、クラスにボーダー指定を持たない Nuxt UI の部品
+ * （コードグループのタブ、アイコンボタン等）に意図しない枠が出ていた。
+ *
+ * 実測（記事ページ1枚）: フォーム要素 29 個のうち 20 個が意図しない枠を
+ * 持ち、kiso の既定に依存している要素は 0 個だった。よって既定値のみ外す。
+ * kiso の他のリセットと日本語組版の設定はそのまま維持される。
+ *
+ * base レイヤー内で kiso より後に書くことで上書きし、`border-*`
+ * ユーティリティ（utilities レイヤー）は従来どおり優先される。
+ */
+@layer base {
+  :where(button, input, select, textarea),
+  ::file-selector-button {
+    border-width: 0;
+  }
+}

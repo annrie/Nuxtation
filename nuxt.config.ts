@@ -136,7 +136,9 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@@/node_modules/kiso.css/kiso.css',
+    // kiso.css はここでは読み込まない。ここから読むとレイヤー外になり
+    // Tailwind の @layer utilities を打ち消すため、
+    // app/assets/css/main.css で `layer(base)` 付きで import している。
     // 'v-network-graph/lib/style.css', // 削除: 未使用
     '@shikijs/twoslash/style-rich.css', // twoslash のホバーツールチップ用スタイル
   ],
@@ -162,6 +164,12 @@ export default defineNuxtConfig({
     url: 'https://nuxtation.vercel.app',
     description: 'Nuxt 4で構築したブログサイト',
     language: 'ja',
+    // <html lang> の実際の供給元。nuxt-seo-utils の applyDefaults が
+    // `siteConfig.currentLocale || siteConfig.defaultLocale || 'en'` で
+    // htmlAttrs.lang を決めており、上の `language` は参照されない。
+    // これを入れないと日本語サイトなのに lang="en" が出力され、
+    // kiso.css の `:lang(ja)` ルールが一切効かなくなる。
+    defaultLocale: 'ja',
     twitter: '@muraie_jin',
     trailingSlash: false,
   },

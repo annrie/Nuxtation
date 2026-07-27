@@ -46,8 +46,17 @@ overrides:
   # (CVE-2026-39406, GHSA-92pp-h63x-v22m) 対応。
   '@hono/node-server': ^1.19.13
   '@nuxt/content': 3.15.0
+  # brace-expansion の連続する空 {} グループによる指数時間展開 DoS
+  # (GHSA-9JQ6-QF4V-C4CG 系) 対応。1系/2系/5系が同時に依存ツリーに存在するため、
+  # メジャーごとにレンジを区切って最小の修正版へ引き上げる。
+  brace-expansion@^1.0.0: ^1.1.16
+  brace-expansion@^2.0.0: ^2.1.2
+  brace-expansion@^5.0.0: ^5.0.8
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   handlebars: ^4.7.9
+  # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
+  # 8.5.15 を牽引するため 8.5.23 を強制する。
+  postcss: ^8.5.23
   # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
   # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。

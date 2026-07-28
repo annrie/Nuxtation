@@ -23,6 +23,8 @@ minimumReleaseAgeExclude:
   - '@vitejs/plugin-vue@6.0.8'
   - typescript-eslint@8.64.0 || 8.65.0
   - '@nuxtjs/sitemap@8.3.0'
+  - '@nuxt/icon@2.4.1'
+  - '@nuxt/test-utils@4.1.0'
 shellEmulator: true
 
 supportedArchitectures:
@@ -54,7 +56,7 @@ overrides:
   # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
   # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
   '@hono/node-server': ^1.19.17
-  '@nuxt/content': 3.15.0
+  '@nuxt/content': 3.15.2
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   # 以下は pnpm audit(npm advisory DB) 由来。いずれも同一メジャー内のパッチ
   # 更新で解決するため、メジャーを跨がないようレンジを区切って指定する。

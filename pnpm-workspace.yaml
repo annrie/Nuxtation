@@ -42,9 +42,18 @@ trustPolicyExclude:
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
-  # @hono/node-server<1.19.13 の serveStatic Directory Traversal
-  # (CVE-2026-39406, GHSA-92pp-h63x-v22m) 対応。
-  '@hono/node-server': ^2.0.12
+  # @hono/node-server は 1系の最新に留める。
+  # 対象アドバイザリは2件:
+  #   1. serveStatic の Directory Traversal (CVE-2026-39406,
+  #      GHSA-92pp-h63x-v22m) → 1.19.13 で修正済み
+  #   2. serve-static の Windows 限定パストラバーサル
+  #      (GHSA-frvp-7c67-39w9, %5C 経由) → 修正は 2.0.5 以降のみ
+  #
+  # 2 は 1系に修正版が無いが、(a) Windows 限定でデプロイ先は Linux、
+  # (b) @modelcontextprotocol/sdk が ^1.19.9 を宣言しており 2系の強制は
+  # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
+  # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
+  '@hono/node-server': ^1.19.17
   '@nuxt/content': 3.15.0
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   # 以下は pnpm audit(npm advisory DB) 由来。いずれも同一メジャー内のパッチ

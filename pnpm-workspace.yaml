@@ -42,27 +42,99 @@ trustPolicyExclude:
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
-  # @hono/node-server<1.19.13 の serveStatic Directory Traversal
-  # (CVE-2026-39406, GHSA-92pp-h63x-v22m) 対応。
-  '@hono/node-server': ^1.19.13
+  # @hono/node-server は 1系の最新に留める。
+  # 対象アドバイザリは2件:
+  #   1. serveStatic の Directory Traversal (CVE-2026-39406,
+  #      GHSA-92pp-h63x-v22m) → 1.19.13 で修正済み
+  #   2. serve-static の Windows 限定パストラバーサル
+  #      (GHSA-frvp-7c67-39w9, %5C 経由) → 修正は 2.0.5 以降のみ
+  #
+  # 2 は 1系に修正版が無いが、(a) Windows 限定でデプロイ先は Linux、
+  # (b) @modelcontextprotocol/sdk が ^1.19.9 を宣言しており 2系の強制は
+  # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
+  # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
+  '@hono/node-server': ^1.19.17
   '@nuxt/content': 3.15.0
-  # brace-expansion の連続する空 {} グループによる指数時間展開 DoS
-  # (GHSA-9JQ6-QF4V-C4CG 系) 対応。1系/2系/5系が同時に依存ツリーに存在するため、
-  # メジャーごとにレンジを区切って最小の修正版へ引き上げる。
+  # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
+  # 以下は pnpm audit(npm advisory DB) 由来。いずれも同一メジャー内のパッチ
+  # 更新で解決するため、メジャーを跨がないようレンジを区切って指定する。
+  # basic-ftp: 複数のプロトコル処理不備
+  basic-ftp@^5.0.0: ^5.3.1
+  # body-parser: URLエンコードのパラメータ数制限の不備
+  body-parser@^1.0.0: ^1.20.6
+  body-parser@^2.0.0: ^2.3.0
+  # brace-expansion の連続する空 {} グループによる指数時間展開 DoS。
+  # メジャーごとにレンジを区切って各系統の最新へ引き上げる。
+  #
+  # 一律 5.0.8 に統一してはいけない。v5 は default export を廃止しており、
+  # minimatch 5.x/9.x の `import expand from 'brace-expansion'` が
+  # 「does not provide an export named 'default'」で落ちる(実測)。
+  # 最新のアドバイザリ(<=5.0.7)は 1系/2系も対象とするが、両系統の最新は
+  # 1.1.16 / 2.1.2 で修正版が出ていないため、ここは上流の対応待ちとする。
   brace-expansion@^1.0.0: ^1.1.16
   brace-expansion@^2.0.0: ^2.1.2
   brace-expansion@^5.0.0: ^5.0.8
-  # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
+  # esbuild: 開発サーバへの任意リクエスト送信(<=0.24.2)と Windows での
+  # 任意ファイル読み取り(0.27.3〜0.28.0)。いずれも開発サーバ限定で本番成果物に
+  # 影響はないが、複数系統がツリーに居るため 0.28.1 に統一する。
+  esbuild: ^0.28.1
+  # express-rate-limit: レート制限の回避
+  express-rate-limit@^8.0.0: ^8.2.2
+  # fast-uri: URIパースのReDoS
+  fast-uri@^3.0.0: ^3.1.4
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
+  # hono: 複数のリクエスト処理系の不具合(Nitro/@hono/node-server 経由)
+  hono@^4.0.0: ^4.12.27
+  # ip-address: パース不備
+  ip-address@^10.0.0: ^10.1.1
+  # js-cookie: Cookie の取り扱い不備
+  js-cookie@^3.0.0: ^3.0.6
+  # js-yaml: マージキー連鎖による二次的CPU消費(@lhci/utils が 3系を牽引)
+  js-yaml@^3.0.0: ^3.15.0
+  # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
+  launch-editor@^2.0.0: ^2.14.1
+  # linkify-it: リンク検出のReDoS
+  linkify-it@^5.0.0: ^5.0.2
+  # lodash-es: プロトタイプ汚染系
+  lodash-es@^4.0.0: ^4.18.0
+  # markdown-it: パースのReDoS
+  markdown-it@^14.0.0: ^14.2.0
+  # path-to-regexp: パターンのReDoS。0系と8系が同居する
+  path-to-regexp@^0.1.0: ^0.1.13
+  path-to-regexp@^8.0.0: ^8.4.0
   postcss: ^8.5.23
+  # qs: パラメータ処理の不備
+  qs@^6.0.0: ^6.15.2
   # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
   # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。
+  # serialize-javascript: XSS。6系に修正版がなく @rollup/plugin-terser 経由
+  # のビルド時利用のみのため 7系へ上げる。
+  serialize-javascript: ^7.0.7
   sharp: ^0.35.3
-  shell-quote: ^1.8.4
+  shell-quote@^1.0.0: ^1.9.0
+  # simple-git: コマンド引数の取り扱い不備
+  simple-git@^3.0.0: ^3.36.0
+  # socket.io-parser: パース不備
+  socket.io-parser@^4.0.0: ^4.2.6
+  # svgo: SVG 最適化時の不具合
+  svgo@^4.0.0: ^4.0.2
+  # tar: 展開時のDoS/パス解釈差異(CRITICAL 含む)
+  tar@^7.0.0: ^7.5.21
+  # tmp: prefix/postfix のサニタイズ不備によるディレクトリ脱出。
+  # external-editor / @lhci/cli 経由。require("tmp") の名前空間利用のため影響なし。
+  tmp: ^0.2.7
   unconfig: 0.4.1
+  # undici: WebSocket断片数によるDoS、ヘッダ注入等。
+  # 最新は 8系だがツリーに居るのは 6系なので 6系内に留める。
+  undici@^6.0.0: ^6.27.0
+  # uuid: v3/v5/v6 で buf 指定時の境界チェック漏れ。@lhci/cli 経由。
+  # v11 は名前付きエクスポートのみだが require("uuid") 形式なので影響なし。
+  uuid: ^11.1.1
+  # vite: 開発サーバのファイル読み取り
+  vite@^7.0.0: ^7.3.5
   ws@7: ^7.5.13
   # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、
   # 8系は8.21.0で修正されたが対策が不完全だったため8.21.1を要求する

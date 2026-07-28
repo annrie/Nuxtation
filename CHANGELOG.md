@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.1
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.0...v4.4.1)
+
+### 🐛 バグ修正
+
+- **deps:** ⬆️ postcss/brace-expansion の脆弱性を解消し未使用の js-yaml を削除 ([96bd1a1](https://github.com/annrie/Nuxtation/commit/96bd1a1))
+- **css:** 🐛 kiso.css をレイヤーに入れ lang="ja" を実際に出力させる ([4d86ca0](https://github.com/annrie/Nuxtation/commit/4d86ca0))
+- **css:** 🐛 kiso.css のフォーム要素ボーダー既定値を外しタブの枠を解消 ([9b40987](https://github.com/annrie/Nuxtation/commit/9b40987))
+- **deps:** 🔒 Snyk / pnpm audit 指摘の脆弱性を解消 ([3245a46](https://github.com/annrie/Nuxtation/commit/3245a46))
+- **deps:** 🔒 @hono/node-server を1系最新に留める ([471f783](https://github.com/annrie/Nuxtation/commit/471f783))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ nuxt 4.5.1・@nuxt/devtools 3.3.1 ほかminor/patch一括更新 ([7b40157](https://github.com/annrie/Nuxtation/commit/7b40157))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **home:** 🔧 機能していない訪問カウンタを削除 ([61fde1d](https://github.com/annrie/Nuxtation/commit/61fde1d))
+
+### 🤖 CI関連
+
+- 🔧 CSSコントラストとカスケードレイヤーの検査をCIに追加 ([cdf5e8f](https://github.com/annrie/Nuxtation/commit/cdf5e8f))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.0
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.3.6...v4.4.0)

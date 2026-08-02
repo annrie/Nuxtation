@@ -22,6 +22,7 @@
     "prepare": "simple-git-hooks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "test:e2e": "playwright test",
     "check:contrast": "npx tsx scripts/check-contrast.ts",
     "check:css-layers": "npx tsx scripts/check-css-layers.ts",
     "release:patch": "changelogen --release --patch",

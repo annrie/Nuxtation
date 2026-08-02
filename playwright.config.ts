@@ -11,7 +11,7 @@ import { devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './tests-examples',
+  testDir: './tests',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -36,7 +36,9 @@ const config: PlaywrightTestConfig = {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3003',
+    // dev の既定ポート(3100)は docustation と重複しているため、e2e は専用ポートを使う。
+    // 開発中の dev サーバーを reuseExistingServer が拾って別リポをテストする事故を防ぐ。
+    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3101',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -98,10 +100,13 @@ const config: PlaywrightTestConfig = {
   outputDir: 'test-results/',
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   port: 3003,
-  // },
+  webServer: {
+    // `pnpm dev` は `nuxi dev -o` でブラウザを自動で開くため、テストでは nuxi を直接呼ぶ。
+    command: 'pnpm exec nuxi dev --port 3101',
+    url: 'http://localhost:3101',
+    reuseExistingServer: !process.env.CI,
+    timeout: 300 * 1000,
+  },
 }
 
 export default config

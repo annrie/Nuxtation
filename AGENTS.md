@@ -22,6 +22,8 @@
 - UnoCSS utilities belong near templates; avoid inline styles unless computed dynamically.
 
 ## Testing Guidelines
+- Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
+- By default a local dev server starts on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.
 - Use relative navigation (`page.goto('/')`) and `data-test` attributes for selectors.
 - Place shared fixtures under `tests/fixtures/` when needed.

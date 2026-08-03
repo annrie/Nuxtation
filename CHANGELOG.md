@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.2
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.1...v4.4.2)
+
+### 🐛 バグ修正
+
+- **test:** 実行されていなかった Playwright 設定を修復 ([#14](https://github.com/annrie/Nuxtation/pull/14))
+- **deps:** 🔒 undici を 7.29.0 に上げ Information Exposure を解消 ([a092d01](https://github.com/annrie/Nuxtation/commit/a092d01))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **config:** 🔧 .entire/ を削除 ([9729b3a](https://github.com/annrie/Nuxtation/commit/9729b3a))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.1
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.0...v4.4.1)

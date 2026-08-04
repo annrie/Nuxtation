@@ -1,0 +1,14 @@
+{
+  "https://qiita.com/kurokawa516/items/80ea1a0e3a3f51a44f2b": {
+    "ogTitle": "open-graph-scraper で取得した YouTube サムネイル画像とタイトルをブラウザで表示する - Qiita",
+    "ogDescription": "経緯 open-graph-scraper を使って、YouTube のサムネイル画像とタイトルを取得し、それをブラウザに表示する実装をしました。 その中でハマったところがあったので、これから同じような実装を検討している人の参考になればと思い、書いていきます。 開発環境...",
+    "ogImage": "https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-user-contents.imgix.net%2Fhttps%253A%252F%252Fcdn.qiita.com%252Fassets%252Fpublic%252Farticle-ogp-background-afbab5eb44e0b055cce1258705637a91.png%3Fixlib%3Drb-4.1.1%26w%3D1200%26blend64%3DaHR0cHM6Ly9xaWl0YS11c2VyLXByb2ZpbGUtaW1hZ2VzLmltZ2l4Lm5ldC9odHRwcyUzQSUyRiUyRnMzLWFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20lMkZxaWl0YS1pbWFnZS1zdG9yZSUyRjAlMkY2NDIxNTUlMkZjZTQ1MTQzY2ViMDA4YTYwN2FiYzkzZmE0ZTRkMjBjZjVmNmQ5YjQ4JTJGeF9sYXJnZS5wbmclM0YxNjcxNDMyMTM5P2l4bGliPXJiLTQuMS4xJmFyPTElM0ExJmZpdD1jcm9wJm1hc2s9ZWxsaXBzZSZiZz1GRkZGRkYmZm09cG5nMzImcz0wOWEyMjFlOTBiMzU2MDU3Zjc0Y2NhM2JkOWQ1N2Y3NA%26blend-x%3D120%26blend-y%3D467%26blend-w%3D82%26blend-h%3D82%26blend-mode%3Dnormal%26s%3D89513b787d19b7564fa2e34f4b04ce5d?ixlib=rb-4.1.1&w=1200&fm=jpg&mark64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTk2MCZoPTMyNCZ0eHQ9b3Blbi1ncmFwaC1zY3JhcGVyJTIwJUUzJTgxJUE3JUU1JThGJTk2JUU1JUJFJTk3JUUzJTgxJTk3JUUzJTgxJTlGJTIwWW91VHViZSUyMCVFMyU4MiVCNSVFMyU4MyVBMCVFMyU4MyU4RCVFMyU4MiVBNCVFMyU4MyVBQiVFNyU5NCVCQiVFNSU4MyU4RiVFMyU4MSVBOCVFMyU4MiVCRiVFMyU4MiVBNCVFMyU4MyU4OCVFMyU4MyVBQiVFMyU4MiU5MiVFMyU4MyU5NiVFMyU4MyVBOSVFMyU4MiVBNiVFMyU4MiVCNiVFMyU4MSVBNyVFOCVBMSVBOCVFNyVBNCVCQSVFMyU4MSU5OSVFMyU4MiU4QiZ0eHQtYWxpZ249bGVmdCUyQ3RvcCZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTU2JnR4dC1wYWQ9MCZzPWY0ZDY3YjkzYjZmOGRhNTI2MTRmNzJiNDVhOWI0N2Mz&mark-x=120&mark-y=112&blend64=aHR0cHM6Ly9xaWl0YS11c2VyLWNvbnRlbnRzLmltZ2l4Lm5ldC9-dGV4dD9peGxpYj1yYi00LjEuMSZ3PTgzOCZoPTU4JnR4dD0lNDBrdXJva2F3YTUxNiZ0eHQtY29sb3I9JTIzMUUyMTIxJnR4dC1mb250PUhpcmFnaW5vJTIwU2FucyUyMFc2JnR4dC1zaXplPTM2JnR4dC1wYWQ9MCZzPTlmZmEyYTMyZTNhY2ZjNjZlMDM5NjEwZjJmNjc2ODdm&blend-x=242&blend-y=480&blend-w=838&blend-h=46&blend-fit=crop&blend-crop=left%2Cbottom&blend-mode=normal&s=d86c6a1b16cb5dc3142e09f0052a7659",
+    "ogUrl": "https://qiita.com/kurokawa516/items/80ea1a0e3a3f51a44f2b"
+  },
+  "https://www.mt-work.com/blog/post-5/": {
+    "ogTitle": "【Astro】自動で情報を取得するリンクカードコンポーネントを作る",
+    "ogDescription": "Astroとogsを使って、自動で情報を取得するリンクカードコンポーネントを作ります",
+    "ogImage": "https://mt-work.com/assets/images/ogp.webp",
+    "ogUrl": "https://mt-work/blog/post-5/"
+  }
+}

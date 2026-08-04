@@ -1,5 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed } from 'vue'
+import ogpCache from '~/data/ogp-cache.json'
+
+// scripts/ogp-link-cards.ts にも同名の型があるが、あちらは開発用スクリプトで
+// アプリのビルド対象外なので import せず、ここで独立に宣言する。
+// app/ が scripts/ に依存する形は避ける。4フィールドしかないため重複の負担は小さい。
+interface OgpEntry {
+  ogTitle: string
+  ogDescription: string
+  ogImage: string
+  ogUrl: string
+}
 
 const props = defineProps({
   propsUrl: String,
@@ -8,39 +19,15 @@ const props = defineProps({
   description: String,
 })
 
-const isDevRun = import.meta.env.DEV
-const ogpData = ref(null)
+// OGP はビルド前に pnpm ogp:refresh で解決してコミットしてある。
+// 以前は /api/ogp を実行時に叩いていたが、任意URLを取得できる穴だったため
+// エンドポイントごと廃止した。JSON に無い URL は素のリンクにフォールバックする。
+const ogpData = computed<OgpEntry | null>(() => {
+  if (!props.propsUrl)
+    return null
 
-if (isDevRun) {
-  onMounted(async () => {
-    try {
-      const data = await $fetch(
-        `/api/ogp?url=${encodeURIComponent(props.propsUrl)}`,
-      )
-      ogpData.value = data
-    }
-    catch (error) {
-      console.error('Fetch error:', error)
-    }
-  })
-}
-else {
-  const { data, error } = useLazyFetch(
-    `/api/ogp?url=${encodeURIComponent(props.propsUrl)}`,
-  )
-
-  watch(data, (newData) => {
-    if (newData) {
-      ogpData.value = newData
-    }
-  }, { immediate: true })
-
-  watch(error, (newError) => {
-    if (newError) {
-      console.error('Fetch error:', newError)
-    }
-  })
-}
+  return (ogpCache as Record<string, OgpEntry>)[props.propsUrl] ?? null
+})
 
 const maxLength = 40
 
@@ -80,7 +67,7 @@ const limitedDescription = computed(() => {
         <div class="link-card-content">
           <div class="link-card-image">
             <img
-              :src="ogpData.ogImage?.[0]?.url || '/img/ogp.png'"
+              :src="ogpData.ogImage || '/img/ogp.png'"
               :alt="limitedTitle || 'リンク先のサムネイル画像'"
             >
           </div>
@@ -98,10 +85,15 @@ const limitedDescription = computed(() => {
         </div>
       </NuxtLink>
     </UCard>
-    <div v-else class="flex items-center gap-2 p-4 text-gray-500/70 dark:text-slate-400/70 text-sm">
-      <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
-      <span>Loading link card...</span>
-    </div>
+    <NuxtLink
+      v-else-if="propsUrl"
+      :to="propsUrl"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="link-card-fallback"
+    >
+      {{ title || propsUrl }}
+    </NuxtLink>
   </div>
 </template>
 
@@ -193,5 +185,17 @@ const limitedDescription = computed(() => {
 .link-card-link :deep(a[target='_blank']::after),
 .link-card-link :deep(a[rel*='noopener']::after) {
   display: none !important;
+}
+
+/* OGP 取得失敗・予約ドメイン除外時の通常動作としてのフォールバック表示なので、
+   白背景で AA（4.5:1）を満たす値を使う。emerald-600 (var(--color-primary-600))
+   は白背景で約3.65〜3.77:1 しかなく未達のため --color-link-* に揃える。 */
+.link-card-fallback {
+  @apply underline underline-offset-2 break-all;
+  color: var(--color-link-light); /* 白背景で 5.48:1 */
+}
+
+.dark .link-card-fallback {
+  color: var(--color-link-dark); /* slate-900 背景で 9.29:1 */
 }
 </style>

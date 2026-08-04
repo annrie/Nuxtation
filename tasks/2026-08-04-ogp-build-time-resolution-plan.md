@@ -19,6 +19,7 @@
 - `scripts/ogp-link-cards.ts` と `scripts/refresh-ogp.ts` は3リポで**完全に同一**にする。差分が出たら誤り
 - 保存する OGP フィールドは `ogTitle` / `ogDescription` / `ogImage` / `ogUrl` の4つのみ。`ogImage` は OGS の `ogImage[0].url` を文字列に平坦化する
 - JSON はキー昇順で出力する（git 差分を安定させるため）
+- 3リポとも `fix/ogp-build-time-resolution` ブランチで作業する。develop へ直接コミットしない
 - コミットは Conventional Commits。本文末尾に `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`
 - 各リポのビルド確認: nuxtation は実行する。docustation / private-nuxtation は**ユーザーが実行する運用**なので計画側では実行しない
 
@@ -808,9 +809,7 @@ EOF
 )"
 ```
 
-- [ ] **Step 9: ユーザーにビルド確認を依頼する**
-
-「docustation の `pnpm build` をお願いします」と伝え、結果を待つ。通らなければ修正する。
+ビルド確認は Task 6 でまとめて依頼するため、ここでは止まらない。
 
 ---
 
@@ -922,13 +921,11 @@ EOF
 )"
 ```
 
-- [ ] **Step 8: ユーザーにビルド確認を依頼する**
-
-「private-nuxtation の `pnpm build` をお願いします」と伝え、結果を待つ。
+ビルド確認は Task 6 でまとめて依頼するため、ここでは止まらない。
 
 ---
 
-### Task 6: 同期とリリース
+### Task 6: ビルド確認と PR
 
 **Files:** なし（git 操作のみ）
 
@@ -936,10 +933,54 @@ EOF
 - Consumes: Task 3〜5 のコミット
 - Produces: なし
 
-nuxt-deps-update スキルの流儀に従う。PR は作らず、コミット → main/develop 同期 →
-`pnpm release:patch` の順。
+CLAUDE.md のタスク規模判断「中（単一機能）: ブランチ作成 → 実装 → PR → codex レビュー対応
+→ マージ」に従う。3リポとも `fix/ogp-build-time-resolution` ブランチで作業している。
 
-- [ ] **Step 1: 各リポの同期方向を確認する**
+nuxtation のビルドは Task 3 で実行済み。ここでは残り2リポのビルド確認をまとめて依頼する。
+
+- [ ] **Step 1: 残り2リポのビルド確認を依頼する**
+
+「docustation と private-nuxtation の `pnpm build` をお願いします」と伝え、結果を待つ。
+通らなければ修正してから次に進む。
+
+- [ ] **Step 2: 3リポを push する**
+
+```bash
+for d in /Users/annrie/LocalSites/nuxtation /Users/annrie/LocalSites/docustation /Users/annrie/LocalSites/private-nuxtation; do
+  cd "$d"
+  env -u GH_TOKEN git push -u origin fix/ogp-build-time-resolution
+done
+```
+
+`git push` / `gh` には `env -u GH_TOKEN` を付ける。GH_TOKEN の fine-grained PAT に
+権限が無く失敗するため。
+
+- [ ] **Step 3: 3リポで PR を作る**
+
+ベースブランチは各リポの作業ブランチ元である `develop`。
+
+```bash
+cd <repo>
+env -u GH_TOKEN gh pr create --base develop --head fix/ogp-build-time-resolution \
+  --title "fix(security): /api/ogp を廃止し OGP をビルド時解決へ移行" \
+  --body-file <本文ファイル>
+```
+
+本文には次を含める: 問題（任意URLをサーバーサイドで取得できた）、判断の根拠（呼び出し元が
+LinkCard.vue だけで URL が markdown 由来の閉じた集合）、変更の要点、検証結果（ビルド・
+e2e・undici が本番成果物から消えたこと）、`pnpm ogp:refresh` の運用手順。
+
+- [ ] **Step 4: codex レビューに対応する**
+
+PR 作成で codex の自動レビューが走る。**指摘が尽きるまで対応する**のが原則。
+レビューは inline comment に入るので、`reviews` の body だけを見ると「指摘なし」と
+誤読する。同種の指摘が2回続いたら境界値を追わずに設計を変える。
+
+- [ ] **Step 5: マージと develop/main 同期**
+
+codex レビューが収束したらマージする。その後 CLAUDE.md の「main と develop を同じ状態に
+保つ」ルールに従って同期する。**片方が0でなければ勝手に同期せず、内容差を確認して
+ユーザーに報告する。**
 
 ```bash
 for d in /Users/annrie/LocalSites/nuxtation /Users/annrie/LocalSites/docustation /Users/annrie/LocalSites/private-nuxtation; do
@@ -948,30 +989,22 @@ for d in /Users/annrie/LocalSites/nuxtation /Users/annrie/LocalSites/docustation
 done
 ```
 
-**片方が0でなければ勝手に同期せず、内容差を確認してユーザーに報告する。**
+- [ ] **Step 6: リリースする**
 
-- [ ] **Step 2: リリースと push**
-
-各リポで作業ブランチから実行する:
+3リポとも `version` と `release:patch` を持つ。マージ後に各リポで実行する。
 
 ```bash
 cd <repo>
 PATH="$PWD/node_modules/.bin:$PATH" pnpm release:patch
-env -u GH_TOKEN git push origin <作業ブランチ> --follow-tags
-git checkout <他方のブランチ> && git merge --ff-only <作業ブランチ>
-env -u GH_TOKEN git push origin <他方のブランチ>
-git checkout <作業ブランチ>
+env -u GH_TOKEN git push origin <ブランチ> --follow-tags
 ```
 
-`gh` / `git push` は `env -u GH_TOKEN` を付ける。GH_TOKEN の fine-grained PAT に
-権限が無く失敗するため。
-
-- [ ] **Step 3: nuxtation の本番デプロイを確認する**
+- [ ] **Step 7: nuxtation の本番デプロイを確認する**
 
 nuxtation は main への push で Vercel に自動デプロイされる。デプロイ完了後、
 本番の該当記事で link-card が表示され、example.com が素のリンクになっていることを確認する。
 
-- [ ] **Step 4: メモリを更新する**
+- [ ] **Step 8: メモリを更新する**
 
 `ogp-endpoint-open-proxy.md` を「未着手」から「対応済み」に書き換える。
 `snyk-alerts-build-only-accepted.md` の Docus 系3リポの記述に、undici が本番ランタイムから
@@ -987,4 +1020,4 @@ nuxtation は main への push で Vercel に自動デプロイされる。デ�
 - 3リポとも `/api/ogp` が404を返す e2e テストを持つ
 - private-nuxtation の `pnpm test` が通る
 - nuxtation の `.vercel/output/functions/__fallback.func/package.json` に undici の宣言が無い
-- 3リポとも main/develop の内容差が0
+- 3リポとも PR がマージされ、main/develop の内容差が0

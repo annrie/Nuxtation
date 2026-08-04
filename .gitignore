@@ -17,3 +17,5 @@ AGENTS*.md
 /playwright/.cache/
 docs/
 .claude/settings.local.json
+# Superpowers SDD の作業領域(台帳・レビュー資材)
+.superpowers/

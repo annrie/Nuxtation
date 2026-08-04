@@ -5,6 +5,11 @@
  * 副作用のある処理は refresh-ogp.ts 側にある。テストからは
  * このファイルだけを import する（refresh-ogp.ts を import すると
  * スクリプト本体が走ってしまうため）。
+ *
+ * 複製について:
+ *   このファイルは nuxtation / docustation / private-nuxtation の
+ *   3リポジトリにバイト単位で複製されている。変更する場合は
+ *   3リポすべてに同じ変更を適用すること（同期を強制する仕組みは無い）。
  */
 
 /** ogp-cache.json に保存するフィールド。OGS の生レスポンスは大きいので絞る。 */

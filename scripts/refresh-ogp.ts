@@ -7,6 +7,11 @@
  *   link-card の URL は自サイトの markdown 由来で、ビルド時に確定する
  *   閉じた集合なので、実行時に取得する必要がそもそも無い。
  *
+ * 複製について:
+ *   このファイルは nuxtation / docustation / private-nuxtation の
+ *   3リポジトリにバイト単位で複製されている。変更する場合は
+ *   3リポすべてに同じ変更を適用すること（同期を強制する仕組みは無い）。
+ *
  * 使い方:
  *   pnpm ogp:refresh
  *
@@ -58,7 +63,8 @@ async function main(): Promise<void> {
       referenced.add(url)
   }
 
-  // 既存キャッシュを読み込む。参照を失ったファイルは後で落とす。
+  // 既存キャッシュを読み込む。参照を失った URL は next にコピーしないことで
+  // 自然に落ちる（後から削除する別処理は無い）。
   // 取得に失敗しても前回取れた値を残すのが狙いで、一時的な障害で
   // 良いデータを失わないようにするため。
   const existing = await readCache()

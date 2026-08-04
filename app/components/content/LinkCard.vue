@@ -86,7 +86,7 @@ const limitedDescription = computed(() => {
       </NuxtLink>
     </UCard>
     <NuxtLink
-      v-else
+      v-else-if="propsUrl"
       :to="propsUrl"
       target="_blank"
       rel="noopener noreferrer"

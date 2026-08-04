@@ -28,7 +28,10 @@ import { extractLinkCardUrls, isReservedHost } from './ogp-link-cards'
 
 const CONTENT_DIR = 'content'
 const CACHE_PATH = 'app/data/ogp-cache.json'
-const REQUEST_TIMEOUT_MS = 20000
+// open-graph-scraper の timeout はミリ秒ではなく秒指定（README/型定義参照）。
+// ミリ秒だと誤解して 20000 に「戻す」と実質 20000 秒（約5.5時間）になり、
+// 応答しないホスト1件で pnpm ogp:refresh がハングする。単位を戻さないこと。
+const REQUEST_TIMEOUT_SECONDS = 20
 
 async function collectMarkdownFiles(dir: string): Promise<string[]> {
   const entries = await readdir(dir, { recursive: true, withFileTypes: true })
@@ -91,7 +94,7 @@ async function main(): Promise<void> {
 
   for (const url of targets) {
     try {
-      const { result, error } = await ogs({ url, timeout: REQUEST_TIMEOUT_MS })
+      const { result, error } = await ogs({ url, timeout: REQUEST_TIMEOUT_SECONDS })
 
       if (error || !result?.success) {
         failed.push(url)

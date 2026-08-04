@@ -20,7 +20,7 @@
  */
 
 import type { OgpEntry } from './ogp-link-cards'
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import process from 'node:process'
 import ogs from 'open-graph-scraper'
@@ -47,10 +47,15 @@ async function readCache(): Promise<Record<string, OgpEntry>> {
     if (error instanceof Error && 'code' in error && error.code === 'ENOENT')
       return {}
 
-    // JSON 破損など、それ以外のエラーは想定外。警告して進める。
-    // 完全に失敗するのではなく、手元のキャッシュを失わない方針。
-    console.warn(`[ogp] キャッシュファイルの読み込みに失敗: ${error instanceof Error ? error.message : String(error)}`)
-    return {}
+    // JSON 破損などそれ以外のエラーは想定外の状態。ここを {} で握り潰すと
+    // 「取得失敗時は既存エントリを残す」が機能しなくなり（前回値が無い扱いになる）、
+    // かつ全滅判定も素通りして壊れたキャッシュを空の JSON で上書きしてしまう。
+    // 警告して進めるのではなく、ここで止めて人間に直させる。
+    throw new Error(
+      `[ogp] ${CACHE_PATH} の読み込みに失敗した。壊れているか読み取れない状態: `
+      + `${error instanceof Error ? error.message : String(error)}\n`
+      + `[ogp] 内容を確認し、直せないなら git で復元すること（例: git checkout -- ${CACHE_PATH}）。`,
+    )
   }
 }
 
@@ -66,7 +71,8 @@ async function main(): Promise<void> {
   // 既存キャッシュを読み込む。参照を失った URL は next にコピーしないことで
   // 自然に落ちる（後から削除する別処理は無い）。
   // 取得に失敗しても前回取れた値を残すのが狙いで、一時的な障害で
-  // 良いデータを失わないようにするため。
+  // 良いデータを失わないようにするため。読み込み自体が失敗した場合は
+  // readCache 内で例外を投げてここで止まる。
   const existing = await readCache()
 
   const skipped: string[] = []
@@ -115,19 +121,11 @@ async function main(): Promise<void> {
     }
   }
 
-  // キー昇順で書き出す。git の差分を安定させるため。
-  const sorted = Object.fromEntries(
-    Object.entries(next).sort(([a], [b]) => a.localeCompare(b)),
-  )
-  await mkdir(dirname(CACHE_PATH), { recursive: true })
-  await writeFile(CACHE_PATH, `${JSON.stringify(sorted, null, 2)}\n`, 'utf8')
-
   // 各カウントが参照集合の互いに素な部分になっている。
   // 参照 = 除外 + 取得成功 + 取得失敗
   // 「前回値を引き継ぎ」は取得失敗の内訳。
   const retainedCount = retained.size
   console.log(`[ogp] 参照 ${referenced.size} 件 / 除外 ${skipped.length} 件 / 取得成功 ${succeeded.length} 件 / 取得失敗 ${failed.length} 件${retainedCount > 0 ? ` (うち前回値を引き継ぎ ${retainedCount} 件)` : ''}`)
-  console.log(`[ogp] 書き出し: ${CACHE_PATH}`)
 
   // 「除外」と「失敗」を分けて出す。混ぜると本物の障害が埋もれる。
   if (skipped.length > 0)
@@ -136,11 +134,28 @@ async function main(): Promise<void> {
   if (failed.length > 0)
     console.warn(`[ogp] 取得失敗: ${failed.join(', ')}`)
 
-  // 全滅はネットワーク断の可能性が高い。空の JSON をコミットする事故を防ぐ。
+  // 全滅はネットワーク断の可能性が高い。書き出す前に判定することで、
+  // 空（または前回値を引き継げず縮小した）JSON を書いてから exit 1 する
+  // 事故を防ぐ。ここで打ち切れば既存ファイルには一切触れない。
   if (targets.length > 0 && failed.length === targets.length) {
-    console.error('[ogp] 取得対象がすべて失敗した。ネットワークを確認すること。')
+    console.error('[ogp] 取得対象がすべて失敗した。ネットワークを確認すること。書き出しは行わない。')
     process.exit(1)
   }
+
+  // キー昇順で書き出す。git の差分を安定させるため。
+  const sorted = Object.fromEntries(
+    Object.entries(next).sort(([a], [b]) => a.localeCompare(b)),
+  )
+  await mkdir(dirname(CACHE_PATH), { recursive: true })
+
+  // 一時ファイルに書いてから rename で置き換える。同一ファイルシステム内の
+  // rename は POSIX でアトミックなので、書き込み途中でプロセスが落ちても
+  // 中途半端な JSON が CACHE_PATH に残らない。
+  const tmpPath = `${CACHE_PATH}.${process.pid}.tmp`
+  await writeFile(tmpPath, `${JSON.stringify(sorted, null, 2)}\n`, 'utf8')
+  await rename(tmpPath, CACHE_PATH)
+
+  console.log(`[ogp] 書き出し: ${CACHE_PATH}`)
 }
 
 main().catch((error) => {

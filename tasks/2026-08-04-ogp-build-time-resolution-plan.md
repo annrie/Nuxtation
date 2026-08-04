@@ -21,7 +21,10 @@
 - JSON はキー昇順で出力する（git 差分を安定させるため）
 - 3リポとも `fix/ogp-build-time-resolution` ブランチで作業する。develop へ直接コミットしない
 - コミットは Conventional Commits。本文末尾に `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>`
-- 各リポのビルド確認: nuxtation は実行する。docustation / private-nuxtation は**ユーザーが実行する運用**なので計画側では実行しない
+- 各リポのビルド確認: nuxtation は `pnpm build`（`preset: 'vercel'` なので出力は `.vercel/output`）。
+  **docustation / private-nuxtation は `pnpm build` ではなく `pnpm generate` で検証する**。全ルートの
+  prerender を通すぶん build より厳しく、静的出力まで確認できる。以前は重いためユーザー実行の運用だったが、
+  高速化したのでこちら側で実行してよい（2026-08-04 ユーザー指示）
 
 ## 計画上の判断（spec からの差異）
 
@@ -779,7 +782,7 @@ Expected: エラーなし。
 
 - [ ] **Step 8: コミット**
 
-ビルドはユーザーが実行する運用のため、ここでは実行しない。
+検証は Task 6 でまとめて `pnpm generate` を回すため、ここでは実行しない。
 
 ```bash
 cd /Users/annrie/LocalSites/docustation
@@ -936,12 +939,29 @@ EOF
 CLAUDE.md のタスク規模判断「中（単一機能）: ブランチ作成 → 実装 → PR → codex レビュー対応
 → マージ」に従う。3リポとも `fix/ogp-build-time-resolution` ブランチで作業している。
 
-nuxtation のビルドは Task 3 で実行済み。ここでは残り2リポのビルド確認をまとめて依頼する。
+nuxtation のビルドは Task 3 で実行済み（`pnpm build`、出力は `.vercel/output`）。
+ここでは残り2リポを検証する。
 
-- [ ] **Step 1: 残り2リポのビルド確認を依頼する**
+- [ ] **Step 1: 残り2リポを generate で検証する**
 
-「docustation と private-nuxtation の `pnpm build` をお願いします」と伝え、結果を待つ。
-通らなければ修正してから次に進む。
+```bash
+cd /Users/annrie/LocalSites/docustation && pnpm generate
+cd /Users/annrie/LocalSites/private-nuxtation && pnpm generate
+```
+
+**`build` ではなく `generate` を使う。** 全ルートの prerender を通すぶん build より厳しく、
+静的出力（`.output/public`）まで確認できる。高速化したのでこちら側で実行してよい。
+
+生成物でキャッシュが実際に効いていることも確認する。終了コードだけでは、コンポーネントが
+描画されずに素のリンクへ落ちていても気づけない。
+
+```bash
+grep -c 'qiita-user-contents.imgix.net' .output/public/blog/*link-card*/index.html
+grep -rl 'api/ogp' .output/server | wc -l    # 0 であること
+```
+
+**コンポーネントのクラス名は3リポで異なる**（private-nuxtation は `link-card`、他は `link-card-root`）。
+`link-card-root` だけで grep すると private-nuxtation で「描画されていない」と誤認する。
 
 - [ ] **Step 2: 3リポを push する**
 

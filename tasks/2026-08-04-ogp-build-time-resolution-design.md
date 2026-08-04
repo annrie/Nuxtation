@@ -151,8 +151,11 @@ private-nuxtation の同ファイルには「dev の非ブロッキング化と 
   必要で、今回の目的から外れるので見送る
 - **回帰防止**: 3リポ共通で playwright smoke に `/api/ogp` が 404 を返すアサーションを
   追加する。エンドポイント復活を検知するため
-- **ビルド検証**: nuxtation はこちらで実行。docustation / private-nuxtation は運用どおり
-  ユーザーが実行する
+- **ビルド検証**: nuxtation は `pnpm build`（`preset: 'vercel'` なので出力は `.vercel/output`）。
+  **docustation / private-nuxtation は `pnpm build` ではなく `pnpm generate`** で検証する。
+  全ルートの prerender を通すぶん build より厳しく、静的出力まで確認できる。3リポともこちら側で実行する
+  （以前は重いためユーザー実行の運用だったが高速化した。2026-08-04 ユーザー指示）。
+  終了コードだけでなく、生成物にキャッシュ済み OGP が実際に描画されているかまで見る
 - **効果測定**: nuxtation の `.vercel/output/functions/__fallback.func/package.json` から
   undici の宣言が消えることを実測する（変更前は `"undici": "7.29.0"` が入っている）
 

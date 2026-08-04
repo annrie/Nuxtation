@@ -10,16 +10,25 @@
 open-graph-scraper にそのまま渡している。宛先の検証は「空でないこと」だけで、
 許可リストもプライベートIPの拒否もない。
 
-3リポとも SSR で本番稼働している。
+**本番で公開エンドポイントだったのは nuxtation だけ。** 深刻度は3リポで異なる。
 
-- nuxtation: `nuxt.config.ts` の `preset: 'vercel'`（Node ランタイム）。
-  `vercel.json` が `github.enabled: true` なので main への push で本番自動デプロイ
-- docustation / private-nuxtation: Dockerfile が `pnpm run build`（generate ではない）
-  で SSR ビルドし `node server/index.mjs` で起動
+- **nuxtation（本番の SSRF 面）**: `nuxt.config.ts` の `preset: 'vercel'`（Node ランタイム）。
+  `vercel.json` が `github.enabled: true` なので main への push で本番自動デプロイ。
+  公開エンドポイントからサーバーサイドの任意ホストへ HTTP リクエストを誘発できた
+- **docustation / private-nuxtation（ビルド時のみ）**: `pnpm generate` の静的出力
+  （`.output/public`）を静的ホスティングに上げる運用。**静的出力にサーバー API ルートは
+  含まれないため、`/api/ogp` は本番に存在しなかった。** 任意URLの取得が起きていたのは
+  プリレンダー中のビルドマシン上だけ
 
-したがって公開エンドポイントからサーバーサイドの任意ホストへの HTTP リクエストを
-誘発できる。open-graph-scraper は `followRedirect: true` がデフォルトなので、
-初回URLだけ検証しても追従先で抜けられる形でもある。
+open-graph-scraper は `followRedirect: true` がデフォルトなので、初回URLだけ検証しても
+追従先で抜けられる形でもある。
+
+> **訂正の経緯（2026-08-05）**: 当初この節は「3リポとも Dockerfile が `pnpm run build` で
+> SSR ビルドし `node server/index.mjs` で起動するため本番稼働」と書いていた。実際には両リポの
+> Dockerfile は未使用の残骸（docustation は初回コミット以降・private-nuxtation は 2024-07-16 以降
+> 一度も触られておらず、CI からも設定からも参照されていない）で、デプロイは静的ホスティングだった。
+> **使っていないデプロイ設定が残っていたために、脆弱性の深刻度を2リポ分読み違えた。**
+> 未使用 Dockerfile の削除を次の PR の課題に加えた。
 
 副次的な問題として、取得先のレスポンスヘッダが第三者の制御下に入るため、undici 側の
 脆弱性の踏み台にもなる。2026-08-04 の undici Information Exposure（不正な

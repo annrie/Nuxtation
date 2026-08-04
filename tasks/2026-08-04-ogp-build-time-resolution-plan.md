@@ -796,8 +796,10 @@ fix(security): 🔒 /api/ogp を廃止し OGP をビルド時解決へ移行
 許可リストもプライベートIPの拒否も無く、open-graph-scraper は
 followRedirect が既定で有効なため追従先でも抜けられる状態だった。
 
-Dockerfile が pnpm run build（generate ではない）で SSR ビルドし
-node server/index.mjs で起動するため、本番プロセスで動作していた。
+このリポジトリは pnpm generate の静的出力を静的ホスティングに上げる運用で、
+静的出力にサーバー API ルートは含まれない。したがって本番にこのエンドポイントは
+存在せず、任意URLの取得が起きていたのはプリレンダー中のビルドマシン上だけだった。
+本番の公開エンドポイントだったのは nuxtation のみ。
 
 呼び出し元は LinkCard.vue だけで、URL は自サイトの markdown 由来の
 閉じた集合。実行時に任意URLを受ける必要が無いため、宛先検証を足すのでは
@@ -909,8 +911,10 @@ fix(security): 🔒 /api/ogp を廃止し OGP をビルド時解決へ移行
 許可リストもプライベートIPの拒否も無く、open-graph-scraper は
 followRedirect が既定で有効なため追従先でも抜けられる状態だった。
 
-Dockerfile が pnpm run build（generate ではない）で SSR ビルドし
-node server/index.mjs で起動するため、本番プロセスで動作していた。
+このリポジトリは pnpm generate の静的出力を静的ホスティングに上げる運用で、
+静的出力にサーバー API ルートは含まれない。したがって本番にこのエンドポイントは
+存在せず、任意URLの取得が起きていたのはプリレンダー中のビルドマシン上だけだった。
+本番の公開エンドポイントだったのは nuxtation のみ。
 
 LinkCard.vue にあった「dev の非ブロッキング化と SSG 出力の両立を狙った
 暫定策」の分岐は、静的 import への移行でそのまま不要になったため
@@ -1041,3 +1045,21 @@ nuxtation は main への push で Vercel に自動デプロイされる。デ�
 - private-nuxtation の `pnpm test` が通る
 - nuxtation の `.vercel/output/functions/__fallback.func/package.json` に undici の宣言が無い
 - 3リポとも PR がマージされ、main/develop の内容差が0
+
+---
+
+## 次のPRへ送る課題
+
+1. **Block Components 形式の抽出対応** — codex と最終レビューが独立に指摘。記事が教えている
+   書き方なので、抽出側が追随する必要がある
+2. **キャッシュ欠落の検出ゲート** — `pnpm ogp:refresh` の実行を忘れても build / generate /
+   test / lint が全て通ってしまう
+3. **記事本文への注記** — 記事が、削除した無検証エンドポイントの実装手順を読者に教えたまま。
+   codex は private-nuxtation でこれを P1 と評価した。説明本文は残し、注記を足す方針
+4. **未使用 Dockerfile の削除**（docustation / private-nuxtation） — 実際には使っていないのに
+   残っていたため、本計画の初版で「Dockerfile が SSR ビルドして本番稼働」と読み違え、
+   脆弱性の深刻度を2リポ分過大に記述した。使わないデプロイ設定は将来も同じ誤読を生む
+
+1 と 2 は独立した不具合ではなく、「link-card の URL 集合はビルド時に確定する」という前提を
+正規表現と人間の規律だけで支えていることの、別々の現れ方。個別に継ぎ足すのではなく
+まとめて設計し直す。

@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.3
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.2...v4.4.3)
+
+### 🐛 バグ修正
+
+- **security:** 🔒 /api/ogp を廃止し OGP をビルド時解決へ移行 ([3e2f306](https://github.com/annrie/Nuxtation/commit/3e2f306))
+- **a11y:** LinkCard フォールバックリンクのコントラスト比を AA 準拠に修正 ([c94c307](https://github.com/annrie/Nuxtation/commit/c94c307))
+- レビュー指摘4件を反映(LinkCardフォールバック/rel/コメント/複製注意) ([2a80423](https://github.com/annrie/Nuxtation/commit/2a80423))
+- **ogp:** 全滅ガードを書き込み前に移し、破損キャッシュは中断する ([81a0ae9](https://github.com/annrie/Nuxtation/commit/81a0ae9))
+- **scripts:** Open-graph-scraper の timeout 単位をミリ秒→秒に修正 ([d6a86a6](https://github.com/annrie/Nuxtation/commit/d6a86a6))
+
+### 📖 ドキュメント
+
+- **spec:** OGP取得をビルド時解決へ移行する設計 ([672ce97](https://github.com/annrie/Nuxtation/commit/672ce97))
+- **plan:** OGP ビルド時解決への移行 実装計画 ([4ac974e](https://github.com/annrie/Nuxtation/commit/4ac974e))
+- **plan:** 実行方針をfeatureブランチ＋PRに変更 ([0b8b248](https://github.com/annrie/Nuxtation/commit/0b8b248))
+- 検証手順を build から generate に修正 ([1472b48](https://github.com/annrie/Nuxtation/commit/1472b48))
+- デプロイ経路の誤認を訂正し、次PRの課題を明記 ([fc4ef95](https://github.com/annrie/Nuxtation/commit/fc4ef95))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.2
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.1...v4.4.2)

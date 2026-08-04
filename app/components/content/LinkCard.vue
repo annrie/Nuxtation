@@ -187,12 +187,15 @@ const limitedDescription = computed(() => {
   display: none !important;
 }
 
+/* OGP 取得失敗・予約ドメイン除外時の通常動作としてのフォールバック表示なので、
+   白背景で AA（4.5:1）を満たす値を使う。emerald-600 (var(--color-primary-600))
+   は白背景で約3.65〜3.77:1 しかなく未達のため --color-link-* に揃える。 */
 .link-card-fallback {
   @apply underline underline-offset-2 break-all;
-  color: var(--color-primary-600);
+  color: var(--color-link-light); /* 白背景で 5.48:1 */
 }
 
 .dark .link-card-fallback {
-  color: var(--color-primary-400);
+  color: var(--color-link-dark); /* slate-900 背景で 9.29:1 */
 }
 </style>

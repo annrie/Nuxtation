@@ -152,7 +152,9 @@ const limitedDescription = computed(() => {
 
 .link-card-url {
   font-size: 0.6875rem;
-  color: rgba(107, 114, 128, 0.8);
+  /* 不透明度を掛けない。rgba(107,114,128,0.8) は白背景で 3.28:1 まで落ち
+     WCAG AA(4.5:1) を割っていた。素の gray-500 なら 4.83:1。 */
+  color: rgb(107, 114, 128);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -164,7 +166,9 @@ const limitedDescription = computed(() => {
 }
 
 .dark .link-card-url {
-  color: rgba(148, 163, 184, 0.8);
+  /* 明側と同じ理由で不透明度なし。0.8 だと slate-900 上で 4.90:1 と
+     AA ぎりぎりだが、素の slate-400 なら 6.96:1 で余裕がある。 */
+  color: rgb(148, 163, 184);
 }
 
 /* リンクの下線を削除 */

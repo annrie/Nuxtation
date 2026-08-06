@@ -7,7 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { defineNuxtConfig } from 'nuxt/config'
 import { imagetools } from 'vite-imagetools'
 import { pwa } from './app/config/pwa'
-import { SiteDescription } from './app/logic/constants'
+import { SiteDescription, SiteUrl } from './app/logic/constants'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
         },
         {
           rel: 'canonical',
-          href: 'https://nuxtation.vercel.app',
+          href: SiteUrl,
         },
         {
           rel: 'icon',
@@ -161,7 +161,7 @@ export default defineNuxtConfig({
     name: 'Nuxtation',
     logo: '/logo.png',
     titleSeparator: '-',
-    url: 'https://nuxtation.vercel.app',
+    url: SiteUrl,
     description: 'Nuxt 4で構築したブログサイト',
     language: 'ja',
     // <html lang> の実際の供給元。nuxt-seo-utils の applyDefaults が
@@ -308,7 +308,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      APP_ROOT: 'https://nuxtation.vercel.app',
+      APP_ROOT: SiteUrl,
       API_URL: '/api',
     },
   },
@@ -338,7 +338,7 @@ export default defineNuxtConfig({
     host: '',
     port: 3100,
     cors: {
-      origin: ['https://nuxtation.vercel.app'],
+      origin: [SiteUrl],
     },
   },
 
@@ -703,7 +703,7 @@ export default defineNuxtConfig({
   },
 
   llms: {
-    domain: 'https://nuxtation.vercel.app',
+    domain: SiteUrl,
   },
 
   nuxtIcon: {
@@ -729,7 +729,7 @@ export default defineNuxtConfig({
         allow: ['/'],
       },
     ],
-    sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml',
+    sitemap: `${SiteUrl}/sitemap.xml`,
   },
 
   schemaOrg: {

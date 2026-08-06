@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withoutTrailingSlash } from 'ufo'
+import { SiteUrl } from '~/logic/constants'
 
 // 検索モーダルを遅延読み込み
 const SearchModal = defineAsyncComponent(() => import('~/components/SearchModal.vue'))
@@ -10,7 +11,7 @@ const isSearchModalOpen = useState('search-modal-open', () => false)
 // サードパーティスクリプトはnuxt.config.tsで自動的に最適なタイミングで読み込まれる
 
 const { path } = useRoute()
-const mySite = 'https://nuxtation.phantomoon.com'
+const mySite = SiteUrl
 const canonical = computed(() => {
   if (path === '/')
     return mySite

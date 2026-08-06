@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
+import { MySite, SiteUrl } from '~/logic/constants'
 
 const props = withDefaults(defineProps<{ pageSize?: number }>(), {
   pageSize: 6,
@@ -120,7 +121,7 @@ useSeoMeta({
   title: () => `All Blog Posts - Page ${currentPage.value}`,
   description: () => description,
   ogType: () => 'article',
-  ogUrl: () => 'https://nuxtation.phantomoon.com/blog/',
+  ogUrl: () => `${SiteUrl}/blog/`,
   ogDescription: () => description,
   ogImage: () =>
     `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
@@ -139,13 +140,13 @@ useSchemaOrg([
         '@type': 'ListItem',
         'position': 1,
         'name': 'ホーム',
-        'item': 'https://nuxtation.phantomoon.com/',
+        'item': MySite,
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': 'ブログ',
-        'item': 'https://nuxtation.phantomoon.com/blog/',
+        'item': `${SiteUrl}/blog/`,
       },
     ],
   },
@@ -153,7 +154,7 @@ useSchemaOrg([
     '@type': 'CollectionPage',
     'name': 'Blog Posts',
     'description': 'Here\'s a list of all my blog posts',
-    'url': 'https://nuxtation.phantomoon.com/blog/',
+    'url': `${SiteUrl}/blog/`,
   },
 ])
 </script>

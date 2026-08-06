@@ -1,8 +1,9 @@
+import type { ComputedRef } from 'vue'
 /**
  * 記事SEO設定の共通ロジック
  */
 
-import type { ComputedRef } from 'vue'
+import { SiteUrl } from '~/logic/constants'
 
 interface ArticleSeoOptions {
   article: any
@@ -166,14 +167,14 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       'author': {
         '@type': 'Person',
         'name': 'annrie',
-        'url': 'https://nuxtation.vercel.app',
+        'url': SiteUrl,
       },
       'publisher': {
         '@type': 'Organization',
         'name': 'Nuxtation',
         'logo': {
           '@type': 'ImageObject',
-          'url': 'https://nuxtation.vercel.app/logo.png',
+          'url': `${SiteUrl}/logo.png`,
         },
       },
       'datePublished': article.value?.publishedAt || '',
@@ -217,7 +218,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
         'sameAs': 'https://ja.wikipedia.org/wiki/山田正紀',
       },
       'description': article.value?.description || '',
-      'url': `https://nuxtation.vercel.app${route.path}`,
+      'url': `${SiteUrl}${route.path}`,
       'datePublished': article.value?.publishedAt || '',
       'articleBody': article.value?.body || '',
       'genre': article.value?.tags?.map((tag: string) => formatTagName(tag)) || [],

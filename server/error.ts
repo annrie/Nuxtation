@@ -1,4 +1,6 @@
 // server/error.ts
+import { SiteUrl } from '../app/logic/constants'
+
 export default defineEventHandler((error) => {
   console.error('Nitro error:', error)
 
@@ -6,7 +8,7 @@ export default defineEventHandler((error) => {
   if (error.url?.includes('robots.txt')) {
     // デフォルトのrobots.txtを返す
     return new Response(
-      'User-agent: *\nAllow: /\nSitemap: https://nuxtation.vercel.app/sitemap.xml',
+      `User-agent: *\nAllow: /\nSitemap: ${SiteUrl}/sitemap.xml`,
       {
         headers: {
           'content-type': 'text/plain',

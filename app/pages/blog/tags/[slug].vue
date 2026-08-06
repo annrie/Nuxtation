@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { sortArticlesByLatestDate } from '~/composables/useBlogDate'
+import { MySite, SiteUrl } from '~/logic/constants'
 
 const route = useRoute()
 const slug = computed(() => {
@@ -71,7 +72,7 @@ useHead({
 
 useSeoMeta({
   ogType: () => 'article',
-  ogUrl: () => `https://nuxtation.vercel.app${route.path}`,
+  ogUrl: () => `${SiteUrl}${route.path}`,
   ogTitle: () => title.value,
   ogDescription: () => description.value,
   ogImage: () =>
@@ -91,19 +92,19 @@ useSchemaOrg([
         '@type': 'ListItem',
         'position': 1,
         'name': 'ホーム',
-        'item': 'https://nuxtation.vercel.app/',
+        'item': MySite,
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': 'ブログ',
-        'item': 'https://nuxtation.vercel.app/blog/',
+        'item': `${SiteUrl}/blog/`,
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': slug.value || '',
-        'item': `https://nuxtation.vercel.app${route.path}`,
+        'item': `${SiteUrl}${route.path}`,
       },
     ],
   },
@@ -111,7 +112,7 @@ useSchemaOrg([
     '@type': 'CollectionPage',
     'name': title.value || '',
     'description': description.value || '',
-    'url': `https://nuxtation.vercel.app${route.path}`,
+    'url': `${SiteUrl}${route.path}`,
   },
 ])
 </script>

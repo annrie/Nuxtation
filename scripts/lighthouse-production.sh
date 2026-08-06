@@ -36,8 +36,10 @@ if [ "$2" = "--runs" ] && [ -n "$3" ]; then
   NUM_RUNS=$3
 fi
 
-# ベースURL
-BASE_URL="https://nuxtation.phantomoon.com"
+# ベースURL。nuxtation の本番は Vercel。
+# nuxtation.phantomoon.com は docustation の公開先なので指定しないこと
+# (2026-08-06 まで誤って指しており、別サイトを計測していた)。
+BASE_URL="https://nuxtation.vercel.app"
 
 # Chrome パス設定（Puppeteer用）
 export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"

@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.4
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.3...v4.4.4)
+
+### 🐛 バグ修正
+
+- **blog:** Update updatedAt for link card article security notice ([cb58174](https://github.com/annrie/Nuxtation/commit/cb58174))
+- **a11y:** Link-card のURL表示のコントラストをAA準拠に修正 ([dfac96c](https://github.com/annrie/Nuxtation/commit/dfac96c))
+
+### 📖 ドキュメント
+
+- **security:** 記事に /api/ogp の危険性と現行方式の注記を追加 ([90b80f6](https://github.com/annrie/Nuxtation/commit/90b80f6))
+- **blog:** 記事のコードサンプルを修正後の実装に同期 ([c3f31af](https://github.com/annrie/Nuxtation/commit/c3f31af))
+- **security:** 注記の主張を正確にし、サンプルの timeout も修正 ([52a0335](https://github.com/annrie/Nuxtation/commit/52a0335))
+- **security:** サイト固有の露出範囲の記述を削除し、fence範囲を修正 ([43702c3](https://github.com/annrie/Nuxtation/commit/43702c3))
+- **security:** 存在しないOGSオプションの記述を正し、注記の主張を限定 ([740ee40](https://github.com/annrie/Nuxtation/commit/740ee40))
+- OGSのオプション列挙をやめ、公式の型定義を参照させる ([02cd09c](https://github.com/annrie/Nuxtation/commit/02cd09c))
+- **security:** サンプルのタイムアウト判定を OGS の二重ラップに対応させる ([c5c145d](https://github.com/annrie/Nuxtation/commit/c5c145d))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.3
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.2...v4.4.3)

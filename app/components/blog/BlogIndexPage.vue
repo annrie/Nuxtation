@@ -120,7 +120,7 @@ useSeoMeta({
   title: () => `All Blog Posts - Page ${currentPage.value}`,
   description: () => description,
   ogType: () => 'article',
-  ogUrl: () => 'https://nuxtation.phantomoon.com/blog/',
+  ogUrl: () => 'https://nuxtation.vercel.app/blog/',
   ogDescription: () => description,
   ogImage: () =>
     `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
@@ -139,13 +139,13 @@ useSchemaOrg([
         '@type': 'ListItem',
         'position': 1,
         'name': 'ホーム',
-        'item': 'https://nuxtation.phantomoon.com/',
+        'item': 'https://nuxtation.vercel.app/',
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': 'ブログ',
-        'item': 'https://nuxtation.phantomoon.com/blog/',
+        'item': 'https://nuxtation.vercel.app/blog/',
       },
     ],
   },
@@ -153,7 +153,7 @@ useSchemaOrg([
     '@type': 'CollectionPage',
     'name': 'Blog Posts',
     'description': 'Here\'s a list of all my blog posts',
-    'url': 'https://nuxtation.phantomoon.com/blog/',
+    'url': 'https://nuxtation.vercel.app/blog/',
   },
 ])
 </script>

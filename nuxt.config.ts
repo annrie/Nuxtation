@@ -729,7 +729,7 @@ export default defineNuxtConfig({
         allow: ['/'],
       },
     ],
-    sitemap: 'https://nuxtation.phantomoon.com/sitemap.xml',
+    sitemap: 'https://nuxtation.vercel.app/sitemap.xml',
   },
 
   schemaOrg: {

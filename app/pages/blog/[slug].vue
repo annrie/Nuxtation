@@ -9,7 +9,7 @@ const route = useRoute()
 const slug = computed(() => route.params.slug as string)
 
 // ベースURL定義
-const baseUrl = 'https://nuxtation.phantomoon.com'
+const baseUrl = 'https://nuxtation.vercel.app'
 
 // 記事データを取得
 const { data: article } = await useArticle('blog', slug.value)
@@ -287,7 +287,7 @@ useArticleSeo({
                 :href="`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                   article.title,
                 )}&url=${encodeURIComponent(
-                  `https://nuxtation.phantomoon.com${route.path}`,
+                  `https://nuxtation.vercel.app${route.path}`,
                 )}`"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -298,7 +298,7 @@ useArticleSeo({
               </a>
               <a
                 :href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                  `https://nuxtation.phantomoon.com${route.path}`,
+                  `https://nuxtation.vercel.app${route.path}`,
                 )}`"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -309,7 +309,7 @@ useArticleSeo({
               </a>
               <a
                 :href="`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                  `https://nuxtation.phantomoon.com${route.path}`,
+                  `https://nuxtation.vercel.app${route.path}`,
                 )}`"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -322,7 +322,7 @@ useArticleSeo({
                 :href="`mailto:?subject=${encodeURIComponent(
                   article.title,
                 )}&body=${encodeURIComponent(
-                  `https://nuxtation.phantomoon.com${route.path}`,
+                  `https://nuxtation.vercel.app${route.path}`,
                 )}`"
                 class="share-button share-button--email"
                 aria-label="メールで共有"

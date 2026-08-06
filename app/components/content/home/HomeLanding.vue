@@ -89,7 +89,7 @@ useSeoMeta({
   title: () => `${title}`,
   description: () => description,
   ogType: () => 'site',
-  ogUrl: () => 'https://nuxtation.phantomoon.com/',
+  ogUrl: () => 'https://nuxtation.vercel.app/',
   ogImage: () => `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
   twitterCard: 'summary_large_image',
   twitterTitle: () => `${title}`,
@@ -100,12 +100,12 @@ useSeoMeta({
 useSchemaOrg([
   {
     '@type': 'WebSite',
-    'url': 'https://nuxtation.phantomoon.com/',
+    'url': 'https://nuxtation.vercel.app/',
     'potentialAction': {
       '@type': 'SearchAction',
       'target': {
         '@type': 'EntryPoint',
-        'urlTemplate': 'https://nuxtation.phantomoon.com/search?q={search_term_string}',
+        'urlTemplate': 'https://nuxtation.vercel.app/search?q={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },

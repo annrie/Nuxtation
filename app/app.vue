@@ -10,7 +10,7 @@ const isSearchModalOpen = useState('search-modal-open', () => false)
 // サードパーティスクリプトはnuxt.config.tsで自動的に最適なタイミングで読み込まれる
 
 const { path } = useRoute()
-const mySite = 'https://nuxtation.phantomoon.com'
+const mySite = 'https://nuxtation.vercel.app'
 const canonical = computed(() => {
   if (path === '/')
     return mySite

@@ -16,7 +16,11 @@ export const pwa: ModuleOptions = {
     description: SiteDescription,
     theme_color: '#ffffff',
     form_factor: 'wide',
-    start_url: 'https://nuxtation.phantomoon.com/?source=NuxtVitePWA',
+    // manifest からの相対解決にする。絶対URLにすると、カスタムドメイン以外
+    // (vercel.app の既定URL、PR のプレビューURL) で開いたときに start_url の
+    // origin がドキュメントと食い違い、ブラウザが manifest を拒否する。
+    // 同ファイルの id も相対なので記法も揃う。
+    start_url: '/?source=NuxtVitePWA',
     icons: [
       {
         src: 'apple-touch-icon.png',

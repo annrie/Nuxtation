@@ -6,7 +6,7 @@ export default defineEventHandler((error) => {
   if (error.url?.includes('robots.txt')) {
     // デフォルトのrobots.txtを返す
     return new Response(
-      'User-agent: *\nAllow: /\nSitemap: https://nuxtation.phantomoon.com/sitemap.xml',
+      'User-agent: *\nAllow: /\nSitemap: https://nuxtation.vercel.app/sitemap.xml',
       {
         headers: {
           'content-type': 'text/plain',

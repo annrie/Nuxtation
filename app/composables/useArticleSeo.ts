@@ -166,14 +166,14 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       'author': {
         '@type': 'Person',
         'name': 'annrie',
-        'url': 'https://nuxtation.phantomoon.com',
+        'url': 'https://nuxtation.vercel.app',
       },
       'publisher': {
         '@type': 'Organization',
         'name': 'Nuxtation',
         'logo': {
           '@type': 'ImageObject',
-          'url': 'https://nuxtation.phantomoon.com/logo.png',
+          'url': 'https://nuxtation.vercel.app/logo.png',
         },
       },
       'datePublished': article.value?.publishedAt || '',
@@ -217,7 +217,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
         'sameAs': 'https://ja.wikipedia.org/wiki/山田正紀',
       },
       'description': article.value?.description || '',
-      'url': `https://nuxtation.phantomoon.com${route.path}`,
+      'url': `https://nuxtation.vercel.app${route.path}`,
       'datePublished': article.value?.publishedAt || '',
       'articleBody': article.value?.body || '',
       'genre': article.value?.tags?.map((tag: string) => formatTagName(tag)) || [],

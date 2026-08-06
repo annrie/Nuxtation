@@ -71,7 +71,7 @@ useHead({
 
 useSeoMeta({
   ogType: () => 'article',
-  ogUrl: () => `https://nuxtation.phantomoon.com${route.path}`,
+  ogUrl: () => `https://nuxtation.vercel.app${route.path}`,
   ogTitle: () => title.value,
   ogDescription: () => description.value,
   ogImage: () =>
@@ -91,19 +91,19 @@ useSchemaOrg([
         '@type': 'ListItem',
         'position': 1,
         'name': 'ホーム',
-        'item': 'https://nuxtation.phantomoon.com/',
+        'item': 'https://nuxtation.vercel.app/',
       },
       {
         '@type': 'ListItem',
         'position': 2,
         'name': 'ブログ',
-        'item': 'https://nuxtation.phantomoon.com/blog/',
+        'item': 'https://nuxtation.vercel.app/blog/',
       },
       {
         '@type': 'ListItem',
         'position': 3,
         'name': slug.value || '',
-        'item': `https://nuxtation.phantomoon.com${route.path}`,
+        'item': `https://nuxtation.vercel.app${route.path}`,
       },
     ],
   },
@@ -111,7 +111,7 @@ useSchemaOrg([
     '@type': 'CollectionPage',
     'name': title.value || '',
     'description': description.value || '',
-    'url': `https://nuxtation.phantomoon.com${route.path}`,
+    'url': `https://nuxtation.vercel.app${route.path}`,
   },
 ])
 </script>

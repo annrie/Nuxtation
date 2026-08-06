@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.5
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.4...v4.4.5)
+
+### 🐛 バグ修正
+
+- **seo:** 正規URLを nuxtation.vercel.app に統一し、manifest を相対パス化 ([946e4a0](https://github.com/annrie/Nuxtation/commit/946e4a0))
+- **perf:** Lighthouse の計測先を nuxtation に直し、死んだ manifest を削除 ([ad8c442](https://github.com/annrie/Nuxtation/commit/ad8c442))
+
+### ♻️ リファクタリング
+
+- **seo:** 正規URLを SiteUrl 定数に集約し、死んだ logic/ を削除 ([790f44f](https://github.com/annrie/Nuxtation/commit/790f44f))
+
+### 📖 ドキュメント
+
+- **agents:** Logic/ の記述を現状に合わせる ([fb0300e](https://github.com/annrie/Nuxtation/commit/fb0300e))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.4
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.3...v4.4.4)

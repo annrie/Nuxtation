@@ -2,7 +2,10 @@
 
 ## Project Structure & Module Organization
 - `app/`: Nuxt entry point with feature pages, layouts, plugins, and shared UI helpers under `composables/` and `utils/`.
-- `logic/`: Central TypeScript utilities re-exported via `logic/index.ts` for stable import paths.
+- `app/logic/`: Central TypeScript constants such as `SiteUrl`. Import via `~/logic/constants`.
+  A duplicate `logic/` sat at the repository root until 2026-08-06. Since the Docus 5 migration
+  (2025-12) made `app/` the srcDir, `~` and `@` resolve to `app/`, so the root copy was unreachable
+  and had drifted out of date. It was removed; do not recreate it.
 - `server/`: Nitro handlers (`server/api`), middleware, and server-side plugins. Keep server-only dependencies here.
 - `content/` & `public/`: Markdown-driven site content and static assets; update `content/` first, then regenerate.
 - `tests/`: Playwright specs. Name files after the route or feature (`tests/docs-home.spec.ts`).

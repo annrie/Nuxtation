@@ -135,8 +135,14 @@ overrides:
   # uuid: v3/v5/v6 で buf 指定時の境界チェック漏れ。@lhci/cli 経由。
   # v11 は名前付きエクスポートのみだが require("uuid") 形式なので影響なし。
   uuid: ^11.1.1
-  # vite: 開発サーバのファイル読み取り
-  vite@^7.0.0: ^7.3.5
+  # vite: 開発サーバのファイル読み取り対応で 7.3.5+ に上げていたが、7系のままだと
+  # vitest 4 が動かない。vitest 4 は rolldown ベースの vite 8（rolldown ~1.1.5 を
+  # 内蔵）を前提にしており、rolldown を持たない vite 7 に載せると transform 時に
+  # 「Missing field `moduleType`（Plugin: builtin:replace）」で全 spec が落ちる。
+  # @intlify/unplugin-vue-i18n などが ^7 も許すレンジを持つため、放っておくと
+  # pnpm が7系のグループを作って vitest をそちらへ寄せてしまう。8系へ明示的に
+  # 引き上げる。docustation / private-nuxtation は元から vite 8 のみで動いている。
+  vite@^7.0.0: ^8.1.5
   ws@7: ^7.5.13
   # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、
   # 8系は8.21.0で修正されたが対策が不完全だったため8.21.1を要求する

@@ -81,11 +81,15 @@ function stagedChangesAreRelevant(): boolean {
   // --name-only は移動先だけを出す。ogp-cache.json を別名へ移すと元のパスが
   // 現れず、検査をすり抜けてビルドだけが壊れる（実測で確認済み）。
   // rename を「削除＋追加」に分解すれば両方のパスが見える。
+  //
+  // **--diff-filter は付けない。** 以前は ACMRD と列挙していたが、
+  // キャッシュを symlink に差し替えると git は T（type change）を報告し、
+  // その一文字が無いだけで検査をすり抜けた（実測で確認済み）。
+  // 種別を数え上げる限り同じ取りこぼしが起き続けるので、絞らない。
   const paths = git([
     'diff',
     '--cached',
     '--name-only',
-    '--diff-filter=ACMRD',
     '--no-renames',
     '-z',
   ])
@@ -185,19 +189,39 @@ async function main(): Promise<void> {
   const unique = new Set(referenced)
   const skipped = [...unique].filter(url => isReservedHost(url))
 
-  if (missing.length === 0) {
+  // 参照されなくなったエントリ。`ogp:refresh` は参照集合だけを書き出すので、
+  // これが残っているのは refresh を回していない証拠になる。
+  // ビルドは壊れないが、消した記事の URL とメタデータが成果物に残り続ける。
+  // 「link-card を全部消したらキャッシュは {} にする」と AGENTS.md に
+  // 書いている以上、人の記憶ではなくここで担保する。
+  const stale = Object.keys(cache).filter(url => !unique.has(url))
+
+  if (missing.length === 0 && stale.length === 0) {
     const covered = unique.size - skipped.length
     console.log(`✅ link-card の OGP キャッシュは最新です（参照 ${unique.size} 件 / 取得対象 ${covered} 件 / 除外 ${skipped.length} 件）。`)
 
     return
   }
 
+  const target = source === 'index' ? 'ステージの内容' : '作業ツリー'
+  console.error(`❌ link-card と OGP キャッシュが一致していません（検査対象: ${target}）。`)
+
   // キーはあるが値が壊れている場合と、そもそも無い場合を区別して出す。
   // 前者は「refresh を忘れた」ではなく「JSON を手で触って壊した」なので、
   // 同じ文面だと原因を取り違える。
-  console.error(`❌ キャッシュで賄えない link-card の URL があります（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
-  for (const url of missing)
-    console.error(`   - ${url}${url in cache ? '  ← エントリはあるが ogTitle/ogDescription/ogImage/ogUrl が揃っていない' : ''}`)
+  if (missing.length > 0) {
+    console.error('\n  キャッシュで賄えない URL:')
+    for (const url of missing)
+      console.error(`   - ${url}${url in cache ? '  ← エントリはあるが ogTitle/ogDescription/ogImage/ogUrl が揃っていない' : ''}`)
+  }
+
+  if (stale.length > 0) {
+    console.error('\n  もう参照されていないのに残っているエントリ:')
+    for (const url of stale)
+      console.error(`   - ${url}`)
+
+    console.error('     （消した記事の URL とメタデータが成果物に残り続けます）')
+  }
 
   if (source === 'index') {
     console.error(`\n対処: \`pnpm ogp:refresh\` を実行し、\`git add ${CACHE_PATH}\` してからコミットしてください。`)
@@ -208,7 +232,10 @@ async function main(): Promise<void> {
     console.error(`\n対処: \`pnpm ogp:refresh\` を実行して ${CACHE_PATH} をコミットしてください。`)
   }
 
-  console.error('      このまま公開すると、該当のカードはただのリンクとして表示されます。\n')
+  if (missing.length > 0)
+    console.error('      このまま公開すると、該当のカードはただのリンクとして表示されます。')
+
+  console.error('')
   process.exit(1)
 }
 

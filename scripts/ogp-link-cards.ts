@@ -13,6 +13,7 @@
  */
 
 import type { MDCNode, MDCRoot } from '@nuxtjs/mdc'
+import type { Buffer } from 'node:buffer'
 import { execFileSync } from 'node:child_process'
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
@@ -47,6 +48,25 @@ export interface OgpEntry {
  */
 function collectLinkCardUrls(node: MDCRoot | MDCNode, found: string[]): string[] {
   if ('tag' in node && node.tag === 'link-card') {
+    // `::link-card{:props-url="cardUrl"}` のようにフロントマターの値を
+    // バインドされると、AST には `{ ':props-url': 'cardUrl' }` が入る。
+    // MDCRenderer は propsToDataRxBind でコロンを外して値を解決するので
+    // **カードは描画されるのに、ここでは URL を拾えない**（実測で確認済み）。
+    //
+    // ast.data から解決する道もあるが、dot-path や式の扱いまで
+    // MDCRenderer の挙動を写し取ることになり、ズレれば同じ種類の
+    // 取りこぼしを別の形で作る。未対応であることを明示して止める。
+    const bound = Object.keys(node.props ?? {}).find(
+      key => key === ':props-url' || key === ':propsUrl',
+    )
+    if (bound) {
+      throw new Error(
+        `link-card の \`${bound}\` （バインド記法）には対応していません。\n`
+        + `  OGP はビルド前に取得するため、URL が markdown 上で確定している必要があります。\n`
+        + `  \`::link-card{propsUrl="https://..."}\` のように直接書いてください。`,
+      )
+    }
+
     const url = node.props?.propsUrl ?? node.props?.['props-url']
     if (typeof url === 'string')
       found.push(url)

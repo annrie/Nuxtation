@@ -12,10 +12,10 @@
     "node": "22.x"
   },
   "scripts": {
-    "build": "VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi build",
+    "build": "pnpm check:ogp-cache && VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi build",
     "dev": "nuxi dev -o",
     "start": "node .output/server/index.mjs",
-    "generate": "VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi generate",
+    "generate": "pnpm check:ogp-cache && VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi generate",
     "preview": "npx serve dist",
     "mdts": "npx mdts",
     "postinstall": "nuxi prepare",

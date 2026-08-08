@@ -101,6 +101,26 @@ function stagedChangesAreRelevant(): boolean {
   )
 }
 
+/**
+ * 検査に使うコード自身が、ステージと作業ツリーで食い違っていないか。
+ *
+ * **tsx は作業ツリーのファイルを実行する。** 検査対象（記事・キャッシュ）は
+ * index から読んでいるのに、読み取る側のロジックは作業ツリー版という
+ * ねじれが起きうる。抽出ロジックを直してステージし、作業ツリーには
+ * 古い版を残したままコミットすると、古い基準で検査して通してしまう
+ * （未ステージの目印が実行されることを実測で確認済み）。
+ *
+ * index の TypeScript を取り出して実行する手もあるが、一時ファイルと
+ * import の解決を自前で抱えることになる。対象は2ファイルだけで、
+ * 部分ステージする場面もまず無いので、食い違いを検出して止める。
+ */
+function checkerFilesDifferFromIndex(): string[] {
+  return git(['diff', '--name-only', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
+    .toString('utf8')
+    .split('\n')
+    .filter(Boolean)
+}
+
 async function readCache(): Promise<Record<string, unknown>> {
   try {
     return JSON.parse(await readSource(CACHE_PATH, source))
@@ -135,10 +155,28 @@ async function readCache(): Promise<Record<string, unknown>> {
 }
 
 async function main(): Promise<void> {
-  // 全走査の前に打ち切る。ここを通るのは content/ かキャッシュに触った
-  // コミットだけなので、無関係なコミットに 20 秒待たせない。
+  // 全走査の前に打ち切る。ここを通るのは content/ かキャッシュ、または
+  // 抽出ロジックに触ったコミットだけなので、無関係なコミットに 20 秒待たせない。
   if (onlyIfRelevant && !stagedChangesAreRelevant())
     return
+
+  // ステージを検査する以上、検査するコード自身もステージと一致していないと
+  // 結果に意味がない。
+  if (source === 'index') {
+    const drifted = checkerFilesDifferFromIndex()
+
+    if (drifted.length > 0) {
+      console.error('❌ 検査に使うコード自身に未ステージの変更があります。')
+      for (const path of drifted)
+        console.error(`   - ${path}`)
+
+      console.error('\n   検査は作業ツリーのコードで走るため、このままではコミット後の')
+      console.error('   状態を保証できません（ステージ側の新しい抽出ロジックではなく、')
+      console.error('   作業ツリーの古いロジックで判定してしまいます）。')
+      console.error('   `git add` するか変更を戻してから、もう一度コミットしてください。\n')
+      process.exit(1)
+    }
+  }
 
   const referenced = await collectReferencedUrls(source)
   const cache = await readCache()

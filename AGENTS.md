@@ -17,6 +17,8 @@
 - `pnpm preview`: Serve `.output/` locally for smoke checks.
 - `pnpm lint` / `pnpm lint:fix`: ESLint via the Antfu preset; autofix before committing.
 - `pnpm exec playwright test`: Run end-to-end tests in `tests/`.
+- `pnpm ogp:refresh`: Resolve link-card OGP into `app/data/ogp-cache.json`.
+- `pnpm check:ogp-cache`: Verify every link-card URL is present in that cache (no network).
 
 ## Coding Style & Naming Conventions
 - TypeScript-first. Prefer composables over global helpers and keep exports typed.
@@ -25,6 +27,12 @@
 - UnoCSS utilities belong near templates; avoid inline styles unless computed dynamically.
 
 ## Testing Guidelines
+- After adding a link-card to an article, run `pnpm ogp:refresh` and commit `app/data/ogp-cache.json`. The `pre-commit` hook runs `pnpm check:ogp-cache --staged --if-relevant`, which inspects the staged tree whenever the commit touches `content/**/*.md` or the cache itself, and exits early otherwise. A forgotten refresh is caught at commit time rather than after publishing — `LinkCard.vue` degrades to a plain link without any error when the cache lacks a URL.
+- **Never delete `app/data/ogp-cache.json`, even when removing the last link-card.** `LinkCard.vue` imports it statically and `nuxt.config.ts` registers `app/components` globally, so a missing file fails the build with `[UNLOADABLE_DEPENDENCY] Could not load ...`. Leave it as `{}` — `pnpm ogp:refresh` writes that automatically when nothing is referenced. The check enforces this.
+- **After pulling changes that touch `simple-git-hooks`, run `pnpm install` (or `pnpm exec simple-git-hooks`).** Editing `package.json` does not rewrite `.git/hooks/pre-commit` in existing clones, so the hook keeps running the old command until reinstalled. `pnpm build` / `pnpm generate` also run `pnpm check:ogp-cache` up front, so a stale hook still cannot ship a broken cache.
+- The check deliberately lives in `simple-git-hooks`, not `lint-staged`: lint-staged's default `--diff-filter` is `ACMR`, which omits deletions, so a commit that only deletes the cache would slip through.
+- `scripts/ogp-*.ts` are duplicated byte-for-byte across nuxtation / docustation / private-nuxtation. Change all three together; nothing enforces the sync.
+- There is no Vitest setup in this repo. Unit specs for the link-card extraction live in private-nuxtation (`test/ogp-link-cards.spec.ts`); Vitest 4 requires Vite 8, and this repo is pinned to Vite 7 because `@nuxt/devtools`, `@vite-pwa/nuxt` and friends do not declare Vite 8 support yet. See `tasks/2026-08-08-vite-8-migration.md`.
 - Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
 - By default a local dev server starts on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.

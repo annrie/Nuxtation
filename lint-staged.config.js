@@ -10,5 +10,9 @@ export default {
   // ただのリンクへ劣化する。content/ を触ったコミットで検査する。
   // 変更ファイル名は渡さない（content/ 全体を走査して初めて欠落が判る）ので
   // 上の nuxi prepare と同じく関数形式にしている。
-  'content/**/*.md': () => 'pnpm check:ogp-cache',
+  //
+  // **--staged が要る。** lint-staged は完全に未ステージのファイルまでは
+  // 隠さないので、作業ツリーを読むと「refresh は実行したが ogp-cache.json を
+  // add し忘れた」コミットが素通りする（実測で確認済み）。
+  'content/**/*.md': () => 'pnpm check:ogp-cache --staged',
 }

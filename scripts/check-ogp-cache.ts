@@ -27,23 +27,35 @@
  *   3リポすべてに同じ変更を適用すること（同期を強制する仕組みは無い）。
  */
 
-import { readFile } from 'node:fs/promises'
+import type { Source } from './ogp-link-cards'
 import process from 'node:process'
 import {
   CACHE_PATH,
   collectReferencedUrls,
   findMissingCacheEntries,
   isReservedHost,
+  readSource,
 } from './ogp-link-cards'
+
+/**
+ * `--staged` はステージ（git index）の内容を検査する。lint-staged から呼ぶときに使う。
+ *
+ * **作業ツリーを読むと「`ogp:refresh` は実行したがキャッシュを add し忘れた」を
+ * 見逃す。** 作業ツリーには新しいキャッシュがあるので検査は通ってしまい、
+ * コミットには記事の変更だけが入って古いキャッシュのまま公開される。
+ */
+const source: Source = process.argv.includes('--staged') ? 'index' : 'worktree'
 
 async function readCache(): Promise<Record<string, unknown>> {
   try {
-    return JSON.parse(await readFile(CACHE_PATH, 'utf8'))
+    return JSON.parse(await readSource(CACHE_PATH, source))
   }
   catch (error) {
-    // 存在しない場合も「まだ一度も取得していない」という欠落なので、
+    // 未追跡・未作成の場合は「まだ一度も取得していない」という欠落なので、
     // 空として扱って後段の欠落報告に任せる。参照が0件なら成功のままになる。
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT')
+    // 作業ツリーなら ENOENT、index に無ければ git show が非ゼロで終了する。
+    const code = error instanceof Error && 'code' in error ? error.code : undefined
+    if (code === 'ENOENT' || code === 1 || code === 128)
       return {}
 
     console.error(`❌ ${CACHE_PATH} を読み込めませんでした。`)
@@ -54,7 +66,7 @@ async function readCache(): Promise<Record<string, unknown>> {
 }
 
 async function main(): Promise<void> {
-  const referenced = await collectReferencedUrls()
+  const referenced = await collectReferencedUrls(source)
   const cache = await readCache()
   const missing = findMissingCacheEntries(referenced, cache)
 
@@ -68,11 +80,19 @@ async function main(): Promise<void> {
     return
   }
 
-  console.error('❌ キャッシュに無い link-card の URL があります。')
+  console.error(`❌ キャッシュに無い link-card の URL があります（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
   for (const url of missing)
     console.error(`   - ${url}`)
 
-  console.error(`\n対処: \`pnpm ogp:refresh\` を実行して ${CACHE_PATH} をコミットしてください。`)
+  if (source === 'index') {
+    console.error(`\n対処: \`pnpm ogp:refresh\` を実行し、\`git add ${CACHE_PATH}\` してからコミットしてください。`)
+    console.error('      すでに refresh 済みなら add 漏れです。作業ツリーが最新でも、')
+    console.error('      コミットに入らなければ古いキャッシュのまま公開されます。')
+  }
+  else {
+    console.error(`\n対処: \`pnpm ogp:refresh\` を実行して ${CACHE_PATH} をコミットしてください。`)
+  }
+
   console.error('      このまま公開すると、該当のカードはただのリンクとして表示されます。\n')
   process.exit(1)
 }

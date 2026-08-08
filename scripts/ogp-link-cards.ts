@@ -13,6 +13,7 @@
  */
 
 import type { MDCNode, MDCRoot } from '@nuxtjs/mdc'
+import { execFileSync } from 'node:child_process'
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { parseMarkdown } from '@nuxtjs/mdc/runtime'
@@ -82,13 +83,42 @@ export async function extractLinkCardUrls(markdown: string): Promise<string[]> {
   return collectLinkCardUrls(ast.body, [])
 }
 
-/** CONTENT_DIR 配下の markdown を再帰的に集める。 */
-async function collectMarkdownFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { recursive: true, withFileTypes: true })
+/**
+ * 読み取り元。
+ *
+ * - `worktree`: 作業ツリーのファイルをそのまま読む。手で実行するときはこちら。
+ * - `index`: `git add` 済みの内容（ステージ）を読む。**コミット時はこちらでないと
+ *   「`ogp:refresh` は実行したがキャッシュを add し忘れた」を見逃す。**
+ *   作業ツリーには新しいキャッシュがあるので検査は通るのに、コミットには
+ *   記事の変更だけが入り、古いキャッシュのまま公開されてしまう。
+ */
+export type Source = 'worktree' | 'index'
+
+/** CONTENT_DIR 配下の markdown を集める。index 指定時は追跡済みのものだけが対象。 */
+async function listMarkdownFiles(source: Source): Promise<string[]> {
+  if (source === 'index') {
+    // -z で NUL 区切り。パスに空白や改行が入っても壊れない。
+    const stdout = execFileSync('git', ['ls-files', '-z', '--', CONTENT_DIR])
+
+    return stdout
+      .toString('utf8')
+      .split('\0')
+      .filter(path => path.endsWith('.md'))
+  }
+
+  const entries = await readdir(CONTENT_DIR, { recursive: true, withFileTypes: true })
 
   return entries
     .filter(entry => entry.isFile() && entry.name.endsWith('.md'))
     .map(entry => join(entry.parentPath, entry.name))
+}
+
+/** ファイル1件を読む。index 指定時は `git show :<path>` でステージの内容を取る。 */
+export async function readSource(path: string, source: Source): Promise<string> {
+  if (source === 'index')
+    return execFileSync('git', ['show', `:${path}`]).toString('utf8')
+
+  return readFile(path, 'utf8')
 }
 
 /**
@@ -99,12 +129,12 @@ async function collectMarkdownFiles(dir: string): Promise<string[]> {
  * 新しい記法や新しいディレクトリに追随して食い違うことがない。
  * 重複は取り除かない（何件参照されたかは呼び出し側で意味が変わるため）。
  */
-export async function collectReferencedUrls(): Promise<string[]> {
-  const files = await collectMarkdownFiles(CONTENT_DIR)
+export async function collectReferencedUrls(source: Source = 'worktree'): Promise<string[]> {
+  const files = await listMarkdownFiles(source)
 
   const referenced: string[] = []
   for (const file of files)
-    referenced.push(...await extractLinkCardUrls(await readFile(file, 'utf8')))
+    referenced.push(...await extractLinkCardUrls(await readSource(file, source)))
 
   return referenced
 }

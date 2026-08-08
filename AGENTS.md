@@ -17,6 +17,8 @@
 - `pnpm preview`: Serve `.output/` locally for smoke checks.
 - `pnpm lint` / `pnpm lint:fix`: ESLint via the Antfu preset; autofix before committing.
 - `pnpm exec playwright test`: Run end-to-end tests in `tests/`.
+- `pnpm ogp:refresh`: Resolve link-card OGP into `app/data/ogp-cache.json`.
+- `pnpm check:ogp-cache`: Verify every link-card URL is present in that cache (no network).
 
 ## Coding Style & Naming Conventions
 - TypeScript-first. Prefer composables over global helpers and keep exports typed.
@@ -25,6 +27,9 @@
 - UnoCSS utilities belong near templates; avoid inline styles unless computed dynamically.
 
 ## Testing Guidelines
+- After adding a link-card to an article, run `pnpm ogp:refresh` and commit `app/data/ogp-cache.json`. `lint-staged` runs `pnpm check:ogp-cache` whenever a commit touches `content/**/*.md`, so a forgotten refresh is caught at commit time rather than after publishing — `LinkCard.vue` degrades to a plain link without any error when the cache lacks a URL.
+- `scripts/ogp-*.ts` are duplicated byte-for-byte across nuxtation / docustation / private-nuxtation. Change all three together; nothing enforces the sync.
+- There is no Vitest setup in this repo. Unit specs for the link-card extraction live in private-nuxtation (`test/ogp-link-cards.spec.ts`); Vitest 4 requires Vite 8, and this repo is pinned to Vite 7 because `@nuxt/devtools`, `@vite-pwa/nuxt` and friends do not declare Vite 8 support yet. See `tasks/2026-08-08-vite-8-migration.md`.
 - Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
 - By default a local dev server starts on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.

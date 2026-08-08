@@ -6,4 +6,9 @@ export default {
   //   2) プロジェクト非依存のグローバル prettier(1.19.1) に依存し不安定
   //   3) [slug].vue の角括弧を prettier が glob 誤認しコミット全体を落としていた
   'app/**/*.{js,jsx,ts,tsx,vue,css,scss}': 'eslint --fix --no-ignore --max-warnings=0',
+  // 記事に link-card を足して `pnpm ogp:refresh` を忘れるとカードが静かに
+  // ただのリンクへ劣化する。content/ を触ったコミットで検査する。
+  // 変更ファイル名は渡さない（content/ 全体を走査して初めて欠落が判る）ので
+  // 上の nuxi prepare と同じく関数形式にしている。
+  'content/**/*.md': () => 'pnpm check:ogp-cache',
 }

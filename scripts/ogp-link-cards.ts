@@ -94,13 +94,22 @@ export async function extractLinkCardUrls(markdown: string): Promise<string[]> {
  */
 export type Source = 'worktree' | 'index'
 
+/**
+ * git を呼んで stdout を返す。
+ *
+ * stderr も pipe で受ける。既定では stderr が親へそのまま流れるため、
+ * **想定内の失敗でも git の `fatal:` が画面に出てしまう**（キャッシュの削除を
+ * ステージしたときの `git show` など）。失敗時の内容は error.stderr で読める。
+ */
+function git(args: string[]): Buffer {
+  return execFileSync('git', args, { stdio: ['pipe', 'pipe', 'pipe'] })
+}
+
 /** CONTENT_DIR 配下の markdown を集める。index 指定時は追跡済みのものだけが対象。 */
 async function listMarkdownFiles(source: Source): Promise<string[]> {
   if (source === 'index') {
     // -z で NUL 区切り。パスに空白や改行が入っても壊れない。
-    const stdout = execFileSync('git', ['ls-files', '-z', '--', CONTENT_DIR])
-
-    return stdout
+    return git(['ls-files', '-z', '--', CONTENT_DIR])
       .toString('utf8')
       .split('\0')
       .filter(path => path.endsWith('.md'))
@@ -116,7 +125,7 @@ async function listMarkdownFiles(source: Source): Promise<string[]> {
 /** ファイル1件を読む。index 指定時は `git show :<path>` でステージの内容を取る。 */
 export async function readSource(path: string, source: Source): Promise<string> {
   if (source === 'index')
-    return execFileSync('git', ['show', `:${path}`]).toString('utf8')
+    return git(['show', `:${path}`]).toString('utf8')
 
   return readFile(path, 'utf8')
 }

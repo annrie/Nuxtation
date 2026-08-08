@@ -51,11 +51,16 @@ async function readCache(): Promise<Record<string, unknown>> {
     return JSON.parse(await readSource(CACHE_PATH, source))
   }
   catch (error) {
-    // 未追跡・未作成の場合は「まだ一度も取得していない」という欠落なので、
-    // 空として扱って後段の欠落報告に任せる。参照が0件なら成功のままになる。
-    // 作業ツリーなら ENOENT、index に無ければ git show が非ゼロで終了する。
-    const code = error instanceof Error && 'code' in error ? error.code : undefined
-    if (code === 'ENOENT' || code === 1 || code === 128)
+    // キャッシュが無いのは「まだ一度も取得していない」または「最後の link-card を
+    // 消したので不要になった」状態。空として扱い、後段の欠落報告に任せる。
+    // 参照が0件なら欠落も0件なので、そのまま成功する。
+    //
+    // 作業ツリーなら ENOENT。index に無い場合 git show は 128 で終了するが、
+    // **execFileSync はその終了コードを error.status に載せる。error.code は
+    // undefined のまま**（実測）。code だけを見ていると、キャッシュの削除を
+    // ステージしたコミットを不当に弾いてしまう。
+    const err = error as NodeJS.ErrnoException & { status?: number }
+    if (err.code === 'ENOENT' || err.status === 128)
       return {}
 
     console.error(`❌ ${CACHE_PATH} を読み込めませんでした。`)

@@ -95,13 +95,13 @@ export async function extractLinkCardUrls(markdown: string): Promise<string[]> {
 export type Source = 'worktree' | 'index'
 
 /**
- * git を呼んで stdout を返す。
+ * git を呼んで stdout を返す。check-ogp-cache.ts も使う。
  *
  * stderr も pipe で受ける。既定では stderr が親へそのまま流れるため、
  * **想定内の失敗でも git の `fatal:` が画面に出てしまう**（キャッシュの削除を
  * ステージしたときの `git show` など）。失敗時の内容は error.stderr で読める。
  */
-function git(args: string[]): Buffer {
+export function git(args: string[]): Buffer {
   return execFileSync('git', args, { stdio: ['pipe', 'pipe', 'pipe'] })
 }
 

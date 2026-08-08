@@ -32,19 +32,47 @@ import process from 'node:process'
 import {
   CACHE_PATH,
   collectReferencedUrls,
+  CONTENT_DIR,
   findMissingCacheEntries,
+  git,
   isReservedHost,
   readSource,
 } from './ogp-link-cards'
 
 /**
- * `--staged` はステージ（git index）の内容を検査する。lint-staged から呼ぶときに使う。
+ * `--staged` はステージ（git index）の内容を検査する。コミット時に使う。
  *
  * **作業ツリーを読むと「`ogp:refresh` は実行したがキャッシュを add し忘れた」を
  * 見逃す。** 作業ツリーには新しいキャッシュがあるので検査は通ってしまい、
  * コミットには記事の変更だけが入って古いキャッシュのまま公開される。
  */
 const source: Source = process.argv.includes('--staged') ? 'index' : 'worktree'
+
+/**
+ * `--if-relevant` は、ステージに関係する変更が無ければ何もせず終了する。
+ *
+ * pre-commit から毎回呼ぶための入口。全走査は docustation で 20 秒ほどかかるので、
+ * 無関係なコミットまで待たせない。判定は `git diff --cached` 1回で済む。
+ *
+ * **lint-staged のフィルタでは代用できない。** 既定の diff-filter は ACMR で
+ * **削除が含まれず**、`ogp-cache.json` を消すだけのコミットで検査が走らないまま
+ * 通ってしまう（実測で確認済み。その後ビルドが静的 import で落ちる）。
+ * ここでは D も含めて自前で判定する。
+ */
+const onlyIfRelevant = process.argv.includes('--if-relevant')
+
+/** ステージされた変更に content/ の markdown かキャッシュが含まれるか。 */
+function stagedChangesAreRelevant(): boolean {
+  const paths = git(['diff', '--cached', '--name-only', '--diff-filter=ACMRD', '-z'])
+    .toString('utf8')
+    .split('\0')
+    .filter(Boolean)
+
+  return paths.some(
+    path => path === CACHE_PATH
+      || (path.startsWith(`${CONTENT_DIR}/`) && path.endsWith('.md')),
+  )
+}
 
 async function readCache(): Promise<Record<string, unknown>> {
   try {
@@ -80,6 +108,11 @@ async function readCache(): Promise<Record<string, unknown>> {
 }
 
 async function main(): Promise<void> {
+  // 全走査の前に打ち切る。ここを通るのは content/ かキャッシュに触った
+  // コミットだけなので、無関係なコミットに 20 秒待たせない。
+  if (onlyIfRelevant && !stagedChangesAreRelevant())
+    return
+
   const referenced = await collectReferencedUrls(source)
   const cache = await readCache()
   const missing = findMissingCacheEntries(referenced, cache)

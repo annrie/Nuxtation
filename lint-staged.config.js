@@ -6,13 +6,9 @@ export default {
   //   2) プロジェクト非依存のグローバル prettier(1.19.1) に依存し不安定
   //   3) [slug].vue の角括弧を prettier が glob 誤認しコミット全体を落としていた
   'app/**/*.{js,jsx,ts,tsx,vue,css,scss}': 'eslint --fix --no-ignore --max-warnings=0',
-  // 記事に link-card を足して `pnpm ogp:refresh` を忘れるとカードが静かに
-  // ただのリンクへ劣化する。content/ を触ったコミットで検査する。
-  // 変更ファイル名は渡さない（content/ 全体を走査して初めて欠落が判る）ので
-  // 上の nuxi prepare と同じく関数形式にしている。
-  //
-  // **--staged が要る。** lint-staged は完全に未ステージのファイルまでは
-  // 隠さないので、作業ツリーを読むと「refresh は実行したが ogp-cache.json を
-  // add し忘れた」コミットが素通りする（実測で確認済み）。
-  'content/**/*.md': () => 'pnpm check:ogp-cache --staged',
+  // link-card の OGP キャッシュ検査はここに置かない。package.json の
+  // simple-git-hooks（pre-commit）から直接呼んでいる。
+  // **lint-staged の既定の diff-filter は ACMR で削除を含まないため、
+  // ogp-cache.json を消すだけのコミットで検査が走らず素通りする**（実測）。
+  // 対象の判定はスクリプト側の --if-relevant が D 込みで行う。
 }

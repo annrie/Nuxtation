@@ -139,7 +139,7 @@
     "vue3-carousel-nuxt": "1.1.6"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged && pnpm check:ogp-cache --staged --if-relevant"
   },
   "browserslist": [
     "defaults and fully supports es6-module"

@@ -176,11 +176,34 @@ export function isReservedHost(url: string): boolean {
 }
 
 /**
- * 参照されているのにキャッシュに無い URL を返す。空配列なら欠落なし。
+ * キャッシュの値が LinkCard.vue の期待する形か。
+ *
+ * **キーの有無だけでは足りない。** LinkCard.vue は ogTitle / ogDescription /
+ * ogImage / ogUrl を実行時の検証なしに読むので、値が null やスカラー、
+ * フィールド欠けのオブジェクトだと空のカードや壊れた表示になる。
+ * それでも `url in cache` は true なので、キーだけ見ていると
+ * 「キャッシュは最新です」と報告してしまう。
+ *
+ * 空文字は許す。取得できなかった項目に refresh-ogp.ts が `?? ''` で
+ * 入れる正規の値で、LinkCard.vue 側もフォールバックを持っている。
+ */
+function isValidOgpEntry(value: unknown): boolean {
+  if (typeof value !== 'object' || value === null || Array.isArray(value))
+    return false
+
+  const entry = value as Record<string, unknown>
+
+  return (['ogTitle', 'ogDescription', 'ogImage', 'ogUrl'] satisfies (keyof OgpEntry)[])
+    .every(field => typeof entry[field] === 'string')
+}
+
+/**
+ * 参照されているのにキャッシュで賄えない URL を返す。空配列なら欠落なし。
  *
  * `pnpm ogp:refresh` の実行忘れを検出するためのもの。以前は忘れても
  * build / test / lint が全部通り、記事を公開してから
  * 「カードがただのリンクになっている」ことに気づくしかなかった。
+ * キーがあっても中身が壊れていれば同じ結果になるので、値の形まで見る。
  *
  * 予約ホストは refresh-ogp.ts 側でも取得対象から外れる（＝キャッシュに
  * 入らないのが正しい状態）ので、ここでも同じ基準で除く。判定を二重に
@@ -194,6 +217,6 @@ export function findMissingCacheEntries(
   cache: Record<string, unknown>,
 ): string[] {
   return [...new Set(urls)].filter(
-    url => !isReservedHost(url) && !(url in cache),
+    url => !isReservedHost(url) && !isValidOgpEntry(cache[url]),
   )
 }

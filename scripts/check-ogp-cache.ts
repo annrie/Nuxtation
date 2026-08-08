@@ -61,15 +61,42 @@ const source: Source = process.argv.includes('--staged') ? 'index' : 'worktree'
  */
 const onlyIfRelevant = process.argv.includes('--if-relevant')
 
-/** ステージされた変更に content/ の markdown かキャッシュが含まれるか。 */
+/**
+ * 参照集合の定義に関わるスクリプト。これらが変わったら検査を走らせる。
+ * リポジトリ直下からの相対パスで、git が返すパスと同じ表記にする。
+ */
+const EXTRACTOR_SCRIPT = 'scripts/ogp-link-cards.ts'
+const SELF_SCRIPT = 'scripts/check-ogp-cache.ts'
+
+/**
+ * 検査を起動すべき変更か。
+ *
+ * 対象は content/ の markdown、キャッシュ本体、そして**抽出ロジック自身**。
+ * ogp-link-cards.ts を変えると「何を参照とみなすか」が変わり、記事を一行も
+ * 触っていなくても必要なキャッシュの中身が変わりうる。抽出側だけを直した
+ * コミットが素通りすると、その時点で欠落が生まれても誰も気づかない。
+ */
 function stagedChangesAreRelevant(): boolean {
-  const paths = git(['diff', '--cached', '--name-only', '--diff-filter=ACMRD', '-z'])
+  // **--no-renames が要る。** 既定では `git mv` が R100 の1エントリになり、
+  // --name-only は移動先だけを出す。ogp-cache.json を別名へ移すと元のパスが
+  // 現れず、検査をすり抜けてビルドだけが壊れる（実測で確認済み）。
+  // rename を「削除＋追加」に分解すれば両方のパスが見える。
+  const paths = git([
+    'diff',
+    '--cached',
+    '--name-only',
+    '--diff-filter=ACMRD',
+    '--no-renames',
+    '-z',
+  ])
     .toString('utf8')
     .split('\0')
     .filter(Boolean)
 
   return paths.some(
     path => path === CACHE_PATH
+      || path === SELF_SCRIPT
+      || path === EXTRACTOR_SCRIPT
       || (path.startsWith(`${CONTENT_DIR}/`) && path.endsWith('.md')),
   )
 }
@@ -127,9 +154,12 @@ async function main(): Promise<void> {
     return
   }
 
-  console.error(`❌ キャッシュに無い link-card の URL があります（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
+  // キーはあるが値が壊れている場合と、そもそも無い場合を区別して出す。
+  // 前者は「refresh を忘れた」ではなく「JSON を手で触って壊した」なので、
+  // 同じ文面だと原因を取り違える。
+  console.error(`❌ キャッシュで賄えない link-card の URL があります（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
   for (const url of missing)
-    console.error(`   - ${url}`)
+    console.error(`   - ${url}${url in cache ? '  ← エントリはあるが ogTitle/ogDescription/ogImage/ogUrl が揃っていない' : ''}`)
 
   if (source === 'index') {
     console.error(`\n対処: \`pnpm ogp:refresh\` を実行し、\`git add ${CACHE_PATH}\` してからコミットしてください。`)

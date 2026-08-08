@@ -51,17 +51,26 @@ async function readCache(): Promise<Record<string, unknown>> {
     return JSON.parse(await readSource(CACHE_PATH, source))
   }
   catch (error) {
-    // キャッシュが無いのは「まだ一度も取得していない」または「最後の link-card を
-    // 消したので不要になった」状態。空として扱い、後段の欠落報告に任せる。
-    // 参照が0件なら欠落も0件なので、そのまま成功する。
-    //
-    // 作業ツリーなら ENOENT。index に無い場合 git show は 128 で終了するが、
-    // **execFileSync はその終了コードを error.status に載せる。error.code は
-    // undefined のまま**（実測）。code だけを見ていると、キャッシュの削除を
-    // ステージしたコミットを不当に弾いてしまう。
+    // ファイルの不在は作業ツリーなら ENOENT。index に無い場合 git show は 128 で
+    // 終了するが、**execFileSync はその終了コードを error.status に載せる。
+    // error.code は undefined のまま**（実測）。code だけを見ると index の
+    // 不在を判定できない。
     const err = error as NodeJS.ErrnoException & { status?: number }
-    if (err.code === 'ENOENT' || err.status === 128)
-      return {}
+
+    // **キャッシュが無いこと自体をエラーにする。空として扱ってはいけない。**
+    // LinkCard.vue が `import ogpCache from '~/data/ogp-cache.json'` と
+    // 静的に読み込んでおり、nuxt.config.ts は app/components を global 登録して
+    // Vite のエントリに含める。ファイルごと消すとビルドが
+    // 「[UNLOADABLE_DEPENDENCY] Could not load ... (os error 2)」で失敗する（実測）。
+    // link-card を全部消す場面でも、中身を {} にしてファイルは残す必要がある。
+    if (err.code === 'ENOENT' || err.status === 128) {
+      console.error(`❌ ${CACHE_PATH} がありません（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
+      console.error('   LinkCard.vue がこの JSON を静的 import しているため、ファイルごと')
+      console.error('   消すとビルドが「Could not load ...」で失敗します。')
+      console.error('   link-card を全部消した場合も、中身を {} にしてファイルは残してください。')
+      console.error('   `pnpm ogp:refresh` は参照0件でも {} を書き出します。')
+      process.exit(1)
+    }
 
     console.error(`❌ ${CACHE_PATH} を読み込めませんでした。`)
     console.error(`   ${error instanceof Error ? error.message : String(error)}`)

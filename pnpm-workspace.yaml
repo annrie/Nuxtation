@@ -68,22 +68,27 @@ overrides:
   # brace-expansion の連続する空 {} グループによる指数時間展開 DoS。
   # メジャーごとにレンジを区切って各系統の最新へ引き上げる。
   #
-  # 一律 5.0.8 に統一してはいけない。v5 は default export を廃止しており、
-  # minimatch 5.x/9.x の `import expand from 'brace-expansion'` が
-  # 「does not provide an export named 'default'」で落ちる(実測)。
-  # 最新のアドバイザリ(<=5.0.7)は 1系/2系も対象とするが、両系統の最新は
-  # 1.1.16 / 2.1.2 で修正版が出ていないため、ここは上流の対応待ちとする。
-  brace-expansion@^1.0.0: ^1.1.16
-  brace-expansion@^2.0.0: ^2.1.2
-  brace-expansion@^5.0.0: ^5.0.8
+  # 一律 5.0.9 に統一してはいけない。v5 は呼び出し規約を変えており、
+  # 下位系統を引く minimatch がどちらの入口からも壊れる(いずれも実測):
+  #   minimatch 9.x (ESM, `import expand from 'brace-expansion'`)
+  #     → 「does not provide an export named 'default'」で落ちる
+  #   minimatch 3.x/5.x (CJS, `require('brace-expansion')`)
+  #     → 戻り値が object になり関数として呼べない({ expand, EXPANSION_MAX,
+  #       EXPANSION_MAX_LENGTH })。呼ぶなら `.expand(...)` が要る
+  #
+  # 2026-08-09: 1系/2系にも修正版が出たので上流の対応待ちを解消した
+  # (以前は 1.1.16 / 2.1.2 が各系統の最新で、修正版が無かった)。
+  brace-expansion@^1.0.0: ^1.1.18
+  brace-expansion@^2.0.0: ^2.1.4
+  brace-expansion@^5.0.0: ^5.0.9
   # esbuild: 開発サーバへの任意リクエスト送信(<=0.24.2)と Windows での
   # 任意ファイル読み取り(0.27.3〜0.28.0)。いずれも開発サーバ限定で本番成果物に
   # 影響はないが、複数系統がツリーに居るため 0.28.1 に統一する。
   esbuild: ^0.28.1
   # express-rate-limit: レート制限の回避
   express-rate-limit@^8.0.0: ^8.2.2
-  # fast-uri: URIパースのReDoS
-  fast-uri@^3.0.0: ^3.1.4
+  # fast-uri: URIパースのReDoS。3.1.5 で Interpretation Conflict も解消
+  fast-uri@^3.0.0: ^3.1.5
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
@@ -94,7 +99,7 @@ overrides:
   # js-cookie: Cookie の取り扱い不備
   js-cookie@^3.0.0: ^3.0.6
   # js-yaml: マージキー連鎖による二次的CPU消費(@lhci/utils が 3系を牽引)
-  js-yaml@^3.0.0: ^3.15.0
+  js-yaml@^3.0.0: ^3.15.1
   # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
   launch-editor@^2.0.0: ^2.14.1
   # linkify-it: リンク検出のReDoS
@@ -103,6 +108,10 @@ overrides:
   lodash-es@^4.0.0: ^4.18.0
   # markdown-it: パースのReDoS
   markdown-it@^14.0.0: ^14.2.0
+  # nanoid: 非整数の size を渡したときの無限ループ。postcss が牽引する。
+  # postcss@8.5.23 は `^3.3.16` を宣言しているので 3系に留める(4系以降を
+  # 強制すれば契約違反になるうえ、CJS の入口が無い — main を持つのは 3系だけ)。
+  nanoid@^3.0.0: ^3.3.18
   # path-to-regexp: パターンのReDoS。0系と8系が同居する
   path-to-regexp@^0.1.0: ^0.1.13
   path-to-regexp@^8.0.0: ^8.4.0
@@ -119,8 +128,9 @@ overrides:
   shell-quote@^1.0.0: ^1.9.0
   # simple-git: コマンド引数の取り扱い不備
   simple-git@^3.0.0: ^3.36.0
-  # socket.io-parser: パース不備
-  socket.io-parser@^4.0.0: ^4.2.6
+  # socket.io-parser: パース不備。4.2.7 で Improper Check for Unusual or
+  # Exceptional Conditions も解消
+  socket.io-parser@^4.0.0: ^4.2.7
   # svgo: SVG 最適化時の不具合
   svgo@^4.0.0: ^4.0.2
   # tar: 展開時のDoS/パス解釈差異(CRITICAL 含む)
@@ -148,7 +158,11 @@ overrides:
   # vitest 4 が動かない（rolldown ベースの vite 8 を前提にしており、rolldown を持たない
   # vite 7 では transform 時に「Missing field `moduleType`」で全 spec が落ちる）。
   # 8系はこのアドバイザリを当然満たすので、8系へ寄せる。
-  # 完了条件は `pnpm peers check` で vite の unmet peer が消えること。
+  #
+  # **完了条件に `pnpm peers check` を使わないこと。** この override は
+  # pnpm-lock.yaml 上の peerDependencies 宣言ごと書き換えるため、非互換な
+  # パッケージも「充足」と表示される。`pnpm check:vite-peers` で上流の宣言と
+  # 突き合わせること（scripts/check-vite-peers.ts の冒頭に経緯あり）。
   vite@^7.0.0: ^8.1.5
   ws@7: ^7.5.13
   # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、

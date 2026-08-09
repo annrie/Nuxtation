@@ -6,7 +6,7 @@
   A duplicate `logic/` sat at the repository root until 2026-08-06. Since the Docus 5 migration
   (2025-12) made `app/` the srcDir, `~` and `@` resolve to `app/`, so the root copy was unreachable
   and had drifted out of date. It was removed; do not recreate it.
-- `server/`: Nitro handlers (`server/api`), middleware, and server-side plugins. Keep server-only dependencies here.
+- `server/`: Nitro middleware and server-side plugins. **There is deliberately no `server/api/`** — `/api/ogp` was removed in 2026-08 (unvalidated `?url=` → SSRF) and OGP is resolved at build time instead. `test/no-server-api-routes.spec.ts` fails if a route reappears. Keep server-only dependencies here.
 - `content/` & `public/`: Markdown-driven site content and static assets; update `content/` first, then regenerate.
 - `tests/`: Playwright specs. Name files after the route or feature (`tests/docs-home.spec.ts`).
 
@@ -14,7 +14,7 @@
 - `pnpm dev`: Start Nuxt 4 dev server with hot reload.
 - `pnpm build`: Production bundle with `VITE_APP_ENV=production`.
 - `pnpm generate`: Produce static output for SSG deployments.
-- `pnpm preview`: Serve `.output/` locally for smoke checks.
+- `pnpm preview`: Serve the build output (`.vercel/output/static`) locally for smoke checks. Run `pnpm build` first.
 - `pnpm lint` / `pnpm lint:fix`: ESLint via the Antfu preset; autofix before committing.
 - `pnpm exec playwright test`: Run end-to-end tests in `tests/`.
 - `pnpm ogp:refresh`: Resolve link-card OGP into `app/data/ogp-cache.json`.
@@ -32,9 +32,15 @@
 - **After pulling changes that touch `simple-git-hooks`, run `pnpm install` (or `pnpm exec simple-git-hooks`).** Editing `package.json` does not rewrite `.git/hooks/pre-commit` in existing clones, so the hook keeps running the old command until reinstalled. `pnpm build` / `pnpm generate` also run `pnpm check:ogp-cache` up front, so a stale hook still cannot ship a broken cache.
 - The check deliberately lives in `simple-git-hooks`, not `lint-staged`: lint-staged's default `--diff-filter` is `ACMR`, which omits deletions, so a commit that only deletes the cache would slip through.
 - `scripts/ogp-*.ts` are duplicated byte-for-byte across nuxtation / docustation / private-nuxtation. Change all three together; nothing enforces the sync.
-- There is no Vitest setup in this repo. Unit specs for the link-card extraction live in private-nuxtation (`test/ogp-link-cards.spec.ts`); Vitest 4 requires Vite 8, and this repo is pinned to Vite 7 because `@nuxt/devtools`, `@vite-pwa/nuxt` and friends do not declare Vite 8 support yet. See `tasks/2026-08-08-vite-8-migration.md`.
+- Run unit specs with `pnpm test` (Vitest, `test/` — singular, not `tests/`). `vitest.config.ts` lists both `app/**` and `test/**` in `include` on purpose: the default would sweep in `tests/` and fail every file, while narrowing to `app/**` would silently skip the shared specs.
+- **Vitest 4 needs Vite 8.** `pnpm-workspace.yaml` pins `vite@^7.0.0: ^8.1.5` together with five `vite-*` overrides, because raising Vite alone lets pnpm swallow peer conflicts for packages that only declare Vite 7 support. Keep them together. See `tasks/2026-08-08-vite-8-migration.md`.
+- **`pnpm peers check` does not prove Vite compatibility.** The override rewrites the `peerDependencies` recorded in `pnpm-lock.yaml`, so a genuinely incompatible package is reported as satisfied — `@nuxt/devtools-kit@2.7.0` declares `vite: ">=6.0"` upstream but appears as `^8.1.5` in the lockfile. Use `pnpm check:vite-peers`, which reads each package's own unpacked manifest (the override does not rewrite those) and resolves Vite *from that package's directory*, so every peer context gets the copy it would actually import. It runs in `ssg-check`. Pass `--vite <version>` to try a different version, and to confirm the check can still fail — `--vite 5.0.0` must exit 1.
+- **`check-vite-peers.ts` asks `pnpm list` for the dependency graph; do not go back to walking `node_modules/.pnpm` and string-matching `pnpm-lock.yaml`.** That approach broke three separate ways: `.pnpm` retains entries from earlier installs (stale versions reported as incompatible), the lockfile quotes scoped keys as `'@nuxt/devtools-kit@2.7.0':` so a plain `includes` silently dropped **every** scoped package — including the one the check exists for — and judging staleness by package version and Vite version independently mistakes a stale entry for a live one whenever that Vite is current for some other dependency. `pnpm list --json --depth Infinity` reports only live packages with real paths, so none of those cases arise.
+- **e2e targets the build output, not the dev server.** `playwright.config.ts` serves `.vercel/output/static`, so run `pnpm build` first. Testing against `nuxi dev` made firefox time out constantly: the dev server ships hundreds of individual modules and firefox waits for all of them before firing `load`, while chromium does not (measured: dev 624ms vs 6,471ms; static 1,251ms vs 2,227ms). That looked like flakiness but was a property of the dev server, not a product defect.
+- `serve -L` disables the SPA fallback on purpose; without it every unknown path returns `index.html` with a 200 and no 404 assertion can hold.
+- **A deleted server route cannot be verified over HTTP locally.** The Vercel preset emits API handlers into `.vercel/output/functions/`, not `static/`, so the static server returns 404 for `/api/*` whether or not the route exists — adding `server/api/` and rebuilding still left all 12 e2e specs green (measured). `test/no-server-api-routes.spec.ts` therefore inspects the build output directly and fails when any route appears under `functions/__fallback.func/chunks/routes/api/`. `tests/ogp-endpoint-removed.spec.ts` is skipped unless `PLAYWRIGHT_TEST_BASE_URL` points at a real deployment, where Nitro does run and the 404 is meaningful. Run `pnpm build` before `pnpm test`.
 - Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
-- By default a local dev server starts on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
+- By default the build output is served on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.
 - Use relative navigation (`page.goto('/')`) and `data-test` attributes for selectors.
 - Place shared fixtures under `tests/fixtures/` when needed.

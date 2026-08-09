@@ -11,13 +11,25 @@ import { devices } from '@playwright/test'
 // すべてここから導出し、個別にポートや URL を書かない。
 //
 // - PLAYWRIGHT_TEST_BASE_URL があれば staging / preview などの外部環境が対象。
-//   その場合ローカルの dev サーバーは起動しない（起動を待つ必要がないどころか、
+//   その場合ローカルのサーバーは起動しない（起動を待つ必要がないどころか、
 //   ローカルが立ち上がらないだけでリモート向けのテストが失敗してしまう）。
-// - 未指定ならローカルを起動して自分自身を対象にする。dev の既定ポート(3100)は
-//   docustation と重複するため専用ポートを使い、reuseExistingServer が別リポの
-//   dev サーバーを拾う事故を防ぐ。
-//   nuxi dev のポート優先順位は NUXT_PORT || NITRO_PORT || PORT || nuxtOptions.devServer.port
-//   なので --port を明示する。
+// - 未指定ならビルド成果物を静的配信して、それを対象にする。専用ポートを使うのは
+//   dev の既定ポート(3100)が docustation と重複するため。
+//
+// **dev サーバーを対象にしない。** 以前は `nuxi dev` を起動していたが、
+// firefox のスモークが 30 秒でタイムアウトし続けていた。実測すると原因は
+// dev サーバー特有の配信方法にあった:
+//
+//   配信元            chromium   firefox
+//   dev サーバー        624ms    6,471ms   ← 10.4 倍
+//   静的配信（本番相当） 1,251ms   2,227ms   ← 1.8 倍
+//
+// dev サーバーは依存を数百の個別モジュールとして配信する。firefox はそれら
+// すべての完了を待って load を発火させるが、chromium は待たずに発火させる
+// （page.on('requestfinished') で確認）。テストが積み重なると閾値を超え、
+// 「firefox だけ不安定」に見えていた。**本番の性能問題ではない。**
+//
+// 静的配信なら本番と同じ成果物を検証でき、firefox の遅さも解消する。
 const E2E_PORT = Number(process.env.PLAYWRIGHT_E2E_PORT ?? 3101)
 const LOCAL_ORIGIN = `http://localhost:${E2E_PORT}`
 const EXTERNAL_BASE_URL = process.env.PLAYWRIGHT_TEST_BASE_URL
@@ -113,16 +125,28 @@ const config: PlaywrightTestConfig = {
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: 'test-results/',
 
-  /* Run your local dev server before starting the tests */
+  /* テスト対象を配信するサーバー */
   // 外部環境が指定されているときは起動しない（上のコメント参照）。
   webServer: EXTERNAL_BASE_URL
     ? undefined
     : {
-        // `pnpm dev` は `nuxi dev -o` でブラウザを自動で開くため、テストでは nuxi を直接呼ぶ。
-        command: `pnpm exec nuxi dev --port ${E2E_PORT}`,
+        // ビルド成果物をそのまま配信する。`pnpm build` を先に済ませておくこと
+        // （成果物が無ければ serve が即座に終了し、Playwright が起動失敗として報告する）。
+        //
+        // -L は SPA フォールバックを無効にする。これが無いと未知のパスにも
+        // index.html を 200 で返してしまい、404 を期待する検査が通らなくなる。
+        //
+        // **ただし -L があっても API の有無は判定できない。** Vercel preset の
+        // API ハンドラは static ではなく `.vercel/output/functions/` に置かれ、
+        // 静的サーバーはそれを実行しない。廃止した `/api/ogp` の復活検出は
+        // `test/no-server-api-routes.spec.ts`（成果物を直接検査）が担当する。
+        //
+        // `nuxi preview` は vercel preset では "Preview is not supported for this
+        // build." と拒否されるため使えない（実測）。
+        command: `pnpm exec serve -p ${E2E_PORT} -L .vercel/output/static`,
         url: LOCAL_ORIGIN,
         reuseExistingServer: !process.env.CI,
-        timeout: 300 * 1000,
+        timeout: 60 * 1000,
       },
 }
 

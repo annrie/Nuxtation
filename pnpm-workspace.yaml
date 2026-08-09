@@ -135,8 +135,21 @@ overrides:
   # uuid: v3/v5/v6 で buf 指定時の境界チェック漏れ。@lhci/cli 経由。
   # v11 は名前付きエクスポートのみだが require("uuid") 形式なので影響なし。
   uuid: ^11.1.1
-  # vite: 開発サーバのファイル読み取り
-  vite@^7.0.0: ^7.3.5
+  # 以下 vite 系5つは、vite 7 までしか peer 宣言していない版が依存ツリーに残るため
+  # vite 8 対応版へ引き上げる。**下の `vite@^7.0.0` の引き上げとセットで初めて成立する。**
+  # 片方だけだと peer conflict が報告されないまま非対応の組み合わせを飲み込む
+  # （それで PR #18 は失敗した）。いずれも @nuxt/devtools と @vite-pwa/nuxt の配下。
+  vite-dev-rpc: ^2.0.0
+  vite-hot-client: ^2.2.0
+  vite-plugin-inspect: ^11.4.1
+  vite-plugin-pwa: ^1.3.0
+  vite-plugin-vue-tracer: ^1.4.0
+  # vite: 開発サーバのファイル読み取り対応で 7.3.5+ を要求していたが、7系のままだと
+  # vitest 4 が動かない（rolldown ベースの vite 8 を前提にしており、rolldown を持たない
+  # vite 7 では transform 時に「Missing field `moduleType`」で全 spec が落ちる）。
+  # 8系はこのアドバイザリを当然満たすので、8系へ寄せる。
+  # 完了条件は `pnpm peers check` で vite の unmet peer が消えること。
+  vite@^7.0.0: ^8.1.5
   ws@7: ^7.5.13
   # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、
   # 8系は8.21.0で修正されたが対策が不完全だったため8.21.1を要求する

@@ -4,8 +4,13 @@
 # exit 0のままページが欠落した事例あり(docustation v4.3.5で修正)。
 # exit codeだけでは検知できないため、成果物を直接検証する。
 name: SSG output check
+# **pull_request でも走らせる。** main への push だけにしていた頃は、
+# PR が server/api/ を復活させてもマージ後にしか検出できなかった
+# (no-server-api-routes.spec.ts はセキュリティ回帰の検査なので、
+# デプロイ対象になってから気づくのでは遅い)。
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches:
       - main
@@ -24,6 +29,10 @@ jobs:
           node-version: '22'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # override は lockfile 上の peer 宣言ごと書き換えるため、pnpm peers check
+      # では非互換を検出できない。上流の宣言と突き合わせる (scripts 冒頭参照)。
+      - name: Check vite peer ranges
+        run: pnpm check:vite-peers
       - run: pnpm build # nitro preset 'vercel' → .vercel/output に出力
       - name: Verify prerendered output
         run: |
@@ -32,6 +41,11 @@ jobs:
           echo "HTML files: $html_count"
           # 全ページ欠落の検知が目的なので、平常値(約34)より大幅に低い閾値にする
           [ "$html_count" -ge 15 ] || { echo "::error::HTML出力が少なすぎます ($html_count < 15)。prerenderの失敗を確認してください"; exit 1; }
+      # 単体テストにもビルド成果物を見るものがある(no-server-api-routes.spec.ts が
+      # .vercel/output を検査し、廃止した /api/ogp の復活を検出する)ため、
+      # 必ず build の後に実行する。
+      - name: Unit tests
+        run: pnpm test
       # ビルド成果物のインラインCSSを解析するため、必ず build の後に実行する。
       # レイヤー外に置かれたリセットCSSがTailwindの@layer utilitiesを打ち消す
       # 事故を検知する(kiso.cssをcss:[]から読んでいた時期に実際に発生した)。

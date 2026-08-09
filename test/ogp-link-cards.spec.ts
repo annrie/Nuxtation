@@ -10,16 +10,17 @@
 // 外すと object。実測で確認済み）。
 
 /**
- * 抽出ロジックの単体テスト。
+ * `scripts/ogp-link-cards.ts` の単体テスト。URL の抽出だけでなく、
+ * `isReservedHost` と `findMissingCacheEntries` の判定もここで固定する。
  *
  * `scripts/ogp-*.ts` は nuxtation / docustation / private-nuxtation で
  * byte 同一で、**この spec と vitest.config.ts も3リポ byte 同一**。
  * 変更するときは3リポすべてに同じ変更を入れること（同期を強制する
  * 仕組みは無い）。壊すと3リポとも黙って壊れる。
  *
- * **ここで見るのは抽出ロジックだけ。実際の `content/` とキャッシュの
- * 突き合わせは意図的に持たせていない**（2026-08-09 決定）。それは
- * `pnpm check:ogp-cache` の担当で、pre-commit と `pnpm build` /
+ * **省いているのは、実際の `content/` とキャッシュを読む統合検査だけ**
+ * （2026-08-09 決定）。判定ロジック自体は上記の通り単体で押さえてある。
+ * 統合検査は `pnpm check:ogp-cache` の担当で、pre-commit と `pnpm build` /
  * `pnpm generate` の先頭から実行されるため、既に塞がっている。
  * 同じ検査を vitest 側にも重ねると、キャッシュを更新するたびに直す場所が
  * 2箇所に増えるだけで、防げる事故は増えない。

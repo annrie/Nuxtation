@@ -14,7 +14,7 @@
 - `pnpm dev`: Start Nuxt 4 dev server with hot reload.
 - `pnpm build`: Production bundle with `VITE_APP_ENV=production`.
 - `pnpm generate`: Produce static output for SSG deployments.
-- `pnpm preview`: Serve `.output/` locally for smoke checks.
+- `pnpm preview`: Serve the build output (`.vercel/output/static`) locally for smoke checks. Run `pnpm build` first.
 - `pnpm lint` / `pnpm lint:fix`: ESLint via the Antfu preset; autofix before committing.
 - `pnpm exec playwright test`: Run end-to-end tests in `tests/`.
 - `pnpm ogp:refresh`: Resolve link-card OGP into `app/data/ogp-cache.json`.
@@ -34,9 +34,10 @@
 - `scripts/ogp-*.ts` are duplicated byte-for-byte across nuxtation / docustation / private-nuxtation. Change all three together; nothing enforces the sync.
 - Run unit specs with `pnpm test` (Vitest, `test/` — singular, not `tests/`). `vitest.config.ts` lists both `app/**` and `test/**` in `include` on purpose: the default would sweep in `tests/` and fail every file, while narrowing to `app/**` would silently skip the shared specs.
 - **Vitest 4 needs Vite 8.** `pnpm-workspace.yaml` pins `vite@^7.0.0: ^8.1.5` together with five `vite-*` overrides, because raising Vite alone lets pnpm swallow peer conflicts for packages that only declare Vite 7 support. Keep them together and verify with `pnpm peers check` — no unmet `vite` peer is the passing condition. See `tasks/2026-08-08-vite-8-migration.md`.
-- `tests/` (Playwright) is flaky on firefox — smoke specs intermittently hit the 30s timeout. This predates the Vite 8 migration; `develop` on Vite 7 failed the same specs. Re-run before treating a failure as a regression.
+- **e2e targets the build output, not the dev server.** `playwright.config.ts` serves `.vercel/output/static`, so run `pnpm build` first. Testing against `nuxi dev` made firefox time out constantly: the dev server ships hundreds of individual modules and firefox waits for all of them before firing `load`, while chromium does not (measured: dev 624ms vs 6,471ms; static 1,251ms vs 2,227ms). That looked like flakiness but was a property of the dev server, not a product defect.
+- `serve -L` disables the SPA fallback on purpose. Without it every unknown path returns `index.html`, which would make `tests/ogp-endpoint-removed.spec.ts` pass unconditionally and stop protecting the deleted endpoint.
 - Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
-- By default a local dev server starts on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
+- By default the build output is served on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.
 - Use relative navigation (`page.goto('/')`) and `data-test` attributes for selectors.
 - Place shared fixtures under `tests/fixtures/` when needed.

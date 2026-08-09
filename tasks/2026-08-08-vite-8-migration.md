@@ -1,7 +1,41 @@
-# vite 8 への移行（nuxtation・未着手）
+# vite 8 への移行（nuxtation・2026-08-09 完了）
 
-2026-08-08 記録。link-card 抽出の修正（PR: `fix/ogp-link-card-extraction`）の途中で
-必要性が判明したが、スコープが大きく別作業として切り出したもの。
+2026-08-08 記録、**2026-08-09 に完了**（PR: `build/vite-8`）。link-card 抽出の修正の
+途中で必要性が判明したが、スコープが大きく別作業として切り出したもの。
+
+## 結果
+
+`pnpm-workspace.yaml` の overrides を2段構えにして解決した。**片方だけでは成立しない。**
+
+```yaml
+vite-dev-rpc: ^2.0.0
+vite-hot-client: ^2.2.0
+vite-plugin-inspect: ^11.4.1
+vite-plugin-pwa: ^1.3.0
+vite-plugin-vue-tracer: ^1.4.0
+vite@^7.0.0: ^8.1.5
+```
+
+加えて `@nuxt/devtools` を 3.3.1 → 3.4.1 へ。
+
+完了条件（`pnpm peers check` で vite の unmet peer が消える）を達成し、
+`vitest.config.ts` と `test/ogp-link-cards.spec.ts` を private-nuxtation から
+持ち込んで **45 spec が通ることを確認**した。
+
+検証結果:
+
+- `pnpm test` — 45 passed（当初の目的）
+- `pnpm build` — 48 routes、実エラーなし
+- **PWA** — v1.3.0 で service worker 生成、precache 231 entries。
+  `pwa:beforeBuildServiceWorker` フックも動作（globPattern が `_payload.js` に置換済み）
+- **dev サーバ** — Vite 8.1.5 で起動、DevTools v3.4.1 認識、HTTP 200
+- **HMR** — content を変更→反映、復元→反映の双方向を確認
+- `pnpm lint` — エラー数は既存の 29 件のまま（増分ゼロ）
+- `pnpm test:e2e` — firefox のスモークが不安定だが、**develop（vite 7）でも同じテストが
+  落ちる**ことを確認済み。移行とは無関係の既存フレーク
+
+`.pnpm` に vite 7.3.6 のインスタンスは残るが、pnpm が複数バージョンを共存させる正常な
+状態。**重要なのは peer 要求が満たされていること。**
 
 ## なぜ必要か
 

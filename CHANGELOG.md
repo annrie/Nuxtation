@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.1
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.0...v4.5.1)
+
+### 🐛 バグ修正
+
+- **deps:** 🔒 Snyk 指摘の推移的依存5件を修正版へ引き上げる ([#21](https://github.com/annrie/Nuxtation/pull/21))
+
+### 📖 ドキュメント
+
+- **test:** 📝 vitest まわりのコメントを実態に合わせる ([#22](https://github.com/annrie/Nuxtation/pull/22))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.0
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.6...v4.5.0)

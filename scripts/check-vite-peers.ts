@@ -38,8 +38,28 @@ const LOCKFILE = join(ROOT, 'pnpm-lock.yaml')
 interface Row {
   name: string
   version: string
+  /** 上流が宣言している vite の peer レンジ。 */
   range: string
-  unmet: string[]
+  /** そのパッケージに実際に割り当てられた vite。 */
+  vite: string
+  satisfied: boolean
+}
+
+/**
+ * 仮想ストアの各エントリ配下にリンクされている vite の版を読む。
+ * pnpm は peer を解決したうえでここに実体を置くので、これがそのパッケージに
+ * とっての vite そのもの。リンクが無ければ peer が供給されていない。
+ */
+function readLinkedVite(dir: string): string | null {
+  try {
+    const pkg = JSON.parse(
+      readFileSync(join(PNPM_DIR, dir, 'node_modules/vite/package.json'), 'utf8'),
+    )
+    return typeof pkg.version === 'string' ? pkg.version : null
+  }
+  catch {
+    return null
+  }
 }
 
 /** `.pnpm` の展開先から semver を借りる（トップレベルに hoist されない場合がある）。 */
@@ -90,16 +110,17 @@ async function main() {
   const lockText = readFileSync(LOCKFILE, 'utf8')
   const inLock = (name: string, version: string) => lockText.includes(`  ${name}@${version}:`)
 
-  // 解決された vite も lockfile から採る（同上の理由）。
-  // --vite で差し替えれば、上げる前の下調べや検査自体の動作確認に使える。
-  const override = process.argv[process.argv.indexOf('--vite') + 1]
-  const viteVersions = process.argv.includes('--vite') && override
-    ? [override]
-    : [...new Set(
-        [...lockText.matchAll(/^ {2}vite@([\d.]+(?:-[\w.]+)?):/gm)].map(m => m[1]!),
-      )]
-  if (viteVersions.length === 0)
+  // lockfile が解決した vite。残骸ディレクトリの判別にも使う。
+  const lockViteVersions = new Set(
+    [...lockText.matchAll(/^ {2}vite@([\d.]+(?:-[\w.]+)?):/gm)].map(m => m[1]!),
+  )
+  if (lockViteVersions.size === 0)
     throw new Error('lockfile から vite のバージョンを読めませんでした。')
+
+  // --vite は「別の版に上げたらどうなるか」の試算用。全パッケージをその版で
+  // 評価する（実際のリンクではなく仮定の値を見るので、判定は概算になる）。
+  const assumeIndex = process.argv.indexOf('--vite')
+  const assumed = assumeIndex >= 0 ? process.argv[assumeIndex + 1] : undefined
 
   const rows: Row[] = []
   for (const dir of entries) {
@@ -119,25 +140,46 @@ async function main() {
     if (!range || !pkg.version || !inLock(resolved.name, pkg.version))
       continue
 
+    // **そのパッケージに実際に割り当てられた vite だけを見る。**
+    // 依存ツリーに複数の vite が正当に並ぶことはありうるので、全バージョンと
+    // 総当たりすると、正しくリンクされているパッケージを無関係な版のせいで
+    // 落としてしまう。pnpm は peer を解決したうえで各仮想ディレクトリ配下に
+    // 実体をリンクするので、それを読めば取り違えない。
+    const linked = assumed ?? readLinkedVite(dir)
+    if (!linked)
+      continue
+
+    // 残骸の除外。`.pnpm` には過去のインストール分が残り、そこには当時の
+    // vite がリンクされたままになっている（実際に vite-imagetools@10.0.1 が
+    // vite 7.3.6 を指す残骸が見つかった）。パッケージ名＋版だけでは弾けない。
+    // CI は fresh checkout + --frozen-lockfile なので、この分岐は開発機専用。
+    if (!assumed && !lockViteVersions.has(linked))
+      continue
+
     rows.push({
       name: resolved.name,
       version: pkg.version,
       range,
-      unmet: viteVersions.filter(v => !semver.satisfies(v, range, { includePrerelease: true })),
+      vite: linked,
+      satisfied: semver.satisfies(linked, range, { includePrerelease: true }),
     })
   }
 
-  // 同一パッケージが peer の組み合わせ違いで複数展開されるため重複を畳む。
-  const unique = [...new Map(rows.map(r => [`${r.name}@${r.version}`, r])).values()]
-    .sort((a, b) => a.name.localeCompare(b.name))
-  const broken = unique.filter(r => r.unmet.length > 0)
+  // 同じパッケージが peer の組み合わせ違いで複数展開される。割り当てられた
+  // vite が違えば別の検証対象なので、そこまで含めて重複を畳む。
+  const unique = [...new Map(rows.map(r => [`${r.name}@${r.version}+vite@${r.vite}`, r])).values()]
+    .sort((a, b) => a.name.localeCompare(b.name) || a.vite.localeCompare(b.vite))
+  const broken = unique.filter(r => !r.satisfied)
 
-  console.log(`解決された vite: ${viteVersions.join(', ')}`)
+  const seenVite = [...new Set(unique.map(r => r.vite))].sort()
+  console.log(assumed
+    ? `仮定する vite: ${assumed}（実際のリンクではなく試算）`
+    : `割り当てられた vite: ${seenVite.join(', ')}`)
   console.log(`vite を peer 宣言するパッケージ: ${unique.length} 件\n`)
 
   if (verbose) {
-    for (const r of unique.filter(r => r.unmet.length === 0))
-      console.log(`  ✅ ${r.name}@${r.version}  要求: ${r.range}`)
+    for (const r of unique.filter(r => r.satisfied))
+      console.log(`  ✅ ${r.name}@${r.version}  要求: ${r.range}  → vite ${r.vite}`)
     console.log()
   }
 
@@ -148,7 +190,7 @@ async function main() {
 
   console.log('❌ 上流のレンジを満たさないパッケージがあります:\n')
   for (const r of broken)
-    console.log(`  ${r.name}@${r.version}\n    上流の要求: ${r.range}\n    未充足    : ${r.unmet.join(', ')}\n`)
+    console.log(`  ${r.name}@${r.version}\n    上流の要求  : ${r.range}\n    割り当て済み: vite ${r.vite}\n`)
 
   console.log('対処: 対応版へ上げる override を追加するか、vite を戻してください。')
   console.log('      `pnpm peers check` はこの状態でも通るので当てになりません。')

@@ -52,8 +52,8 @@ interface Row {
   version: string
   /** 上流が宣言している vite の peer レンジ。 */
   range: string
-  /** そのパッケージ自身の位置から解決される vite。 */
-  vite: string
+  /** そのパッケージ自身の位置から解決される vite。null は供給されていないこと。 */
+  vite: string | null
   satisfied: boolean
 }
 
@@ -122,7 +122,11 @@ function main() {
 
   const rows: Row[] = []
   for (const [path, name] of resolved) {
-    let pkg: { version?: string, peerDependencies?: Record<string, string> }
+    let pkg: {
+      version?: string
+      peerDependencies?: Record<string, string>
+      peerDependenciesMeta?: Record<string, { optional?: boolean }>
+    }
     try {
       pkg = JSON.parse(readFileSync(`${path}/package.json`, 'utf8'))
     }
@@ -137,14 +141,20 @@ function main() {
     // **そのパッケージ自身の位置から vite を解決する。** ツリーに複数の vite が
     // 並ぶことは正当にありうるので、全バージョンと総当たりすると正しく
     // リンクされたパッケージまで落ちる。Node の解決なら取り違えない。
-    let vite = assumed
+    let vite: string | null = assumed ?? null
     if (!vite) {
       try {
         const req = createRequire(`${path}/`)
         vite = JSON.parse(readFileSync(req.resolve('vite/package.json'), 'utf8')).version
       }
       catch {
-        continue // peer が供給されていない（optional peer など）
+        // **解決できないことを黙って見逃さない。** optional peer なら供給
+        // されないのが正常だが、必須なら欠落そのものが不適合。ここで
+        // continue すると「必須 peer が無い」構成を成功として報告してしまう。
+        if (pkg.peerDependenciesMeta?.vite?.optional === true)
+          continue
+        rows.push({ name, version: pkg.version, range, vite: null, satisfied: false })
+        continue
       }
     }
     if (!vite)
@@ -160,11 +170,11 @@ function main() {
   }
 
   // 表示は名前・版・割り当て vite の組で畳む（実体が別でも内容が同じなら1行）。
-  const unique = [...new Map(rows.map(r => [`${r.name}@${r.version}+vite@${r.vite}`, r])).values()]
-    .sort((a, b) => a.name.localeCompare(b.name) || a.vite.localeCompare(b.vite))
+  const unique = [...new Map(rows.map(r => [`${r.name}@${r.version}+vite@${r.vite ?? '-'}`, r])).values()]
+    .sort((a, b) => a.name.localeCompare(b.name) || (a.vite ?? '').localeCompare(b.vite ?? ''))
   const broken = unique.filter(r => !r.satisfied)
 
-  const seenVite = [...new Set(unique.map(r => r.vite))].sort()
+  const seenVite = [...new Set(unique.map(r => r.vite).filter(v => v !== null))].sort()
   console.log(assumed
     ? `仮定する vite: ${assumed}（実際の解決結果ではなく試算）`
     : `解決された vite: ${seenVite.join(', ')}`)
@@ -181,9 +191,13 @@ function main() {
     return
   }
 
-  console.log('❌ 上流のレンジを満たさないパッケージがあります:\n')
-  for (const r of broken)
-    console.log(`  ${r.name}@${r.version}\n    上流の要求: ${r.range}\n    解決結果  : vite ${r.vite}\n`)
+  console.log('❌ vite の peer を満たさないパッケージがあります:\n')
+  for (const r of broken) {
+    const result = r.vite === null
+      ? 'vite が解決できません（optional ではない peer なので、欠落そのものが不適合）'
+      : `vite ${r.vite}`
+    console.log(`  ${r.name}@${r.version}\n    上流の要求: ${r.range}\n    解決結果  : ${result}\n`)
+  }
 
   console.log('対処: 対応版へ上げる override を追加するか、vite を戻してください。')
   console.log('      `pnpm peers check` はこの状態でも通るので当てになりません。')

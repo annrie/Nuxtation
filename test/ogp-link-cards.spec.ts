@@ -1,21 +1,28 @@
 // @vitest-environment node
 //
-// node 環境を明示する。vitest.config.ts の既定は jsdom だが、@nuxt/test-utils が
-// Nuxt を部分的に用意する環境で @nuxtjs/mdc を呼ぶと、MDC 内部の composable が
-// Nuxt インスタンスを見つけられず NUXT_E1001 を大量に吐く（結果自体は正しい）。
-// **本体の pnpm ogp:refresh は tsx で Nuxt の外を走る。** node 環境にすれば
-// ノイズが消えるだけでなく、テストと本体の実行条件が揃う。
+// node 環境を明示する。vitest.config.ts の既定は jsdom だが、**本体の
+// pnpm ogp:refresh は tsx で Nuxt も DOM も無い所を走る**ので、実行条件を
+// 揃えておく。
+//
+// **レポーターの `|jsdom|` 表示に惑わされないこと。** 行頭に出るのは
+// プロジェクト既定の環境名で、ファイル単位の上書きは反映されない。
+// 効いているかは `typeof window` で判る（docblock あり → undefined、
+// 外すと object。実測で確認済み）。
 
 /**
  * 抽出ロジックの単体テスト。
  *
  * `scripts/ogp-*.ts` は nuxtation / docustation / private-nuxtation で
- * byte 同一だが、**vitest 基盤があるのはこのリポジトリだけ**（他2つは
- * vite 7 に固定されており vitest 4 が動かない。詳細は nuxtation の
- * tasks/2026-08-08-vite-8-migration.md）。3リポ分の抽出ロジックを
- * ここで代表して検証している。壊すと他2リポも黙って壊れる。
+ * byte 同一で、**この spec と vitest.config.ts も3リポ byte 同一**。
+ * 変更するときは3リポすべてに同じ変更を入れること（同期を強制する
+ * 仕組みは無い）。壊すと3リポとも黙って壊れる。
  *
- * キャッシュ欠落の検出そのものは `pnpm check:ogp-cache` が担当する（3リポ共通）。
+ * **ここで見るのは抽出ロジックだけ。実際の `content/` とキャッシュの
+ * 突き合わせは意図的に持たせていない**（2026-08-09 決定）。それは
+ * `pnpm check:ogp-cache` の担当で、pre-commit と `pnpm build` /
+ * `pnpm generate` の先頭から実行されるため、既に塞がっている。
+ * 同じ検査を vitest 側にも重ねると、キャッシュを更新するたびに直す場所が
+ * 2箇所に増えるだけで、防げる事故は増えない。
  */
 
 import { describe, expect, it } from 'vitest'

@@ -4,8 +4,13 @@
 # exit 0のままページが欠落した事例あり(docustation v4.3.5で修正)。
 # exit codeだけでは検知できないため、成果物を直接検証する。
 name: SSG output check
+# **pull_request でも走らせる。** main への push だけにしていた頃は、
+# PR が server/api/ を復活させてもマージ後にしか検出できなかった
+# (no-server-api-routes.spec.ts はセキュリティ回帰の検査なので、
+# デプロイ対象になってから気づくのでは遅い)。
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches:
       - main
@@ -24,6 +29,10 @@ jobs:
           node-version: '22'
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # override は lockfile 上の peer 宣言ごと書き換えるため、pnpm peers check
+      # では非互換を検出できない。上流の宣言と突き合わせる (scripts 冒頭参照)。
+      - name: Check vite peer ranges
+        run: pnpm check:vite-peers
       - run: pnpm build # nitro preset 'vercel' → .vercel/output に出力
       - name: Verify prerendered output
         run: |

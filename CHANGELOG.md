@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.4.6
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.5...v4.4.6)
+
+### 🐛 バグ修正
+
+- **ogp:** Link-card の抽出を MDC の AST へ移しキャッシュ欠落を検出する ([3fb1861](https://github.com/annrie/Nuxtation/commit/3fb1861))
+- **ogp:** キャッシュ検査をステージの内容に対して行う ([32a2151](https://github.com/annrie/Nuxtation/commit/32a2151))
+- **ogp:** ステージにキャッシュが無いケースの判定を直す ([b32008b](https://github.com/annrie/Nuxtation/commit/b32008b))
+- **ogp:** キャッシュファイルの不在をエラーにする ([cdf6f41](https://github.com/annrie/Nuxtation/commit/cdf6f41))
+- **ogp:** キャッシュ検査を pre-commit へ移し削除も捕まえる ([eb6dff3](https://github.com/annrie/Nuxtation/commit/eb6dff3))
+- **ogp:** Rename・壊れたエントリ・抽出側の変更を検査対象に含める ([2bd5d75](https://github.com/annrie/Nuxtation/commit/2bd5d75))
+- **ogp:** 検査コード自身のステージずれを検出する ([80e2a2e](https://github.com/annrie/Nuxtation/commit/80e2a2e))
+- **ogp:** 古いエントリ・型変更・バインド記法・フック未更新を塞ぐ ([11e7503](https://github.com/annrie/Nuxtation/commit/11e7503))
+- **ogp:** V-bind の全綴りと予約ホストのエントリを拒否する ([bf02725](https://github.com/annrie/Nuxtation/commit/bf02725))
+- **ogp:** URL バインドの判定を接頭辞の列挙からやめる ([b886c9b](https://github.com/annrie/Nuxtation/commit/b886c9b))
+- **ogp:** キャッシュのルートがオブジェクトであることを検証する ([3144c15](https://github.com/annrie/Nuxtation/commit/3144c15))
+- **ogp:** Index から消えた検査スクリプトも検出する ([c0c4352](https://github.com/annrie/Nuxtation/commit/c0c4352))
+- **ogp:** 検査スクリプトが通常ファイルであることを index の mode で確かめる ([8e1aa4f](https://github.com/annrie/Nuxtation/commit/8e1aa4f))
+- **ogp:** キャッシュも通常ファイルであることを index の mode で確かめる ([3b7bf75](https://github.com/annrie/Nuxtation/commit/3b7bf75))
+
+### 📖 ドキュメント
+
+- **agents:** OGP キャッシュ検査の位置づけと削除禁止を明記する ([457ac49](https://github.com/annrie/Nuxtation/commit/457ac49))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- MCP の生成スナップショットを ignore する ([069a1aa](https://github.com/annrie/Nuxtation/commit/069a1aa))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.5
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.4...v4.4.5)

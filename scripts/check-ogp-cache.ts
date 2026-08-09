@@ -133,11 +133,25 @@ function checkerFilesDifferFromIndex(): string[] {
   // なるが、`ls-files` はパスを報告し `diff` も差分なしと言う。tsx は手元の
   // untracked なリンク先を辿って動くので検査は成功するのに、クローンした
   // 環境にはリンク先が無い（実測で確認済み）。index の mode まで見る。
-  //
-  // 各行は `<mode> <sha> <stage>\t<path>` の形。通常ファイル（100644 /
-  // 実行ビット付き 100755）以外は受け付けない。
-  const stagedModes = new Map(
-    git(['ls-files', '--stage', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
+  return [...new Set([...drifted, ...notRegularFilesInIndex([SELF_SCRIPT, EXTRACTOR_SCRIPT])])]
+}
+
+/**
+ * ステージに通常ファイルとして入っていないパスを返す。
+ *
+ * **リポジトリに実体として入る必要のあるファイルは、これを通す。**
+ * symlink としてステージすると mode が 120000 になり、`ls-files` は
+ * パスを報告し `git show` はリンク先の**名前**を blob として返す。
+ * リンク先を `{}` という名前にすれば中身が空の JSON に見えるので、
+ * 内容の検証もすり抜ける（実測で確認済み）。クローンした環境には
+ * リンク先が無く、LinkCard.vue の静的 import が解決できない。
+ *
+ * 各行は `<mode> <sha> <stage>\t<path>` の形。通常ファイル（100644 /
+ * 実行ビット付き 100755）以外は受け付けない。
+ */
+function notRegularFilesInIndex(paths: string[]): string[] {
+  const modes = new Map(
+    git(['ls-files', '--stage', '--', ...paths])
       .toString('utf8')
       .split('\n')
       .filter(Boolean)
@@ -148,13 +162,11 @@ function checkerFilesDifferFromIndex(): string[] {
       }),
   )
 
-  const unusable = [SELF_SCRIPT, EXTRACTOR_SCRIPT].filter((path) => {
-    const mode = stagedModes.get(path)
+  return paths.filter((path) => {
+    const mode = modes.get(path)
 
     return mode === undefined || (mode !== '100644' && mode !== '100755')
   })
-
-  return [...new Set([...drifted, ...unusable])]
 }
 
 async function readCache(): Promise<Record<string, unknown>> {
@@ -224,6 +236,18 @@ async function main(): Promise<void> {
       console.error('   状態を保証できません。ステージ側と食い違ったロジックで判定するか、')
       console.error('   ステージから消えたスクリプトを手元のコピーで代用してしまいます。')
       console.error('   `git add` するか変更を戻してから、もう一度コミットしてください。\n')
+      process.exit(1)
+    }
+
+    // キャッシュも実体でなければならない。LinkCard.vue が静的 import する
+    // ので、symlink をステージするとクローン先で dangling になり
+    // ビルドが解決できない。リンク先の名前を `{}` にすると blob が空の
+    // JSON に見えて内容の検証もすり抜けるため、読む前に mode で弾く。
+    if (notRegularFilesInIndex([CACHE_PATH]).length > 0) {
+      console.error(`❌ ${CACHE_PATH} がステージに通常ファイルとして入っていません。`)
+      console.error('   symlink や gitlink ではなく、実体のファイルとしてコミットしてください。')
+      console.error('   LinkCard.vue がこの JSON を静的 import するため、リンク先が無い環境では')
+      console.error('   ビルドが「Could not load ...」で失敗します。\n')
       process.exit(1)
     }
   }

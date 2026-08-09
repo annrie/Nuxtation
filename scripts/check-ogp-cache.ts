@@ -119,10 +119,25 @@ function stagedChangesAreRelevant(): boolean {
  * 部分ステージする場面もまず無いので、食い違いを検出して止める。
  */
 function checkerFilesDifferFromIndex(): string[] {
-  return git(['diff', '--name-only', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
+  const drifted = git(['diff', '--name-only', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
     .toString('utf8')
     .split('\n')
     .filter(Boolean)
+
+  // **`git diff` だけでは足りない。** `git rm --cached` で index から外すと
+  // 作業ツリーのコピーは untracked になり、比較対象から消えるので差分が
+  // 出ない（実測で確認済み）。検査は手元のファイルで動いて成功するのに、
+  // コミット後はスクリプトが消えていて build の check が import できない。
+  // index に居るかどうかを直接確かめる。
+  const tracked = new Set(
+    git(['ls-files', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
+      .toString('utf8')
+      .split('\n')
+      .filter(Boolean),
+  )
+  const removed = [SELF_SCRIPT, EXTRACTOR_SCRIPT].filter(path => !tracked.has(path))
+
+  return [...new Set([...drifted, ...removed])]
 }
 
 async function readCache(): Promise<Record<string, unknown>> {
@@ -184,13 +199,13 @@ async function main(): Promise<void> {
     const drifted = checkerFilesDifferFromIndex()
 
     if (drifted.length > 0) {
-      console.error('❌ 検査に使うコード自身に未ステージの変更があります。')
+      console.error('❌ 検査に使うコード自身が、ステージの内容と一致していません。')
       for (const path of drifted)
         console.error(`   - ${path}`)
 
       console.error('\n   検査は作業ツリーのコードで走るため、このままではコミット後の')
-      console.error('   状態を保証できません（ステージ側の新しい抽出ロジックではなく、')
-      console.error('   作業ツリーの古いロジックで判定してしまいます）。')
+      console.error('   状態を保証できません。ステージ側と食い違ったロジックで判定するか、')
+      console.error('   ステージから消えたスクリプトを手元のコピーで代用してしまいます。')
       console.error('   `git add` するか変更を戻してから、もう一度コミットしてください。\n')
       process.exit(1)
     }

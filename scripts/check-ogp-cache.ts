@@ -128,16 +128,33 @@ function checkerFilesDifferFromIndex(): string[] {
   // 作業ツリーのコピーは untracked になり、比較対象から消えるので差分が
   // 出ない（実測で確認済み）。検査は手元のファイルで動いて成功するのに、
   // コミット後はスクリプトが消えていて build の check が import できない。
-  // index に居るかどうかを直接確かめる。
-  const tracked = new Set(
-    git(['ls-files', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
+  //
+  // **在否だけでも足りない。** symlink としてステージすると mode は 120000 に
+  // なるが、`ls-files` はパスを報告し `diff` も差分なしと言う。tsx は手元の
+  // untracked なリンク先を辿って動くので検査は成功するのに、クローンした
+  // 環境にはリンク先が無い（実測で確認済み）。index の mode まで見る。
+  //
+  // 各行は `<mode> <sha> <stage>\t<path>` の形。通常ファイル（100644 /
+  // 実行ビット付き 100755）以外は受け付けない。
+  const stagedModes = new Map(
+    git(['ls-files', '--stage', '--', SELF_SCRIPT, EXTRACTOR_SCRIPT])
       .toString('utf8')
       .split('\n')
-      .filter(Boolean),
-  )
-  const removed = [SELF_SCRIPT, EXTRACTOR_SCRIPT].filter(path => !tracked.has(path))
+      .filter(Boolean)
+      .map((line) => {
+        const [meta, path] = line.split('\t')
 
-  return [...new Set([...drifted, ...removed])]
+        return [path, meta.split(' ')[0]] as const
+      }),
+  )
+
+  const unusable = [SELF_SCRIPT, EXTRACTOR_SCRIPT].filter((path) => {
+    const mode = stagedModes.get(path)
+
+    return mode === undefined || (mode !== '100644' && mode !== '100755')
+  })
+
+  return [...new Set([...drifted, ...unusable])]
 }
 
 async function readCache(): Promise<Record<string, unknown>> {

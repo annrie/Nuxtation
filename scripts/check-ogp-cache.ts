@@ -127,7 +127,21 @@ function checkerFilesDifferFromIndex(): string[] {
 
 async function readCache(): Promise<Record<string, unknown>> {
   try {
-    return JSON.parse(await readSource(CACHE_PATH, source))
+    const parsed: unknown = JSON.parse(await readSource(CACHE_PATH, source))
+
+    // **JSON として妥当でも、形が違えば検査が空振りする。**
+    // `[]` や `""` や `0` はキャストを素通りし、Object.keys() が空になるので
+    // 「参照0件・stale 0件」で成功と報告してしまう（refresh が書き出すのは
+    // 常にプレーンオブジェクト）。ここで形を確かめる。
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+      console.error(`❌ ${CACHE_PATH} の中身が想定の形ではありません（検査対象: ${source === 'index' ? 'ステージの内容' : '作業ツリー'}）。`)
+      console.error(`   URL をキーにしたオブジェクトである必要があります。実際の型: ${Array.isArray(parsed) ? 'array' : typeof parsed}`)
+      console.error('   link-card が1件も無い場合は {} にしてください。')
+      console.error('   `pnpm ogp:refresh` を実行すれば正しい形で書き出されます。\n')
+      process.exit(1)
+    }
+
+    return parsed as Record<string, unknown>
   }
   catch (error) {
     // ファイルの不在は作業ツリーなら ENOENT。index に無い場合 git show は 128 で

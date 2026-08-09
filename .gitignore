@@ -19,3 +19,10 @@ docs/
 .claude/settings.local.json
 # Superpowers SDD の作業領域(台帳・レビュー資材)
 .superpowers/
+# @nuxt/test-utils が nuxi prepare 時に生成する。中身は導入バージョンの記録だけで
+# 各自の環境で再生成されるため追跡しない。
+.nuxtrc
+# Playwright MCP がセッションごとに書き出すスナップショット。
+# タイムスタンプ付きで無限に増えるうえ、テスト資産ではないので追跡しない。
+# （private-nuxtation では未記載のまま git add -A で 17 ファイル巻き込んだ）
+.playwright-mcp/

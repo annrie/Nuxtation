@@ -12,10 +12,10 @@
     "node": "22.x"
   },
   "scripts": {
-    "build": "VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi build",
+    "build": "pnpm check:ogp-cache && VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi build",
     "dev": "nuxi dev -o",
     "start": "node .output/server/index.mjs",
-    "generate": "VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi generate",
+    "generate": "pnpm check:ogp-cache && VITE_APP_ENV=production NODE_OPTIONS='--max-old-space-size=16384' nuxi generate",
     "preview": "npx serve dist",
     "mdts": "npx mdts",
     "postinstall": "nuxi prepare",
@@ -26,6 +26,7 @@
     "test:e2e": "playwright install && playwright test",
     "check:contrast": "npx tsx scripts/check-contrast.ts",
     "check:css-layers": "npx tsx scripts/check-css-layers.ts",
+    "check:ogp-cache": "npx tsx scripts/check-ogp-cache.ts",
     "release:patch": "changelogen --release --patch",
     "release:minor": "changelogen --release --minor",
     "release:major": "changelogen --release --major",
@@ -138,7 +139,7 @@
     "vue3-carousel-nuxt": "1.1.6"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged && pnpm check:ogp-cache --staged --if-relevant"
   },
   "browserslist": [
     "defaults and fully supports es6-module"

@@ -20,26 +20,16 @@
  */
 
 import type { OgpEntry } from './ogp-link-cards'
-import { mkdir, readdir, readFile, rename, writeFile } from 'node:fs/promises'
-import { dirname, join } from 'node:path'
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { dirname } from 'node:path'
 import process from 'node:process'
 import ogs from 'open-graph-scraper'
-import { extractLinkCardUrls, isReservedHost } from './ogp-link-cards'
+import { CACHE_PATH, collectReferencedUrls, isReservedHost } from './ogp-link-cards'
 
-const CONTENT_DIR = 'content'
-const CACHE_PATH = 'app/data/ogp-cache.json'
 // open-graph-scraper の timeout はミリ秒ではなく秒指定（README/型定義参照）。
 // ミリ秒だと誤解して 20000 に「戻す」と実質 20000 秒（約5.5時間）になり、
 // 応答しないホスト1件で pnpm ogp:refresh がハングする。単位を戻さないこと。
 const REQUEST_TIMEOUT_SECONDS = 20
-
-async function collectMarkdownFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { recursive: true, withFileTypes: true })
-
-  return entries
-    .filter(entry => entry.isFile() && entry.name.endsWith('.md'))
-    .map(entry => join(entry.parentPath, entry.name))
-}
 
 async function readCache(): Promise<Record<string, OgpEntry>> {
   try {
@@ -63,13 +53,9 @@ async function readCache(): Promise<Record<string, OgpEntry>> {
 }
 
 async function main(): Promise<void> {
-  const files = await collectMarkdownFiles(CONTENT_DIR)
-
-  const referenced = new Set<string>()
-  for (const file of files) {
-    for (const url of extractLinkCardUrls(await readFile(file, 'utf8')))
-      referenced.add(url)
-  }
+  // 同じ URL が複数記事から参照されることがあるので一意化する。
+  // 取得は URL ごとに1回で足りる。
+  const referenced = new Set(await collectReferencedUrls())
 
   // 既存キャッシュを読み込む。参照を失った URL は next にコピーしないことで
   // 自然に落ちる（後から削除する別処理は無い）。

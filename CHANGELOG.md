@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.0
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.6...v4.5.0)
+
+### 📦 ビルド
+
+- **deps:** Vite 8 へ移行し vitest を使えるようにする ([#20](https://github.com/annrie/Nuxtation/pull/20))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.4.6
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.4.5...v4.4.6)

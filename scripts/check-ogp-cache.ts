@@ -189,12 +189,18 @@ async function main(): Promise<void> {
   const unique = new Set(referenced)
   const skipped = [...unique].filter(url => isReservedHost(url))
 
-  // 参照されなくなったエントリ。`ogp:refresh` は参照集合だけを書き出すので、
-  // これが残っているのは refresh を回していない証拠になる。
-  // ビルドは壊れないが、消した記事の URL とメタデータが成果物に残り続ける。
-  // 「link-card を全部消したらキャッシュは {} にする」と AGENTS.md に
-  // 書いている以上、人の記憶ではなくここで担保する。
-  const stale = Object.keys(cache).filter(url => !unique.has(url))
+  // `ogp:refresh` が書き出さないはずのエントリ。残っていれば refresh を
+  // 回していない証拠になる。ビルドは壊れないが、消した記事の URL と
+  // メタデータが成果物に残り続ける。「link-card を全部消したらキャッシュは
+  // {} にする」と AGENTS.md に書いている以上、人の記憶ではなくここで担保する。
+  //
+  // **予約ホストは参照されていても stale。** refresh は予約ホストを取得対象から
+  // 外すのでキャッシュに入れない。一方 findMissingCacheEntries も予約ホストを
+  // 飛ばすため値の検証をしない。両方すり抜けるので、手で書いた壊れた
+  // エントリが素通りしていた（実測で確認済み）。
+  const stale = Object.keys(cache).filter(
+    url => !unique.has(url) || isReservedHost(url),
+  )
 
   if (missing.length === 0 && stale.length === 0) {
     const covered = unique.size - skipped.length

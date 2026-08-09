@@ -46,19 +46,41 @@ export interface OgpEntry {
  * LinkCard.vue 側は `propsUrl: String` 宣言で Vue の props 正規化が効くため
  * どちらでも描画される。抽出だけが追随していないと表示が静かに劣化する。
  */
+/**
+ * URL がバインドで渡されている props か。渡されていたら抽出できない。
+ *
+ * `::link-card{:props-url="cardUrl"}` のようにフロントマターの値を束ねると、
+ * AST には `{ ':props-url': 'cardUrl' }` のまま残る。MDCRenderer は rxBind で
+ * 接頭辞を外して値を解決するので **カードは描画されるのに、ここでは URL を
+ * 拾えない**（実測で確認済み）。
+ *
+ * **綴りは1つではない。** MDC 0.22.2 は `:props-url` / `v-bind:props-url` /
+ * `v-bind="obj"` をいずれも AST に残し、レンダラは全部解決する。
+ * `v-bind:propsUrl` は kebab へ正規化されて `v-bind:props-url` になる。
+ * 綴りを列挙して1つ漏らすと、そこだけ黙って劣化する。
+ *
+ * `v-bind="obj"` はオブジェクトごと束ねるので、中に propsUrl が入るかを
+ * 静的に判定できない。安全側に倒して拒否する。逆に `:title` のような
+ * URL と無関係なバインドは通す。
+ *
+ * ast.data から解決する道もあるが、dot-path や式の扱いまで MDCRenderer の
+ * 挙動を写し取ることになり、ズレれば同じ種類の取りこぼしを別の形で作る。
+ * 未対応であることを明示して止めるほうが壊れにくい。
+ */
+function isBoundUrlProp(key: string): boolean {
+  // オブジェクト束ね。中身が分からないので URL を含む可能性を排除できない。
+  if (key === 'v-bind')
+    return true
+
+  const name = key.replace(/^(?::|v-bind:)/, '')
+
+  // 接頭辞が実際に外れた場合だけバインド記法。素の propsUrl はここに来ない。
+  return name !== key && (name === 'props-url' || name === 'propsUrl')
+}
+
 function collectLinkCardUrls(node: MDCRoot | MDCNode, found: string[]): string[] {
   if ('tag' in node && node.tag === 'link-card') {
-    // `::link-card{:props-url="cardUrl"}` のようにフロントマターの値を
-    // バインドされると、AST には `{ ':props-url': 'cardUrl' }` が入る。
-    // MDCRenderer は propsToDataRxBind でコロンを外して値を解決するので
-    // **カードは描画されるのに、ここでは URL を拾えない**（実測で確認済み）。
-    //
-    // ast.data から解決する道もあるが、dot-path や式の扱いまで
-    // MDCRenderer の挙動を写し取ることになり、ズレれば同じ種類の
-    // 取りこぼしを別の形で作る。未対応であることを明示して止める。
-    const bound = Object.keys(node.props ?? {}).find(
-      key => key === ':props-url' || key === ':propsUrl',
-    )
+    const bound = Object.keys(node.props ?? {}).find(isBoundUrlProp)
     if (bound) {
       throw new Error(
         `link-card の \`${bound}\` （バインド記法）には対応していません。\n`

@@ -1,8 +1,9 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config'
 
 // テスト基盤の方針:
-// - environment は jsdom。app/composables のテストが document を直接操作するため
-//   （utils.spec.ts の downloadImage は document.createElement を spy する）。
+// - environment は jsdom。DOM を直接触る spec（document.createElement の spy など）が
+//   あるリポジトリに合わせてある。3リポで設定を byte 同一に保つため、spec が
+//   まだ無いリポジトリでも同じ値にしておく。
 // - include は app 配下と test/ 配下。AGENTS.md の規約で **`test/`（単数）が共有の
 //   vitest spec、`tests/`（複数）が Playwright** と分かれている（紛らわしいので注意）。
 //   **既定の include に任せると tests/ の Playwright テストまで拾い、@playwright/test の

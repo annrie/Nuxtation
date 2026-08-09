@@ -46,22 +46,34 @@ export interface OgpEntry {
  * LinkCard.vue 側は `propsUrl: String` 宣言で Vue の props 正規化が効くため
  * どちらでも描画される。抽出だけが追随していないと表示が静かに劣化する。
  */
+/** MDC が素の属性として残す綴り。これ以外で URL を指す形は受け付けない。 */
+const PLAIN_URL_PROPS = new Set(['propsUrl', 'props-url'])
+
 /**
- * URL がバインドで渡されている props か。渡されていたら抽出できない。
+ * URL が動的に渡されている props か。渡されていたら抽出できない。
  *
  * `::link-card{:props-url="cardUrl"}` のようにフロントマターの値を束ねると、
- * AST には `{ ':props-url': 'cardUrl' }` のまま残る。MDCRenderer は rxBind で
- * 接頭辞を外して値を解決するので **カードは描画されるのに、ここでは URL を
- * 拾えない**（実測で確認済み）。
+ * AST にはバインド式のまま残る。MDCRenderer は接頭辞を解いて値を解決するので
+ * **カードは描画されるのに、ここでは URL を拾えない**（実測で確認済み）。
  *
- * **綴りは1つではない。** MDC 0.22.2 は `:props-url` / `v-bind:props-url` /
- * `v-bind="obj"` をいずれも AST に残し、レンダラは全部解決する。
- * `v-bind:propsUrl` は kebab へ正規化されて `v-bind:props-url` になる。
- * 綴りを列挙して1つ漏らすと、そこだけ黙って劣化する。
+ * **接頭辞を数え上げてはいけない。** 最初は `:` だけを見ていて
+ * `v-bind:` を取りこぼし、次に両方を見るようにして今度は `v-model:` を
+ * 取りこぼした。Vue のディレクティブ構文は増えうるので、列挙する限り
+ * 「N 個まで対応」になり N+1 で必ず破れる。
+ *
+ * そこで判定を反転させた。**素の綴りだけを許可し、それ以外の形で
+ * URL prop を指しているものは、接頭辞が何であれ拒否する。**
+ * 実測した AST（MDC 0.22.2）:
+ *
+ *   :props-url        → { ':props-url': ... }
+ *   v-bind:props-url  → { 'v-bind:props-url': ... }
+ *   v-model:props-url → { 'v-model:props-url': ... }
+ *   v-model:propsUrl  → { 'v-model:props-url': ... }  ← kebab へ正規化
+ *   propsUrl          → { 'props-url': ... }          ← これだけが素
  *
  * `v-bind="obj"` はオブジェクトごと束ねるので、中に propsUrl が入るかを
- * 静的に判定できない。安全側に倒して拒否する。逆に `:title` のような
- * URL と無関係なバインドは通す。
+ * 静的に判定できない。安全側に倒して拒否する。逆に `:title` や
+ * `my-props-url` のように URL prop を指さないものは通す。
  *
  * ast.data から解決する道もあるが、dot-path や式の扱いまで MDCRenderer の
  * 挙動を写し取ることになり、ズレれば同じ種類の取りこぼしを別の形で作る。
@@ -72,10 +84,14 @@ function isBoundUrlProp(key: string): boolean {
   if (key === 'v-bind')
     return true
 
-  const name = key.replace(/^(?::|v-bind:)/, '')
+  if (PLAIN_URL_PROPS.has(key))
+    return false
 
-  // 接頭辞が実際に外れた場合だけバインド記法。素の propsUrl はここに来ない。
-  return name !== key && (name === 'props-url' || name === 'propsUrl')
+  // 引数を取る Vue のディレクティブは、接頭辞が何であれ `:` で引数を区切る
+  // （`:x` / `v-bind:x` / `v-model:x`）。接頭辞を列挙するのではなく
+  // 「`:` の直後が URL prop か」で見れば、未知のディレクティブにも効く。
+  // `my-props-url` のような `-` 区切りの素の属性は巻き込まない。
+  return /:props-?url$/i.test(key)
 }
 
 function collectLinkCardUrls(node: MDCRoot | MDCNode, found: string[]): string[] {

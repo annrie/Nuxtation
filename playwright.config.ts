@@ -133,9 +133,14 @@ const config: PlaywrightTestConfig = {
         // ビルド成果物をそのまま配信する。`pnpm build` を先に済ませておくこと
         // （成果物が無ければ serve が即座に終了し、Playwright が起動失敗として報告する）。
         //
-        // -L は SPA フォールバックを無効にする。**これが無いと未知のパスにも
-        // index.html を返してしまい、`/api/ogp` が 404 であることを確かめている
-        // テストが「常に通る」意味のないテストになる。**
+        // -L は SPA フォールバックを無効にする。これが無いと未知のパスにも
+        // index.html を 200 で返してしまい、404 を期待する検査が通らなくなる。
+        //
+        // **ただし -L があっても API の有無は判定できない。** Vercel preset の
+        // API ハンドラは static ではなく `.vercel/output/functions/` に置かれ、
+        // 静的サーバーはそれを実行しない。廃止した `/api/ogp` の復活検出は
+        // `test/no-server-api-routes.spec.ts`（成果物を直接検査）が担当する。
+        //
         // `nuxi preview` は vercel preset では "Preview is not supported for this
         // build." と拒否されるため使えない（実測）。
         command: `pnpm exec serve -p ${E2E_PORT} -L .vercel/output/static`,

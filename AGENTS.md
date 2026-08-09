@@ -6,7 +6,7 @@
   A duplicate `logic/` sat at the repository root until 2026-08-06. Since the Docus 5 migration
   (2025-12) made `app/` the srcDir, `~` and `@` resolve to `app/`, so the root copy was unreachable
   and had drifted out of date. It was removed; do not recreate it.
-- `server/`: Nitro handlers (`server/api`), middleware, and server-side plugins. Keep server-only dependencies here.
+- `server/`: Nitro middleware and server-side plugins. **There is deliberately no `server/api/`** — `/api/ogp` was removed in 2026-08 (unvalidated `?url=` → SSRF) and OGP is resolved at build time instead. `test/no-server-api-routes.spec.ts` fails if a route reappears. Keep server-only dependencies here.
 - `content/` & `public/`: Markdown-driven site content and static assets; update `content/` first, then regenerate.
 - `tests/`: Playwright specs. Name files after the route or feature (`tests/docs-home.spec.ts`).
 
@@ -35,7 +35,8 @@
 - Run unit specs with `pnpm test` (Vitest, `test/` — singular, not `tests/`). `vitest.config.ts` lists both `app/**` and `test/**` in `include` on purpose: the default would sweep in `tests/` and fail every file, while narrowing to `app/**` would silently skip the shared specs.
 - **Vitest 4 needs Vite 8.** `pnpm-workspace.yaml` pins `vite@^7.0.0: ^8.1.5` together with five `vite-*` overrides, because raising Vite alone lets pnpm swallow peer conflicts for packages that only declare Vite 7 support. Keep them together and verify with `pnpm peers check` — no unmet `vite` peer is the passing condition. See `tasks/2026-08-08-vite-8-migration.md`.
 - **e2e targets the build output, not the dev server.** `playwright.config.ts` serves `.vercel/output/static`, so run `pnpm build` first. Testing against `nuxi dev` made firefox time out constantly: the dev server ships hundreds of individual modules and firefox waits for all of them before firing `load`, while chromium does not (measured: dev 624ms vs 6,471ms; static 1,251ms vs 2,227ms). That looked like flakiness but was a property of the dev server, not a product defect.
-- `serve -L` disables the SPA fallback on purpose. Without it every unknown path returns `index.html`, which would make `tests/ogp-endpoint-removed.spec.ts` pass unconditionally and stop protecting the deleted endpoint.
+- `serve -L` disables the SPA fallback on purpose; without it every unknown path returns `index.html` with a 200 and no 404 assertion can hold.
+- **A deleted server route cannot be verified over HTTP locally.** The Vercel preset emits API handlers into `.vercel/output/functions/`, not `static/`, so the static server returns 404 for `/api/*` whether or not the route exists — adding `server/api/` and rebuilding still left all 12 e2e specs green (measured). `test/no-server-api-routes.spec.ts` therefore inspects the build output directly and fails when any route appears under `functions/__fallback.func/chunks/routes/api/`. `tests/ogp-endpoint-removed.spec.ts` is skipped unless `PLAYWRIGHT_TEST_BASE_URL` points at a real deployment, where Nitro does run and the 404 is meaningful. Run `pnpm build` before `pnpm test`.
 - Run e2e with `pnpm test:e2e`. `pnpm install` does not provision Playwright browsers, so the script runs `playwright install` first (a no-op taking ~3s once installed).
 - By default the build output is served on a dedicated port (3101, since 3100 collides with docustation). Set `PLAYWRIGHT_TEST_BASE_URL` to target a deployed environment, which skips the local startup entirely.
 - Add Playwright specs with the `.spec.ts` suffix and isolate state between tests.

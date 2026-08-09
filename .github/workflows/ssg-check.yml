@@ -32,6 +32,11 @@ jobs:
           echo "HTML files: $html_count"
           # 全ページ欠落の検知が目的なので、平常値(約34)より大幅に低い閾値にする
           [ "$html_count" -ge 15 ] || { echo "::error::HTML出力が少なすぎます ($html_count < 15)。prerenderの失敗を確認してください"; exit 1; }
+      # 単体テストにもビルド成果物を見るものがある(no-server-api-routes.spec.ts が
+      # .vercel/output を検査し、廃止した /api/ogp の復活を検出する)ため、
+      # 必ず build の後に実行する。
+      - name: Unit tests
+        run: pnpm test
       # ビルド成果物のインラインCSSを解析するため、必ず build の後に実行する。
       # レイヤー外に置かれたリセットCSSがTailwindの@layer utilitiesを打ち消す
       # 事故を検知する(kiso.cssをcss:[]から読んでいた時期に実際に発生した)。

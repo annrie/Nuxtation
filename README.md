@@ -1,5 +1,20 @@
 # Nuxtation
 
+<p align="center">
+  <!-- License -->
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/annrie/Nuxtation.svg" alt="License">
+  </a>
+  <!-- Stars -->
+  <a href="https://github.com/annrie/Nuxtation/stargazers">
+    <img src="https://img.shields.io/github/stars/annrie/Nuxtation.svg" alt="Stars">
+  </a>
+  <!-- Last commit -->
+  <a href="https://github.com/annrie/Nuxtation/commits">
+    <img src="https://img.shields.io/github/last-commit/annrie/Nuxtation.svg" alt="Last commit">
+  </a>
+</p>
+
 > Docus 5.3.1ベースのブログサイト - THX [Docus](https://docus.com/))
 
 ![nuxtation](https://user-images.githubusercontent.com/5172584/219685899-f21d7608-2cd0-4fe1-872f-f25822ae2551.png)

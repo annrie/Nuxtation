@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.2
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.1...v4.5.2)
+
+### 📖 ドキュメント
+
+- 📛 READMEにステータスバッジを追加 ([6bd5a63](https://github.com/annrie/Nuxtation/commit/6bd5a63))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ nuxt 4.5.2 / @nuxtjs/mdc 0.23.1 ほかminor/patch一括更新 ([57bea28](https://github.com/annrie/Nuxtation/commit/57bea28))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.1
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.0...v4.5.1)

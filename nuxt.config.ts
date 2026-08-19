@@ -470,9 +470,9 @@ export default defineNuxtConfig({
       ],
       exclude: ['shiki', 'shiki/onig.wasm'],
       entries: [
-        'app/pages/**/*.vue',
-        'app/layouts/**/*.vue',
-        'app/components/**/*.vue',
+        'pages/**/*.vue',
+        'layouts/**/*.vue',
+        'components/**/*.vue',
       ],
     },
     build: {

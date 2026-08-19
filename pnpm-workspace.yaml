@@ -168,7 +168,6 @@ overrides:
   # tmp: prefix/postfix のサニタイズ不備によるディレクトリ脱出。
   # external-editor / @lhci/cli 経由。require("tmp") の名前空間利用のため影響なし。
   tmp: ^0.2.7
-  unconfig: 0.4.1
   # undici: WebSocket断片数によるDoS、ヘッダ注入等。
   # 最新は 8系だがツリーに居るのは 6系なので 6系内に留める。
   undici@^6.0.0: ^6.27.0

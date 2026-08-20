@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.3
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.2...v4.5.3)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ Snyk指摘のhono 4.13.3ほかロックファイル再解決で更新 ([334cbef](https://github.com/annrie/Nuxtation/commit/334cbef))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.2
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.1...v4.5.2)

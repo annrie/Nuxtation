@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.5
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.4...v4.5.5)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ js-yaml 3.15.2 / 4.3.2 で Snyk 指摘 High(SNYK-JS-JSYAML-19496768)を解消 ([7ad9395](https://github.com/annrie/Nuxtation/commit/7ad9395))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.4
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.3...v4.5.4)

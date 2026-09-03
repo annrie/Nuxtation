@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.6
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.5...v4.5.6)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ hono 4.13.5 / fast-uri 3.1.7 / @tiptap 3.31.0 で Snyk 指摘 High 4件・Medium 1件と GHSA 1件を解消 ([c7160c1](https://github.com/annrie/Nuxtation/commit/c7160c1))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.5
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.4...v4.5.5)

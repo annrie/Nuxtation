@@ -134,7 +134,11 @@ overrides:
   # js-cookie: Cookie の取り扱い不備
   js-cookie@^3.0.0: ^3.0.6
   # js-yaml: マージキー連鎖による二次的CPU消費(@lhci/utils が 3系を牽引)
-  js-yaml@^3.0.0: ^3.15.1
+  # 2026-09-03: 空マッピングが maxTotalMergeKeys に数えられない CPU 消費
+  # (SNYK-JS-JSYAML-19496768)対応で 3.15.2 / 4.3.2 に引き上げ。4系は
+  # cosmiconfig / @rollup/plugin-yaml / json-schema-ref-parser が牽引する。
+  js-yaml@^3.0.0: ^3.15.2
+  js-yaml@^4.0.0: ^4.3.2
   # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
   launch-editor@^2.0.0: ^2.14.1
   # linkify-it: リンク検出のReDoS

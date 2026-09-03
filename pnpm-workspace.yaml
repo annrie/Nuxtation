@@ -55,6 +55,7 @@ minimumReleaseAgeExclude:
   - postcss-svgo@8.0.5
   - postcss-unique-selectors@8.0.4
   - stylehacks@8.0.4
+  - fast-uri@3.1.7
 shellEmulator: true
 
 supportedArchitectures:
@@ -123,12 +124,18 @@ overrides:
   #   GHSA-5jgf-p345-68v8 (scheme-relative 参照での IDN 正規化スキップ)
   #   GHSA-jqff-g426-hqxp (%エンコードされた scheme の正規化)
   #   GHSA-f65p-4m7j-42xc (不正な IPv6 の正規化)
-  fast-uri@^3.0.0: ^3.1.6
+  #   2026-09-03: 3.1.7 で SNYK-JS-FASTURI-19502854 (閉じ ] の無い host を返す
+  #   Host Confusion) と SNYK-JS-FASTURI-19502739 (port に非数字を連結する
+  #   authority 注入) に対応
+  fast-uri@^3.0.0: ^3.1.7
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
   # hono: 複数のリクエスト処理系の不具合(Nitro/@hono/node-server 経由)
-  hono@^4.0.0: ^4.12.27
+  # 2026-09-03: 4.13.5 で SNYK-JS-HONO-19499091 (query が # 以降も解析される
+  # Request Smuggling)、SNYK-JS-HONO-19499068 (toSSG の Directory Traversal)、
+  # SNYK-JS-HONO-19499093 (parseBody の入れ子無制限によるメモリ枯渇) に対応
+  hono@^4.0.0: ^4.13.5
   # ip-address: パース不備
   ip-address@^10.0.0: ^10.1.1
   # js-cookie: Cookie の取り扱い不備
@@ -139,6 +146,48 @@ overrides:
   # cosmiconfig / @rollup/plugin-yaml / json-schema-ref-parser が牽引する。
   js-yaml@^3.0.0: ^3.15.2
   js-yaml@^4.0.0: ^4.3.2
+  # @tiptap/*: mergeAttributes() が own の __proto__ キーを継承 DOM 属性として
+  # 実行可能にしてしまう Prototype Pollution(GHSA-cp6q-959q-f8rh、修正版 3.30.4)。
+  # @nuxt/ui が牽引。拡張パッケージが @tiptap/core を exact 固定しているため、
+  # core だけでなく tiptap 一式を同じバージョンに揃える(pnpm の override は
+  # `@tiptap/*` のようなパターンを解決に使わないので個別に列挙)。
+  '@tiptap/core@^3.0.0': ^3.30.4
+  '@tiptap/extension-blockquote@^3.0.0': ^3.30.4
+  '@tiptap/extension-bold@^3.0.0': ^3.30.4
+  '@tiptap/extension-bubble-menu@^3.0.0': ^3.30.4
+  '@tiptap/extension-bullet-list@^3.0.0': ^3.30.4
+  '@tiptap/extension-code@^3.0.0': ^3.30.4
+  '@tiptap/extension-code-block@^3.0.0': ^3.30.4
+  '@tiptap/extension-collaboration@^3.0.0': ^3.30.4
+  '@tiptap/extension-document@^3.0.0': ^3.30.4
+  '@tiptap/extension-drag-handle@^3.0.0': ^3.30.4
+  '@tiptap/extension-drag-handle-vue-3@^3.0.0': ^3.30.4
+  '@tiptap/extension-dropcursor@^3.0.0': ^3.30.4
+  '@tiptap/extension-floating-menu@^3.0.0': ^3.30.4
+  '@tiptap/extension-gapcursor@^3.0.0': ^3.30.4
+  '@tiptap/extension-hard-break@^3.0.0': ^3.30.4
+  '@tiptap/extension-heading@^3.0.0': ^3.30.4
+  '@tiptap/extension-horizontal-rule@^3.0.0': ^3.30.4
+  '@tiptap/extension-image@^3.0.0': ^3.30.4
+  '@tiptap/extension-italic@^3.0.0': ^3.30.4
+  '@tiptap/extension-link@^3.0.0': ^3.30.4
+  '@tiptap/extension-list@^3.0.0': ^3.30.4
+  '@tiptap/extension-list-item@^3.0.0': ^3.30.4
+  '@tiptap/extension-list-keymap@^3.0.0': ^3.30.4
+  '@tiptap/extension-mention@^3.0.0': ^3.30.4
+  '@tiptap/extension-node-range@^3.0.0': ^3.30.4
+  '@tiptap/extension-ordered-list@^3.0.0': ^3.30.4
+  '@tiptap/extension-paragraph@^3.0.0': ^3.30.4
+  '@tiptap/extension-placeholder@^3.0.0': ^3.30.4
+  '@tiptap/extension-strike@^3.0.0': ^3.30.4
+  '@tiptap/extension-text@^3.0.0': ^3.30.4
+  '@tiptap/extension-underline@^3.0.0': ^3.30.4
+  '@tiptap/extensions@^3.0.0': ^3.30.4
+  '@tiptap/markdown@^3.0.0': ^3.30.4
+  '@tiptap/pm@^3.0.0': ^3.30.4
+  '@tiptap/starter-kit@^3.0.0': ^3.30.4
+  '@tiptap/suggestion@^3.0.0': ^3.30.4
+  '@tiptap/vue-3@^3.0.0': ^3.30.4
   # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
   launch-editor@^2.0.0: ^2.14.1
   # linkify-it: リンク検出のReDoS

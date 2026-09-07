@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.7
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.6...v4.5.7)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ undici 6.28.1 / 7.29.1 / 8.10.2 で Snyk 指摘 Critical 2件・High 1件ほかを解消 ([cbeef5c](https://github.com/annrie/Nuxtation/commit/cbeef5c))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.6
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.5...v4.5.6)

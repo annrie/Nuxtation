@@ -228,9 +228,13 @@ overrides:
   # tmp: prefix/postfix のサニタイズ不備によるディレクトリ脱出。
   # external-editor / @lhci/cli 経由。require("tmp") の名前空間利用のため影響なし。
   tmp: ^0.2.7
-  # undici: WebSocket断片数によるDoS、ヘッダ注入等。
-  # 最新は 8系だがツリーに居るのは 6系なので 6系内に留める。
-  undici@^6.0.0: ^6.27.0
+  # undici: 2026-09-04 の一括 advisory(cache interceptor のクロスオリジン汚染 GHSA-vp8m-p9jh-q5pm、
+  # BalancedPool の TLS 検証コールバック欠落 GHSA-w293-vg96-wgc3、WebSocket サブプロトコルの
+  # 未処理 TypeError GHSA-rfgv-xxqx-mfg5 ほか 8 件)。
+  # 6/7/8 系が共存するのでメジャーごとに区切る。6 系: @nuxt/scripts / node-gyp 12 / @ai-sdk、7 系: jsdom / cheerio、8 系: nuxt 本体 / unifont。
+  undici@^6.0.0: ^6.28.1
+  undici@^7.0.0: ^7.29.1
+  undici@^8.0.0: ^8.10.2
   # uuid: v3/v5/v6 で buf 指定時の境界チェック漏れ。@lhci/cli 経由。
   # v11 は名前付きエクスポートのみだが require("uuid") 形式なので影響なし。
   uuid: ^11.1.1

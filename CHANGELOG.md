@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.8
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.7...v4.5.8)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ Snyk / pnpm audit 指摘 4 件を override で解消(svgo 4.1.0 / sharp 0.35.4 / colord 2.9.4 / tiptap 3.31.3) ([ec88d42](https://github.com/annrie/Nuxtation/commit/ec88d42))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.7
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.6...v4.5.7)

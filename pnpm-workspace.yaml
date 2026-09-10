@@ -112,6 +112,8 @@ overrides:
   brace-expansion@^1.0.0: ^1.1.18
   brace-expansion@^2.0.0: ^2.1.4
   brace-expansion@^5.0.0: ^5.0.9
+  # colord: 色文字列パースの ReDoS (GHSA-2wm5-q62r-hmrv)。stylelint 経由の dev only。
+  colord@^2.0.0: ^2.9.4
   # esbuild: 開発サーバへの任意リクエスト送信(<=0.24.2)と Windows での
   # 任意ファイル読み取り(0.27.3〜0.28.0)。いずれも開発サーバ限定で本番成果物に
   # 影響はないが、複数系統がツリーに居るため 0.28.1 に統一する。
@@ -151,43 +153,46 @@ overrides:
   # @nuxt/ui が牽引。拡張パッケージが @tiptap/core を exact 固定しているため、
   # core だけでなく tiptap 一式を同じバージョンに揃える(pnpm の override は
   # `@tiptap/*` のようなパターンを解決に使わないので個別に列挙)。
-  '@tiptap/core@^3.0.0': ^3.30.4
-  '@tiptap/extension-blockquote@^3.0.0': ^3.30.4
-  '@tiptap/extension-bold@^3.0.0': ^3.30.4
-  '@tiptap/extension-bubble-menu@^3.0.0': ^3.30.4
-  '@tiptap/extension-bullet-list@^3.0.0': ^3.30.4
-  '@tiptap/extension-code@^3.0.0': ^3.30.4
-  '@tiptap/extension-code-block@^3.0.0': ^3.30.4
-  '@tiptap/extension-collaboration@^3.0.0': ^3.30.4
-  '@tiptap/extension-document@^3.0.0': ^3.30.4
-  '@tiptap/extension-drag-handle@^3.0.0': ^3.30.4
-  '@tiptap/extension-drag-handle-vue-3@^3.0.0': ^3.30.4
-  '@tiptap/extension-dropcursor@^3.0.0': ^3.30.4
-  '@tiptap/extension-floating-menu@^3.0.0': ^3.30.4
-  '@tiptap/extension-gapcursor@^3.0.0': ^3.30.4
-  '@tiptap/extension-hard-break@^3.0.0': ^3.30.4
-  '@tiptap/extension-heading@^3.0.0': ^3.30.4
-  '@tiptap/extension-horizontal-rule@^3.0.0': ^3.30.4
-  '@tiptap/extension-image@^3.0.0': ^3.30.4
-  '@tiptap/extension-italic@^3.0.0': ^3.30.4
-  '@tiptap/extension-link@^3.0.0': ^3.30.4
-  '@tiptap/extension-list@^3.0.0': ^3.30.4
-  '@tiptap/extension-list-item@^3.0.0': ^3.30.4
-  '@tiptap/extension-list-keymap@^3.0.0': ^3.30.4
-  '@tiptap/extension-mention@^3.0.0': ^3.30.4
-  '@tiptap/extension-node-range@^3.0.0': ^3.30.4
-  '@tiptap/extension-ordered-list@^3.0.0': ^3.30.4
-  '@tiptap/extension-paragraph@^3.0.0': ^3.30.4
-  '@tiptap/extension-placeholder@^3.0.0': ^3.30.4
-  '@tiptap/extension-strike@^3.0.0': ^3.30.4
-  '@tiptap/extension-text@^3.0.0': ^3.30.4
-  '@tiptap/extension-underline@^3.0.0': ^3.30.4
-  '@tiptap/extensions@^3.0.0': ^3.30.4
-  '@tiptap/markdown@^3.0.0': ^3.30.4
-  '@tiptap/pm@^3.0.0': ^3.30.4
-  '@tiptap/starter-kit@^3.0.0': ^3.30.4
-  '@tiptap/suggestion@^3.0.0': ^3.30.4
-  '@tiptap/vue-3@^3.0.0': ^3.30.4
+  # 2026-09-10: 3.31.3 に引き上げ。GHSA-j95f-988m-3j2f (Markdown 属性パーサの ReDoS、
+  # 修正版 3.30.5)、GHSA-c8x8-7fp4-3x9w (prosemirror-view の XSS、3.31.2)、
+  # GHSA-pmh9-4rj3-c67g (CollaborationCaret の CSS injection、3.31.3) に対応。
+  '@tiptap/core@^3.0.0': ^3.31.3
+  '@tiptap/extension-blockquote@^3.0.0': ^3.31.3
+  '@tiptap/extension-bold@^3.0.0': ^3.31.3
+  '@tiptap/extension-bubble-menu@^3.0.0': ^3.31.3
+  '@tiptap/extension-bullet-list@^3.0.0': ^3.31.3
+  '@tiptap/extension-code@^3.0.0': ^3.31.3
+  '@tiptap/extension-code-block@^3.0.0': ^3.31.3
+  '@tiptap/extension-collaboration@^3.0.0': ^3.31.3
+  '@tiptap/extension-document@^3.0.0': ^3.31.3
+  '@tiptap/extension-drag-handle@^3.0.0': ^3.31.3
+  '@tiptap/extension-drag-handle-vue-3@^3.0.0': ^3.31.3
+  '@tiptap/extension-dropcursor@^3.0.0': ^3.31.3
+  '@tiptap/extension-floating-menu@^3.0.0': ^3.31.3
+  '@tiptap/extension-gapcursor@^3.0.0': ^3.31.3
+  '@tiptap/extension-hard-break@^3.0.0': ^3.31.3
+  '@tiptap/extension-heading@^3.0.0': ^3.31.3
+  '@tiptap/extension-horizontal-rule@^3.0.0': ^3.31.3
+  '@tiptap/extension-image@^3.0.0': ^3.31.3
+  '@tiptap/extension-italic@^3.0.0': ^3.31.3
+  '@tiptap/extension-link@^3.0.0': ^3.31.3
+  '@tiptap/extension-list@^3.0.0': ^3.31.3
+  '@tiptap/extension-list-item@^3.0.0': ^3.31.3
+  '@tiptap/extension-list-keymap@^3.0.0': ^3.31.3
+  '@tiptap/extension-mention@^3.0.0': ^3.31.3
+  '@tiptap/extension-node-range@^3.0.0': ^3.31.3
+  '@tiptap/extension-ordered-list@^3.0.0': ^3.31.3
+  '@tiptap/extension-paragraph@^3.0.0': ^3.31.3
+  '@tiptap/extension-placeholder@^3.0.0': ^3.31.3
+  '@tiptap/extension-strike@^3.0.0': ^3.31.3
+  '@tiptap/extension-text@^3.0.0': ^3.31.3
+  '@tiptap/extension-underline@^3.0.0': ^3.31.3
+  '@tiptap/extensions@^3.0.0': ^3.31.3
+  '@tiptap/markdown@^3.0.0': ^3.31.3
+  '@tiptap/pm@^3.0.0': ^3.31.3
+  '@tiptap/starter-kit@^3.0.0': ^3.31.3
+  '@tiptap/suggestion@^3.0.0': ^3.31.3
+  '@tiptap/vue-3@^3.0.0': ^3.31.3
   # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
   launch-editor@^2.0.0: ^2.14.1
   # linkify-it: リンク検出のReDoS
@@ -214,7 +219,8 @@ overrides:
   # serialize-javascript: XSS。6系に修正版がなく @rollup/plugin-terser 経由
   # のビルド時利用のみのため 7系へ上げる。
   serialize-javascript: ^7.0.7
-  sharp: ^0.35.3
+  # 2026-09-10: 0.35.4 で GHSA-rgj7-g3m4-5g8c (Heap Overflow) に対応。
+  sharp: ^0.35.4
   shell-quote@^1.0.0: ^1.9.0
   # simple-git: コマンド引数の取り扱い不備
   simple-git@^3.0.0: ^3.36.0
@@ -222,7 +228,11 @@ overrides:
   # Exceptional Conditions も解消
   socket.io-parser@^4.0.0: ^4.2.7
   # svgo: SVG 最適化時の不具合
-  svgo@^4.0.0: ^4.0.2
+  # 2026-09-10: 4.1.0 で removeScripts プラグインの XSS 2件
+  #   GHSA-w27v-7q3p-w38r (名前空間付き <svg:a> と制御文字入り URL スキームの回避)
+  #   GHSA-4vpr-x523-8j87 (<foreignObject> 内の HTML イベントハンドラ未除去)
+  # に対応。4.1.0 は sax 1.6.1 固定で XML 検証が厳格化されるため generate で検証済み。
+  svgo@^4.0.0: ^4.1.0
   # tar: 展開時のDoS/パス解釈差異(CRITICAL 含む)
   tar@^7.0.0: ^7.5.21
   # tmp: prefix/postfix のサニタイズ不備によるディレクトリ脱出。

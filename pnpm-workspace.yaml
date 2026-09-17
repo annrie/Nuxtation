@@ -129,7 +129,9 @@ overrides:
   #   2026-09-03: 3.1.7 で SNYK-JS-FASTURI-19502854 (閉じ ] の無い host を返す
   #   Host Confusion) と SNYK-JS-FASTURI-19502739 (port に非数字を連結する
   #   authority 注入) に対応
-  fast-uri@^3.0.0: ^3.1.7
+  #   2026-09-17: 3.1.8 で SNYK-JS-FASTURI-19846649 (CVE-2026-86472、host の %エンコード大文字を
+  #   正規化せず allowlist / denylist を迂回できる Improper Handling of Case Sensitivity) に対応
+  fast-uri@^3.0.0: ^3.1.8
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
@@ -140,6 +142,10 @@ overrides:
   hono@^4.0.0: ^4.13.5
   # ip-address: パース不備
   ip-address@^10.0.0: ^10.1.1
+  # isomorphic-git: getRemoteInfo が ref 名の __proto__ セグメントを検証せず
+  # Prototype Pollution を起こす(SNYK-JS-ISOMORPHICGIT-19784422、修正版 1.42.0)。
+  # @nuxt/content 3.15.2 が ^1.38.9 を宣言するので同一メジャー内で最新へ。
+  isomorphic-git: ^1.42.2
   # js-cookie: Cookie の取り扱い不備
   js-cookie@^3.0.0: ^3.0.6
   # js-yaml: マージキー連鎖による二次的CPU消費(@lhci/utils が 3系を牽引)
@@ -209,6 +215,10 @@ overrides:
   path-to-regexp@^0.1.0: ^0.1.13
   path-to-regexp@^8.0.0: ^8.4.0
   postcss: ^8.5.23
+  # proxy-addr: IPv4-mapped IPv6 のサブネット判定不備で trust proxy を欺き
+  # req.ip を偽装できる User Impersonation(SNYK-JS-PROXYADDR-19812342、修正版 2.0.8)。
+  # express 4 (@lhci/cli 経由 dev) と express 5 (@modelcontextprotocol/sdk 経由 本番) の両方が牽引。
+  proxy-addr: ^2.0.8
   # qs: パラメータ処理の不備。6.16.0 で Snyk 指摘の Medium 2件を解消:
   #   SNYK-JS-QS-19432019 (isBuffer() の callable 未確認による Uncaught Exception)
   #   SNYK-JS-QS-19432017 (parseArrayValue() の arrayLimit 未適用によるメモリ枯渇)

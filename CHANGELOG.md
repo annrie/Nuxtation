@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.9
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.8...v4.5.9)
+
+### 🐛 バグ修正
+
+- **deploy:** 🚀 Vercel の pnpm を packageManager と同じ 11.21.0 に揃える ([41d7aed](https://github.com/annrie/Nuxtation/commit/41d7aed))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ Snyk 指摘 3 件を override で解消(proxy-addr 2.0.8 / isomorphic-git 1.42.2 / fast-uri 3.1.8) ([e611216](https://github.com/annrie/Nuxtation/commit/e611216))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.8
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.7...v4.5.8)

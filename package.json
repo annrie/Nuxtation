@@ -60,7 +60,6 @@
     "mdast-util-to-string": "^4.0.0",
     "node-gyp": "^12.4.0",
     "nuxt-content-twoslash": "^0.4.0",
-    "remark-oembed": "^1.2.2",
     "slugify": "^1.6.9",
     "unist-util-stringify-position": "^4.0.0",
     "vue-router": "^5.2.0",

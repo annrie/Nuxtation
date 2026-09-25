@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.10
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.9...v4.5.10)
+
+### 📦 ビルド
+
+- **deps:** ➖ 未使用の remark-oembed を削除(Snyk: http-cache-semantics 2 件を解消) ([a8a355b](https://github.com/annrie/Nuxtation/commit/a8a355b))
+- **deps:** ⬆️ Snyk 指摘 3 件を override で解消(devalue 5.9.4 / hono 4.13.9) ([313e5c7](https://github.com/annrie/Nuxtation/commit/313e5c7))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.9
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.8...v4.5.9)

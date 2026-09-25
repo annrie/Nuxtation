@@ -14,11 +14,12 @@ overrides:
   brace-expansion@^2.0.0: ^2.1.4
   brace-expansion@^5.0.0: ^5.0.9
   colord@^2.0.0: ^2.9.4
+  devalue@^5.0.0: ^5.9.4
   esbuild: ^0.28.1
   express-rate-limit@^8.0.0: ^8.2.2
   fast-uri@^3.0.0: ^3.1.8
   handlebars: ^4.7.9
-  hono@^4.0.0: ^4.13.5
+  hono@^4.0.0: ^4.13.9
   ip-address@^10.0.0: ^10.1.1
   isomorphic-git: ^1.42.2
   js-cookie@^3.0.0: ^3.0.6
@@ -1855,7 +1856,7 @@ packages:
     resolution: {integrity: sha512-dSneS5qhiauZWGDCeK4o695Xd9nUNjviSZCMQrj10eetr8Uln1ucn6bbphOM6UynAMMtNIzZNSpL9vnASJwrPQ==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
-      hono: ^4.13.5
+      hono: ^4.13.9
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -6099,8 +6100,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  devalue@5.9.0:
-    resolution: {integrity: sha512-RWrqdArjvPbsATEhOPUo6Wndc/iWnkWKlhIrdlF3zMMYo/c3CVtoaVAyLtWxz5h8nSlkHzxnzV2uLydPXmtF+A==}
+  devalue@5.9.4:
+    resolution: {integrity: sha512-sPAT4pztbu6586/hrhOnMKS17IJrvg12mXiSPSS3W5qDeN2RGgvZ0diZCm31dBbnevfVmujNO3IM2wrS4Y2Rhg==}
 
   devframe@0.9.3:
     resolution: {integrity: sha512-DojnzbtLaKbsNyiUmxf1W5ghMExtA+S5ZgHZjYP9vcekn+8RSv84AOJNsAI30gKYrwTUfvF1PUC9E75KaSGELQ==}
@@ -7225,8 +7226,8 @@ packages:
     resolution: {integrity: sha512-oaXMACAU0kzOMXBjWpNcX+vlwSBCIAiZ9BHa7gA15NOTtT2L/l8OSZDuqS2XppOhZBPJ7hm4o8ep2kyuip2uEQ==}
     engines: {node: '>=12.0.0'}
 
-  hono@4.13.5:
-    resolution: {integrity: sha512-O6+/eCYRkzzzy0rPWwKLiGBR1nFuUPZynnwjxN1MBA62NNqbT0wQEzQyK2gSO5yDIDB336sXQleAhOHrzlYyKw==}
+  hono@4.13.9:
+    resolution: {integrity: sha512-7dMkQmZoC4E6F7AtaQSPhlWAdnBti+j7rreMZl8QB4jFiEhP9TWbGWUMi8WYzBCgmgulxuvLQupKqo+Co6Omyg==}
     engines: {node: '>=16.9.0'}
 
   hookable@5.5.3:
@@ -13284,9 +13285,9 @@ snapshots:
     dependencies:
       vue: 3.5.41(typescript@6.0.3)
 
-  '@hono/node-server@1.19.17(hono@4.13.5)':
+  '@hono/node-server@1.19.17(hono@4.13.9)':
     dependencies:
-      hono: 4.13.5
+      hono: 4.13.9
 
   '@humanfs/core@0.19.2':
     dependencies:
@@ -13709,7 +13710,7 @@ snapshots:
 
   '@modelcontextprotocol/sdk@1.30.0(supports-color@10.2.2)(zod@4.4.3)':
     dependencies:
-      '@hono/node-server': 1.19.17(hono@4.13.5)
+      '@hono/node-server': 1.19.17(hono@4.13.9)
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
       content-type: 1.0.5
@@ -13719,7 +13720,7 @@ snapshots:
       eventsource-parser: 3.1.1
       express: 5.2.1(supports-color@10.2.2)
       express-rate-limit: 8.6.2(express@5.2.1(supports-color@10.2.2))(supports-color@10.2.2)
-      hono: 4.13.5
+      hono: 4.13.9
       jose: 6.2.9
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
@@ -14512,7 +14513,7 @@ snapshots:
       consola: 3.4.2
       defu: 6.1.7
       destr: 2.0.5
-      devalue: 5.9.0
+      devalue: 5.9.4
       errx: 0.1.2
       escape-string-regexp: 5.0.0
       exsolve: 1.1.1
@@ -14949,7 +14950,7 @@ snapshots:
       '@vue/compiler-sfc': 3.5.41
       confbox: 0.2.4
       defu: 6.1.7
-      devalue: 5.9.0
+      devalue: 5.9.4
       h3: 1.15.11
       knitwork: 1.3.0
       magic-string: 0.30.21
@@ -18154,7 +18155,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  devalue@5.9.0: {}
+  devalue@5.9.4: {}
 
   devframe@0.9.3(cac@7.0.0)(srvx@0.11.22):
     dependencies:
@@ -19772,7 +19773,7 @@ snapshots:
 
   highlight.js@11.11.2: {}
 
-  hono@4.13.5: {}
+  hono@4.13.9: {}
 
   hookable@5.5.3: {}
 
@@ -21509,7 +21510,7 @@ snapshots:
       consola: 3.4.2
       culori: 4.0.2
       defu: 6.1.7
-      devalue: 5.9.0
+      devalue: 5.9.4
       exsolve: 1.1.1
       lightningcss: 1.33.0
       magic-string: 0.30.21
@@ -21567,7 +21568,7 @@ snapshots:
       chrome-launcher: 1.2.1(supports-color@10.2.2)
       consola: 3.4.2
       defu: 6.1.7
-      devalue: 5.9.0
+      devalue: 5.9.4
       exsolve: 1.1.1
       fnv1a-64: 0.1.2
       lightningcss: 1.33.0
@@ -21810,7 +21811,7 @@ snapshots:
       consola: 3.4.2
       cookie-es: 3.1.1
       defu: 6.1.7
-      devalue: 5.9.0
+      devalue: 5.9.4
       errx: 0.1.2
       escape-string-regexp: 5.0.0
       exsolve: 1.1.1

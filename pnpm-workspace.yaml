@@ -114,6 +114,12 @@ overrides:
   brace-expansion@^5.0.0: ^5.0.9
   # colord: 色文字列パースの ReDoS (GHSA-2wm5-q62r-hmrv)。stylelint 経由の dev only。
   colord@^2.0.0: ^2.9.4
+  # devalue: nuxt 本体(@nuxt/nitro-server)と @nuxt/hints が 5.9.0 を牽引。
+  # 2026-09-25: 5.9.4 で SNYK-JS-DEVALUE-20044498 (CVE-2026-92708、Buffer のシリアライズで
+  # 背後の ArrayBuffer 全体を出力し共有メモリプールの無関係なデータが漏れる。修正版 5.9.3) と
+  # SNYK-JS-DEVALUE-19883911 (CVE-2026-81176、不正入力による DoS。修正版 5.9.1) に対応。
+  # 6系はメジャーのため上げない。
+  devalue@^5.0.0: ^5.9.4
   # esbuild: 開発サーバへの任意リクエスト送信(<=0.24.2)と Windows での
   # 任意ファイル読み取り(0.27.3〜0.28.0)。いずれも開発サーバ限定で本番成果物に
   # 影響はないが、複数系統がツリーに居るため 0.28.1 に統一する。
@@ -139,7 +145,8 @@ overrides:
   # 2026-09-03: 4.13.5 で SNYK-JS-HONO-19499091 (query が # 以降も解析される
   # Request Smuggling)、SNYK-JS-HONO-19499068 (toSSG の Directory Traversal)、
   # SNYK-JS-HONO-19499093 (parseBody の入れ子無制限によるメモリ枯渇) に対応
-  hono@^4.0.0: ^4.13.5
+  # 2026-09-25: 4.13.9 で SNYK-JS-HONO-19964059 (CVE-2026-93981、XSS。修正版 4.13.7) に対応
+  hono@^4.0.0: ^4.13.9
   # ip-address: パース不備
   ip-address@^10.0.0: ^10.1.1
   # isomorphic-git: getRemoteInfo が ref 名の __proto__ セグメントを検証せず
@@ -283,6 +290,19 @@ overrides:
   ws@8: ^8.21.1
   zod: ^4.4.3
   zod-to-json-schema: ^3.25.2
+  # --- 以下は override しない(上流待ち)。2026-09-25 時点の Snyk 指摘 ---
+  # 修正版が存在しない(npm の最新が現行版):
+  #   braces 3.0.3 (SNYK-JS-BRACES-19963945、Uncontrolled Recursion)
+  #   deepmerge 4.3.1 (SNYK-JS-DEEPMERGE-19964053、Prototype Pollution)
+  #   uri-js 4.4.1 (SNYK-JS-URIJS-19963963 Infinite loop / -19963961 Improper Encoding)
+  #   node-forge 1.4.0 (SNYK-JS-NODEFORGE-19635204、@nuxt/cli の dev 用証明書生成)
+  #   extract-zip 2.0.1 (GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv、@lhci/cli 経由の dev only)
+  # 修正がメジャー更新でしか提供されず、牽引元の宣言レンジを破る:
+  #   ioredis 5.x (SNYK-JS-IOREDIS-19963957、修正は 6.x。unstorage 等が ^5 を宣言)
+  #   @apidevtools/json-schema-ref-parser 14.x (SNYK-JS-APIDEVTOOLSJSONSCHEMAREFPARSER-17937352、
+  #   修正は 15.3.6。json-schema-to-typescript-lite 15.0.0 が ^14 を宣言)
+  # docus の依存更新で解消するもの(ai v7 等のメジャー移行を伴うため別途対応):
+  #   nuxt-og-image 6.6.0 (GHSA-q8hw-4fvp-9rwv、SSRF。docus 5.12.3 が ~6.6.0 を固定、5.13.0 で ~6.7.8)
 packageExtensions:
   '@nuxt/content':
     dependencies:

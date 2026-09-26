@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.11
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.10...v4.5.11)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ @nuxt/content 3.16.1・docus 5.13.0・@nuxt/ui 4.11.2 ほかminor/patch一括更新 ([184eddc](https://github.com/annrie/Nuxtation/commit/184eddc))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.10
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.9...v4.5.10)

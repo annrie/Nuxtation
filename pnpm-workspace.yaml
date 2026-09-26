@@ -56,6 +56,57 @@ minimumReleaseAgeExclude:
   - postcss-unique-selectors@8.0.4
   - stylehacks@8.0.4
   - fast-uri@3.1.7
+  - '@csstools/cascade-layer-name-parser@3.0.1'
+  - '@csstools/color-helpers@6.1.2'
+  - '@csstools/css-calc@3.4.1'
+  - '@csstools/css-color-parser@4.2.4'
+  - '@csstools/css-parser-algorithms@4.0.1'
+  - '@csstools/css-tokenizer@4.0.2'
+  - '@csstools/media-query-list-parser@5.0.1'
+  - '@csstools/postcss-alpha-function@2.0.14'
+  - '@csstools/postcss-cascade-layers@6.0.1'
+  - '@csstools/postcss-color-function-display-p3-linear@2.0.13'
+  - '@csstools/postcss-color-function@5.0.13'
+  - '@csstools/postcss-color-mix-function@4.0.13'
+  - '@csstools/postcss-color-mix-variadic-function-arguments@2.0.13'
+  - '@csstools/postcss-container-rule-prelude-list@1.0.2'
+  - '@csstools/postcss-content-alt-text@3.0.5'
+  - '@csstools/postcss-contrast-color-function@3.0.13'
+  - '@csstools/postcss-exponential-functions@3.0.7'
+  - '@csstools/postcss-gamut-mapping@3.0.13'
+  - '@csstools/postcss-gradients-interpolation-method@6.0.13'
+  - '@csstools/postcss-hwb-function@5.0.13'
+  - '@csstools/postcss-image-function@1.0.4'
+  - '@csstools/postcss-is-pseudo-class@6.0.1'
+  - '@csstools/postcss-light-dark-function@3.0.5'
+  - '@csstools/postcss-logical-viewport-units@4.0.2'
+  - '@csstools/postcss-media-minmax@3.0.6'
+  - '@csstools/postcss-media-queries-aspect-ratio-number-values@4.0.1'
+  - '@csstools/postcss-mixins@1.0.1'
+  - '@csstools/postcss-nested-calc@5.0.2'
+  - '@csstools/postcss-oklab-function@5.0.13'
+  - '@csstools/postcss-property-rule-prelude-list@2.0.1'
+  - '@csstools/postcss-random-function@4.0.3'
+  - '@csstools/postcss-relative-color-syntax@4.0.13'
+  - '@csstools/postcss-sign-functions@2.0.7'
+  - '@csstools/postcss-stepped-value-functions@5.0.7'
+  - '@csstools/postcss-syntax-descriptor-syntax-production@2.0.1'
+  - '@csstools/postcss-system-ui-font-family@2.0.1'
+  - '@csstools/postcss-text-decoration-shorthand@5.0.6'
+  - '@csstools/postcss-trigonometric-functions@5.0.7'
+  - '@csstools/selector-resolve-nested@4.0.2'
+  - lint-staged@17.6.0
+  - postcss-attribute-case-insensitive@8.0.1
+  - postcss-color-functional-notation@8.0.13
+  - postcss-custom-media@12.0.2
+  - postcss-custom-properties@15.0.2
+  - postcss-custom-selectors@9.0.2
+  - postcss-lab-function@8.0.13
+  - postcss-logical@9.0.1
+  - postcss-nesting@14.0.2
+  - postcss-preset-env@11.5.4
+  - postcss-pseudo-class-any-link@11.0.1
+  - socket.io-client@4.8.4
 shellEmulator: true
 
 supportedArchitectures:
@@ -87,7 +138,7 @@ overrides:
   # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
   # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
   '@hono/node-server': ^1.19.17
-  '@nuxt/content': 3.15.2
+  '@nuxt/content': 3.16.1
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   # 以下は pnpm audit(npm advisory DB) 由来。いずれも同一メジャー内のパッチ
   # 更新で解決するため、メジャーを跨がないようレンジを区切って指定する。
@@ -301,8 +352,7 @@ overrides:
   #   ioredis 5.x (SNYK-JS-IOREDIS-19963957、修正は 6.x。unstorage 等が ^5 を宣言)
   #   @apidevtools/json-schema-ref-parser 14.x (SNYK-JS-APIDEVTOOLSJSONSCHEMAREFPARSER-17937352、
   #   修正は 15.3.6。json-schema-to-typescript-lite 15.0.0 が ^14 を宣言)
-  # docus の依存更新で解消するもの(ai v7 等のメジャー移行を伴うため別途対応):
-  #   nuxt-og-image 6.6.0 (GHSA-q8hw-4fvp-9rwv、SSRF。docus 5.12.3 が ~6.6.0 を固定、5.13.0 で ~6.7.8)
+  # 2026-09-26 解消: nuxt-og-image 6.6.0 (GHSA-q8hw-4fvp-9rwv、SSRF) は docus 5.13.0 への更新で 6.7.8 になった
 packageExtensions:
   '@nuxt/content':
     dependencies:

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.12
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.11...v4.5.12)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ Snyk 指摘を override で解消(shell-quote 1.12.0 / brace-expansion) ([6aa31f9](https://github.com/annrie/Nuxtation/commit/6aa31f9))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.11
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.10...v4.5.11)

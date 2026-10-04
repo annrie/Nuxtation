@@ -201,7 +201,7 @@ overrides:
   # 2026-09-25: 4.13.9 で SNYK-JS-HONO-19964059 (CVE-2026-93981、XSS。修正版 4.13.7) に対応
   hono@^4.0.0: ^4.13.9
   # ip-address: パース不備
-  ip-address@^10.0.0: ^10.1.1
+  ip-address@^10.0.0: ^10.7.3
   # isomorphic-git: getRemoteInfo が ref 名の __proto__ セグメントを検証せず
   # Prototype Pollution を起こす(SNYK-JS-ISOMORPHICGIT-19784422、修正版 1.42.0)。
   # @nuxt/content 3.15.2 が ^1.38.9 を宣言するので同一メジャー内で最新へ。
@@ -266,7 +266,7 @@ overrides:
   # lodash-es: プロトタイプ汚染系
   lodash-es@^4.0.0: ^4.18.0
   # markdown-it: パースのReDoS
-  markdown-it@^14.0.0: ^14.2.0
+  markdown-it@^14.0.0: ^14.3.2
   # nanoid: 非整数の size を渡したときの無限ループ。postcss が牽引する。
   # postcss@8.5.23 は `^3.3.16` を宣言しているので 3系に留める(4系以降を
   # 強制すれば契約違反になるうえ、CJS の入口が無い — main を持つのは 3系だけ)。
@@ -288,7 +288,7 @@ overrides:
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。
   # serialize-javascript: XSS。6系に修正版がなく @rollup/plugin-terser 経由
   # のビルド時利用のみのため 7系へ上げる。
-  serialize-javascript: ^7.0.7
+  serialize-javascript: ^7.1.2
   # 2026-09-10: 0.35.4 で GHSA-rgj7-g3m4-5g8c (Heap Overflow) に対応。
   sharp: ^0.35.4
   shell-quote@^1.0.0: ^1.12.0

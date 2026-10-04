@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.13
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.12...v4.5.13)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ serialize-javascript 7.1.2・ip-address 10.7.3・markdown-it 14.3.2 で脆弱性を解消 ([0c61e7d](https://github.com/annrie/Nuxtation/commit/0c61e7d))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.12
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.11...v4.5.12)

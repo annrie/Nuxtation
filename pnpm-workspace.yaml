@@ -275,6 +275,9 @@ overrides:
   path-to-regexp@^0.1.0: ^0.1.13
   path-to-regexp@^8.0.0: ^8.4.0
   postcss: ^8.5.23
+  # postcss-selector-parser: SNYK の Inefficient Algorithmic Complexity (7.1.5 以前)。
+  # 2026-10-08: 7.1.6 で解消。postcss 系プラグインが牽引する推移的依存。
+  postcss-selector-parser: ^7.1.6
   # proxy-addr: IPv4-mapped IPv6 のサブネット判定不備で trust proxy を欺き
   # req.ip を偽装できる User Impersonation(SNYK-JS-PROXYADDR-19812342、修正版 2.0.8)。
   # express 4 (@lhci/cli 経由 dev) と express 5 (@modelcontextprotocol/sdk 経由 本番) の両方が牽引。
@@ -289,8 +292,12 @@ overrides:
   # serialize-javascript: XSS。6系に修正版がなく @rollup/plugin-terser 経由
   # のビルド時利用のみのため 7系へ上げる。
   serialize-javascript: ^7.1.2
+  # seroval: SNYK の Allocation of Resources Without Limits (1.6.2 以前)。
+  # 2026-10-08: 1.6.3 以降で解消。nuxt (@nuxt/vite-builder) が牽引する推移的依存。
+  seroval: ^1.6.8
   # 2026-09-10: 0.35.4 で GHSA-rgj7-g3m4-5g8c (Heap Overflow) に対応。
-  sharp: ^0.35.4
+  # 2026-10-08: 0.35.5 で Use After Free (Snyk) に対応。
+  sharp: ^0.35.5
   shell-quote@^1.0.0: ^1.12.0
   # simple-git: コマンド引数の取り扱い不備
   # 2026-10-04: SNYK-JS-SIMPLEGIT-20335540 ほかの修正は 4.0.0 以降のみ。4 系は default
@@ -353,6 +360,8 @@ overrides:
   #   deepmerge 4.3.1 (SNYK-JS-DEEPMERGE-19964053、Prototype Pollution)
   #   uri-js 4.4.1 (SNYK-JS-URIJS-19963963 Infinite loop / -19963961 Improper Encoding)
   #   node-forge 1.4.0 (SNYK-JS-NODEFORGE-19635204、@nuxt/cli の dev 用証明書生成)
+  #   zod 4.x (SNYK-JS-ZOD-20510278 / CVE-2023-54404、$ZodArray が要素ごとの issue を上限なく溜める。
+  #   全バージョンが対象で修正版なし。上流 PR colinhacks/zod#6475 は未マージで閉鎖。2026-10-08 追記)
   #   extract-zip 2.0.1 (GHSA-7pqw-9j4j-h8q3 / GHSA-jmr9-qjv8-65gv、@lhci/cli 経由の dev only)
   # 修正がメジャー更新でしか提供されず、牽引元の宣言レンジを破る:
   #   ioredis 5.x (SNYK-JS-IOREDIS-19963957、修正は 6.x。unstorage 等が ^5 を宣言)

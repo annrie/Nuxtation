@@ -107,6 +107,11 @@ minimumReleaseAgeExclude:
   - postcss-preset-env@11.5.4
   - postcss-pseudo-class-any-link@11.0.1
   - socket.io-client@4.8.4
+  - '@iconify/json@2.2.540'
+  - '@playwright/test@1.64.0'
+  - playwright-core@1.64.0
+  - playwright@1.64.0
+  - vue-router@5.4.0
 shellEmulator: true
 
 supportedArchitectures:

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.16
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.15...v4.5.16)
+
+### 🐛 バグ修正
+
+- **sitemap:** 🐛 docus 5.14 で消えたアプリ側ページを sitemap に戻す ([3f75e40](https://github.com/annrie/Nuxtation/commit/3f75e40))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.15
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.14...v4.5.15)

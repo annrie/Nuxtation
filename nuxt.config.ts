@@ -750,6 +750,10 @@ export default defineNuxtConfig({
 
   sitemap: {
     zeroRuntime: true, // サーバーバンドルサイズを削減
+    // docus 5.14 のレイヤーが excludeAppSources: true(content だけを材料にする)を設定するようになり、
+    // prerender したアプリ側のページ(blog/tags・jenre/tags など)が sitemap から消えた。既定の [] に戻す
+    // (false は不可: sitemap 8.6.1 は配列か true を前提にしており `false.includes` で落ちる)。
+    excludeAppSources: [],
     defaults: {
       priority: 0.5,
       changefreq: 'monthly', // デフォルトは月次更新

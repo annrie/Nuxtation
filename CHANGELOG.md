@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.14
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.13...v4.5.14)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ sharp 0.35.5 / seroval 1.6.8 / postcss-selector-parser 7.1.6 へ(Snyk 対応) ([8a9accb](https://github.com/annrie/Nuxtation/commit/8a9accb))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.13
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.12...v4.5.13)

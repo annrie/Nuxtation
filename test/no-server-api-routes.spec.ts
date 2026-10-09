@@ -19,6 +19,14 @@ const BUILD_OUTPUT = '.vercel/output/functions/__fallback.func'
 const ROUTES_DIR = `${BUILD_OUTPUT}/chunks/routes`
 /** そのうち API ハンドラが入るサブディレクトリ。 */
 const API_ROUTES_DIR = `${ROUTES_DIR}/api`
+/**
+ * レイヤーが持ち込む、外部へリクエストを飛ばさない API。ここに足すのは
+ * 「入力を受け取らない・外部に接続しない」ものだけにする。
+ *
+ * - `__sitemap__`: docus 5.14 の server/api/__sitemap__/urls.ts。@nuxt/content の
+ *   コレクションを読んで sitemap の URL 一覧を返すだけ(sitemap.sources が参照する)。
+ */
+const ALLOWED_API_ROUTES = new Set(['__sitemap__', '__sitemap__/urls.mjs'])
 
 describe('サーバー API ルート', () => {
   // 2026-08-04 に server/api/ogp.ts を削除した。`?url=` を検証せずに
@@ -45,9 +53,10 @@ describe('サーバー API ルート', () => {
       + '見る場所を更新するまで判定できません。',
     ).toBe(true)
 
-    const routes = existsSync(API_ROUTES_DIR)
+    const routes = (existsSync(API_ROUTES_DIR)
       ? await readdir(API_ROUTES_DIR, { recursive: true })
       : []
+    ).filter(r => !ALLOWED_API_ROUTES.has(String(r).split('\\').join('/')))
 
     const found = routes.map(r => `  - ${join(API_ROUTES_DIR, String(r))}`).join('\n')
 

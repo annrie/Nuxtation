@@ -7,40 +7,15 @@ allowBuilds:
   unrs-resolver: false
   vue-demi: true
 minimumReleaseAgeExclude:
-  - '@nuxt/ui@4.8.0'
-  - '@nuxtjs/i18n@10.4.0'
-  - '@nuxt/scripts@1.3.1 || 1.3.5'
-  - '@typescript-eslint/eslint-plugin@8.64.0 || 8.65.0'
-  - '@typescript-eslint/parser@8.64.0 || 8.65.0'
-  - '@typescript-eslint/project-service@8.64.0 || 8.65.0'
-  - '@typescript-eslint/scope-manager@8.64.0 || 8.65.0'
-  - '@typescript-eslint/tsconfig-utils@8.64.0 || 8.65.0'
-  - '@typescript-eslint/type-utils@8.64.0 || 8.65.0'
-  - '@typescript-eslint/types@8.64.0 || 8.65.0'
-  - '@typescript-eslint/typescript-estree@8.64.0 || 8.65.0'
-  - '@typescript-eslint/utils@8.64.0 || 8.65.0'
-  - '@typescript-eslint/visitor-keys@8.64.0 || 8.65.0'
-  - '@vitejs/plugin-vue@6.0.8'
-  - typescript-eslint@8.64.0 || 8.65.0
-  - '@nuxtjs/sitemap@8.3.0'
-  - '@nuxt/icon@2.4.1'
-  - '@nuxt/test-utils@4.1.0'
-  - cssnano-preset-default@8.0.6
   - cssnano-utils@6.0.4
-  - cssnano@8.0.6
-  - postcss-colormin@8.0.4
   - postcss-convert-values@8.0.4
   - postcss-discard-comments@8.0.4
   - postcss-discard-duplicates@8.0.4
-  - postcss-discard-empty@8.0.4
   - postcss-discard-overridden@8.0.4
   - postcss-merge-longhand@8.0.4
-  - postcss-merge-rules@8.0.4
   - postcss-minify-font-values@8.0.4
-  - postcss-minify-gradients@8.0.4
   - postcss-minify-params@8.0.4
   - postcss-minify-selectors@8.0.5
-  - postcss-normalize-charset@8.0.4
   - postcss-normalize-display-values@8.0.4
   - postcss-normalize-positions@8.0.4
   - postcss-normalize-repeat-style@8.0.4
@@ -48,63 +23,15 @@ minimumReleaseAgeExclude:
   - postcss-normalize-timing-functions@8.0.4
   - postcss-normalize-unicode@8.0.4
   - postcss-normalize-url@8.0.4
-  - postcss-normalize-whitespace@8.0.4
-  - postcss-ordered-values@8.0.4
-  - postcss-reduce-initial@8.0.4
   - postcss-reduce-transforms@8.0.4
-  - postcss-svgo@8.0.5
   - postcss-unique-selectors@8.0.4
   - stylehacks@8.0.4
-  - fast-uri@3.1.7
-  - '@csstools/cascade-layer-name-parser@3.0.1'
   - '@csstools/color-helpers@6.1.2'
-  - '@csstools/css-calc@3.4.1'
-  - '@csstools/css-color-parser@4.2.4'
-  - '@csstools/css-parser-algorithms@4.0.1'
   - '@csstools/css-tokenizer@4.0.2'
-  - '@csstools/media-query-list-parser@5.0.1'
-  - '@csstools/postcss-alpha-function@2.0.14'
-  - '@csstools/postcss-cascade-layers@6.0.1'
-  - '@csstools/postcss-color-function-display-p3-linear@2.0.13'
-  - '@csstools/postcss-color-function@5.0.13'
-  - '@csstools/postcss-color-mix-function@4.0.13'
-  - '@csstools/postcss-color-mix-variadic-function-arguments@2.0.13'
-  - '@csstools/postcss-container-rule-prelude-list@1.0.2'
-  - '@csstools/postcss-content-alt-text@3.0.5'
-  - '@csstools/postcss-contrast-color-function@3.0.13'
-  - '@csstools/postcss-exponential-functions@3.0.7'
-  - '@csstools/postcss-gamut-mapping@3.0.13'
-  - '@csstools/postcss-gradients-interpolation-method@6.0.13'
-  - '@csstools/postcss-hwb-function@5.0.13'
-  - '@csstools/postcss-image-function@1.0.4'
-  - '@csstools/postcss-is-pseudo-class@6.0.1'
-  - '@csstools/postcss-light-dark-function@3.0.5'
-  - '@csstools/postcss-logical-viewport-units@4.0.2'
-  - '@csstools/postcss-media-minmax@3.0.6'
-  - '@csstools/postcss-media-queries-aspect-ratio-number-values@4.0.1'
-  - '@csstools/postcss-mixins@1.0.1'
   - '@csstools/postcss-nested-calc@5.0.2'
-  - '@csstools/postcss-oklab-function@5.0.13'
-  - '@csstools/postcss-property-rule-prelude-list@2.0.1'
-  - '@csstools/postcss-random-function@4.0.3'
-  - '@csstools/postcss-relative-color-syntax@4.0.13'
-  - '@csstools/postcss-sign-functions@2.0.7'
-  - '@csstools/postcss-stepped-value-functions@5.0.7'
   - '@csstools/postcss-syntax-descriptor-syntax-production@2.0.1'
-  - '@csstools/postcss-system-ui-font-family@2.0.1'
-  - '@csstools/postcss-text-decoration-shorthand@5.0.6'
-  - '@csstools/postcss-trigonometric-functions@5.0.7'
   - '@csstools/selector-resolve-nested@4.0.2'
   - lint-staged@17.6.0
-  - postcss-attribute-case-insensitive@8.0.1
-  - postcss-color-functional-notation@8.0.13
-  - postcss-custom-media@12.0.2
-  - postcss-custom-properties@15.0.2
-  - postcss-custom-selectors@9.0.2
-  - postcss-lab-function@8.0.13
-  - postcss-logical@9.0.1
-  - postcss-nesting@14.0.2
-  - postcss-preset-env@11.5.4
   - postcss-pseudo-class-any-link@11.0.1
   - socket.io-client@4.8.4
   - '@iconify/json@2.2.540'
@@ -112,6 +39,8 @@ minimumReleaseAgeExclude:
   - playwright-core@1.64.0
   - playwright@1.64.0
   - vue-router@5.4.0
+# lockfile から消えた版を minimumReleaseAgeExclude / trustPolicyExclude から自動で外す(pnpm 11.22+)
+minimumReleaseAgeExcludePrune: true
 shellEmulator: true
 
 supportedArchitectures:
@@ -122,6 +51,7 @@ supportedArchitectures:
     - current
 
 trustPolicy: no-downgrade
+trustPolicyExcludePrune: true
 trustPolicyExclude:
   - chokidar
   - rollup
@@ -375,10 +305,6 @@ overrides:
   # 2026-09-26 解消: nuxt-og-image 6.6.0 (GHSA-q8hw-4fvp-9rwv、SSRF) は docus 5.13.0 への更新で 6.7.8 になった
 packageExtensions:
   '@nuxt/content':
-    dependencies:
-      zod: '*'
-      zod-to-json-schema: '*'
-  docus:
     dependencies:
       zod: '*'
       zod-to-json-schema: '*'

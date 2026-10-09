@@ -555,6 +555,17 @@ export default defineNuxtConfig({
     },
   },
 
+  // docus 5.14 から入った nuxt-agent-discovery の既定を、このサイトに合わせて切る。
+  agentDiscovery: {
+    robots: {
+      // AI ボットごとの `Allow: /` グループを足さない。足すと下の robots.groups の
+      // Disallow(/_content/ や検索結果)が AI ボットにだけ効かなくなる。5.13 以前の挙動に戻す。
+      aiPolicy: false,
+    },
+    // skills/create-docs は docus テンプレート由来で、このサイトの訪問者向けではない。
+    skills: false,
+  },
+
   eslint: {
     config: {
       stylistic: {
@@ -700,10 +711,6 @@ export default defineNuxtConfig({
     excludeLinks: [
       'https://twitter.com/muraie_jin',
     ],
-  },
-
-  llms: {
-    domain: SiteUrl,
   },
 
   nuxtIcon: {

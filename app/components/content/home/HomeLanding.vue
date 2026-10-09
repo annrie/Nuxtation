@@ -98,19 +98,16 @@ useSeoMeta({
   twitterImage: () => `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
 })
 
+// 生の `@type: 'WebSite'` だと、docus(useSeo)が出す #website とは別のノードになり WebSite が2つ出る。
+// defineWebSite は同じ #website に合流するので、検索アクションだけを足せる。
 useSchemaOrg([
-  {
-    '@type': 'WebSite',
-    'url': MySite,
-    'potentialAction': {
-      '@type': 'SearchAction',
-      'target': {
-        '@type': 'EntryPoint',
-        'urlTemplate': `${SiteUrl}/search?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
-  },
+  defineWebSite({
+    potentialAction: [
+      defineSearchAction({
+        target: `${SiteUrl}/search?q={search_term_string}`,
+      }),
+    ],
+  }),
 ])
 </script>
 

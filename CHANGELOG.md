@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.17
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.16...v4.5.17)
+
+### 🐛 バグ修正
+
+- **seo:** 🐛 docus 5.14 の agent-discovery 既定と重複する WebSite ノードを整理 ([ca2e378](https://github.com/annrie/Nuxtation/commit/ca2e378))
+
+### 📦 ビルド
+
+- **deps:** 🔧 nuxt / @nuxt/kit を ~4.5.2 に固定し、除外リストの自動整理を有効化 ([7ce1cb8](https://github.com/annrie/Nuxtation/commit/7ce1cb8))
+
+### ✅ テストの追加・修正
+
+- ✅ docus 5.14 の sitemap 用 API ルートを許可リストに入れる ([1de37e3](https://github.com/annrie/Nuxtation/commit/1de37e3))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.16
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.15...v4.5.16)

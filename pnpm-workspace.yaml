@@ -34,11 +34,13 @@ minimumReleaseAgeExclude:
   - lint-staged@17.6.0
   - postcss-pseudo-class-any-link@11.0.1
   - socket.io-client@4.8.4
-  - '@iconify/json@2.2.540'
-  - '@playwright/test@1.64.0'
-  - playwright-core@1.64.0
-  - playwright@1.64.0
   - vue-router@5.4.0
+  - '@iconify-json/logos@1.2.17'
+  - '@iconify/json@2.2.545'
+  - '@nuxt/devtools-kit@3.4.4'
+  - '@nuxt/devtools-wizard@3.4.4'
+  - '@nuxt/devtools@3.4.4'
+  - browserslist@4.29.4
 # lockfile から消えた版を minimumReleaseAgeExclude / trustPolicyExclude から自動で外す(pnpm 11.22+)
 minimumReleaseAgeExcludePrune: true
 shellEmulator: true
@@ -73,7 +75,7 @@ overrides:
   # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
   # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
   '@hono/node-server': ^1.19.17
-  '@nuxt/content': 3.16.1
+  '@nuxt/content': 3.16.2
   # セキュリティ: Snyk指摘のcritical対応 (handlebars: JS注入, shell-quote: エスケープ不備)
   # 以下は pnpm audit(npm advisory DB) 由来。いずれも同一メジャー内のパッチ
   # 更新で解決するため、メジャーを跨がないようレンジを区切って指定する。
@@ -220,7 +222,10 @@ overrides:
   # qs: パラメータ処理の不備。6.16.0 で Snyk 指摘の Medium 2件を解消:
   #   SNYK-JS-QS-19432019 (isBuffer() の callable 未確認による Uncaught Exception)
   #   SNYK-JS-QS-19432017 (parseArrayValue() の arrayLimit 未適用によるメモリ枯渇)
-  qs@^6.0.0: ^6.16.0
+  # 2026-10-19: 10/16 の Snyk 通知 (qs 6.16.0 の Uncaught Exception、H) の修正版は未公表だったが、
+  # 10/14 公開の 6.16.1 に stringify の例外修正 (toString が呼べない要素で throw しない) が入ったので上げる。
+  # Snyk 側で解消と判定されるかは未確認。
+  qs@^6.0.0: ^6.16.1
   # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
   # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。

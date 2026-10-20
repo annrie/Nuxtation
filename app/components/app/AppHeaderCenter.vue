@@ -5,11 +5,12 @@ const route = useRoute()
 const openDropdown = ref<string | null>(null)
 
 const navigationItems = computed(() => {
-  const links = appConfig.header?.links || []
+  // app.config.ts は header.links を定義しているが、Docus 層の AppConfig 型には links が無いため、型だけ補う
+  const links = (appConfig.header as { links?: any[] } | undefined)?.links || []
   return links.map((link: any) => ({
     label: link.label,
     to: link.to,
-    children: link.children || [],
+    children: (link.children || []) as any[], // v-for のインデックスを number にするため、型だけ配列に揃える
     active: route.path === link.to || (link.to !== '/' && route.path.startsWith(link.to)),
   }))
 })

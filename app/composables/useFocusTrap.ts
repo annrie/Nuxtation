@@ -36,8 +36,9 @@ export function useFocusTrap(containerRef: Ref<HTMLElement | null>, isActive: Re
     if (focusableElements.length === 0)
       return
 
-    const firstElement = focusableElements[0]
-    const lastElement = focusableElements[focusableElements.length - 1]
+    // 上で length === 0 を弾いているので、どちらも必ず存在する(noUncheckedIndexedAccess の型だけ補う)
+    const firstElement = focusableElements[0] as HTMLElement
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
 
     // Shift+Tab: 最初の要素から最後の要素へ
     if (event.shiftKey && document.activeElement === firstElement) {
@@ -67,7 +68,8 @@ export function useFocusTrap(containerRef: Ref<HTMLElement | null>, isActive: Re
         const inputElement = focusableElements.find(
           el => el.tagName === 'INPUT' || el.tagName === 'TEXTAREA',
         )
-        const targetElement = inputElement || focusableElements[0]
+        // length > 0 を確認済みなので、focusableElements[0] は必ず存在する
+        const targetElement = (inputElement || focusableElements[0]) as HTMLElement
         targetElement.focus()
       }
     })

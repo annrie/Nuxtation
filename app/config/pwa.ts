@@ -40,6 +40,7 @@ export const pwa: ModuleOptions = {
       {
         src: 'safari-pinned-tab.svg',
         sizes: 'any',
+        // @ts-expect-error `color` は Web App Manifest の icons に無いキー(<link rel="mask-icon"> の属性)。出力を変えないため、値は触らずに残している。
         color: '#5bbad5',
         type: 'image/svg+xml',
         purpose: 'maskable',

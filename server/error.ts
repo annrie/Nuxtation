@@ -5,6 +5,7 @@ export default defineEventHandler((error) => {
   console.error('Nitro error:', error)
 
   // robots.txtに関連するエラーの場合
+  // @ts-expect-error H3Event の型に `url` は無い(`path` はある)。値は直していない(1 件だけを覆う)。
   if (error.url?.includes('robots.txt')) {
     // デフォルトのrobots.txtを返す
     return new Response(

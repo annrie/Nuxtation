@@ -3,7 +3,7 @@ import { defineNuxtPlugin } from '#app'
 export default defineNuxtPlugin(() => {
   return {
     provide: {
-      formatDate: (dateStr) => {
+      formatDate: (dateStr?: string | number | Date | null) => {
         if (!dateStr) {
           console.error(`Invalid date: ${dateStr}`)
           return undefined

@@ -1,4 +1,3 @@
-import type { ResolvedVitePWAOptions } from 'vite-plugin-pwa'
 // import { rollup as unwasm } from 'unwasm/plugin'  // Nitro の experimental.wasm で代替
 import yaml from '@rollup/plugin-yaml'
 import tailwindcss from '@tailwindcss/vite'
@@ -144,6 +143,7 @@ export default defineNuxtConfig({
   ],
 
   vue: {
+    // @ts-expect-error `vue.defineModel` は型に無いキー(Vue 3.5 では defineModel は常に有効)。ビルド出力を変えないため、値は触らずに残している。
     defineModel: true,
     propsDestructure: true,
   },
@@ -210,6 +210,7 @@ export default defineNuxtConfig({
     },
     build: {
       markdown: {
+        // @ts-expect-error `anchorLinks` は @nuxt/content v3 の markdown オプションの型に無いキー(v2 の名残の可能性)。ビルド出力を変えないため、値は触らずに残している。
         anchorLinks: true,
         toc: {
           depth: 5,
@@ -263,6 +264,7 @@ export default defineNuxtConfig({
         default: 'github-light',
         dark: 'github-dark',
       },
+      // @ts-expect-error string[] は Shiki の BundledLanguage[] に代入できない(shiki は直接の依存ではなく、型を import できない)。中身は Shiki の言語名のみ。
       langs: SHIKI_LANGS,
       preload: SHIKI_PRELOAD,
       lineNumbers: true,
@@ -352,6 +354,7 @@ export default defineNuxtConfig({
     componentIslands: true,
     treeshakeClientOnly: true,
     typedPages: true,
+    // @ts-expect-error `experimental.appManifest` の型は boolean だが、オブジェクトを渡している。ビルド出力を変えないため、値は触らずに残している。
     appManifest: {
       override: true,
     },
@@ -385,6 +388,7 @@ export default defineNuxtConfig({
       plugins: [
         Vue({
           template: {
+            // @ts-expect-error `customElement` は template オプションの型に無いキー。ビルド出力を変えないため、値は触らずに残している。
             customElement: true,
           },
         }) as any,
@@ -395,6 +399,7 @@ export default defineNuxtConfig({
       options: {
         target: 'esnext',
       },
+      // @ts-expect-error `nitro.esbuild` の型に `plugins` は無い。ビルド出力を変えないため、値は触らずに残している。
       plugins: ['@/plugins/nitro.error.ts'],
     },
     // compressPublicAssets: ホスティング先がオンザフライ圧縮するため無効化
@@ -478,6 +483,7 @@ export default defineNuxtConfig({
     build: {
       target: 'es2020',
       chunkSizeWarningLimit: 1600,
+      // @ts-expect-error `assetsInclude` は `vite.build` ではなく `vite` 直下のオプション(置き場所の誤りの可能性)。ビルド出力を変えないため、値は触らずに残している。
       assetsInclude: '**/*.wasm',
       cssCodeSplit: true,
       cssMinify: 'esbuild',
@@ -488,7 +494,8 @@ export default defineNuxtConfig({
           // 注意: @sqlite.org/sqlite-wasm と sqlite3.wasm を external にすると、
           // @nuxt/content のクライアント側クエリ（検索モーダル等）で
           // 「Failed to resolve module specifier '@sqlite.org/sqlite-wasm'」に
-          // なるため external にしない。wasm は assetsInclude でアセット化される。
+          // なるため external にしない。wasm のアセット化は assetsInclude を想定しているが、
+          // その assetsInclude は vite.build 配下にあり(Vite では vite 直下のオプション)、効いているかは未確認。
         ],
         onwarn(warning, warn) {
           // unwasm の shiki WASM 警告を抑制
@@ -545,12 +552,14 @@ export default defineNuxtConfig({
   telemetry: false,
 
   hooks: {
-    'pwa:beforeBuildServiceWorker': function (options: ResolvedVitePWAOptions) {
+    // options の型は @vite-pwa/nuxt の ModuleHooks から決まる(vite-plugin-pwa は直接の依存ではなく import できない)
+    'pwa:beforeBuildServiceWorker': function (options) {
       const globPatterns = options.workbox.globPatterns
       const payloadPatternIndex = globPatterns?.indexOf('**/_payload.json') ?? -1
 
       if (payloadPatternIndex !== -1) {
-        globPatterns[payloadPatternIndex] = '**/_payload.js'
+        // payloadPatternIndex !== -1 のときは globPatterns が必ずある(optional chaining の結果を型が追えないだけ)
+        (globPatterns as string[])[payloadPatternIndex] = '**/_payload.js'
       }
     },
   },
@@ -589,6 +598,7 @@ export default defineNuxtConfig({
       styles: ['normal', 'italic'],
       subsets: [],
     },
+    // @ts-expect-error `fonts.fallbacks` は型に無いキー(`fonts.defaults.fallbacks` の置き場違いの可能性)。ビルド出力を変えないため、値は触らずに残している。
     fallbacks: {
       serif: ['Noto Serif JP'],
       sans: ['Noto Sans JP'],
@@ -681,6 +691,7 @@ export default defineNuxtConfig({
     quality: 80,
     imgix: {
       baseURL: 'https://nuxtation.imgix.net/',
+      // @ts-expect-error `modifiers` は imgix プロバイダのオプション型に無いキー。ビルド出力を変えないため、値は触らずに残している。
       modifiers: {
         auto: 'format,compress', // Phase 24: 自動最適化（format + compress）
         q: 80, // Phase 24: 明示的な品質指定
@@ -693,7 +704,6 @@ export default defineNuxtConfig({
     alias: {
       imgix: 'https://nuxtation.imgix.net/',
     },
-    densities: [1, 2],
     presets: {
       cover: {
         modifiers: {
@@ -792,6 +802,7 @@ export default defineNuxtConfig({
 
   twoslash: {
     // Nuxt の自動生成型を注入（デフォルト: true）
+    // @ts-expect-error `injectNuxtTypes` は nuxt-content-twoslash のモジュールオプションの型に無いキー。ビルド出力を変えないため、値は触らずに残している。
     injectNuxtTypes: true,
   },
 })

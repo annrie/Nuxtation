@@ -39,7 +39,8 @@ function cycleColorMode() {
   const modes = ['light', 'dark', 'system'] as const
   const currentIndex = modes.indexOf(colorMode.preference as any)
   const nextIndex = (currentIndex + 1) % modes.length
-  colorMode.preference = modes[nextIndex]
+  // nextIndex は 0〜2 に収まる(noUncheckedIndexedAccess の型だけ補う)
+  colorMode.preference = modes[nextIndex] as (typeof modes)[number]
 }
 </script>
 

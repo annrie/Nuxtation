@@ -117,7 +117,7 @@ const relatedArticles = computed(() => {
 
     // 新しい記事に少しボーナス（最新日付ベース）
     const itemLatestDate = getBlogLatestDate(item)
-    const currentLatestDate = getBlogLatestDate(article.value)
+    const currentLatestDate = getBlogLatestDate(article.value!) // 関数の先頭で article.value の有無を確認済み(クロージャ内で絞り込みが外れるだけ)
 
     const daysDiff
       = Math.abs(itemLatestDate.getTime() - currentLatestDate.getTime())

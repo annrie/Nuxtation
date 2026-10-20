@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { TwitterWindow } from '~/types'
+import type { TwitterWindow } from '~~/types'
 
 declare const window: TwitterWindow
 </script>

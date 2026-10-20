@@ -8,7 +8,8 @@ const openDropdown = ref<string | null>(null)
 const headerMenuOpen = inject<Ref<boolean>>('header-menu-open', ref(false))
 
 const navigationItems = computed(() => {
-  const links = appConfig.header?.links || []
+  // app.config.ts は header.links を定義しているが、Docus 層の AppConfig 型には links が無いため、型だけ補う
+  const links = (appConfig.header as { links?: any[] } | undefined)?.links || []
   return links.map((link: any) => ({
     label: link.label,
     to: link.to,

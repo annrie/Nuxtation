@@ -17,7 +17,9 @@ const currentPage = computed(() => {
 
 const activeTag = computed(() => {
   const tag = route.query.tag
-  return Array.isArray(tag) ? tag[0] : tag || ''
+  // LocationQueryValue は null を含む。tag が配列で先頭の要素が null のとき、ここは null のままになる。
+  // `as string` は、それを型だけで隠している(null でも `!activeTag.value` で全件表示になり、実行時は従来どおり)。
+  return (Array.isArray(tag) ? tag[0] : tag || '') as string
 })
 
 const { data: articlesData } = useLazyAsyncData('docs-blog-articles', async () => {

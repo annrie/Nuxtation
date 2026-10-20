@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import type { ContentPreview } from '~/types'
+import type { ContentPreview } from '~~/types'
 import { computed, inject } from 'vue'
 import { useIsWithinTenDays } from '~/composables/useIsWithinTenDays'
 import { getLatestDate } from '~/utils/format'

@@ -18,7 +18,8 @@ export default defineEventHandler((event) => {
   // event.path はクエリ文字列を含むため、拡張子判定($ 終端)が
   // /missing.png?v=1 のようなキャッシュバスト付き要求を素通りさせてしまう。
   // pathname のみで判定する。
-  const path = event.path.split('?')[0]
+  // split は必ず 1 つ以上の要素を返す(noUncheckedIndexedAccess の型だけ補う)
+  const path = event.path.split('?')[0] as string
   if (
     path.startsWith('/_ipx/')
     || path.startsWith('/api/')

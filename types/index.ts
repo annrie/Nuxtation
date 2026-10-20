@@ -1,8 +1,28 @@
-import type { ParsedContent as DefaultParsedContent, MarkdownParsedContent } from '@nuxt/content/dist/runtime/types'
-import type { MicroCMSImage, MicroCMSListContent } from 'microcms-js-sdk'
-import type { StorageMeta } from 'unstorage'
-import type { VitePWAOptions } from 'vite-plugin-pwa'
-import type { Ref, UnwrapNestedRefs } from 'vue'
+import type { ParsedContentv2 as DefaultParsedContent } from '@nuxt/content'
+import type { Ref } from 'vue'
+
+// 以下の型は、直接の依存ではない `unstorage` / `microcms-js-sdk` から型だけを借りていた。
+// pnpm の厳密な node_modules からは解決できず、型エラーになるため、同じ形をここで定義する。
+interface StorageMeta {
+  atime?: Date
+  mtime?: Date
+  ttl?: number
+  [key: string]: unknown
+}
+
+interface MicroCMSImage {
+  url: string
+  height?: number
+  width?: number
+}
+
+interface MicroCMSListContent {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt?: string
+  revisedAt?: string
+}
 
 export interface ParsedContent extends DefaultParsedContent {
   storageMeta: StorageMeta
@@ -12,7 +32,8 @@ export interface ParsedContent extends DefaultParsedContent {
 
 export type Sections = 'blog' | 'catResponse'
 
-export interface BlogPost extends MarkdownParsedContent {
+// `@nuxt/content` v3 に `MarkdownParsedContent` は無く、v2 相当の `ParsedContentv2` を土台にする。
+export interface BlogPost extends DefaultParsedContent {
   title: string
   publishedAt: string
   description: string
@@ -25,6 +46,24 @@ export interface BlogPost extends MarkdownParsedContent {
   published?: boolean
   updatedAt?: string
   path?: string
+  draft?: boolean
+  featured?: boolean
+}
+
+// カード表示 (HomeCard / HomeFeaturedArticle / BlogCardHorizontal ほか) が参照する項目。
+// 記事コレクションの項目から本文を除いた形で渡されるため、すべて任意にしている。
+export interface ContentPreview {
+  title?: string
+  description?: string
+  path?: string
+  url?: string
+  img?: string
+  alt?: string
+  tags?: string[]
+  publishedAt?: string
+  updatedAt?: string
+  draft?: boolean
+  featured?: boolean
 }
 
 export interface CatResponse {
@@ -53,6 +92,8 @@ declare global {
   }
 }
 
+export type TwitterWindow = Window & typeof globalThis
+
 export interface PwaInjection {
   isInstalled: boolean
   showInstallPrompt: Ref<boolean>
@@ -67,45 +108,11 @@ export interface PwaInjection {
   getSWRegistration: () => ServiceWorkerRegistration | undefined
 }
 
-// TODO: fix this issue upstream in nuxt/module-builder
-declare module '#app' {
-  interface NuxtApp {
-    $pwa: UnwrapNestedRefs<PwaInjection>
-  }
-}
+// `NuxtApp['$pwa']` の宣言は @vite-pwa/nuxt 自身が持っている。ここでも宣言すると
+// 型が食い違って TS2687 / TS2717 になるため、重複していた宣言は削除した。
 
-export interface ClientOptions {
-  /**
-   * Exposes the plugin: defaults to true.
-   */
-  registerPlugin?: boolean
-  /**
-   * Registers a periodic sync for updates interval: value in seconds.
-   */
-  periodicSyncForUpdates?: number
-  /**
-   * Will prevent showing native PWA install prompt: defaults to false.
-   *
-   * When set to true or no empty string, the native PWA install prompt will be prevented.
-   *
-   * When set to a string, it will be used as the key in `localStorage` to prevent show the PWA install prompt widget.
-   *
-   * When set to true, the key used will be `vite-pwa:hide-install`.
-   */
-  installPrompt?: boolean | string
-}
-
-export interface ModuleOptions extends Partial<VitePWAOptions> {
-  registerWebManifestInRouteRules?: boolean
-  /**
-   * Writes the plugin to disk: defaults to false (debug).
-   */
-  writePlugin?: boolean
-  /**
-   * Options for plugin.
-   */
-  client?: ClientOptions
-}
+// `vite-plugin-pwa` も直接の依存ではないため、同じ形の型を持つ @vite-pwa/nuxt から再エクスポートする。
+export type { ClientOptions, ModuleOptions } from '@vite-pwa/nuxt'
 
 export interface Blog {
   title?: string

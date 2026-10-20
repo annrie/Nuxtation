@@ -1,9 +1,12 @@
 /**
  * 記事データ取得の共通ロジック
  */
+import type { Collections, PageCollections } from '@nuxt/content'
 
-interface ArticleDataOptions {
-  collection: string
+// コレクション名はジェネリクスで受け、`queryCollection` が返す項目の型を呼び出し側まで引き継ぐ。
+// `string` で受けると `keyof Collections` に渡せず、戻り値も全コレクションの union になる。
+interface ArticleDataOptions<C extends keyof PageCollections> {
+  collection: C
   slug: string
   path: string
 }
@@ -14,7 +17,7 @@ interface ArticleDataOptions {
  * @param slug - 記事のslug
  * @returns 記事データ
  */
-export function useArticle(collection: string, slug: string) {
+export function useArticle<C extends keyof Collections>(collection: C, slug: string) {
   return useAsyncData(`${collection}-${slug}`, () =>
     queryCollection(collection).path(`/${collection}/${slug}`).first())
 }
@@ -25,7 +28,7 @@ export function useArticle(collection: string, slug: string) {
  * @param path - 現在の記事パス
  * @returns 前後の記事データ
  */
-export function useSurroundingArticles(collection: string, path: string) {
+export function useSurroundingArticles<C extends keyof PageCollections>(collection: C, path: string) {
   return useAsyncData(`surround-${collection}-${path}`, async () => {
     // まず前後の記事を取得
     const surroundings = await queryCollectionItemSurroundings(collection, path)
@@ -54,9 +57,9 @@ export function useSurroundingArticles(collection: string, path: string) {
  * @param orderDirection - ソート方向（'ASC' | 'DESC'、デフォルト: 'DESC'）
  * @returns 全記事リスト
  */
-export function useAllArticles(
-  collection: string,
-  orderBy?: string,
+export function useAllArticles<C extends keyof Collections>(
+  collection: C,
+  orderBy?: keyof Collections[C] & string,
   orderDirection: 'ASC' | 'DESC' = 'DESC',
 ) {
   const key = orderBy
@@ -74,7 +77,7 @@ export function useAllArticles(
  * @param options - コレクション名、slug、パス
  * @returns 記事データ、前後記事、全記事リスト
  */
-export async function useArticleDataBundle(options: ArticleDataOptions) {
+export async function useArticleDataBundle<C extends keyof PageCollections>(options: ArticleDataOptions<C>) {
   const { collection, slug, path } = options
 
   const article = await useArticle(collection, slug)

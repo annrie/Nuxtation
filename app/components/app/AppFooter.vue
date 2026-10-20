@@ -76,6 +76,7 @@ const links = computed(() =>
 
     <template #right>
       <ClientOnly>
+        <!-- @vue-expect-error `color="white"` は Nuxt UI v2 の値で、v4 の型に無い(1 件だけを覆う。`ui.icon` は `:ui` 内の @ts-expect-error が別に覆う) -->
         <UButton
           :icon="colorModeIcon"
           color="white"
@@ -84,12 +85,14 @@ const links = computed(() =>
           :title="colorModeLabel"
           :ui="{
             base: 'touch-manipulation',
+            // @ts-expect-error `ui.icon` は Nuxt UI v2 の記法で、v4 の型に無い(1 件だけを覆う)
             icon: { size: { md: 'w-5 h-5' } }
           }"
           class="!min-w-[44px] !min-h-[44px]"
           @click="cycleColorMode"
         />
         <template #fallback>
+          <!-- @vue-expect-error `color="white"` は Nuxt UI v2 の値で、v4 の型に無い(1 件だけを覆う。`ui.icon` は `:ui` 内の @ts-expect-error が別に覆う) -->
           <UButton
             icon="i-lucide-monitor"
             color="white"
@@ -98,6 +101,7 @@ const links = computed(() =>
             title="システム設定"
             :ui="{
               base: 'touch-manipulation',
+              // @ts-expect-error `ui.icon` は Nuxt UI v2 の記法で、v4 の型に無い(1 件だけを覆う)
               icon: { size: { md: 'w-5 h-5' } }
             }"
             class="!min-w-[44px] !min-h-[44px]"
@@ -106,12 +110,14 @@ const links = computed(() =>
       </ClientOnly>
 
       <template v-if="links?.length">
+        <!-- 注記: `v-bind` の `color: 'white'` も Nuxt UI v2 の値で、v4 の型に無い。型検査には出ないが、直していない(他の 5 個の UButton と同じ) -->
         <UButton
-          v-for="(link, index) of links"
+          v-for="link of links"
           :key="link.to"
           v-bind="{ color: 'white', variant: 'ghost', ...link }"
           :ui="{
             base: 'touch-manipulation',
+            // @ts-expect-error `ui.icon` は Nuxt UI v2 の記法で、v4 の型に無い(1 件だけを覆う)
             icon: { size: { md: 'w-5 h-5' } }
           }"
           class="!min-w-[44px] !min-h-[44px]"

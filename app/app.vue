@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// @ts-expect-error `ufo` は直接の依存ではなく、pnpm の node_modules からは型を解決できない(ビルド時の解決は別経路で通っている)。
 import { withoutTrailingSlash } from 'ufo'
 import { SiteUrl } from '~/logic/constants'
 
@@ -18,9 +19,16 @@ const canonical = computed(() => {
   const { href: canonical } = new URL(path, mySite)
   return canonical
 })
+// 既存の不具合: `queryCollection()` はコレクション名が必須で、`route` はこのスコープに存在しない。
+// 実行時は ReferenceError が asyncData のエラーに吸収され、`article` は常に空になる。挙動を変えないため直さず、型だけ通している。
 const { data: article } = useLazyAsyncData('home', () =>
+  // @ts-expect-error コレクション名の引数が無い(1 件だけを覆う)
   queryCollection()
-    .where({ path: withoutTrailingSlash(route.fullPath) })
+    // @ts-expect-error `.where()` は 2〜3 個の引数が必要で、ここでは 1 個(1 件だけを覆う)
+    .where(
+      // @ts-expect-error `route` はこのスコープに存在しない(1 件だけを覆う)
+      { path: withoutTrailingSlash(route.fullPath) },
+    )
     .first())
 
 const description = ref('Nuxt.js, Vue.jsについての記事及び作家山田正紀の著作の紹介をしているサイトです。 - Phantomoon Annex')
@@ -33,12 +41,13 @@ const ogLocale = ref('ja_JP')
 const appleMobileWebAppStatusBarStyle = 'black-translucent'
 
 useHead({
-  titleTemplate: (titleChunk: string) => {
+  titleTemplate: (titleChunk?: string) => {
     return titleChunk ? `${titleChunk} - Nuxtation` : 'Nuxtation'
   },
   htmlAttrs: {
     lang: 'ja',
   },
+  // @ts-expect-error unhead 3.4.3 の型に top-level の `charset` が無い。実行時に捨てられるかは未確認。挙動を変えないため残している(1 件だけを覆う)。
   charset: 'utf-8',
   title: ogTitle,
   link: [

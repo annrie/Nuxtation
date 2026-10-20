@@ -8,7 +8,6 @@ const configs = nuxt(
       unocss: true,
       formatters: true,
       ignores: [
-        '.entire/**',
         '.github/copilot-instructions.md',
         '.vscode/**',
         'COMPONENT_PATTERNS.md',

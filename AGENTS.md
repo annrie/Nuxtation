@@ -16,6 +16,7 @@
 - `pnpm generate`: Produce static output for SSG deployments.
 - `pnpm preview`: Serve the build output (`.vercel/output/static`) locally for smoke checks. Run `pnpm build` first.
 - `pnpm lint` / `pnpm lint:fix`: ESLint via the Antfu preset; autofix before committing.
+- `pnpm typecheck`: `nuxt typecheck` (vue-tsc). `tsconfig.json` is Nuxt 4's references-only form, pointing at `.nuxt/tsconfig.{app,server,shared,node}.json`. Must exit 0; `ssg-check` runs it before `pnpm build`, because the build strips types without checking them. **Covered:** `app/` (plus `types/`, as far as `app/` imports it), `server/` and `nuxt.config.ts`. **Not covered:** `scripts/`, `test/`, `tests/`, `content.config.ts` and the root `utils/`; `noUnusedLocals` is not enabled. Fix with annotations, generics, or `import type` from `~~/types` (`~` is `app/`, not the repo root). Where a `@ts-expect-error` (or `<!-- @vue-expect-error -->` in a template) is unavoidable, give each directive exactly one error and keep the reason in the comment: it fails once that error goes away, which is the point. **Casts (`as string`, `as unknown as …`, `as { … }`) get no such warning**: they stay silent after the gap closes, so write down in a comment what the cast hides.
 - `pnpm exec playwright test`: Run end-to-end tests in `tests/`.
 - `pnpm ogp:refresh`: Resolve link-card OGP into `app/data/ogp-cache.json`.
 - `pnpm check:ogp-cache`: Verify every link-card URL is present in that cache (no network).

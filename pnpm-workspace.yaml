@@ -239,12 +239,6 @@ overrides:
   # 2026-10-08: 0.35.5 で Use After Free (Snyk) に対応。
   sharp: ^0.35.5
   shell-quote@^1.0.0: ^1.12.0
-  # simple-git: コマンド引数の取り扱い不備
-  # 2026-10-04: SNYK-JS-SIMPLEGIT-20335540 ほかの修正は 4.0.0 以降のみ。4 系は default
-  # export を削除しており、@nuxt/devtools 3.4.2 の `import Git from 'simple-git'` が
-  # 壊れるので 3 系に据え置く(devtools 4 では simple-git 依存自体が無くなる)。
-  # devtools は status/branch/revparse を固定引数で呼ぶだけなので Snyk で一時 ignore。
-  simple-git@^3.0.0: ^3.36.0
   # socket.io-parser: パース不備。4.2.7 で Improper Check for Unusual or
   # Exceptional Conditions も解消
   socket.io-parser@^4.0.0: ^4.2.7

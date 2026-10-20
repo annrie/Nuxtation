@@ -33,6 +33,10 @@ jobs:
       # では非互換を検出できない。上流の宣言と突き合わせる (scripts 冒頭参照)。
       - name: Check vite peer ranges
         run: pnpm check:vite-peers
+      # build は型を検査せず剥がすだけなので、型エラーがあっても通ってしまう。
+      # build の成果物を使わないため、時間のかかる build の前に置いて早く落とす。
+      - name: Typecheck
+        run: pnpm typecheck
       - run: pnpm build # nitro preset 'vercel' → .vercel/output に出力
       - name: Verify prerendered output
         run: |

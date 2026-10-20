@@ -23,6 +23,7 @@
     "prepare": "simple-git-hooks",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck",
     "ogp:refresh": "npx tsx scripts/refresh-ogp.ts",
     "test": "vitest run",
     "test:watch": "vitest",

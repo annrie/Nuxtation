@@ -62,6 +62,7 @@
     "node-gyp": "^12.4.0",
     "nuxt-content-twoslash": "^0.4.0",
     "slugify": "^1.6.9",
+    "ufo": "^1.6.4",
     "unist-util-stringify-position": "^4.0.0",
     "vue-router": "^5.4.0",
     "zod": "^4.6.7",

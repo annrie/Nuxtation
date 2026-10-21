@@ -532,6 +532,8 @@ export default defineNuxtConfig({
       compilerOptions: {
         isolatedModules: false,
         useDefineForClassFields: false,
+        // 未使用の import / ローカル変数を型検査で検出する(references 形式にする前の tsconfig.json が持っていた指定)。
+        noUnusedLocals: true,
       },
     },
     shim: true,

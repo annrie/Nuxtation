@@ -1,0 +1,17 @@
+{
+  "extends": "./.nuxt/tsconfig.node.json",
+  "compilerOptions": {
+    // 他のプロジェクト(.nuxt/tsconfig.*.json)と同じく、増分情報は .nuxt/ に置く(リポジトリ直下に出さない)
+    "tsBuildInfoFile": "./.nuxt/tsconfig.tools.tsbuildinfo"
+  },
+  "include": [
+    ".nuxt/nuxt.node.d.ts",
+    "scripts/**/*.ts",
+    "test/**/*.ts",
+    "tests/**/*.ts",
+    "utils/**/*.ts",
+    "content.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts"
+  ]
+}

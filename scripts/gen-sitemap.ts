@@ -1,8 +1,10 @@
 import type { Nitro } from 'nitropack'
+// @ts-expect-error `sitemap` は dependencies に無く、型を解決できない(このスクリプトはどこからも参照されていない。1 件だけを覆う)。
 import type { SitemapItem } from 'sitemap'
 import { writeFileSync } from 'fs'
 import path from 'path'
 import { Readable } from 'stream'
+// @ts-expect-error 上と同じ理由(`sitemap` は dependencies に無い。1 件だけを覆う)。
 import { SitemapStream, streamToPromise } from 'sitemap'
 
 // サイトドメインを指定（最後スラッシュ不要）

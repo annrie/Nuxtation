@@ -156,7 +156,8 @@ function notRegularFilesInIndex(paths: string[]): string[] {
       .split('\n')
       .filter(Boolean)
       .map((line) => {
-        const [meta, path] = line.split('\t')
+        // `git ls-files --stage` の各行は「メタ情報<TAB>パス」で、必ず 2 つに分かれる(noUncheckedIndexedAccess の型だけ補う)
+        const [meta, path] = line.split('\t') as [string, string]
 
         return [path, meta.split(' ')[0]] as const
       }),

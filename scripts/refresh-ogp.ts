@@ -86,7 +86,8 @@ async function main(): Promise<void> {
         failed.push(url)
         // 取得失敗時は、旧キャッシュがあれば引き継ぐ
         if (url in existing) {
-          next[url] = existing[url]
+          // `url in existing` で存在を確認済み(noUncheckedIndexedAccess の型だけ補う)
+          next[url] = existing[url] as OgpEntry
           retained.add(url)
         }
         continue
@@ -104,7 +105,8 @@ async function main(): Promise<void> {
       failed.push(url)
       // 取得失敗時は、旧キャッシュがあれば引き継ぐ
       if (url in existing) {
-        next[url] = existing[url]
+        // `url in existing` で存在を確認済み(noUncheckedIndexedAccess の型だけ補う)
+        next[url] = existing[url] as OgpEntry
         retained.add(url)
       }
     }

@@ -5,10 +5,11 @@
 
 /** sRGB → 相対輝度 */
 function luminance(r: number, g: number, b: number): number {
+  // 3 要素の配列を map した結果なので、必ず 3 要素ある(noUncheckedIndexedAccess の型だけ補う)
   const [rs, gs, bs] = [r, g, b].map((c) => {
     c = c / 255
     return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
-  })
+  }) as [number, number, number]
   return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs
 }
 
@@ -16,7 +17,8 @@ function luminance(r: number, g: number, b: number): number {
 function parseRGB(hex: string): [number, number, number] {
   hex = hex.replace('#', '')
   if (hex.length === 3) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+    // 長さ 3 の文字列なので、hex[0] は必ずある(noUncheckedIndexedAccess の型だけ補う)
+    hex = (hex[0] as string) + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
   }
   return [
     parseInt(hex.slice(0, 2), 16),

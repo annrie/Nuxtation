@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// @ts-expect-error `ufo` は直接の依存ではなく、pnpm の node_modules からは型を解決できない(ビルド時の解決は別経路で通っている)。
 import { withoutTrailingSlash } from 'ufo'
 import { SiteUrl } from '~/logic/constants'
 

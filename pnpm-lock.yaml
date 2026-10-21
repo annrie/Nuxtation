@@ -168,6 +168,9 @@ importers:
       slugify:
         specifier: ^1.6.9
         version: 1.6.9
+      ufo:
+        specifier: ^1.6.4
+        version: 1.6.4
       unist-util-stringify-position:
         specifier: ^4.0.0
         version: 4.0.0

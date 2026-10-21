@@ -118,6 +118,7 @@ function main() {
   const semverPath = [...resolved].find(([, name]) => name === 'semver')?.[0]
   if (!semverPath)
     throw new Error('semver を依存ツリーから見つけられませんでした。')
+  // @ts-expect-error `semver` は直接の依存ではなく、型を解決できない(下の `semver` は any になる。1 件だけを覆う)。
   const semver = createRequire(`${semverPath}/`)('semver') as typeof import('semver')
 
   const rows: Row[] = []

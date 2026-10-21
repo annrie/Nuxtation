@@ -53,7 +53,8 @@ function collect(source: string): Map<string, string> {
   const map = new Map<string, string>()
   // --color-NAME: #HEX  /  --color-NAME: var(--color-OTHER)
   for (const m of source.matchAll(/--color-([\w-]+):\s*(#[0-9a-f]{3,8}|var\(--color-[\w-]+\))/gi))
-    map.set(m[1], m[2])
+    // 正規表現のキャプチャグループは必ずマッチしている(noUncheckedIndexedAccess の型だけ補う)
+    map.set(m[1] as string, m[2] as string)
   return map
 }
 
@@ -120,7 +121,8 @@ const referenced = new Map<string, string[]>()
 for (const file of walk(join(ROOT, 'app'))) {
   const text = stripComments(readFileSync(file, 'utf8'))
   for (const m of text.matchAll(/var\(\s*--color-([\w-]+)/g)) {
-    const name = m[1]
+    // キャプチャグループは必ずマッチしている(noUncheckedIndexedAccess の型だけ補う)
+    const name = m[1] as string
     if (isExternal(name))
       continue
     const list = referenced.get(name) ?? []
@@ -172,7 +174,8 @@ for (const rel of WHITE_LABEL_FILES) {
     if (!/background|linear-gradient/.test(line))
       return
     for (const m of line.matchAll(/var\(\s*--color-([\w-]+)\s*\)/g)) {
-      const hex = light.get(m[1])
+      // キャプチャグループは必ずマッチしている(noUncheckedIndexedAccess の型だけ補う)
+      const hex = light.get(m[1] as string)
       if (!hex)
         continue
       const ratio = Math.round(contrastRatio(WHITE, hex) * 100) / 100

@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.19
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.18...v4.5.19)
+
+### 🐛 バグ修正
+
+- **types:** 🏷️ 型エラー 110 件を、実行時の挙動を変えずに解消 ([4dac807](https://github.com/annrie/Nuxtation/commit/4dac807))
+
+### 📖 ドキュメント
+
+- **claude-md:** 📝 Planモードと承認の規則を、グローバルの規模判断に合わせる ([b7576a4](https://github.com/annrie/Nuxtation/commit/b7576a4))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ undici 6.29.1 / 7.30.1 / 8.12.3 で Snyk の Critical 2件・High 6件を解消 ([e80994c](https://github.com/annrie/Nuxtation/commit/e80994c))
+- **deps:** 📌 ufo を直接の依存に追加し、app.vue の型エラー抑制を外す ([406e39e](https://github.com/annrie/Nuxtation/commit/406e39e))
+- **deps:** ⬆️ launch-editor 2.14.2 / markdown-it 14.3.3 ほかで Snyk の High・Critical を解消 ([6302bbd](https://github.com/annrie/Nuxtation/commit/6302bbd))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **config:** 🔧 .codex/hooks.json と commit-message スキルを追跡対象に / Track .codex/hooks.json and the commit-message skill ([06be43d](https://github.com/annrie/Nuxtation/commit/06be43d))
+- **config:** 🔥 entire 関連の設定を削除 / Remove entire-related config ([5af420f](https://github.com/annrie/Nuxtation/commit/5af420f))
+- **ci:** ✅ typecheck スクリプトを追加し、tsconfig を Nuxt 標準の references にして ssg-check で実行 ([ac85d00](https://github.com/annrie/Nuxtation/commit/ac85d00))
+- **typecheck:** 🔍 scripts/・tests・utils を typecheck の範囲に入れ、noUnusedLocals を有効にする ([122ad46](https://github.com/annrie/Nuxtation/commit/122ad46))
+- **cleanup:** 🧹 どこからも参照されていない uno.config.ts・types/blog.ts・scripts/gen-sitemap.ts を削除する ([87952d0](https://github.com/annrie/Nuxtation/commit/87952d0))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.18
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.17...v4.5.18)

@@ -82,8 +82,9 @@ overrides:
   # basic-ftp: 複数のプロトコル処理不備
   basic-ftp@^5.0.0: ^5.3.1
   # body-parser: URLエンコードのパラメータ数制限の不備
-  body-parser@^1.0.0: ^1.20.6
-  body-parser@^2.0.0: ^2.3.0
+  # 2026-10-24: GHSA-27r3-jxmh-p828 (本文の後ろに余分なバイトがあると DoS) で 1.20.9 / 2.4.0 へ
+  body-parser@^1.0.0: ^1.20.9
+  body-parser@^2.0.0: ^2.4.0
   # brace-expansion の連続する空 {} グループによる指数時間展開 DoS。
   # メジャーごとにレンジを区切って各系統の最新へ引き上げる。
   #
@@ -104,6 +105,9 @@ overrides:
   brace-expansion@^5.0.0: ^5.0.12
   # colord: 色文字列パースの ReDoS (GHSA-2wm5-q62r-hmrv)。stylelint 経由の dev only。
   colord@^2.0.0: ^2.9.4
+  # compression: 途中で切断されたレスポンスによるメモリリーク DoS (GHSA-vc2v-76pw-4v95、修正版 1.8.2)。
+  # 2026-10-24 追加。@lhci/cli (dev) と、@nuxt/cli 経由の serve (preview 用) が牽引する。
+  compression@^1.0.0: ^1.8.2
   # devalue: nuxt 本体(@nuxt/nitro-server)と @nuxt/hints が 5.9.0 を牽引。
   # 2026-09-25: 5.9.4 で SNYK-JS-DEVALUE-20044498 (CVE-2026-92708、Buffer のシリアライズで
   # 背後の ArrayBuffer 全体を出力し共有メモリプールの無関係なデータが漏れる。修正版 5.9.3) と
@@ -127,7 +131,9 @@ overrides:
   #   authority 注入) に対応
   #   2026-09-17: 3.1.8 で SNYK-JS-FASTURI-19846649 (CVE-2026-86472、host の %エンコード大文字を
   #   正規化せず allowlist / denylist を迂回できる Improper Handling of Case Sensitivity) に対応
-  fast-uri@^3.0.0: ^3.1.8
+  #   2026-10-24: 3.1.9 で GHSA-w74x-v6f9-j3xg (%エンコードされた scheme のデコードによる scheme 偽装)・
+  #   GHSA-wjr9-j795-jxcr (WHATWG の host 正規化を検査しない host confusion) ほか Low 2件に対応
+  fast-uri@^3.0.0: ^3.1.9
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
@@ -136,9 +142,11 @@ overrides:
   # Request Smuggling)、SNYK-JS-HONO-19499068 (toSSG の Directory Traversal)、
   # SNYK-JS-HONO-19499093 (parseBody の入れ子無制限によるメモリ枯渇) に対応
   # 2026-09-25: 4.13.9 で SNYK-JS-HONO-19964059 (CVE-2026-93981、XSS。修正版 4.13.7) に対応
-  hono@^4.0.0: ^4.13.9
+  # 2026-10-24: 4.13.11 で GHSA-5r4p-p66f-jhc7 (serveStatic がパスを二重にデコードし、静的パスのミドルウェアを迂回できる) に対応
+  hono@^4.0.0: ^4.13.11
   # ip-address: パース不備
-  ip-address@^10.0.0: ^10.7.3
+  # 2026-10-24: 10.7.4 で GHSA-rxp7-6hxx-x8q5 (Address6 のゾーン ID 照合が長さ制限より先に二次時間かかる) に対応
+  ip-address@^10.0.0: ^10.7.4
   # isomorphic-git: getRemoteInfo が ref 名の __proto__ セグメントを検証せず
   # Prototype Pollution を起こす(SNYK-JS-ISOMORPHICGIT-19784422、修正版 1.42.0)。
   # @nuxt/content 3.15.2 が ^1.38.9 を宣言するので同一メジャー内で最新へ。
@@ -197,13 +205,19 @@ overrides:
   '@tiptap/suggestion@^3.0.0': ^3.31.3
   '@tiptap/vue-3@^3.0.0': ^3.31.3
   # launch-editor: Windows の UNC パス経由の NTLMv2 ハッシュ漏洩(@nuxt/devtools 経由)
-  launch-editor@^2.0.0: ^2.14.1
+  # 2026-10-24: 2.14.2 で GHSA-587h-7wmj-h5pm (Windows で存在確認を回避、High)・GHSA-r825-w8mm-5pxw
+  # (エディタの CLI フラグの誤解釈によるコマンド実行)・GHSA-698v-4r3x-3vcv (% のエスケープ漏れ) に対応。
+  # Snyk の通知は「No remediation available yet」だったが、修正版は 10-20 に出ていた。dev のみ。
+  launch-editor@^2.0.0: ^2.14.2
   # linkify-it: リンク検出のReDoS
   linkify-it@^5.0.0: ^5.0.2
   # lodash-es: プロトタイプ汚染系
   lodash-es@^4.0.0: ^4.18.0
   # markdown-it: パースのReDoS
-  markdown-it@^14.0.0: ^14.3.2
+  # 2026-10-24: 14.3.3 で GHSA-gfr2-rv44-r23c (複数行のリンク参照定義の二次時間レンダリング、High)・
+  # GHSA-vfgh-jcmw-g37q (html 有効時のインライン HTML の二次時間 DoS) に対応。
+  # Snyk の通知は「No remediation available yet」だったが、修正版は 10-20 に出ていた。
+  markdown-it@^14.0.0: ^14.3.3
   # nanoid: 非整数の size を渡したときの無限ループ。postcss が牽引する。
   # postcss@8.5.23 は `^3.3.16` を宣言しているので 3系に留める(4系以降を
   # 強制すれば契約違反になるうえ、CJS の入口が無い — main を持つのは 3系だけ)。
@@ -231,7 +245,8 @@ overrides:
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。
   # serialize-javascript: XSS。6系に修正版がなく @rollup/plugin-terser 経由
   # のビルド時利用のみのため 7系へ上げる。
-  serialize-javascript: ^7.1.2
+  # 2026-10-24: 7.1.3 で GHSA-m5mm-p8h7-m29v (関数本体末尾の </script による XSS、Low) に対応
+  serialize-javascript: ^7.1.3
   # seroval: SNYK の Allocation of Resources Without Limits (1.6.2 以前)。
   # 2026-10-08: 1.6.3 以降で解消。nuxt (@nuxt/vite-builder) が牽引する推移的依存。
   seroval: ^1.6.8
@@ -250,6 +265,9 @@ overrides:
   svgo@^4.0.0: ^4.1.0
   # tar: 展開時のDoS/パス解釈差異(CRITICAL 含む)
   tar@^7.0.0: ^7.5.21
+  # tinypool: worker のオプション経由の Prototype Pollution → RCE (GHSA-5gmw-xhrv-c9v3 / GHSA-85c8-ppgw-ccpr、
+  # Critical、修正版 2.1.2)。2026-10-24 追加。eslint-plugin-format → oxfmt 経由の dev のみ。
+  tinypool@^2.0.0: ^2.1.2
   # tmp: prefix/postfix のサニタイズ不備によるディレクトリ脱出。
   # external-editor / @lhci/cli 経由。require("tmp") の名前空間利用のため影響なし。
   tmp: ^0.2.7
@@ -290,7 +308,9 @@ overrides:
   # ws CVE-2026-48779 (fragment枯渇によるOOM) 対応。7系は7.5.11でバックポート修正、
   # 8系は8.21.0で修正されたが対策が不完全だったため8.21.1を要求する
   ws@8: ^8.21.1
-  zod: ^4.4.3
+  # zod: 制約付きの巨大なコレクションの検証でメモリ枯渇 (GHSA-mrhx-c7xc-m3w5、High、修正版 4.6.6)。
+  # 2026-10-24 に ^4.4.3 から引き上げ。下の「修正版なし」の zod は SNYK-JS-ZOD-20510278 で別の指摘。
+  zod: ^4.6.6
   zod-to-json-schema: ^3.25.2
   # --- 以下は override しない(上流待ち)。2026-09-25 時点の Snyk 指摘 ---
   # 修正版が存在しない(npm の最新が現行版):

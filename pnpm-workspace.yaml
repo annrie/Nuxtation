@@ -6,6 +6,7 @@ allowBuilds:
   simple-git-hooks: true
   unrs-resolver: false
   vue-demi: true
+
 minimumReleaseAgeExclude:
   - cssnano-utils@6.0.4
   - postcss-convert-values@8.0.4
@@ -43,6 +44,7 @@ minimumReleaseAgeExclude:
   - browserslist@4.29.4
 # lockfile から消えた版を minimumReleaseAgeExclude / trustPolicyExclude から自動で外す(pnpm 11.22+)
 minimumReleaseAgeExcludePrune: true
+
 shellEmulator: true
 
 supportedArchitectures:

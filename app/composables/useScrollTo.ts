@@ -53,6 +53,7 @@ export function scrollToHeading(id: string, customOffset?: number) {
 /**
  * スムーズスクロール機能を提供するcomposable
  * @param options - オプション設定
+ * @param options.offset - スクロール位置のオフセット（省略時は自動計算）
  * @returns スクロール関数
  */
 export function useScrollTo(options: { offset?: number } = {}) {

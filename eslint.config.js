@@ -15,6 +15,8 @@ const configs = nuxt(
         'content/**/*.md',
         'public/html/**',
         'public/sw.js',
+        // 過去の設計書・計画書。コード片は断片なので lint しない
+        'tasks/**',
         'templates/**',
       ],
       rules: {
@@ -33,6 +35,21 @@ const configs = nuxt(
       'no-console': 'warn',
       'style/no-tabs': 'off',
       '@stylistic/no-tabs': 'off',
+    },
+  },
+  {
+    // CLI スクリプトは標準出力に結果を出すのが仕事なので console.log を許す
+    files: ['scripts/**'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    // overrides は経緯のコメントと一緒に手で並べている。docustation・private-nuxtation とも
+    // 同じ並びなので、アルファベット順に並べ替えない
+    files: ['pnpm-workspace.yaml'],
+    rules: {
+      'yaml/sort-keys': 'off',
     },
   },
 )

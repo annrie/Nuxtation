@@ -5,6 +5,8 @@
 /**
  * publishedAtとupdatedAtの新しい方の日付を取得（Dateオブジェクト）
  * @param entry - publishedAtとupdatedAtを持つオブジェクト
+ * @param entry.publishedAt - 公開日
+ * @param entry.updatedAt - 更新日
  * @returns 新しい方の日付（両方ない場合は1970/1/1）
  */
 export function getBlogLatestDate(entry: { publishedAt?: string, updatedAt?: string }): Date {

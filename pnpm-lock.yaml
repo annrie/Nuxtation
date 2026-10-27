@@ -110,12 +110,6 @@ importers:
       '@iconify/json':
         specifier: ^2.2.545
         version: 2.2.545
-      '@imgix/js-core':
-        specifier: ^3.8.0
-        version: 3.8.0
-      '@imgix/vue':
-        specifier: ^3.1.1
-        version: 3.1.1
       '@nuxt/image':
         specifier: 2.1.0
         version: 2.1.0(@nuxt/schema@4.6.2)(@types/node@25.9.9)(confbox@0.2.4)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.62.4)(vite@8.3.4(@types/node@25.9.9)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.15)(yaml@2.9.1)))(unstorage@1.17.5(db0@0.3.4(better-sqlite3@12.11.1))(ioredis@5.11.1(supports-color@10.2.2)))
@@ -2132,12 +2126,6 @@ packages:
     engines: {node: '>=20.9.0'}
     cpu: [x64]
     os: [win32]
-
-  '@imgix/js-core@3.8.0':
-    resolution: {integrity: sha512-kvLmsODQq7W17UuhDIffimlKN+AUTgtQCgD8kpPN0gglvaqR1VZKXl4gB5eAUXgrwNgi5hRDl5XYAMFRPIUztw==}
-
-  '@imgix/vue@3.1.1':
-    resolution: {integrity: sha512-GGR9LNNntfkaMcMrkqsU1omqvXW+AFk5TzRfDXmB28WaVh0W9NxkQb1UyDDQxWf2aEFE6jFxUevHGZbzNjCm4g==}
 
   '@internationalized/date@3.12.4':
     resolution: {integrity: sha512-M1dEn4c1U1HsSlaVR8upZtSqvXrTkHDfv18H01uCSJyjVLDxnBR38v/fMxecmlwXKR4i9HeZcmgQAPE6A+aGJQ==}
@@ -5572,9 +5560,6 @@ packages:
   chardet@2.2.0:
     resolution: {integrity: sha512-rddelWYNPRrXq6PtNEN2S3f6t9ILzvqaN5pVgi4kqt9jHQaXIial9PznB5iSPVlQSLNaaH22ItWz3EJtQ10+OA==}
 
-  charenc@0.0.2:
-    resolution: {integrity: sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA==}
-
   cheerio-select@2.1.0:
     resolution: {integrity: sha512-9v9kG0LvzrlcungtnJtpGNxY+fzECQKhK4EGJX2vByejiMX84MFNQw4UxPJl3bFbTMw+Dfs37XaIkCwTZfLh4g==}
 
@@ -5884,9 +5869,6 @@ packages:
     peerDependenciesMeta:
       srvx:
         optional: true
-
-  crypt@0.0.2:
-    resolution: {integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==}
 
   crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
@@ -7483,9 +7465,6 @@ packages:
     resolution: {integrity: sha512-wa56o2/ElJMYqjCjGkXri7it5FbebW5usLw/nPmCMs5DeZ7eziSYZhSmPRn0txqeW4LnAmQQU7FgqLpsEFKM4A==}
     engines: {node: '>= 0.4'}
 
-  is-buffer@1.1.6:
-    resolution: {integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==}
-
   is-builtin-module@5.0.0:
     resolution: {integrity: sha512-f4RqJKBUe5rQkJ2eJEJBXSticB3hGbN9j0yxxMQFqIW89Jp9WYFtzfTcRlstDKVUTRzSOTLKRfO9vIztenwtxA==}
     engines: {node: '>=18.20'}
@@ -7726,9 +7705,6 @@ packages:
   jpeg-js@0.4.4:
     resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
 
-  js-base64@3.7.8:
-    resolution: {integrity: sha512-hNngCeKxIUQiEUN3GPJOkz4wF/YvdUdbNL9hsBcMQTkKzboD7T/q3OYOuuPZLUE6dBxSGpwhk5mwuDud7JVAow==}
-
   js-beautify@2.0.3:
     resolution: {integrity: sha512-cyFbh3tkPhknnTD/0bLf0T0yy2ZIbqL05mttzbt4y1Zfr7NxqXQZ62dkBLKs3oHH/lpjmDRAnciJiSUyOy8XwQ==}
     engines: {node: '>=14'}
@@ -7858,8 +7834,8 @@ packages:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
 
-  legacy-javascript@0.0.3:
-    resolution: {integrity: sha512-1r6MT4dVaJyXt4G07Cm2cQ0AUaLJdefiEp4SmIAylA++gnEQ82YvmzE58RkM5EP0fk5hROLCslUPGnwIYdZQVA==}
+  legacy-javascript@0.0.4:
+    resolution: {integrity: sha512-UTmeKBVxnfJcpmpOvzzNnLsQT99BXHpPlc/ZKddIRmWmrR0fw6335I3lq4+sJoP60UTbBNaYsGYVPc65YB1x3A==}
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -8179,9 +8155,6 @@ packages:
 
   mathml-tag-names@4.0.0:
     resolution: {integrity: sha512-aa6AU2Pcx0VP/XWnh8IGL0SYSgQHDT6Ucror2j2mXeFAlN3ahaNs8EZtG1YiticMkSLj3Gt6VPFfZogt7G5iFQ==}
-
-  md5@2.3.0:
-    resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}
 
   mdast-util-find-and-replace@3.0.2:
     resolution: {integrity: sha512-Tmd1Vg/m3Xz43afeNxDIhWRtFZgM2VLyaf4vSTYwudTyeuTneoL3qtWMA5jeLyz/O1vDJmmV4QuScFCA2tBPwg==}
@@ -13596,16 +13569,6 @@ snapshots:
   '@img/sharp-win32-x64@0.35.5':
     optional: true
 
-  '@imgix/js-core@3.8.0':
-    dependencies:
-      js-base64: 3.7.8
-      md5: 2.3.0
-      ufo: 1.6.4
-
-  '@imgix/vue@3.1.1':
-    dependencies:
-      '@imgix/js-core': 3.8.0
-
   '@internationalized/date@3.12.4':
     dependencies:
       '@swc/helpers': 0.5.23
@@ -15696,7 +15659,7 @@ snapshots:
 
   '@paulirish/trace_engine@0.0.53':
     dependencies:
-      legacy-javascript: 0.0.3
+      legacy-javascript: 0.0.4
       third-party-web: 0.30.0
 
   '@pkgjs/parseargs@0.11.0':
@@ -17714,8 +17677,6 @@ snapshots:
 
   chardet@2.2.0: {}
 
-  charenc@0.0.2: {}
-
   cheerio-select@2.1.0:
     dependencies:
       boolbase: 1.0.0
@@ -18003,8 +17964,6 @@ snapshots:
   crossws@0.4.10(srvx@1.0.6):
     optionalDependencies:
       srvx: 1.0.6
-
-  crypt@0.0.2: {}
 
   crypto-random-string@2.0.0: {}
 
@@ -20143,8 +20102,6 @@ snapshots:
       call-bound: 1.0.4
       has-tostringtag: 1.0.2
 
-  is-buffer@1.1.6: {}
-
   is-builtin-module@5.0.0:
     dependencies:
       builtin-modules: 5.3.0
@@ -20361,8 +20318,6 @@ snapshots:
 
   jpeg-js@0.4.4: {}
 
-  js-base64@3.7.8: {}
-
   js-beautify@2.0.3:
     dependencies:
       config-chain: 1.1.13
@@ -20498,7 +20453,7 @@ snapshots:
     dependencies:
       readable-stream: 2.3.8
 
-  legacy-javascript@0.0.3: {}
+  legacy-javascript@0.0.4: {}
 
   leven@3.1.0: {}
 
@@ -20828,12 +20783,6 @@ snapshots:
   math-intrinsics@1.1.0: {}
 
   mathml-tag-names@4.0.0: {}
-
-  md5@2.3.0:
-    dependencies:
-      charenc: 0.0.2
-      crypt: 0.0.2
-      is-buffer: 1.1.6
 
   mdast-util-find-and-replace@3.0.2:
     dependencies:

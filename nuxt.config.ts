@@ -316,7 +316,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: ['nuxt', '@imgix/vue'],
+    transpile: ['nuxt'],
   },
 
   routeRules: {

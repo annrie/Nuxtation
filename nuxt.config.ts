@@ -577,6 +577,14 @@ export default defineNuxtConfig({
     skills: false,
   },
 
+  // docus は Vercel の VERCEL_OIDC_TOKEN があるだけで AI チャット(/__docus__/assistant)を有効にする。
+  // このサイトでは使わないので、明示的に切る。
+  docus: {
+    assistant: {
+      enabled: false,
+    },
+  },
+
   eslint: {
     config: {
       stylistic: {

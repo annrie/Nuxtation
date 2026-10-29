@@ -519,16 +519,8 @@ export default defineNuxtConfig({
     css: {
       preprocessorMaxWorkers: true,
     },
-    $client: {
-      build: {
-        rollupOptions: {
-          output: {
-            chunkFileNames: '_nuxt/[name].js',
-            entryFileNames: '_nuxt/[name].js',
-          },
-        },
-      },
-    },
+    // JS のファイル名は Nuxt 既定のハッシュ付きのままにする。固定名（_nuxt/[name].js）にすると、
+    // immutable のキャッシュと PWA のプリキャッシュに旧 JS が残り、デプロイ後に旧ハッシュの CSS が 404 になる。
   },
 
   typescript: {
@@ -765,6 +757,13 @@ export default defineNuxtConfig({
 
   schemaOrg: {
     identity: 'Person',
+  },
+
+  // nuxt-seo-utils（@nuxtjs/seo）のビルド時の縮小を止める。既定の { build: true } は、プリレンダーした HTML の
+  // インラインの <style> を本文の分まで縮めるため、記事本文の shiki の <style> が HTML とペイロードで食い違い、
+  // ハイドレーションの不一致（Hydration text mismatch in HTMLStyleElement）になる。実行時の縮小は既定で無効。
+  seo: {
+    minify: false,
   },
 
   shiki: {

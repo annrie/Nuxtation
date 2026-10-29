@@ -9,12 +9,13 @@ const isSearchModalOpen = useState('search-modal-open', () => false)
 // Phase 20: onNuxtReady トリガーに変更したため、手動読み込みコードは不要
 // サードパーティスクリプトはnuxt.config.tsで自動的に最適なタイミングで読み込まれる
 
-const { path } = useRoute()
+// route を分割代入すると最初のパスで固定されるので、route のまま持ってページ移動に追従させる
+const route = useRoute()
 const mySite = SiteUrl
 const canonical = computed(() => {
-  if (path === '/')
+  if (route.path === '/')
     return mySite
-  const { href: canonical } = new URL(path, mySite)
+  const { href: canonical } = new URL(route.path, mySite)
   return canonical
 })
 
@@ -41,7 +42,8 @@ useHead({
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     {
       rel: 'canonical',
-      href: canonical.value,
+      // `.value` で渡すと文字列になって更新されないため、computed のまま渡す
+      href: canonical,
     },
   ],
   meta: [

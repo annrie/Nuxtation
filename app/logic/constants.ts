@@ -17,6 +17,8 @@ export const SiteUrl = 'https://nuxtation.vercel.app'
 
 /** 末尾スラッシュ付きが要る箇所向け。 */
 export const MySite = `${SiteUrl}/`
+/** imgix の配信元。**末尾スラッシュ付き。** URL を組み立てるときは app/utils/imgix.ts の buildImgixUrl を使う */
+export const ImgixBaseUrl = 'https://nuxtation.imgix.net/'
 export const SiteLanguage = 'ja'
 export const SiteImage = 'https://nuxtation.imgix.net/ogp.png'
 export const SiteLogo = '/icon.png'

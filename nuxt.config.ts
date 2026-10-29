@@ -349,7 +349,11 @@ export default defineNuxtConfig({
     payloadExtraction: isDev ? false : 'client',
     sharedPrerenderData: false,
     scanPageMeta: 'after-resolve',
-    renderJsonPayloads: !isDev,
+    // 記事の本文のコード例に `</script>` がそのまま入っているので、JSON のペイロード（<script type="application/json">）は
+    // ブラウザがそこで閉じてしまう。残りがページの末尾に文字として出て、ペイロードを読めず hydration も食い違っていた
+    // （2026-10-29 に本番で確認。docustation は同じ理由で false にしている）。JS の形（window.__NUXT__）なら起きない。
+    // ローカルの nuxi generate の出力でも同じで、__NUXT_DATA__ の中に生の `<` が 12 個あり、`<` へのエスケープは 0 個だった
+    renderJsonPayloads: false,
     viewTransition: false,
     componentIslands: true,
     treeshakeClientOnly: true,
@@ -701,10 +705,10 @@ export default defineNuxtConfig({
     quality: 80,
     imgix: {
       baseURL: 'https://nuxtation.imgix.net/',
-      // @ts-expect-error `modifiers` は imgix プロバイダのオプション型に無いキー。ビルド出力を変えないため、値は触らずに残している。
+      // @ts-expect-error `modifiers` は imgix プロバイダのオプション型に無いキー。型には無いが効いている（2026-10-29 に URL で確認）。
+      // 品質は上の `quality: 80` で付く。ここに `q: 80` も書くと URL に q が 2 つ並び、部品で quality を変えても読みにくくなるので外した
       modifiers: {
         auto: 'format,compress', // Phase 24: 自動最適化（format + compress）
-        q: 80, // Phase 24: 明示的な品質指定
         fit: 'crop', // Phase 24: トリミング最適化
       },
     },

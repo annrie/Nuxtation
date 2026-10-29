@@ -3,7 +3,7 @@ import type { ComputedRef } from 'vue'
  * 記事SEO設定の共通ロジック
  */
 
-import { SiteUrl } from '~/logic/constants'
+import { ImgixBaseUrl, SiteUrl } from '~/logic/constants'
 
 interface ArticleSeoOptions {
   article: any
@@ -52,17 +52,24 @@ function generateOgImageUrl(
   options: ArticleSeoOptions['ogImageOptions'] = {},
 ): string {
   const { useBase64 = false, encodedTitle = '', blur = 0 } = options
+  const { path, params } = splitImgixSource(img)
+
+  // 文字入れ（mark64）を持つ画像（ブログ）には、タイトルがすでに描かれているので txt を足さない。
+  // 以前は img の後ろに `?txt=…` を足していたため `?` が 2 つ並び、txt が mark-align の値に飲み込まれて、
+  // 結果として文字入れとぼかしだけの画像になっていた。その見た目のまま正しい URL にする（`?` だけを直すとタイトルが二重に描かれる）
+  if (params.mark64)
+    return buildImgixUrl(img, { auto: 'format,compress', fit: 'crop', ...(blur > 0 ? { blur } : {}) })
+
   const txtSize = calculateTextSize(title)
   const baseParams = 'txt-color=white&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=crop'
+  // img のパラメータ（あれば）を先頭に置いて `?` を 1 つにする。パラメータの無い img は、以前と同じ文字列になる
+  const imgParams = new URLSearchParams(params).toString()
+  const prefix = `${ImgixBaseUrl}${path}?${imgParams ? `${imgParams}&` : ''}`
+  const blurParam = blur > 0 ? `&blur=${blur}` : ''
 
-  if (useBase64 && encodedTitle) {
-    const blurParam = blur > 0 ? `&blur=${blur}` : ''
-    return `https://nuxtation.imgix.net/${img}?txt64=${encodedTitle}&txt-size=${txtSize}&${baseParams}${blurParam}`
-  }
-  else {
-    const blurParam = blur > 0 ? `&blur=${blur}` : ''
-    return `https://nuxtation.imgix.net/${img}?txt=${encodeURIComponent(title)}&txt-size=${txtSize}&${baseParams}${blurParam}`
-  }
+  if (useBase64 && encodedTitle)
+    return `${prefix}txt64=${encodedTitle}&txt-size=${txtSize}&${baseParams}${blurParam}`
+  return `${prefix}txt=${encodeURIComponent(title)}&txt-size=${txtSize}&${baseParams}${blurParam}`
 }
 
 /**
@@ -78,12 +85,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       { name: 'description', content: article?.value?.description },
       { property: 'og:title', content: article?.value?.title },
       { property: 'og:description', content: article?.value?.description },
-      {
-        property: 'og:image',
-        content: article?.value?.img
-          ? `https://nuxtation.imgix.net/${article.value.img}?auto=format,compress&fit=crop&w=1200&h=630`
-          : '',
-      },
+      // og:image は下の useSeoMeta で出す（ここにも書いていたが、上書きされて出力されていなかった）
       { property: 'og:type', content: 'article' },
     ],
   })
@@ -163,7 +165,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       },
       'headline': article.value?.title || '',
       'description': article.value?.description || '',
-      'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
+      'image': article.value?.img ? buildImgixUrl(article.value.img) : '',
       'author': {
         '@type': 'Person',
         'name': 'annrie',
@@ -190,7 +192,7 @@ export function useArticleSeo(options: ArticleSeoOptions) {
       },
       'headline': article.value?.title || '',
       'description': article.value?.description || '',
-      'image': article.value?.img ? `https://nuxtation.imgix.net/${article.value.img}` : '',
+      'image': article.value?.img ? buildImgixUrl(article.value.img) : '',
       'author': {
         '@type': 'Person',
         'name': 'annrie',

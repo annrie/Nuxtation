@@ -9,9 +9,10 @@ const props = withDefaults(defineProps<{
   item: ContentPreview
   section: Sections
   variant?: 'blog'
-  index?: number
+  // 最初の画面の主役（LCP）になるカードだけ true にする。画像を先に読み、優先度を上げる
+  priority?: boolean
 }>(), {
-  index: 0,
+  priority: false,
 })
 
 // 親からダークモード状態をinject
@@ -47,15 +48,21 @@ const limitedTitle = computed(() => {
       <template #header>
         <div class="header-wrapper">
           <NuxtLink :to="destination" :target="target" class="card-image-link" :aria-label="`${limitedTitle}の記事を読む`">
+            <!-- fit は以前 'contain' と書いていたが、modifiers の fit は @nuxt/image に上書きされて効かず、実際は crop だった。
+                 ArticleHeroImage が modifiers の fit を効かせるようになったので、今の見た目どおり cover（imgix の crop）にする -->
             <ArticleHeroImage
               v-if="item.img"
               :src="item.img"
               :alt="item.title"
               aspect-ratio="16/9"
               format="avif,webp,png"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : undefined"
-              :modifiers="{ fit: 'contain', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
+              :loading="priority ? 'eager' : 'lazy'"
+              :fetchpriority="priority ? 'high' : undefined"
+              :width="1280"
+              :height="720"
+              :quality="60"
+              :modifiers="{ fit: 'cover', auto: 'format,compress' }"
+              sizes="xxs:100vw sm:100vw md:100vw tb:50vw lg:340px"
               img-class="card-image"
               :is-dark="isDark"
             />

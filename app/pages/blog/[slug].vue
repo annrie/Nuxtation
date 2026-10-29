@@ -54,8 +54,8 @@ function calculateScrollOffset() {
   return headerHeight + 16
 }
 
-// 全記事リスト（左サイドバー用）
-const { data: allArticles } = await useAllArticles('blog')
+// 全記事リスト（左サイドバー・関連記事・前後記事用）。本文は要らないので、使うフィールドだけを取る
+const { data: allArticles } = await useArticleList('blog', ['path', 'title', 'draft', 'tags', 'publishedAt', 'updatedAt'])
 
 const filteredArticles = computed(() => {
   const isDev = import.meta.dev
@@ -231,6 +231,7 @@ useArticleSeo({
 
         <article class="article-container">
           <header class="article-header">
+            <!-- sizes は本文の列の幅に合わせる（.blog-article-page の列: md 未満は 1 列、md〜lg は本文＋240px、lg 以上は 260px＋本文＋240px、最大 1440px） -->
             <ArticleHeroImage
               v-if="article.img"
               :src="article.img"
@@ -239,11 +240,12 @@ useArticleSeo({
               format="avif,webp"
               loading="eager"
               fetchpriority="high"
+              :quality="70"
               :modifiers="{
                 auto: 'format,compress',
                 fit: 'cover',
-                quality: '70',
               }"
+              sizes="xxs:100vw sm:100vw md:100vw tb:70vw lg:52vw xl:60vw xxl:830px"
               img-class="article-image"
               :is-dark="isDark"
             />

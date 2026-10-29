@@ -53,7 +53,11 @@ const limitedDescription = computed(() => {
           format="avif,webp,png"
           loading="eager"
           fetchpriority="high"
-          :modifiers="{ fit: 'cover', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
+          :width="1280"
+          :height="720"
+          :quality="60"
+          :modifiers="{ fit: 'cover', auto: 'format,compress' }"
+          sizes="xxs:100vw sm:100vw md:100vw tb:100vw lg:560px"
           img-class="featured-image"
           :is-dark="isDark"
         />

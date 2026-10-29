@@ -203,7 +203,7 @@ useSchemaOrg([
       </section>
 
       <section class="article-grid">
-        <HomeCardGrid :items="paginatedCards" section="blog" variant="blog" />
+        <HomeCardGrid :items="paginatedCards" section="blog" variant="blog" priority />
         <p v-if="!paginatedArticles.length" class="placeholder">条件に合致する記事がありませんでした。</p>
       </section>
 

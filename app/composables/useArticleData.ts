@@ -51,7 +51,33 @@ export function useSurroundingArticles<C extends keyof PageCollections>(collecti
 }
 
 /**
+ * 記事の一覧を、指定したフィールドだけで取得（サイドバー・関連記事・前後記事など、一覧に使う場合）
+ * 全フィールドを取ると全記事の本文（body）までペイロードに入り、hydration と記事間の移動（_payload.json）を重くする
+ * （docustation では 2026-10-29 にブログ記事のペイロードが 635KB → 101KB になった）。
+ * キーにフィールドを含め、別のフィールドで取る呼び出しとキャッシュが混ざらないようにする
+ * @param collection - コレクション名（blog）
+ * @param fields - 取得するフィールド
+ * @param orderBy - ソート順のフィールド名（省略時は並べ替えない）
+ * @param orderDirection - ソート方向（'ASC' | 'DESC'、デフォルト: 'DESC'）
+ * @returns 指定したフィールドだけを持つ記事の一覧
+ */
+export function useArticleList<C extends keyof PageCollections, K extends keyof PageCollections[C] & string>(
+  collection: C,
+  fields: K[],
+  orderBy?: keyof PageCollections[C] & string,
+  orderDirection: 'ASC' | 'DESC' = 'DESC',
+) {
+  const order = orderBy ? `-${orderBy}-${orderDirection}` : ''
+  // 並べる順が違うだけの同じ組は、同じキーにする（別キーだと同じデータを 2 回取り、ペイロードにも 2 回入る）
+  return useAsyncData(`${collection}-article-list-${[...fields].sort().join(',')}${order}`, () => {
+    const query = queryCollection(collection)
+    return (orderBy ? query.order(orderBy, orderDirection) : query).select(...fields).all()
+  })
+}
+
+/**
  * 全記事リストを取得
+ * 全フィールド（本文の body を含む）を取るので、一覧やサイドバーには使わず、useArticleList でフィールドを絞る
  * @param collection - コレクション名（blog）
  * @param orderBy - ソート順のフィールド名（デフォルト: 'publishedAt'）
  * @param orderDirection - ソート方向（'ASC' | 'DESC'、デフォルト: 'DESC'）

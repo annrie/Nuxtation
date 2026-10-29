@@ -5,6 +5,9 @@ defineProps<{
   items?: ContentPreview[]
   section: Sections
   variant?: 'blog'
+  // 先頭のカードが最初の画面の主役（LCP）になる一覧だけ true にする。
+  // トップでは注目記事が主役なので付けない（付けると下の方のカードの画像が注目記事の画像と帯域を取り合う）
+  priority?: boolean
 }>()
 </script>
 
@@ -16,7 +19,7 @@ defineProps<{
       :item="item"
       :section="section"
       :variant="variant"
-      :index="index"
+      :priority="priority && index === 0"
     />
   </div>
   <p v-else class="empty-placeholder">

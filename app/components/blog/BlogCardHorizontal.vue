@@ -52,7 +52,11 @@ const safeAlt = computed(() => props.item.title || '記事の画像')
               class="h-full"
               format="avif,webp,png"
               loading="lazy"
-              :modifiers="{ fit: 'cover', w: 1280, h: 720, q: 60, auto: 'format,compress' }"
+              :width="1280"
+              :height="720"
+              :quality="60"
+              :modifiers="{ fit: 'cover', auto: 'format,compress' }"
+              sizes="xxs:100vw sm:100vw md:100vw tb:40vw lg:360px"
               img-class="card-image"
               :is-dark="isDark"
             />

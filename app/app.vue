@@ -51,15 +51,12 @@ useHead({
           description,
     },
     {
+      // ogUrl を設定しないページ（/cat など）の既定値。トップではなく、そのページの URL にする
       property: 'og:url',
-      content: mySite,
+      content: canonical,
     },
     { property: 'og:site_name', content: mySite },
     { property: 'og:type', content: 'website' },
-    {
-      property: 'og:url',
-      content: mySite,
-    },
     {
       property: 'og:title',
       content: ogTitle,
@@ -75,10 +72,6 @@ useHead({
     },
     { name: 'twitter:site', content: '@muraie_jin' },
     { name: 'twitter:card', content: 'summary_large_image' },
-    {
-      name: 'twitter:url',
-      content: mySite,
-    },
     {
       name: 'twitter:title',
       content: ogTitle,

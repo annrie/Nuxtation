@@ -1,6 +1,6 @@
 ---
 title: Nuxtation
-description: Nuxtation で扱っているブログ記事と僭越図書館のコンテンツを集約したサイトです。
+description: annrie's Blog Site
 navigation: false
 layout: page
 ---

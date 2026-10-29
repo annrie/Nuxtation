@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { withoutTrailingSlash } from 'ufo'
 import { SiteUrl } from '~/logic/constants'
 
 // 検索モーダルを遅延読み込み
@@ -18,17 +17,6 @@ const canonical = computed(() => {
   const { href: canonical } = new URL(path, mySite)
   return canonical
 })
-// 既存の不具合: `queryCollection()` はコレクション名が必須で、`route` はこのスコープに存在しない。
-// 実行時は ReferenceError が asyncData のエラーに吸収され、`article` は常に空になる。挙動を変えないため直さず、型だけ通している。
-const { data: article } = useLazyAsyncData('home', () =>
-  // @ts-expect-error コレクション名の引数が無い(1 件だけを覆う)
-  queryCollection()
-    // @ts-expect-error `.where()` は 2〜3 個の引数が必要で、ここでは 1 個(1 件だけを覆う)
-    .where(
-      // @ts-expect-error `route` はこのスコープに存在しない(1 件だけを覆う)
-      { path: withoutTrailingSlash(route.fullPath) },
-    )
-    .first())
 
 const description = ref('Nuxt.js, Vue.jsについての記事及び作家山田正紀の著作の紹介をしているサイトです。 - Phantomoon Annex')
 const ogTitle = ref('Nuxtation')
@@ -106,7 +94,8 @@ useHead({
   ],
 })
 useSeoMeta({
-  description: () => `${article?.value?.description ?? description.value}`,
+  // 記事ごとの description は各ページ（useArticleSeo など）が設定する。ここはサイト共通の既定値
+  description: () => `${description.value}`,
   twitterTitle: () => `${ogTitle.value}`,
   twitterDescription: () => `${twitterDescription.value}`,
   twitterImage: () =>

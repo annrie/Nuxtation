@@ -123,7 +123,7 @@ useSeoMeta({
   title: () => `All Blog Posts - Page ${currentPage.value}`,
   description: () => description,
   ogType: () => 'article',
-  ogUrl: () => `${SiteUrl}/blog/`,
+  ogUrl: () => `${SiteUrl}/blog`,
   ogDescription: () => description,
   ogImage: () =>
     `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,

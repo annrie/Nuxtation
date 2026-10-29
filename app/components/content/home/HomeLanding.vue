@@ -92,6 +92,7 @@ useSeoMeta({
   // @ts-expect-error 'site' は og:type の有効な値ではない(正しくは 'website' など)。出力が変わるため、値は直していない。
   ogType: () => 'site',
   ogUrl: () => MySite,
+  ogDescription: () => description,
   ogImage: () => `https://nuxtation.imgix.net/ogp.png?txt64=${encoded1.value}&txt-size=62&txt-color=blue&txt-shad=4&txt-align=middle,center&txt-font=Hiragino%20Sans%20W6&auto=format,compress&fit=cover&blur=50`,
   twitterCard: 'summary_large_image',
   twitterTitle: () => `${title}`,

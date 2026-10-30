@@ -6,6 +6,8 @@ const props = withDefaults(defineProps<{
   loading?: 'lazy' | 'eager'
   // 最初の画面の主役（LCP）になる画像にだけ 'high' を渡す。既定は付けない（ブラウザに任せる）
   fetchpriority?: 'high' | 'low' | 'auto'
+  // LCP になる画像を <head> の <link rel="preload"> で先に読ませる（下の「preload」を参照）。fetchpriority も link に付く
+  preload?: boolean
   modifiers?: Record<string, any>
   // 幅・高さ・品質はここで渡す（modifiers に書いても下の lifted で props に移す）。
   // modifiers の w / h / q は @nuxt/image から見ると素のキーで、srcset の幅（w）と全体の quality（q=80）が後ろに重なって上書きされる。
@@ -65,6 +67,55 @@ const source = computed(() => {
   const extra = scale && !('mark-scale' in params) ? { 'mark-scale': scale } : {}
   return { path, modifiers: { ...params, ...extra, ...lifted.value.modifiers } }
 })
+
+// preload: NuxtPicture にも preload はあるが、次の 2 点が困るので使わず、ここで <link rel="preload" as="image"> を出す。
+// - 位置: unhead の既定の並び（capo）では style が 60（@import を含むと 40）・preload が 70 なので、Nuxt がインラインにした
+//   約 300KB の CSS のあとに来て、画像のリクエストがほとんど早まらない。tagPriority を 35 にして CSS より前に出す
+//   （importmap の 25 よりは後ろ）
+// - type: 付かないので、AVIF に対応しないブラウザも AVIF を読み、そのあと <picture> が WebP を別に読む
+// srcset と sizes は、NuxtPicture が最初の <source> に使うのと同じ引数で作る（@nuxt/image の useImageProps と NuxtPicture の
+// sources を参照）。食い違うと二重に読むので、生成した HTML で一致を確かめている（scripts/check-lcp-preload.ts。PR と main への push の CI で走る。Vercel のデプロイを止めはしない）
+if (import.meta.server && props.preload && props.src) {
+  const format = firstPictureFormat(props.format || 'avif,webp', source.value.path)
+  if (format) {
+    const $img = useImage()
+    const { srcset, sizes } = $img.getSizes(source.value.path, {
+      sizes: props.sizes || $img.options.screens,
+      modifiers: {
+        ...source.value.modifiers,
+        width: lifted.value.width,
+        height: lifted.value.height,
+        format,
+        quality: lifted.value.quality || $img.options.quality,
+        fit: lifted.value.fit,
+      },
+    })
+    useHead({
+      link: [{
+        rel: 'preload',
+        as: 'image',
+        imagesrcset: srcset,
+        imagesizes: sizes,
+        // NuxtPicture の <source> と同じく、形式の名前をそのまま使う（jpg も読み替えない。読み替えると <source> と食い違う）
+        type: `image/${format}`,
+        fetchpriority: props.fetchpriority,
+        tagPriority: 35,
+      }],
+    })
+  }
+}
+
+// NuxtPicture の <source> の並びと同じ規則で、最初の <source> の形式を返す。旧形式（透過できる元画像なら png、それ以外は jpeg）は
+// 最後に回るので、最初はそれ以外の先頭になる（形式が旧形式だけなら <source> は作られず、<img> の srcset と同じになる）。
+// svg は srcset を作らないので preload もしない
+function firstPictureFormat(format: string, path: string): string | undefined {
+  const formats = format.split(',')
+  if (formats[0] === 'svg')
+    return undefined
+  const original = path.match(/^[^?#]+\.(\w+)(?:$|[?#])/)?.[1]
+  const legacy = !original || !['png', 'webp', 'gif', 'svg'].includes(original) ? 'jpeg' : 'png'
+  return formats.find(f => f !== legacy) ?? legacy
+}
 
 // 文字入れ（mark64 の ~text 画像）の幅は px で決まっている（w=1000 など）ので、小さい画像ほど文字がはみ出して切れる。
 // 元画像（幅 1280）に載せたときと同じ割合を mark-scale（出力の幅に対する %）で指定し、どの幅でも同じ見た目にする

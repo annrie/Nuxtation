@@ -5,10 +5,13 @@ const hasLogo = computed(() => !!(appConfig.header?.logo?.light || appConfig.hea
 
 <template>
   <span class="header-logo">
+    <!-- width / height は logo.webp の寸法。読み込む前から縦横比が決まるので、届くまで幅が 0 のままにならない -->
     <img
       v-if="hasLogo"
       :src="appConfig.header?.logo?.light || appConfig.header?.logo?.dark"
       :alt="appConfig.header?.logo?.alt || appConfig.header?.title || 'Logo'"
+      width="134"
+      height="144"
       class="logo-img"
     >
     <span v-else class="logo-text">

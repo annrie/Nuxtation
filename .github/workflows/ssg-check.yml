@@ -45,6 +45,10 @@ jobs:
           echo "HTML files: $html_count"
           # 全ページ欠落の検知が目的なので、平常値(約34)より大幅に低い閾値にする
           [ "$html_count" -ge 15 ] || { echo "::error::HTML出力が少なすぎます ($html_count < 15)。prerenderの失敗を確認してください"; exit 1; }
+      # トップの LCP 画像の preload が、インラインの大きな CSS より前にあり、<source> と srcset が一致することを確かめる。
+      # unhead の並びや @nuxt/image の srcset の作り方が変わると、黙って効かなくなるか二重に読むようになる
+      - name: Check LCP image preload
+        run: pnpm check:lcp-preload --strict
       # 単体テストにもビルド成果物を見るものがある(no-server-api-routes.spec.ts が
       # .vercel/output を検査し、廃止した /api/ogp の復活を検出する)ため、
       # 必ず build の後に実行する。

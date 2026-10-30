@@ -91,6 +91,11 @@ export default defineNuxtConfig({
         { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#0d1117' },
       ],
       link: [
+        // 画像はすべて imgix から読む。最初の画像のリクエストより先に接続を始めておく（画像は CORS なしで読むので crossorigin は付けない）
+        {
+          rel: 'preconnect',
+          href: 'https://nuxtation.imgix.net',
+        },
         {
           rel: 'manifest',
           href: '/manifest.webmanifest',

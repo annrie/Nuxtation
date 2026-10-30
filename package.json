@@ -30,6 +30,7 @@
     "test:e2e": "playwright install && playwright test",
     "check:contrast": "npx tsx scripts/check-contrast.ts",
     "check:css-layers": "npx tsx scripts/check-css-layers.ts",
+    "check:lcp-preload": "npx tsx scripts/check-lcp-preload.ts",
     "check:ogp-cache": "npx tsx scripts/check-ogp-cache.ts",
     "check:vite-peers": "npx tsx scripts/check-vite-peers.ts",
     "release:patch": "changelogen --release --patch",

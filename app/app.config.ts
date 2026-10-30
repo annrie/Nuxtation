@@ -22,8 +22,10 @@ export default defineAppConfig({
   header: {
     title: 'Nuxtation',
     logo: {
-      light: '/logo.svg',
-      dark: '/logo.svg',
+      // logo.svg は PNG を細かいパスに変換したもので 1.4MB（gzip で 400KB）あり、37×40 の表示のためにモバイルの回線を
+      // 長く使っていた。logo.png（702×760）から 134×144 の WebP を作った（11KB。表示の高さ 40px の約 3.6 倍で、docustation と同じファイル）
+      light: '/logo.webp',
+      dark: '/logo.webp',
       alt: 'Nuxtation',
     },
     links: [

@@ -22,10 +22,14 @@ export default defineAppConfig({
   header: {
     title: 'Nuxtation',
     logo: {
-      // logo.svg は PNG を細かいパスに変換したもので 1.4MB（gzip で 400KB）あり、37×40 の表示のためにモバイルの回線を
-      // 長く使っていた。logo.png（702×760）から 134×144 の WebP を作った（11KB。表示の高さ 40px の約 3.6 倍で、docustation と同じファイル）
+      // 以前の logo.svg（削除済み）は PNG を細かいパスに変換したもので 1.4MB（gzip で 400KB）あり、37×40 の表示のために
+      // モバイルの回線を長く使っていた。logo.png（702×760）から 134×144 の WebP を作った（11KB。表示の高さ 40px の約 3.6 倍で、
+      // docustation と同じファイル）
       light: '/logo.webp',
       dark: '/logo.webp',
+      // 画像の寸法。AppHeaderLogo が <img> の width / height に渡し、読み込む前から縦横比を決める。画像を替えたらここも直す
+      width: 134,
+      height: 144,
       alt: 'Nuxtation',
     },
     links: [

@@ -74,9 +74,8 @@ header.custom-header a:hover {
   fill: rgba(255, 255, 255, 0.8);
 }
 
-/* ロゴ画像の表示を確保 */
-header.custom-header img[alt='Nuxtation'],
-header.custom-header img[src='/logo.webp'] {
+/* ロゴ画像の表示を確保（AppHeaderLogo の <img>。ファイル名や alt に頼らず、クラスで指す） */
+header.custom-header img.logo-img {
   display: block;
   visibility: visible;
   opacity: 1;

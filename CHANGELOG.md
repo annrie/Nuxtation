@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.20
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.19...v4.5.20)
+
+### ⚡ パフォーマンスの向上
+
+- **image:** ⚡ docustation の画像・ペイロード・og:image の修正を移し、壊れていたペイロードを直す ([#26](https://github.com/annrie/Nuxtation/pull/26))
+
+### 🐛 バグ修正
+
+- **config:** 🔒 Docus の AI チャットを明示的に無効にする ([2cf75b9](https://github.com/annrie/Nuxtation/commit/2cf75b9))
+- **app:** 🐛 記事ページのハイドレーションの不一致・デプロイ後の CSS の 404・app.vue の壊れたクエリを直す ([#27](https://github.com/annrie/Nuxtation/pull/27))
+- **seo:** 🐛 トップの説明文・og:url・twitter:url をそろえる ([#28](https://github.com/annrie/Nuxtation/pull/28))
+- **seo:** 🐛 トップの og:type を website にし、canonical をページ移動に追従させる ([#29](https://github.com/annrie/Nuxtation/pull/29))
+
+### 📦 ビルド
+
+- **deps:** ➖ 使われていない @imgix/js-core と @imgix/vue を削除する ([6981d98](https://github.com/annrie/Nuxtation/commit/6981d98))
+- **deps:** ⬆️ nuxt 4.6.3 / @nuxt/image 2.2.0 ほか minor/patch 一括更新 ([8c9cac4](https://github.com/annrie/Nuxtation/commit/8c9cac4))
+
+### 🧹 ビルドプロセスまたは補助ツールの変更
+
+- **lint:** 🔧 ESLint のキャッシュを有効にし、既存の指摘 94 件を片付ける ([08be749](https://github.com/annrie/Nuxtation/commit/08be749))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.19
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.18...v4.5.19)

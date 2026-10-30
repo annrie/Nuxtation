@@ -53,6 +53,7 @@ const limitedDescription = computed(() => {
           format="avif,webp,png"
           loading="eager"
           fetchpriority="high"
+          preload
           :width="1280"
           :height="720"
           :quality="60"

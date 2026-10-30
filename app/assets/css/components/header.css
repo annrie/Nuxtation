@@ -76,7 +76,7 @@ header.custom-header a:hover {
 
 /* ロゴ画像の表示を確保 */
 header.custom-header img[alt='Nuxtation'],
-header.custom-header img[src='/logo.svg'] {
+header.custom-header img[src='/logo.webp'] {
   display: block;
   visibility: visible;
   opacity: 1;

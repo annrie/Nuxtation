@@ -74,12 +74,12 @@ header.custom-header a:hover {
   fill: rgba(255, 255, 255, 0.8);
 }
 
-/* ロゴ画像の表示を確保（AppHeaderLogo の <img>。ファイル名や alt に頼らず、クラスで指す） */
+/* ロゴ画像の表示を確保（AppHeaderLogo の <img>。ファイル名や alt に頼らず、クラスで指す）。
+   大きさは AppHeaderLogo.vue の scoped の height / min-height で決める（ここに max-height を書いても min-height に負けて効かない） */
 header.custom-header img.logo-img {
   display: block;
   visibility: visible;
   opacity: 1;
-  max-height: 1.5rem;
   width: auto;
 }
 

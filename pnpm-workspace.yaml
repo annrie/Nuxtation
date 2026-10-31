@@ -88,18 +88,16 @@ trustPolicyExclude:
   - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
-  # @hono/node-server は 1系の最新に留める。
-  # 対象アドバイザリは2件:
-  #   1. serveStatic の Directory Traversal (CVE-2026-39406,
-  #      GHSA-92pp-h63x-v22m) → 1.19.13 で修正済み
-  #   2. serve-static の Windows 限定パストラバーサル
-  #      (GHSA-frvp-7c67-39w9, %5C 経由) → 修正は 2.0.5 以降のみ
+  # @hono/node-server: 2026-10-31 に 1系から 2系へ移した。1系には次の 2 件の修正が無い:
+  #   1. serve-static の Windows 限定パストラバーサル (GHSA-frvp-7c67-39w9, %5C 経由) → 2.0.5 以降
+  #   2. serveStatic がパスを二重にデコードし、制限を回避される (GHSA-rmxm-3fg6-px4f) → 2.1.3 以降
+  # (serveStatic の Directory Traversal CVE-2026-39406 / GHSA-92pp-h63x-v22m は 1.19.13 で修正済み)
   #
-  # 2 は 1系に修正版が無いが、(a) Windows 限定でデプロイ先は Linux、
-  # (b) @modelcontextprotocol/sdk が ^1.19.9 を宣言しており 2系の強制は
-  # 契約違反、(c) 当該SDKは本番成果物に含まれ実行時に到達しうる、
-  # の3点から 2系へは上げず 1系最新に留めて上流の対応を待つ。
-  '@hono/node-server': ^1.19.17
+  # 以前は @modelcontextprotocol/sdk が ^1.19.9 しか宣言しておらず、2系の強制は契約違反だったので
+  # 1系に留めていた。SDK 1.32.1 で `^1.19.9 || ^2.0.5` に広がったので、その理由はなくなった。
+  # SDK が使うのは getRequestListener だけ(2系にもある)。docus の @nuxtjs/mcp-toolkit は
+  # WebStandardStreamableHTTPServerTransport を使うので @hono/node-server を通らず、本番の成果物にも入らない。
+  '@hono/node-server': ^2.1.3
   # vue-i18n と @intlify/*: escapeParameter が翻訳文の srcdoc を通した XSS を防げない
   # (GHSA-83rm-6c8r-g728、High)と、同じ呼び出しで渡した名前付きの値がエスケープされない
   # (GHSA-8rc2-428q-7ww3、Low)。修正版は 11.4.14。2026-10-31 追加。docus > @nuxtjs/i18n が

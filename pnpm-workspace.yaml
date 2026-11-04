@@ -276,7 +276,9 @@ overrides:
   # 2026-10-19: 10/16 の Snyk 通知 (qs 6.16.0 の Uncaught Exception、H) の修正版は未公表だったが、
   # 10/14 公開の 6.16.1 に stringify の例外修正 (toString が呼べない要素で throw しない) が入ったので上げる。
   # Snyk 側で解消と判定されるかは未確認。
-  qs@^6.0.0: ^6.16.1
+  # 2026-11-04: Snyk の Improper Encoding or Escaping of Output (Medium、6.16.1)。
+  # Snyk の公開ページでは 6.16.2 以降の指摘が 0 件。最新の 6.17.1 へ上げる。
+  qs@^6.0.0: ^6.17.1
   # セキュリティ: sharp<0.35.0 の libvips 由来 Heap/Integer Overflow
   # (CVE-2026-33327/33328/35590/35591, GHSA-F88M-G3JW-G9CJ) 対応。
   # @nuxt/image が 0.34.5 を牽引するため 0.35.0+ (libvips 8.18.3) を強制。

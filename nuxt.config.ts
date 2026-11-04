@@ -350,6 +350,10 @@ export default defineNuxtConfig({
   },
 
   experimental: {
+    // 既定の import map（`#entry`）は Safari 15 が解決できず、起動に失敗する（iPadOS 15.8.8 の実機で確認）。
+    // 代わりに、入口が変わるとチャンクのファイル名も連鎖して変わるが、起動できることを優先した。
+    // Safari 16.4 より古い端末を見なくなったら、既定に戻してよい
+    entryImportMap: false,
     inlineSSRStyles: true,
     payloadExtraction: isDev ? false : 'client',
     sharedPrerenderData: false,

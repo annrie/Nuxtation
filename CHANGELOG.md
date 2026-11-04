@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.21
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.20...v4.5.21)
+
+### ⚡ パフォーマンスの向上
+
+- **image:** ⚡ トップの LCP 画像を preload し、ヘッダーのロゴを軽くする ([#30](https://github.com/annrie/Nuxtation/pull/30))
+
+### 🐛 バグ修正
+
+- **header:** 🐛 ロゴの効いていない max-height を消す ([e0ac8a1](https://github.com/annrie/Nuxtation/commit/e0ac8a1))
+
+### ♻️ リファクタリング
+
+- **image:** ♻️ preload の確認を厳しくし、ロゴの寸法とパスを設定 1 か所にまとめる ([#31](https://github.com/annrie/Nuxtation/pull/31))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ node-forge 1.4.2・vue-i18n 11.4.16・seroval 1.7.5 で pnpm audit の High 指摘を解消 ([fd071d1](https://github.com/annrie/Nuxtation/commit/fd071d1))
+- **deps:** ⬆️ @hono/node-server を 2.1.5 へ移し、1系に残っていた指摘 2件を解消 ([52638e8](https://github.com/annrie/Nuxtation/commit/52638e8))
+- **deps:** ⬆️ qs 6.17.1 で Snyk の Medium 1件を解消 ([b4beb0f](https://github.com/annrie/Nuxtation/commit/b4beb0f))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.20
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.19...v4.5.20)

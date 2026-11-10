@@ -320,9 +320,13 @@ overrides:
   # 再ネゴシエーション DoS GHSA-qrxm-fqhp-jwvm、content-encoding の未処理エラー GHSA-xjj6-f33q-929c
   # ほか 7 件)に合わせて下限を 6.29.1 / 7.30.1 / 8.12.2 へ。Snyk の通知は「No remediation available
   # yet」だったが、修正版は 10-15 に出ていた。
+  # 2026-11-10: 11-05 の一括 advisory(リダイレクトの中継でのキャッシュ汚染 GHSA-mqg3-3v4r-cm32(High)、
+  # integrity の空白による SRI 回避 GHSA-r4pc-4jcp-7pqc、cache interceptor の未処理例外 GHSA-3g9m-rv3r-w5w2
+  # ほか 3 件)に合わせて 7 系 / 8 系の下限を 7.30.2 / 8.12.4 へ(6 系は対象外)。Snyk の通知は今回も
+  # 「No remediation available yet」だったが、修正版は 11-05 に出ていた。pnpm audit は undici を拾わないので lockfile で確かめる。
   undici@^6.0.0: ^6.29.1
-  undici@^7.0.0: ^7.30.1
-  undici@^8.0.0: ^8.12.2
+  undici@^7.0.0: ^7.30.2
+  undici@^8.0.0: ^8.12.4
   # uuid: v3/v5/v6 で buf 指定時の境界チェック漏れ。@lhci/cli 経由。
   # v11 は名前付きエクスポートのみだが require("uuid") 形式なので影響なし。
   uuid: ^11.1.1

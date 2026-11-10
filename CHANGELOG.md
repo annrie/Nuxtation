@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.22
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.21...v4.5.22)
+
+### 🐛 バグ修正
+
+- 🐛 Safari 15 で起動に失敗するので entryImportMap を切る / Disable entryImportMap so the app boots on Safari 15 ([c12169c](https://github.com/annrie/Nuxtation/commit/c12169c))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ undici 7.30.2 / 8.12.4 で Snyk の Critical 1件・High 2件ほかを解消 ([a1a59e0](https://github.com/annrie/Nuxtation/commit/a1a59e0))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.21
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.20...v4.5.21)

@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.23
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.22...v4.5.23)
+
+### 🐛 バグ修正
+
+- 🐛 sitemap 生成時の landing/query の request error を止める / Stop the landing/query request error during sitemap generation ([c0b2153](https://github.com/annrie/Nuxtation/commit/c0b2153))
+
+### 📦 ビルド
+
+- **deps:** ⬆️ node-forge 1.4.3 で Snyk の Critical 1件・High 2件ほかを解消 / Bump node-forge to 1.4.3 to fix Snyk Critical and High issues ([6fd5f94](https://github.com/annrie/Nuxtation/commit/6fd5f94))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.22
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.21...v4.5.22)

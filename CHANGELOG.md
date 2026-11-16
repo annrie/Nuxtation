@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.26
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.25...v4.5.26)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ @vueuse/core・@vueuse/nuxt を 15.0.0 へ更新 / bump @vueuse to 15.0.0 ([e49f0d7](https://github.com/annrie/Nuxtation/commit/e49f0d7))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.25
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.24...v4.5.25)

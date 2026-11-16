@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.24
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.23...v4.5.24)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ nuxt を 4.6.4 へ更新 / bump nuxt to 4.6.4 ([1000704](https://github.com/annrie/Nuxtation/commit/1000704))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.23
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.22...v4.5.23)

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v4.5.25
+
+[compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.24...v4.5.25)
+
+### 📦 ビルド
+
+- **deps:** ⬆️ minor/patch 依存を一括更新 / bump minor and patch dependencies ([c740862](https://github.com/annrie/Nuxtation/commit/c740862))
+
+### ❤️ Contributors
+
+- Annrie ([@annrie](https://github.com/annrie))
+
 ## v4.5.24
 
 [compare changes](https://github.com/annrie/Nuxtation/compare/v4.5.23...v4.5.24)

@@ -32,10 +32,8 @@ minimumReleaseAgeExclude:
   - '@csstools/postcss-nested-calc@5.0.2'
   - '@csstools/postcss-syntax-descriptor-syntax-production@2.0.1'
   - '@csstools/selector-resolve-nested@4.0.2'
-  - lint-staged@17.6.0
   - postcss-pseudo-class-any-link@11.0.1
   - socket.io-client@4.8.4
-  - vue-router@5.4.0
   - '@nuxt/devtools-kit@3.4.4'
   - '@nuxt/devtools-wizard@3.4.4'
   - '@nuxt/devtools@3.4.4'
@@ -57,7 +55,6 @@ minimumReleaseAgeExclude:
   - '@csstools/postcss-oklab-function@5.0.16'
   - '@csstools/postcss-progressive-custom-properties@5.1.5'
   - '@csstools/postcss-relative-color-syntax@4.0.16'
-  - '@iconify/json@2.2.550'
   - '@vue/language-core@3.3.14'
   - open-graph-scraper@6.13.0
   - postcss-color-functional-notation@8.0.16
@@ -65,6 +62,8 @@ minimumReleaseAgeExclude:
   - postcss-lab-function@8.0.16
   - postcss-preset-env@11.6.2
   - vue-tsc@3.3.14
+  - '@nuxt/ui@4.12.2'
+  - lint-staged@17.6.1
 # lockfile から消えた版を minimumReleaseAgeExclude / trustPolicyExclude から自動で外す(pnpm 11.22+)
 minimumReleaseAgeExcludePrune: true
 

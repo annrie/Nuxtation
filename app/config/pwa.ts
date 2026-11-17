@@ -47,7 +47,9 @@ export const pwa: ModuleOptions = {
       },
     ],
   },
-  workbox: {
+  // v2 では generateSW の外(トップレベル)に置く
+  maximumFileSizeToCacheInBytes: 60000000,
+  generateSW: {
     // パフォーマンス改善: 静的アセットのみプリキャッシュ（HTMLはネットワーク優先）
     globPatterns: [
       '_nuxt/*.js',
@@ -66,7 +68,6 @@ export const pwa: ModuleOptions = {
     navigateFallbackDenylist: [/^\/api\//],
     navigateFallback: '/',
     cleanupOutdatedCaches: true,
-    maximumFileSizeToCacheInBytes: 60000000,
     runtimeCaching: [
       // HTMLページ: ネットワーク優先（オフライン時はキャッシュ使用）
       {

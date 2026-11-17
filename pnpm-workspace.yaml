@@ -84,7 +84,6 @@ trustPolicyExclude:
   - semver
   - tinyexec
   - undici-types
-  - '@trickfilm400/rollup-plugin-off-main-thread'
 
 overrides:
   # @hono/node-server: 2026-10-31 に 1系から 2系へ移した。1系には次の 2 件の修正が無い:

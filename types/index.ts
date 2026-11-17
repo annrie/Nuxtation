@@ -112,7 +112,7 @@ export interface PwaInjection {
 // 型が食い違って TS2687 / TS2717 になるため、重複していた宣言は削除した。
 
 // `vite-plugin-pwa` も直接の依存ではないため、同じ形の型を持つ @vite-pwa/nuxt から再エクスポートする。
-export type { ClientOptions, ModuleOptions } from '@vite-pwa/nuxt'
+export type { ModuleOptions } from '@vite-pwa/nuxt'
 
 export interface Blog {
   title?: string

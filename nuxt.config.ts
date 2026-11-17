@@ -561,7 +561,7 @@ export default defineNuxtConfig({
   hooks: {
     // options の型は @vite-pwa/nuxt の ModuleHooks から決まる(vite-plugin-pwa は直接の依存ではなく import できない)
     'pwa:beforeBuildServiceWorker': function (options) {
-      const globPatterns = options.workbox.globPatterns
+      const globPatterns = options.generateSW.globPatterns
       const payloadPatternIndex = globPatterns?.indexOf('**/_payload.json') ?? -1
 
       if (payloadPatternIndex !== -1) {

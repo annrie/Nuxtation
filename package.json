@@ -100,7 +100,7 @@
     "@types/node": "^25.9.9",
     "@unhead/vue": "^3.4.3",
     "@unocss/eslint-plugin": "^66.13.0",
-    "@vite-pwa/nuxt": "^1.1.1",
+    "@vite-pwa/nuxt": "^2.0.1",
     "@vitest/ui": "^4.1.12",
     "@vue/test-utils": "^2.6.0",
     "@vueuse/core": "^15.0.0",

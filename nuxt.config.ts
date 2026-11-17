@@ -604,8 +604,9 @@ export default defineNuxtConfig({
     },
   },
   fonts: {
+    // 1.0 で experimental から出た
+    processCSSVariables: true,
     experimental: {
-      processCSSVariables: true,
       disableLocalFallbacks: false,
     },
     defaults: {

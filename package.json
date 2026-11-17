@@ -85,7 +85,7 @@
     "@lhci/cli": "^0.15.1",
     "@mdi/js": "^7.4.47",
     "@nuxt/content": "3.16.2",
-    "@nuxt/devtools": "^3.4.4",
+    "@nuxt/devtools": "^4.2.0",
     "@nuxt/eslint": "1.17.0",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/icon": "^2.6.2",

@@ -68,7 +68,7 @@
     "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.5.1",
+    "@antfu/eslint-config": "^10.0.0",
     "@axe-core/playwright": "^4.14.0",
     "@eslint/js": "^10.0.1",
     "@formkit/nuxt": "^2.5.0",

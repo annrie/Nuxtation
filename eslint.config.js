@@ -20,6 +20,8 @@ const configs = nuxt(
         'templates/**',
       ],
       rules: {
+        // 10 で既定になった整形ルール。全ファイルが大量に直るので、いまは使わない
+        'antfu/reasonable-newline': 'off',
         'node/prefer-global/buffer': 'off',
         'node/prefer-global/process': 'off',
         'no-console': 'warn',

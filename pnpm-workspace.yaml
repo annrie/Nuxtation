@@ -95,7 +95,9 @@ overrides:
   # 1系に留めていた。SDK 1.32.1 で `^1.19.9 || ^2.0.5` に広がったので、その理由はなくなった。
   # SDK が使うのは getRequestListener だけ(2系にもある)。docus の @nuxtjs/mcp-toolkit は
   # WebStandardStreamableHTTPServerTransport を使うので @hono/node-server を通らず、本番の成果物にも入らない。
-  '@hono/node-server': ^2.1.3
+  # 2026-11-19: 2.1.6 でパスの `\` をパス区切りとして解釈する件と、WebSocket upgrade 中の ECONNRESET による
+  # プロセス停止に対応。2.1.9 は最新
+  '@hono/node-server': ^2.1.9
   # vue-i18n と @intlify/*: escapeParameter が翻訳文の srcdoc を通した XSS を防げない
   # (GHSA-83rm-6c8r-g728、High)と、同じ呼び出しで渡した名前付きの値がエスケープされない
   # (GHSA-8rc2-428q-7ww3、Low)。修正版は 11.4.14。2026-10-31 追加。docus > @nuxtjs/i18n が
@@ -164,6 +166,9 @@ overrides:
   #   2026-10-24: 3.1.9 で GHSA-w74x-v6f9-j3xg (%エンコードされた scheme のデコードによる scheme 偽装)・
   #   GHSA-wjr9-j795-jxcr (WHATWG の host 正規化を検査しない host confusion) ほか Low 2件に対応
   fast-uri@^3.0.0: ^3.1.9
+  # fast-xml-parser: 終端のない stop-node タグの走査で二次時間かかる (Low、修正版 5.12.0)。
+  # 2026-11-19 追加。5.12.1 は最新。
+  fast-xml-parser@^5.0.0: ^5.12.1
   handlebars: ^4.7.9
   # postcss<8.5.16 の Directory Traversal 対応。cssnano 系と @tailwindcss/postcss が
   # 8.5.15 を牽引するため 8.5.23 を強制する。
@@ -173,7 +178,9 @@ overrides:
   # SNYK-JS-HONO-19499093 (parseBody の入れ子無制限によるメモリ枯渇) に対応
   # 2026-09-25: 4.13.9 で SNYK-JS-HONO-19964059 (CVE-2026-93981、XSS。修正版 4.13.7) に対応
   # 2026-10-24: 4.13.11 で GHSA-5r4p-p66f-jhc7 (serveStatic がパスを二重にデコードし、静的パスのミドルウェアを迂回できる) に対応
-  hono@^4.0.0: ^4.13.11
+  # 2026-11-19: 4.13.16 で csrf() が text/ping を検査しない件、mount() のミドルウェア迂回、
+  # RegExpRouter のワイルドカード漏れ、validator('form') の検証省略、css ヘルパーの HTML 注入に対応。4.13.19 は最新
+  hono@^4.0.0: ^4.13.19
   # ip-address: パース不備
   # 2026-10-24: 10.7.4 で GHSA-rxp7-6hxx-x8q5 (Address6 のゾーン ID 照合が長さ制限より先に二次時間かかる) に対応
   ip-address@^10.0.0: ^10.7.4
